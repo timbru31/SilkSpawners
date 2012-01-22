@@ -144,13 +144,9 @@ public class SilkSpawners extends JavaPlugin {
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
 
         MemorySection eggSection = (MemorySection)getConfig().get("eggs");
-        Map<String,Object> eggMapStrings = eggSection.getValues(true);
 
-        Iterator it = eggMapStrings.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            String creatureString = (String)pair.getKey();
-
+    
+        for (String creatureString: eggSection.getKeys(false)) {
             CreatureType creatureType = CreatureType.fromName(creatureString);
             if (creatureType == null) {
                 log.info("Invalid creature type: " + creatureString);
@@ -158,8 +154,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
-            Integer entityInteger = (Integer)pair.getValue();
-            short entityID = (short)entityInteger.intValue();
+            short entityID = (short)getConfig().getInt("eggs."+creatureString+".entityID");
 
             ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
 
@@ -186,6 +181,38 @@ public class SilkSpawners extends JavaPlugin {
 
     public void onDisable() {
         log.info("SilkSpawners disabled");
+    }
+
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        if (!cmd.getName().equalsIgnoreCase("spawner")) {
+            return false;
+        }
+
+        if (!(sender instanceof Player)) {
+            // Would like to handle the non-player (console command) case, but, I use the block the
+            // player is looking at, so...
+            return false;
+        }
+
+        Player player = (Player)sender;
+
+        Block block = player.getTargetBlock(null, getConfig().getInt("lookDistance", 6));
+        if (block == null || block.getType() != Material.MOB_SPAWNER) {
+            sender.sendMessage("You must be looking directly at a spawner to use this command");
+            return true;
+        }
+
+        if (args.length == 0) {
+            CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
+
+            sender.sendMessage(spawner.getCreatureType().getName() + " spawner");
+        } else {
+            String creatureString = args[0];
+
+            sender.sendMessage("TODO: set to "+creatureString);
+        }
+
+        return true;
     }
 
 
