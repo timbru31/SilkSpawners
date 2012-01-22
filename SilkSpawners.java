@@ -97,15 +97,22 @@ class SilkSpawnersBlockListener extends BlockListener {
         }
 
         log.info("place spawner ");
+        
+        Player player = event.getPlayer();
+
+        // BUG: event.getItemInHand() loses enchantments! (TODO: test on newer builds) Cannot use it
+        //ItemStack item = event.getItemInHand();
+        ItemStack item = player.getItemInHand();
 
         // TODO: get data from item
-        ItemStack item = event.getItemInHand();
         log.info("\titem held:"+item+", durability="+item.getDurability());
         log.info("\tlevel ="+item.getEnchantmentLevel(Enchantment.OXYGEN)+", "+item.getEnchantmentLevel(Enchantment.SILK_TOUCH));
         log.info("\tmap="+item.getEnchantments());
 
         log.info("\n");
         log.info("\tblockPlaced data="+blockPlaced.getData());
+
+        log.info("\theld2="+player.getItemInHand().getEnchantments());
 
 
 
