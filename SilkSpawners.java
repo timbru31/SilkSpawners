@@ -72,13 +72,15 @@ public class SilkSpawners extends JavaPlugin {
     SilkSpawnersBlockListener blockListener;
 
     public void onEnable() {
-
         ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        item.addEnchantment(Enchantment.SILK_TOUCH, 1);
+        //item.addEnchantment(Enchantment.SILK_TOUCH, 1); // cannot craft to enchanted items
+        item.setDurability((short)1000);        // works!
+        //ItemStack item = new ItemStack(Material.WOOL, 1, (short)1); // orange wool
 
         ShapelessRecipe recipe = new ShapelessRecipe(item);
         recipe.addIngredient(2, Material.DIRT);
         Bukkit.getServer().addRecipe(recipe);
+
 
         blockListener = new SilkSpawnersBlockListener();
 
