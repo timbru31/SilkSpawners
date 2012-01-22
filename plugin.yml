@@ -11,9 +11,11 @@ permissions:
             silkspawners.info: true
             silkspawners.silkdrop: true
             silkspawners.eggdrop: true
+            silkspawners.viewtype: true
+            silkspawners.changetype: true
         default: false
     silkspawners.info:
-        description: Allows you to see informational messages about the spawners as they interact
+        description: Allows you to see informational messages about the spawners as you place and destory them
         default: true
     silkspawners.silkdrop:
         description: Allows you to use silk touch to acquire mob spawner items
@@ -21,4 +23,10 @@ permissions:
     silkspawners.eggdrop:
         description: Allows you to destroy mob spawners to acquire mob spawn eggs
         default: true
+    silkspawners.viewtype:
+        description: Allows you to view the spawner type using /spawner
+        default: true
+    silkspawners.changetype:
+        description: Allows you to change the spawner type using /spawner [creature]
+        default: op
 
