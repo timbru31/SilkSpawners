@@ -196,7 +196,8 @@ public class SilkSpawners extends JavaPlugin {
         // Bukkit bug resets durability on spawners
         item.setDurability(entityID);
 
-        item.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
+        // TODO: Creaturebox compatibility
+        //item.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
         item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
 
         return item;
@@ -209,11 +210,12 @@ public class SilkSpawners extends JavaPlugin {
             return id;
         }
 
+        // TODO: compatibility with Creaturebox's 0-22
+        /*
         id = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
         if (id != 0) {
-            // TODO: compatibility with Creaturebox's 0-22
             return id;
-        }
+        }*/
 
         id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
         if (id != 0) {
