@@ -1,0 +1,28 @@
+
+# Map creature type http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
+# to entity ID http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
+eggs:
+    Creeper: 50
+    Skeleton: 51
+    Spider: 52
+    Giant: 53
+    Zombie: 54
+    Slime: 55
+    Ghast: 56
+    PigZombie: 57
+    Enderman: 58
+    CaveSpider: 59
+    Silverfish: 60
+    Blaze: 61
+    LavaSlime: 62
+    EnderDragon: 63
+    Pig: 90
+    Sheep: 91
+    Cow: 92
+    Chicken: 93
+    Squid: 94
+    Wolf: 95
+    MushroomCow: 96
+    SnowMan: 97
+    Villager: 120
+    #monster:
