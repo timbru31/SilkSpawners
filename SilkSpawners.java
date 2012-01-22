@@ -56,7 +56,7 @@ class SilkSpawnersBlockListener implements Listener {
         Player player = event.getPlayer();
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        player.sendMessage("Broke "+spawner.getCreatureType().getName()+" spawner");
+        plugin.informPlayer(player, "Broke "+spawner.getCreatureType().getName()+" spawner");
 
         // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
@@ -65,14 +65,17 @@ class SilkSpawnersBlockListener implements Listener {
         ItemStack eggItem = plugin.creature2Egg.get(spawner.getCreatureType());
         ItemStack dropItem;
 
-        if (silkTouch) {
+        if (silkTouch && player.hasPermission("silkspawners.silkdrop")) {
             // Drop spawner
             short entityID = eggItem.getDurability();
 
             dropItem = plugin.newSpawnerItem(entityID);
-        } else {
+        } else if (player.hasPermission("silkspawners.eggdrop")) {
             // Drop egg
             dropItem = eggItem;
+        } else {
+            // No permission to drop anything
+            return;
         }
 
         World world = player.getWorld();
@@ -90,27 +93,27 @@ class SilkSpawnersBlockListener implements Listener {
 
         Player player = event.getPlayer();
 
-        // BUG: event.getItemInHand() loses enchantments! (TODO: test on newer builds) Cannot use it
+        // BUG: event.getItemInHand() loses enchantments! (tested on craftbukkit-1.1-R1-20120121.235721-81.jar) Cannot use it
         //ItemStack item = event.getItemInHand();
         ItemStack item = player.getItemInHand();
 
         // Get data from item
         short entityID = plugin.getStoredSpawnerItemEntityID(item);
         if (entityID == 0) {
-            player.sendMessage("Placed default spawner");
+            plugin.informPlayer(player, "Placed default spawner");
             return;
         }
 
         CreatureType creature = plugin.eid2Creature.get(entityID);
         if (creature == null) {
-            player.sendMessage("No creature associated with spawner");
+            plugin.informPlayer(player, "No creature associated with spawner");
             return;
         }
-        player.sendMessage("Placed "+creature.getName()+" spawner");
+        plugin.informPlayer(player, "Placed "+creature.getName()+" spawner");
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         if (spawner == null) {
-            player.sendMessage("Failed to find placed spawner");
+            plugin.informPlayer(player, "Failed to find placed spawner, creature not set");
             return;
         }
         spawner.setCreatureType(creature); 
@@ -131,12 +134,6 @@ public class SilkSpawners extends JavaPlugin {
 
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
-
-        /* deprecated event system
-        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, blockListener, org.bukkit.event.Event.Priority.Normal, this);
-        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, blockListener, org.bukkit.event.Event.Priority.Normal, this);
-        */
-
 
         log.info("SilkSpawners enabled");
     }
@@ -203,6 +200,7 @@ public class SilkSpawners extends JavaPlugin {
         item.setDurability(entityID);
 
         // TODO: Creaturebox compatibility
+        // see http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
         //item.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
         item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
 
@@ -231,7 +229,11 @@ public class SilkSpawners extends JavaPlugin {
         return 0;
     }
 
-
+    public static void informPlayer(Player player, String message) {
+        if (player.hasPermission("silkspawners.info")) {
+            player.sendMessage(message);
+        }
+    }
 }
 
 

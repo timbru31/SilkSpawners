@@ -1,4 +1,19 @@
 name: SilkSpawners
 main: me.exphc.SilkSpawners.SilkSpawners
 version: 0
-
+permissions:
+    silkspawners.*:
+        children:
+            silkspawners.info: true
+            silkspawners.silkdrop: true
+            silkspawners.eggdrop: true
+        default: false
+    silkspawners.info:
+        description: Allows you to see informational messages about the spawners
+        default: true
+    silkspawners.silkdrop:
+        description: Allows you to use silk touch to acquire mob spawner items
+        default: true
+    silkspawners.eggdrop:
+        description: Allows you to destroy mob spawners to acquire mob spawn eggs
+        default: true
