@@ -56,13 +56,15 @@ class SilkSpawnersBlockListener implements Listener {
         Player player = event.getPlayer();
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        plugin.informPlayer(player, spawner.getCreatureType().getName()+" spawner broken");
+        CreatureType creatureType = spawner.getCreatureType();
+
+        plugin.informPlayer(player, plugin.getCreatureName(creatureType)+" spawner broken");
 
         // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
         boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
 
-        ItemStack eggItem = plugin.creature2Egg.get(spawner.getCreatureType());
+        ItemStack eggItem = plugin.creature2Egg.get(creatureType);
         ItemStack dropItem;
 
         if (silkTouch && player.hasPermission("silkspawners.silkdrop")) {
@@ -114,7 +116,7 @@ class SilkSpawnersBlockListener implements Listener {
             plugin.informPlayer(player, "No creature associated with spawner");
             return;
         }
-        plugin.informPlayer(player, creature.getName()+" spawner placed");
+        plugin.informPlayer(player, plugin.getCreatureName(creature)+" spawner placed");
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         if (spawner == null) {
@@ -190,6 +192,8 @@ public class SilkSpawners extends JavaPlugin {
 
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(creatureString.toLowerCase().replace(" ", ""));
+            aliases.add(entityID+"");
+            aliases.add("#"+legacyID);
 
             for (String alias: aliases) {
                 name2Creature.put(alias, creatureType);
@@ -305,7 +309,7 @@ public class SilkSpawners extends JavaPlugin {
     // Get a creature name suitable for displaying to the user
     // CreatureType getName has internal names like 'LavaSlime', this will return
     // the in-game name like 'Magma Cube'
-    private String getCreatureName(CreatureType creature) {
+    public String getCreatureName(CreatureType creature) {
         String displayName = creature2DisplayName.get(creature);
 
         if (displayName == null) {
