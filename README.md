@@ -4,6 +4,7 @@ Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
 Features:
+
 * Spawner retains creature type
 * Works on legit spawners
 * If a spawner is mined _without_ silk touch, drops spawner eggs instead
@@ -13,19 +14,19 @@ Features:
 * Permissions support
 
 ## Permissions
-silkspawners.info (true)
+silkspawners.info (true) -
 Allows you to see informative messages about the spawners as you place and break them
 
-silkspawners.silkdrop (true)
+silkspawners.silkdrop (true) -
 Allows you to use silk touch to acquire mob spawner items
 
-silkspawners.eggdrop (true)
+silkspawners.eggdrop (true) -
 Allows you to destroy mob spawners to acquire mob spawn eggs
 
-silkspawners.viewtype (true)
+silkspawners.viewtype (true) -
 Allows you to view the spawner type using /spawner
 
-silkspawners.changetype (op)
+silkspawners.changetype (op) -
 Allows you to change the spawner type using /spawner [creature]
 
 ## Configuration
