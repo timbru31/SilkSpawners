@@ -34,16 +34,19 @@ import org.bukkit.*;
 
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 
-class SilkSpawnersBlockListener extends BlockListener {
+class SilkSpawnersBlockListener implements Listener {
     static Logger log = Logger.getLogger("Minecraft");
 
     SilkSpawners plugin;
 
     public SilkSpawnersBlockListener(SilkSpawners pl) {
         plugin = pl;
+        
+        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    public void onBlockBreak(BlockBreakEvent event) {
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onBlockBreak(final BlockBreakEvent event) {
         Block block = event.getBlock();
 
         if (block.getType() != Material.MOB_SPAWNER) {
@@ -77,7 +80,8 @@ class SilkSpawnersBlockListener extends BlockListener {
 
     }
 
-    public void onBlockPlace(BlockPlaceEvent event) {
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onBlockPlace(final BlockPlaceEvent event) {
         Block blockPlaced = event.getBlockPlaced();
 
         if (blockPlaced.getType() != Material.MOB_SPAWNER) {
@@ -128,8 +132,10 @@ public class SilkSpawners extends JavaPlugin {
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
 
+        /* deprecated event system
         Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, blockListener, org.bukkit.event.Event.Priority.Normal, this);
         Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, blockListener, org.bukkit.event.Event.Priority.Normal, this);
+        */
 
 
         log.info("SilkSpawners enabled");
