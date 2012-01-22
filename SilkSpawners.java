@@ -53,10 +53,9 @@ class SilkSpawnersBlockListener extends BlockListener {
         Player player = event.getPlayer();
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        log.info("broke spawner for "+spawner.getCreatureType().getName());
-        // TODO: set data on item
+        player.sendMessage("Broke "+spawner.getCreatureType().getName()+" spawner");
 
-        // TODO: if using silk touch, drop spawner itself (optionally)
+        // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
         boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
 
@@ -67,9 +66,6 @@ class SilkSpawnersBlockListener extends BlockListener {
             // Drop spawner
             short entityID = eggItem.getDurability();
 
-            log.info("dropping spawner eid="+entityID);
-
-            // TODO: get working
             // Tag the entity ID several ways, for compatibility
             ItemStack spawnerItem = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
 
@@ -96,8 +92,6 @@ class SilkSpawnersBlockListener extends BlockListener {
             return;
         }
 
-        log.info("place spawner ");
-        
         Player player = event.getPlayer();
 
         // BUG: event.getItemInHand() loses enchantments! (TODO: test on newer builds) Cannot use it
@@ -106,9 +100,23 @@ class SilkSpawnersBlockListener extends BlockListener {
 
         // Get data from item
         short entityID = getStoredEntityID(item);
+        if (entityID == 0) {
+            player.sendMessage("Placed default spawner");
+            return;
+        }
+
         CreatureType creature = plugin.eid2Creature.get(entityID);
+        if (creature == null) {
+            player.sendMessage("No creature associated with spawner");
+            return;
+        }
+        player.sendMessage("Placed "+creature.getName()+" spawner");
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
+        if (spawner == null) {
+            player.sendMessage("Failed to find placed spawner");
+            return;
+        }
         spawner.setCreatureType(creature); //CreatureType.fromName("Zombie"));   
     }
 
