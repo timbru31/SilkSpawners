@@ -128,6 +128,9 @@ public class SilkSpawners extends JavaPlugin {
     ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
     ConcurrentHashMap<Short,CreatureType> eid2Creature;
 
+    ConcurrentHashMap<CreatureType,String> creature2DisplayName;
+    ConcurrentHashMap<String,CreatureType> name2Creature;
+
     public void onEnable() {
         loadConfig();
         loadRecipes();
@@ -143,10 +146,14 @@ public class SilkSpawners extends JavaPlugin {
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
 
-        MemorySection eggSection = (MemorySection)getConfig().get("eggs");
+        creature2DisplayName = new ConcurrentHashMap<CreatureType,String>();
+        name2Creature = new ConcurrentHashMap<String,CreatureType>();
+
+
+        MemorySection creatureSection = (MemorySection)getConfig().get("creatures");
 
     
-        for (String creatureString: eggSection.getKeys(false)) {
+        for (String creatureString: creatureSection.getKeys(false)) {
             CreatureType creatureType = CreatureType.fromName(creatureString);
             if (creatureType == null) {
                 log.info("Invalid creature type: " + creatureString);
@@ -154,12 +161,34 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
-            short entityID = (short)getConfig().getInt("eggs."+creatureString+".entityID");
+            short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
             ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
+
+            int legacyID = getConfig().getInt("creatures."+creatureString+".legacyID");
+            // TODO: store?
+
+
+            // In-game name for user display, and other recognized names for user input lookup
+
+            String displayName = getConfig().getString("creatures."+creatureString+".displayName");
+            if (displayName == null) {
+                displayName = creatureString;
+            }
+
+            creature2DisplayName.put(creatureType, displayName);
+
+            List<String> aliases = getConfig().getStringList("creatures."+creatureString+".aliases");
+
+            aliases.add(displayName.toLowerCase().replace(" ", ""));
+            aliases.add(creatureString.toLowerCase().replace(" ", ""));
+
+            for (String alias: aliases) {
+                name2Creature.put(alias, creatureType);
+            }
         }
     }
 
@@ -196,7 +225,7 @@ public class SilkSpawners extends JavaPlugin {
 
         Player player = (Player)sender;
 
-        Block block = player.getTargetBlock(null, getConfig().getInt("lookDistance", 6));
+        Block block = player.getTargetBlock(null, getConfig().getInt("spawnerCommandReachDistance", 6));
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             sender.sendMessage("You must be looking directly at a spawner to use this command");
             return true;
@@ -204,15 +233,46 @@ public class SilkSpawners extends JavaPlugin {
 
         if (args.length == 0) {
             CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
+            if (spawner == null) {
+                sender.sendMessage("Failed to find spawner");
+                return true;
+            }
 
-            sender.sendMessage(spawner.getCreatureType().getName() + " spawner");
+            CreatureType creatureType = spawner.getCreatureType();
+
+            sender.sendMessage(getCreatureName(creatureType) + " spawner");
         } else {
             String creatureString = args[0];
+            CreatureType creatureType = name2Creature.get(creatureString);
+            if (creatureType == null) {
+                sender.sendMessage("Unrecognized creature "+creatureString);
+                return true;
+            }
 
-            sender.sendMessage("TODO: set to "+creatureString);
+            CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
+            if (spawner == null) {
+                sender.sendMessage("Failed to find spawner, creature not set");
+                return true;
+            }
+            spawner.setCreatureType(creatureType); 
+
+            sender.sendMessage(getCreatureName(creatureType) + " spawner");
         }
 
         return true;
+    }
+
+    // Get a creature name suitable for displaying to the user
+    // CreatureType getName has internal names like 'LavaSlime', this will return
+    // the in-game name like 'Magma Cube'
+    private String getCreatureName(CreatureType creature) {
+        String displayName = creature2DisplayName.get(creature);
+
+        if (displayName == null) {
+            displayName = "("+creature.getName()+")";
+        }
+    
+        return displayName;
     }
 
 
