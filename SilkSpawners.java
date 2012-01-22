@@ -100,8 +100,13 @@ class SilkSpawnersBlockListener implements Listener {
         // Get data from item
         short entityID = plugin.getStoredSpawnerItemEntityID(item);
         if (entityID == 0) {
-            plugin.informPlayer(player, "Placed default spawner");
-            return;
+            plugin.informPlayer(player, "Placing default spawner");
+            entityID = plugin.defaultEntityID;
+
+            if (entityID == 0) {
+                // "default default"; defer to Minecraft
+                return;
+            }
         }
 
         CreatureType creature = plugin.eid2Creature.get(entityID);
@@ -131,6 +136,8 @@ public class SilkSpawners extends JavaPlugin {
     ConcurrentHashMap<CreatureType,String> creature2DisplayName;
     ConcurrentHashMap<String,CreatureType> name2Creature;
 
+    short defaultEntityID;
+
     public void onEnable() {
         loadConfig();
         loadRecipes();
@@ -142,16 +149,14 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadConfig() {
-        // Load creature to egg map
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
 
         creature2DisplayName = new ConcurrentHashMap<CreatureType,String>();
         name2Creature = new ConcurrentHashMap<String,CreatureType>();
 
-
+        // Creature info
         MemorySection creatureSection = (MemorySection)getConfig().get("creatures");
-
     
         for (String creatureString: creatureSection.getKeys(false)) {
             CreatureType creatureType = CreatureType.fromName(creatureString);
@@ -190,21 +195,46 @@ public class SilkSpawners extends JavaPlugin {
                 name2Creature.put(alias, creatureType);
             }
         }
+
+        // Get the entity ID of the creatures to spawn on damage 0 spawners, or otherwise not override
+        // (then will default to Minecraft's default of pigs)
+        defaultEntityID = 0;
+
+        String defaultCreatureString = getConfig().getString("defaultCreature", null);
+        if (defaultCreatureString != null) {
+            CreatureType defaultCreatureType = name2Creature.get(defaultCreatureString);
+            if (defaultCreatureType != null) {
+                ItemStack defaultItemStack = creature2Egg.get(defaultCreatureType);
+                if (defaultItemStack != null) {
+                    defaultEntityID = defaultItemStack.getDurability();
+                    log.info("Default monster spawner set to "+creature2DisplayName.get(defaultCreatureType));
+                } else {
+                    log.info("Unable to lookup name of " + defaultCreatureString);
+                }
+            } else {
+                log.info("Invalid creature type: " + defaultCreatureString);
+            }
+        }
     }
 
     private void loadRecipes() {
-        for (ItemStack egg: creature2Egg.values()) {
-            short entityID = egg.getDurability();
+        if (getConfig().getBoolean("spawnerRecipes", false)) {
+            for (ItemStack egg: creature2Egg.values()) {
+                short entityID = egg.getDurability();
 
-            ItemStack spawnerItem = newSpawnerItem(entityID);
+                // This crafted item doesn't work because:
+                // 1. mob spawners lose durability (also affecting Creaturebox)
+                // 2. crafted items lose enchantments
+                ItemStack spawnerItem = newSpawnerItem(entityID);
 
-            ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
+                ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
-            // TODO: ShapedRecipe, box
-            recipe.addIngredient(8, Material.IRON_FENCE);
-            recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
+                // TODO: ShapedRecipe, box
+                recipe.addIngredient(8, Material.IRON_FENCE);
+                recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
-            Bukkit.getServer().addRecipe(recipe);
+                Bukkit.getServer().addRecipe(recipe);
+            }
         }
     }
 
