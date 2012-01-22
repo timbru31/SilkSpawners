@@ -3,8 +3,9 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
-** Pre-release ** download for CraftBukkit 1.1 snapshot (tested on craftbukkit-1.1-R1-20120121.235721-81.jar): 
+** Pre-release ** download for **CraftBukkit 1.1 snapshots** (tested on craftbukkit-1.1-R1-20120121.235721-81.jar, will **not** work with 1.0.1):
 
+> **[SilkSpawners 0.1 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.1.jar)** 
 
 Features:
 
@@ -62,5 +63,6 @@ Related plugins:
 * [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
 * [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
 * [Mob Spawner Changer](http://forums.bukkit.org/threads/misc-mech-mob-spawner-changer-v0-3-change-what-a-mob-spawner-spawns-1337.26038/)
-
+* [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
+* [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
 
