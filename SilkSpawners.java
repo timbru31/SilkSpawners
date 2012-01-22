@@ -56,7 +56,7 @@ class SilkSpawnersBlockListener implements Listener {
         Player player = event.getPlayer();
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        plugin.informPlayer(player, "Broke "+spawner.getCreatureType().getName()+" spawner");
+        plugin.informPlayer(player, spawner.getCreatureType().getName()+" spawner broken");
 
         // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
@@ -109,7 +109,7 @@ class SilkSpawnersBlockListener implements Listener {
             plugin.informPlayer(player, "No creature associated with spawner");
             return;
         }
-        plugin.informPlayer(player, "Placed "+creature.getName()+" spawner");
+        plugin.informPlayer(player, creature.getName()+" spawner placed");
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         if (spawner == null) {
@@ -224,6 +224,16 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         Player player = (Player)sender;
+
+        if (args.length == 0 && !player.hasPermission("silkspawners.viewtype")) {
+            sender.sendMessage("You do not have permission to view the spawner type");
+            return true;
+        }
+        if (args.length > 0 && !player.hasPermission("silkspawners.changetype")) {
+            sender.sendMessage("You do not have permission to change spawners");
+            return true;
+        }
+
 
         Block block = player.getTargetBlock(null, getConfig().getInt("spawnerCommandReachDistance", 6));
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
