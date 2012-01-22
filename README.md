@@ -3,6 +3,9 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
+** Pre-release ** download for CraftBukkit 1.1 snapshot (tested on craftbukkit-1.1-R1-20120121.235721-81.jar): 
+
+
 Features:
 
 * Spawner retains creature type

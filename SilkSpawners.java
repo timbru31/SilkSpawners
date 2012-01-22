@@ -34,8 +34,7 @@ import org.bukkit.*;
 
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 
-//class SilkSpawnersBlockListener implements Listener {
-class SilkSpawnersBlockListener extends BlockListener {
+class SilkSpawnersBlockListener implements Listener {
     static Logger log = Logger.getLogger("Minecraft");
 
     SilkSpawners plugin;
@@ -43,13 +42,10 @@ class SilkSpawnersBlockListener extends BlockListener {
     public SilkSpawnersBlockListener(SilkSpawners pl) {
         plugin = pl;
         
-        //Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
-
-        Bukkit.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, this, Event.Priority.Normal, plugin);
-        Bukkit.getServer().getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, this, Event.Priority.Normal, plugin);
+        Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    //@EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(final BlockBreakEvent event) {
         Block block = event.getBlock();
 
@@ -76,10 +72,10 @@ class SilkSpawnersBlockListener extends BlockListener {
             short entityID = eggItem.getDurability();
 
             dropItem = plugin.newSpawnerItem(entityID);
-        } /* else if (player.hasPermission("silkspawners.eggdrop")) {
+        } else if (player.hasPermission("silkspawners.eggdrop")) {
             // Drop egg
             dropItem = eggItem;
-        }*/ else {
+        } else {
             // No permission to drop anything
             return;
         }
@@ -89,7 +85,7 @@ class SilkSpawnersBlockListener extends BlockListener {
 
     }
 
-    //@EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlace(final BlockPlaceEvent event) {
         Block blockPlaced = event.getBlockPlaced();
 
@@ -146,7 +142,7 @@ public class SilkSpawners extends JavaPlugin {
 
     public void onEnable() {
         loadConfig();
-        //loadRecipes();
+        loadRecipes();
 
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
@@ -174,8 +170,7 @@ public class SilkSpawners extends JavaPlugin {
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
-            //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
-            ItemStack eggItem = new ItemStack(Material.SPONGE, 1, entityID);
+            ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
@@ -194,9 +189,6 @@ public class SilkSpawners extends JavaPlugin {
             creature2DisplayName.put(creatureType, displayName);
 
             List<String> aliases = getConfig().getStringList("creatures."+creatureString+".aliases");
-            if (aliases == null) {
-                aliases = new ArrayList<String>();
-            }
 
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(creatureString.toLowerCase().replace(" ", ""));
@@ -229,7 +221,6 @@ public class SilkSpawners extends JavaPlugin {
         }
     }
 
-/*
     private void loadRecipes() {
         if (getConfig().getBoolean("spawnerRecipes", false)) {
             for (ItemStack egg: creature2Egg.values()) {
@@ -250,7 +241,6 @@ public class SilkSpawners extends JavaPlugin {
             }
         }
     }
-    */
 
     public void onDisable() {
         log.info("SilkSpawners disabled");

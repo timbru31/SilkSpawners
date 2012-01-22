@@ -43,11 +43,11 @@ creatures:
     Blaze: 
         entityID: 61
         legacyID: 18
-    #LavaSlime: 
-    #    entityID: 62
-    #    legacyID: 20
-    #    aliases: ['magmacube', 'mcube', 'magma']
-    #    displayName: 'Magma Cube'
+    LavaSlime: 
+        entityID: 62
+        legacyID: 20
+        aliases: ['magmacube', 'mcube', 'magma']
+        displayName: 'Magma Cube'
     EnderDragon:
         entityID: 63
         legacyID: 19
@@ -75,11 +75,11 @@ creatures:
         entityID: 96
         legacyID: 21
         displayName: 'Mooshroom'
-    #SnowMan: 
-    #    entityID: 97
-    #    legacyID: 22
-    #    displayName: 'Snow Golem'
-    #    aliases: ['golem']
+    SnowMan: 
+        entityID: 97
+        legacyID: 22
+        displayName: 'Snow Golem'
+        aliases: ['golem']
     Villager: 
         entityID: 120
         legacyID: 23
