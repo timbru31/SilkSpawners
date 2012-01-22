@@ -1,51 +1,90 @@
 
-# Map creature type http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
-# to entity ID http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
-eggs:
+# Key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
+# entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
+# legacyID is pre-1222 creaturebox(+other plugins) scheme, see order on http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
+creatures:
     Creeper: 
         entityID: 50
+        legacyID: 5
     Skeleton: 
         entityID: 51
+        legacyID: 8
     Spider: 
         entityID: 52
+        legacyID: 9
     Giant: 
         entityID: 53
+        legacyID: 13
     Zombie: 
         entityID: 54
+        legacyID: 10
     Slime: 
         entityID: 55
+        legacyID: 11
     Ghast: 
         entityID: 56
+        legacyID: 6
     PigZombie: 
         entityID: 57
+        legacyID: 7
+        aliases: ['pigman', 'zombiepigman']
+        displayName: 'Zombie Pigman'
     Enderman: 
         entityID: 58
+        legacyID: 16
     CaveSpider: 
         entityID: 59
+        legacyID: 15
+        aliases: ['cspider']
+        displayName: 'Cave Spider'
     Silverfish: 
         entityID: 60
+        legacyID: 17
     Blaze: 
         entityID: 61
+        legacyID: 18
     LavaSlime: 
         entityID: 62
+        legacyID: 20
+        aliases: ['magmacube', 'mcube', 'magma']
+        displayName: 'Magma Cube'
     EnderDragon:
         entityID: 63
+        legacyID: 19
+        displayName: 'Enderdragon'
+        aliases: ['dragon']
     Pig: 
         entityID: 90
+        legacyID: 0
     Sheep: 
         entityID: 91
+        legacyID: 3
     Cow: 
         entityID: 92
+        legacyID: 2
     Chicken: 
         entityID: 93
+        legacyID: 1
     Squid: 
         entityID: 94
+        legacyID: 4
     Wolf: 
         entityID: 95
+        legacyID: 14
     MushroomCow: 
         entityID: 96
+        legacyID: 21
+        displayName: 'Mooshroom'
     SnowMan: 
         entityID: 97
+        legacyID: 22
+        displayName: 'Snow Golem'
+        aliases: ['golem']
     Villager: 
         entityID: 120
-    #monster:
+        legacyID: 23
+        aliases: ['npc']
+    #Monster:
+    #   no entityID?
+    #   aliases: ['human']
+    #   legacyID: 12
