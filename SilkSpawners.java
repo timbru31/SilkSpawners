@@ -76,6 +76,8 @@ class SilkSpawnersBlockListener extends BlockListener {
             spawnerItem.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
             spawnerItem.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
 
+            //spawnerItem.setAmount(entityID);
+
             dropItem = spawnerItem;
         } else {
             // Drop egg
@@ -83,7 +85,7 @@ class SilkSpawnersBlockListener extends BlockListener {
         }
 
         World world = player.getWorld();
-        world.dropItemNaturally(player.getLocation(), dropItem);
+        world.dropItemNaturally(block.getLocation(), dropItem);
 
     }
 
@@ -100,6 +102,12 @@ class SilkSpawnersBlockListener extends BlockListener {
         ItemStack item = event.getItemInHand();
         log.info("\titem held:"+item+", durability="+item.getDurability());
         log.info("\tlevel ="+item.getEnchantmentLevel(Enchantment.OXYGEN)+", "+item.getEnchantmentLevel(Enchantment.SILK_TOUCH));
+        log.info("\tmap="+item.getEnchantments());
+
+        log.info("\n");
+        log.info("\tblockPlaced data="+blockPlaced.getData());
+
+
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         spawner.setCreatureType(CreatureType.fromName("Zombie"));   
