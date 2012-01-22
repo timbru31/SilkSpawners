@@ -66,15 +66,7 @@ class SilkSpawnersBlockListener extends BlockListener {
             // Drop spawner
             short entityID = eggItem.getDurability();
 
-            // Tag the entity ID several ways, for compatibility
-            ItemStack spawnerItem = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
-
-            spawnerItem.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
-            spawnerItem.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
-
-            //spawnerItem.setAmount(entityID);
-
-            dropItem = spawnerItem;
+            dropItem = plugin.newSpawnerItem(entityID);
         } else {
             // Drop egg
             dropItem = eggItem;
@@ -99,7 +91,7 @@ class SilkSpawnersBlockListener extends BlockListener {
         ItemStack item = player.getItemInHand();
 
         // Get data from item
-        short entityID = getStoredEntityID(item);
+        short entityID = plugin.getStoredSpawnerItemEntityID(item);
         if (entityID == 0) {
             player.sendMessage("Placed default spawner");
             return;
@@ -117,28 +109,9 @@ class SilkSpawnersBlockListener extends BlockListener {
             player.sendMessage("Failed to find placed spawner");
             return;
         }
-        spawner.setCreatureType(creature); //CreatureType.fromName("Zombie"));   
+        spawner.setCreatureType(creature); 
     }
 
-    static short getStoredEntityID(ItemStack item) {
-        short id = item.getDurability();
-        if (id != 0) {
-            return id;
-        }
-
-        id = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
-        if (id != 0) {
-            // TODO: compatibility with Creaturebox 0-22
-            return id;
-        }
-
-        id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
-        if (id != 0) {
-            return id;
-        }
-
-        return 0;
-    }
 }
 
 public class SilkSpawners extends JavaPlugin {
@@ -193,26 +166,16 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadRecipes() {
-        /* Crafting test
-        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        //item.addEnchantment(Enchantment.SILK_TOUCH, 1); // cannot craft to enchanted items
-        item.setDurability((short)1000);        // works!
-        //ItemStack item = new ItemStack(Material.WOOL, 1, (short)1); // orange wool
-
-        ShapelessRecipe recipe = new ShapelessRecipe(item);
-        recipe.addIngredient(2, Material.DIRT);
-        Bukkit.getServer().addRecipe(recipe);
-        */
-
         for (ItemStack egg: creature2Egg.values()) {
             short entityID = egg.getDurability();
 
-            ItemStack spawner = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
-            ShapelessRecipe recipe = new ShapelessRecipe(spawner);
+            ItemStack spawnerItem = newSpawnerItem(entityID);
+
+            ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
             // TODO: ShapedRecipe, box
             recipe.addIngredient(8, Material.IRON_FENCE);
-            recipe.addIngredient( Material.MONSTER_EGG, (int)entityID);
+            recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
             Bukkit.getServer().addRecipe(recipe);
         }
@@ -221,6 +184,46 @@ public class SilkSpawners extends JavaPlugin {
     public void onDisable() {
         log.info("SilkSpawners disabled");
     }
+
+
+    // Create a tagged a mob spawner _item_ with its entity ID so we know what it spawns
+    // This is not part of vanilla
+    public static ItemStack newSpawnerItem(short entityID) {
+        ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+
+        // Tag the entity ID several ways, for compatibility
+
+        // Bukkit bug resets durability on spawners
+        item.setDurability(entityID);
+
+        item.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
+        item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
+
+        return item;
+    }
+
+    // Get the entity ID
+    public static short getStoredSpawnerItemEntityID(ItemStack item) {
+        short id = item.getDurability();
+        if (id != 0) {
+            return id;
+        }
+
+        id = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
+        if (id != 0) {
+            // TODO: compatibility with Creaturebox's 0-22
+            return id;
+        }
+
+        id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
+        if (id != 0) {
+            return id;
+        }
+
+        return 0;
+    }
+
+
 }
 
 
