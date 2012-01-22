@@ -104,20 +104,32 @@ class SilkSpawnersBlockListener extends BlockListener {
         //ItemStack item = event.getItemInHand();
         ItemStack item = player.getItemInHand();
 
-        // TODO: get data from item
-        log.info("\titem held:"+item+", durability="+item.getDurability());
-        log.info("\tlevel ="+item.getEnchantmentLevel(Enchantment.OXYGEN)+", "+item.getEnchantmentLevel(Enchantment.SILK_TOUCH));
-        log.info("\tmap="+item.getEnchantments());
-
-        log.info("\n");
-        log.info("\tblockPlaced data="+blockPlaced.getData());
-
-        log.info("\theld2="+player.getItemInHand().getEnchantments());
-
-
+        // Get data from item
+        short entityID = getStoredEntityID(item);
+        CreatureType creature = plugin.eid2Creature.get(entityID);
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
-        spawner.setCreatureType(CreatureType.fromName("Zombie"));   
+        spawner.setCreatureType(creature); //CreatureType.fromName("Zombie"));   
+    }
+
+    static short getStoredEntityID(ItemStack item) {
+        short id = item.getDurability();
+        if (id != 0) {
+            return id;
+        }
+
+        id = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
+        if (id != 0) {
+            // TODO: compatibility with Creaturebox 0-22
+            return id;
+        }
+
+        id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
+        if (id != 0) {
+            return id;
+        }
+
+        return 0;
     }
 }
 
@@ -126,6 +138,7 @@ public class SilkSpawners extends JavaPlugin {
     SilkSpawnersBlockListener blockListener;
 
     ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
+    ConcurrentHashMap<Short,CreatureType> eid2Creature;
 
     public void onEnable() {
         loadConfig();
@@ -144,6 +157,7 @@ public class SilkSpawners extends JavaPlugin {
     private void loadConfig() {
         // Load creature to egg map
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
+        eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
 
         MemorySection eggSection = (MemorySection)getConfig().get("eggs");
         Map<String,Object> eggMapStrings = eggSection.getValues(true);
@@ -166,6 +180,7 @@ public class SilkSpawners extends JavaPlugin {
             ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
 
             creature2Egg.put(creatureType, eggItem);
+            eid2Creature.put(new Short(entityID), creatureType);
         }
     }
 
