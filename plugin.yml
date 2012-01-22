@@ -1,6 +1,6 @@
 name: SilkSpawners
 main: me.exphc.SilkSpawners.SilkSpawners
-version: 0
+version: 0.1
 commands:
     spawner:
         description: Change or view the monster spawner creature type
@@ -15,7 +15,7 @@ permissions:
             silkspawners.changetype: true
         default: false
     silkspawners.info:
-        description: Allows you to see informational messages about the spawners as you place and destory them
+        description: Allows you to see informative messages about the spawners as you place and break them
         default: true
     silkspawners.silkdrop:
         description: Allows you to use silk touch to acquire mob spawner items
