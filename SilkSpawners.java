@@ -57,11 +57,34 @@ class SilkSpawnersBlockListener extends BlockListener {
         // TODO: set data on item
 
         // TODO: if using silk touch, drop spawner itself (optionally)
+        ItemStack tool = player.getItemInHand();
+        boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
 
-        // Drop egg
-        ItemStack dropItem = plugin.creature2Egg.get(spawner.getCreatureType());
+        ItemStack eggItem = plugin.creature2Egg.get(spawner.getCreatureType());
+        ItemStack dropItem;
+
+        if (silkTouch) {
+            // Drop spawner
+            short entityID = eggItem.getDurability();
+
+            log.info("dropping spawner eid="+entityID);
+
+            // TODO: get working
+            // Tag the entity ID several ways, for compatibility
+            ItemStack spawnerItem = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+
+            spawnerItem.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
+            spawnerItem.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
+
+            dropItem = spawnerItem;
+        } else {
+            // Drop egg
+            dropItem = eggItem;
+        }
+
         World world = player.getWorld();
         world.dropItemNaturally(player.getLocation(), dropItem);
+
     }
 
     public void onBlockPlace(BlockPlaceEvent event) {
@@ -75,6 +98,8 @@ class SilkSpawnersBlockListener extends BlockListener {
 
         // TODO: get data from item
         ItemStack item = event.getItemInHand();
+        log.info("\titem held:"+item+", durability="+item.getDurability());
+        log.info("\tlevel ="+item.getEnchantmentLevel(Enchantment.OXYGEN)+", "+item.getEnchantmentLevel(Enchantment.SILK_TOUCH));
 
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         spawner.setCreatureType(CreatureType.fromName("Zombie"));   
@@ -88,17 +113,20 @@ public class SilkSpawners extends JavaPlugin {
     ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
 
     public void onEnable() {
-        /* Crafting test
-        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, 1);
-        //item.addEnchantment(Enchantment.SILK_TOUCH, 1); // cannot craft to enchanted items
-        item.setDurability((short)1000);        // works!
-        //ItemStack item = new ItemStack(Material.WOOL, 1, (short)1); // orange wool
+        loadConfig();
+        loadRecipes();
 
-        ShapelessRecipe recipe = new ShapelessRecipe(item);
-        recipe.addIngredient(2, Material.DIRT);
-        Bukkit.getServer().addRecipe(recipe);
-        */
+        // Listeners
+        blockListener = new SilkSpawnersBlockListener(this);
 
+        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, blockListener, org.bukkit.event.Event.Priority.Normal, this);
+        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, blockListener, org.bukkit.event.Event.Priority.Normal, this);
+
+
+        log.info("SilkSpawners enabled");
+    }
+
+    private void loadConfig() {
         // Load creature to egg map
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
 
@@ -124,15 +152,32 @@ public class SilkSpawners extends JavaPlugin {
 
             creature2Egg.put(creatureType, eggItem);
         }
+    }
 
-        // Listeners
-        blockListener = new SilkSpawnersBlockListener(this);
+    private void loadRecipes() {
+        /* Crafting test
+        ItemStack item = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+        //item.addEnchantment(Enchantment.SILK_TOUCH, 1); // cannot craft to enchanted items
+        item.setDurability((short)1000);        // works!
+        //ItemStack item = new ItemStack(Material.WOOL, 1, (short)1); // orange wool
 
-        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_BREAK, blockListener, org.bukkit.event.Event.Priority.Normal, this);
-        Bukkit.getPluginManager().registerEvent(Event.Type.BLOCK_PLACE, blockListener, org.bukkit.event.Event.Priority.Normal, this);
+        ShapelessRecipe recipe = new ShapelessRecipe(item);
+        recipe.addIngredient(2, Material.DIRT);
+        Bukkit.getServer().addRecipe(recipe);
+        */
 
+        for (ItemStack egg: creature2Egg.values()) {
+            short entityID = egg.getDurability();
 
-        log.info("SilkSpawners enabled");
+            ItemStack spawner = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+            ShapelessRecipe recipe = new ShapelessRecipe(spawner);
+
+            // TODO: ShapedRecipe, box
+            recipe.addIngredient(8, Material.IRON_FENCE);
+            recipe.addIngredient( Material.MONSTER_EGG, (int)entityID);
+
+            Bukkit.getServer().addRecipe(recipe);
+        }
     }
 
     public void onDisable() {
