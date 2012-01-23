@@ -312,8 +312,13 @@ public class SilkSpawners extends JavaPlugin {
                 sender.sendMessage(getCreatureName(creatureType) + " spawner");
             } else {
                 // Get free spawner item in hand
-                if (!player.hasPermission("silkspawners.giveitem")) {
-                    sender.sendMessage("You do not have permission to get free spawners");
+                if (!player.hasPermission("silkspawners.freeitem")) {
+                    sender.sendMessage("You must be looking directly at a spawner to use this command");
+                    return true;
+                }
+
+                if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
+                    sender.sendMessage("To use this command, empty your hand (to get a free spawner item) or point at an existing spawner (to change the spawner type)");
                     return true;
                 }
 
