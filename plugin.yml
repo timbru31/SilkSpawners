@@ -13,6 +13,7 @@ permissions:
             silkspawners.eggdrop: true
             silkspawners.viewtype: true
             silkspawners.changetype: true
+            silkspawners.freeitem: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -29,4 +30,5 @@ permissions:
     silkspawners.changetype:
         description: Allows you to change the spawner type using /spawner [creature]
         default: op
-
+    silkspawners.freeitem:
+        description: Allows you to get spawner items in your hand for free using /spawner [creature]
