@@ -5,15 +5,17 @@ Ever wanted to move a mob spawner? Now you can, using tools with the
 
 ** Pre-release ** download for **CraftBukkit 1.1 snapshots** (will **not** work with 1.0.1-R1 RB):
 
-> **[SilkSpawners 0.1 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.1.jar)** 
+> **[SilkSpawners 0.2 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.2.jar)**
 
-Features:
+Featurs:
 
 * Spawner retains creature type
 * Works on legit spawners
 * If a spawner is mined _without_ silk touch, drops spawner eggs instead (optional)
-* Informational messages showing the creature type when spawners are placed or broken
-* /spawner command to view or change the creature type
+* Show creature type when spawners are placed or broken
+* /spawner command to view spawner you are looking at 
+* /spawner [creature] to change an existing spawner in the world, if in your crosshairs
+* /spawner [creature] to put a new spawner item in your empty hand
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Permissions support
 
@@ -32,6 +34,9 @@ Allows you to view the spawner type using /spawner
 
 silkspawners.changetype (op) -
 Allows you to change the spawner type using /spawner [creature]
+
+silkspawners.freeitem (op) -
+Allows you to get spawner items in your hand for free using /spawner [creature]
 
 ## Configuration
 No configuration file is required or copied by default, but if desired the creature names and entity IDs
@@ -57,8 +62,22 @@ knowledgeable of SilkSpawner's conventions), it will not know what to spawn. In 
 pigs will be spawned by default, but this can be changed using the "defaultCreature"
 configuration option.
 
+*For plugin developers*: if you want to interoperate with SilkSpawners' monster spawner items,
+use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or
+`item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID)` on the `ItemStack`, the 
+enchantment level storing the creature type [Entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs).
+
+## Limitations
+SilkSpawners only changes the spawner type, it does not manage the spawning itself;
+the spawning algorithm remains up to Minecraft. Other plugins offer more control.
+
+In the inventory window, item description is "Monster Spawner" for all kinds of spawners. 
+Fixing this requires a client-side mod.
+
 ## See Also
-Related plugins:
+Want to make Silk Touch yet more useful? Also try [Sublimation](http://dev.bukkit.org/server-mods/sublimation/).
+
+Other relevant plugins:
 
 * [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
 * [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
@@ -66,3 +85,4 @@ Related plugins:
 * [felega.block](http://forums.bukkit.org/threads/multiple-felegas-plugin-pile.54916/)
 * [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
 * [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
+

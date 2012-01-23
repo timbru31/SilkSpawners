@@ -32,3 +32,4 @@ permissions:
         default: op
     silkspawners.freeitem:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
+        default: op
