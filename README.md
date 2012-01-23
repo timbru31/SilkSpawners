@@ -67,6 +67,19 @@ use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or
 `item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID)` on the `ItemStack`, the 
 enchantment level storing the creature type [Entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs).
 
+## Craftable Spawners (Experimental)
+Experimental support for crafting spawners can be enabled by setting the "spawnerRecipes"
+configuration option to true. The recipe is currently 8 iron bars surrounding the
+spawner egg ([as seen here](http://imgur.com/KrWGI), 
+[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)).
+*However*, CraftBukkit at the time of this writing does not retain the enchantment level on crafting results, so
+for the creature type to be set correctly you need to apply the patch in
+[BUKKIT-602](https://bukkit.atlassian.net/browse/BUKKIT-602)
+and rebuild CraftBukkit (if it has not yet been fixed in a build). The patch has been 
+verified to fix this problem on the latest source from
+[CraftBukkit's GitHub repository](https://github.com/Bukkit/CraftBukkit)
+as of 2012/01/22.
+
 ## Limitations
 SilkSpawners only changes the spawner type, it does not manage the spawning itself;
 the spawning algorithm remains up to Minecraft. Other plugins offer more control.
