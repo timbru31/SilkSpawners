@@ -64,17 +64,14 @@ class SilkSpawnersBlockListener implements Listener {
         ItemStack tool = player.getItemInHand();
         boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
 
-        ItemStack eggItem = plugin.creature2Egg.get(creatureType);
         ItemStack dropItem;
 
         if (silkTouch && player.hasPermission("silkspawners.silkdrop")) {
             // Drop spawner
-            short entityID = eggItem.getDurability();
-
-            dropItem = plugin.newSpawnerItem(entityID);
+            dropItem = plugin.newSpawnerItem(creatureType);
         } else if (player.hasPermission("silkspawners.eggdrop")) {
             // Drop egg
-            dropItem = eggItem;
+            dropItem = plugin.creature2Egg.get(creatureType);
         } else {
             // No permission to drop anything
             return;
@@ -134,6 +131,7 @@ public class SilkSpawners extends JavaPlugin {
 
     ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
     ConcurrentHashMap<Short,CreatureType> eid2Creature;
+    ConcurrentHashMap<CreatureType,Short> creature2Eid;
 
     ConcurrentHashMap<CreatureType,String> creature2DisplayName;
     ConcurrentHashMap<String,CreatureType> name2Creature;
@@ -153,6 +151,7 @@ public class SilkSpawners extends JavaPlugin {
     private void loadConfig() {
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
+        creature2Eid = new ConcurrentHashMap<CreatureType,Short>();
 
         creature2DisplayName = new ConcurrentHashMap<CreatureType,String>();
         name2Creature = new ConcurrentHashMap<String,CreatureType>();
@@ -174,6 +173,7 @@ public class SilkSpawners extends JavaPlugin {
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
+            creature2Eid.put(creatureType, new Short(entityID));
 
             int legacyID = getConfig().getInt("creatures."+creatureString+".legacyID");
             // TODO: store?
@@ -225,11 +225,12 @@ public class SilkSpawners extends JavaPlugin {
         if (getConfig().getBoolean("spawnerRecipes", false)) {
             for (ItemStack egg: creature2Egg.values()) {
                 short entityID = egg.getDurability();
+                CreatureType creatureType = eid2Creature.get(entityID);
 
                 // This crafted item doesn't work because:
                 // 1. mob spawners lose durability (also affecting Creaturebox)
                 // 2. crafted items lose enchantments
-                ItemStack spawnerItem = newSpawnerItem(entityID);
+                ItemStack spawnerItem = newSpawnerItem(creatureType);
 
                 ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
@@ -259,23 +260,19 @@ public class SilkSpawners extends JavaPlugin {
 
         Player player = (Player)sender;
 
-        if (args.length == 0 && !player.hasPermission("silkspawners.viewtype")) {
-            sender.sendMessage("You do not have permission to view the spawner type");
-            return true;
-        }
-        if (args.length > 0 && !player.hasPermission("silkspawners.changetype")) {
-            sender.sendMessage("You do not have permission to change spawners");
-            return true;
-        }
-
-
-        Block block = player.getTargetBlock(null, getConfig().getInt("spawnerCommandReachDistance", 6));
-        if (block == null || block.getType() != Material.MOB_SPAWNER) {
-            sender.sendMessage("You must be looking directly at a spawner to use this command");
-            return true;
-        }
-
         if (args.length == 0) {
+            // Get spawner type
+            if (!player.hasPermission("silkspawners.viewtype")) {
+                sender.sendMessage("You do not have permission to view the spawner type");
+                return true;
+            }
+
+            Block block = getSpawnerFacing(player);
+            if (block == null) {
+                sender.sendMessage("You must be looking directly at a spawner to use this command");
+                return false;
+            }
+
             CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
             if (spawner == null) {
                 sender.sendMessage("Failed to find spawner");
@@ -286,6 +283,10 @@ public class SilkSpawners extends JavaPlugin {
 
             sender.sendMessage(getCreatureName(creatureType) + " spawner");
         } else {
+            // Set or get spawner
+
+            Block block = getSpawnerFacing(player);
+
             String creatureString = args[0];
             CreatureType creatureType = name2Creature.get(creatureString);
             if (creatureType == null) {
@@ -293,18 +294,47 @@ public class SilkSpawners extends JavaPlugin {
                 return true;
             }
 
-            CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
-            if (spawner == null) {
-                sender.sendMessage("Failed to find spawner, creature not set");
-                return true;
-            }
-            spawner.setCreatureType(creatureType); 
+            if (block != null) {
+                // Set spawner type
+                if (!player.hasPermission("silkspawners.changetype")) {
+                    sender.sendMessage("You do not have permission to change spawners");
+                    return true;
+                }
 
-            sender.sendMessage(getCreatureName(creatureType) + " spawner");
+
+                CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
+                if (spawner == null) {
+                    sender.sendMessage("Failed to find spawner, creature not set");
+                    return true;
+                }
+                spawner.setCreatureType(creatureType); 
+
+                sender.sendMessage(getCreatureName(creatureType) + " spawner");
+            } else {
+                // Get free spawner item in hand
+                if (!player.hasPermission("silkspawners.giveitem")) {
+                    sender.sendMessage("You do not have permission to get free spawners");
+                    return true;
+                }
+
+                player.setItemInHand(newSpawnerItem(creatureType));
+            }
         }
 
         return true;
     }
+
+    // Return the spawner block the player is looking at, or null if isn't
+    private Block getSpawnerFacing(Player player) {
+        Block block = player.getTargetBlock(null, getConfig().getInt("spawnerCommandReachDistance", 6));
+        if (block == null || block.getType() != Material.MOB_SPAWNER) {
+            return null;
+        }
+
+        return block;
+    }
+
+
 
     // Get a creature name suitable for displaying to the user
     // CreatureType getName has internal names like 'LavaSlime', this will return
@@ -322,7 +352,14 @@ public class SilkSpawners extends JavaPlugin {
 
     // Create a tagged a mob spawner _item_ with its entity ID so we know what it spawns
     // This is not part of vanilla
-    public static ItemStack newSpawnerItem(short entityID) {
+    public ItemStack newSpawnerItem(CreatureType creatureType) {
+        Short entityIDObject = creature2Eid.get(creatureType);
+        if (entityIDObject == null) {
+            log.info("newSpawnerItem("+creatureType+") unexpectedly failed to lookup entityID");
+            return null;
+        }
+
+        short entityID = entityIDObject.shortValue();
         ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
 
         // Tag the entity ID several ways, for compatibility

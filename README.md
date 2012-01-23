@@ -3,7 +3,7 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
-** Pre-release ** download for **CraftBukkit 1.1 snapshots** (tested on craftbukkit-1.1-R1-20120121.235721-81.jar, will **not** work with 1.0.1):
+** Pre-release ** download for **CraftBukkit 1.1 snapshots** (will **not** work with 1.0.1-R1 RB):
 
 > **[SilkSpawners 0.1 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.1.jar)** 
 
@@ -11,7 +11,7 @@ Features:
 
 * Spawner retains creature type
 * Works on legit spawners
-* If a spawner is mined _without_ silk touch, drops spawner eggs instead
+* If a spawner is mined _without_ silk touch, drops spawner eggs instead (optional)
 * Informational messages showing the creature type when spawners are placed or broken
 * /spawner command to view or change the creature type
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
@@ -41,7 +41,7 @@ details.
 ## Technical Details
 SilkSpawners stores the entity ID of creature in two places within the mob spawner item:
 
-* Durability (damage value), if possible
+* Durability (damage value), if possible. *Since Bukkit 1.0.1+ [broke](https://bukkit.atlassian.net/browse/BUKKIT-329) storing data values on mob spawner items, SilkSpawners does not rely on this field, although it will use it if it is available.*
 
 * Enchantment SILK\_TOUCH level
 
@@ -63,6 +63,6 @@ Related plugins:
 * [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
 * [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
 * [Mob Spawner Changer](http://forums.bukkit.org/threads/misc-mech-mob-spawner-changer-v0-3-change-what-a-mob-spawner-spawns-1337.26038/)
+* [felega.block](http://forums.bukkit.org/threads/multiple-felegas-plugin-pile.54916/)
 * [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
 * [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
-
