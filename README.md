@@ -42,12 +42,12 @@ Allows you to get spawner items in your hand for free using /spawner [creature]
 No configuration is required in the common case, but a few options can be 
 tweaked in SilkSpawners/config.yml:
 
-*craftableSpawners* (true): enable crafting mob spawners using spawner egg + 8 iron bars
+craftableSpawners (true) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
-*workaroundBukkitBug602* (true): workaround 
-[BUKKIT-602](https://bukkit.atlassian.net/browse/BUKKIT-602#Enchantments_lost_on_crafting_recipe_output) for crafting spawners (keep enabled unless this bug is fixed)
+workaroundBukkitBug602 (true): Workaround 
+[BUKKIT-602](https://bukkit.atlassian.net/browse/BUKKIT-602#Enchantments_lost_on_crafting_recipe_output) for crafting spawners (keep enabled until fixed).
 
-*defaultCreature* (null): when generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs)
+defaultCreature (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
 
 All spawner items obtained using SilkSpawners will have the creature type stored, but the
 default creature will be used if the spawner is obtained using:
@@ -57,10 +57,10 @@ default creature will be used if the spawner is obtained using:
 * other plugins not knowledgeable of SilkSpawners' conventions
 
 
-*spawnerCommandReachDistance* (6): how close you have to be to use the /spawner command
+spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
 
-*creatures*: mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
-[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name
+creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
+[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name.
 
 ## Technical Details
 SilkSpawners stores the entity ID of creature in two places within the mob spawner item:
