@@ -3,9 +3,7 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
-** Pre-release ** download for **CraftBukkit 1.1 snapshots** (will **not** work with 1.0.1-R1 RB):
-
-> **[SilkSpawners 0.2 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.2.jar)**
+*Update 2012/01/23*: SilkSpawners 0.3 beta released (requires CraftBukkit 1.1). [Alternate download link](http://dl.dropbox.com/u/57628348/SilkSpawners-0.3.jar) until submission is approved on BukkitDev.
 
 Features:
 
@@ -81,11 +79,6 @@ type is set (also using CraftCreatureSpawner).
 use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or
 `item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID)` on the `ItemStack`, the 
 enchantment level storing the creature type [Entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs).
-
-## Craftable Spawners
-Craftable spawners can be enabled by setting the "spawnerRecipes"
-configuration option to true. The recipe is 8 iron bars surrounding the
-spawner egg (
 
 ## Limitations
 Requires CraftBukkit 1.1+. Will not work on 1.0.1-R1 (no plans to backport).
