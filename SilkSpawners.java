@@ -356,6 +356,8 @@ public class SilkSpawners extends JavaPlugin {
                 }
 
                 player.setItemInHand(newSpawnerItem(creatureType));
+                
+                sender.sendMessage(getCreatureName(creatureType) + " spawner");
             }
         }
 
