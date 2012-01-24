@@ -145,7 +145,7 @@ public class SilkSpawners extends JavaPlugin {
     public void onEnable() {
         loadConfig();
 
-        if (getConfig().getBoolean("spawnerRecipes", true)) {
+        if (getConfig().getBoolean("craftableSpawners", true)) {
             loadRecipes();
         }
 
@@ -156,6 +156,10 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadConfig() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+
+
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
         creature2Eid = new ConcurrentHashMap<CreatureType,Short>();
@@ -233,11 +237,7 @@ public class SilkSpawners extends JavaPlugin {
             short entityID = egg.getDurability();
             CreatureType creatureType = eid2Creature.get(entityID);
 
-            // This crafted item doesn't work because:
-            // 1. mob spawners lose durability (also affecting Creaturebox)
-            // 2. crafted items lose enchantments
             ItemStack spawnerItem = newSpawnerItem(creatureType);
-
             ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
             // TODO: ShapedRecipe, box
