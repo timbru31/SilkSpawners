@@ -34,6 +34,9 @@ import org.bukkit.*;
 
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 
+import net.minecraft.server.CraftingManager;        
+import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
+
 class SilkSpawnersBlockListener implements Listener {
     static Logger log = Logger.getLogger("Minecraft");
 
@@ -92,7 +95,8 @@ class SilkSpawnersBlockListener implements Listener {
 
         Player player = event.getPlayer();
 
-        // BUG: event.getItemInHand() loses enchantments! (tested on craftbukkit-1.1-R1-20120121.235721-81.jar) Cannot use it
+        // https://bukkit.atlassian.net/browse/BUKKIT-596 - BlockPlaceEvent getItemInHand() loses enchantments
+        // so, have to get item from player instead
         //ItemStack item = event.getItemInHand();
         ItemStack item = player.getItemInHand();
 
@@ -140,7 +144,10 @@ public class SilkSpawners extends JavaPlugin {
 
     public void onEnable() {
         loadConfig();
-        loadRecipes();
+
+        if (getConfig().getBoolean("spawnerRecipes", true)) {
+            loadRecipes();
+        }
 
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
@@ -222,22 +229,48 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadRecipes() {
-        if (getConfig().getBoolean("spawnerRecipes", false)) {
-            for (ItemStack egg: creature2Egg.values()) {
-                short entityID = egg.getDurability();
-                CreatureType creatureType = eid2Creature.get(entityID);
+        for (ItemStack egg: creature2Egg.values()) {
+            short entityID = egg.getDurability();
+            CreatureType creatureType = eid2Creature.get(entityID);
 
-                // This crafted item doesn't work because:
-                // 1. mob spawners lose durability (also affecting Creaturebox)
-                // 2. crafted items lose enchantments
-                ItemStack spawnerItem = newSpawnerItem(creatureType);
+            // This crafted item doesn't work because:
+            // 1. mob spawners lose durability (also affecting Creaturebox)
+            // 2. crafted items lose enchantments
+            ItemStack spawnerItem = newSpawnerItem(creatureType);
 
-                ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
+            ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
-                // TODO: ShapedRecipe, box
-                recipe.addIngredient(8, Material.IRON_FENCE);
-                recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
+            // TODO: ShapedRecipe, box
+            recipe.addIngredient(8, Material.IRON_FENCE);
+            recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
+            if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
+                // Workaround Bukkit bug:
+                // https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output
+                // CraftBukkit/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
+                ArrayList<MaterialData> ingred = recipe.getIngredientList();
+                Object[] data = new Object[ingred.size()];
+                int i = 0;
+                for (MaterialData mdata : ingred) {
+                    int id = mdata.getItemTypeId();
+                    byte dmg = mdata.getData();
+                    data[i] = new net.minecraft.server.ItemStack(id, 1, dmg);
+                    i++;
+                }
+
+                // Convert Bukkit ItemStack to net.minecraft.server.ItemStack
+                int id = recipe.getResult().getTypeId();
+                int amount = recipe.getResult().getAmount();
+                short durability = recipe.getResult().getDurability();
+                Map<Enchantment, Integer> enchantments = recipe.getResult().getEnchantments();
+                net.minecraft.server.ItemStack result = new net.minecraft.server.ItemStack(id, amount, durability);
+                for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                    result.addEnchantment(CraftEnchantment.getRaw(entry.getKey()), entry.getValue().intValue());
+                }
+
+                CraftingManager.getInstance().registerShapelessRecipe(result, data);
+
+            } else {
                 Bukkit.getServer().addRecipe(recipe);
             }
         }
@@ -370,6 +403,8 @@ public class SilkSpawners extends JavaPlugin {
         // Tag the entity ID several ways, for compatibility
 
         // Bukkit bug resets durability on spawners
+        // https://bukkit.atlassian.net/browse/BUKKIT-329 MobSpawner should retains durability/data values.
+        // Try it anyways, just in case the bug has been fixed
         item.setDurability(entityID);
 
         // TODO: Creaturebox compatibility

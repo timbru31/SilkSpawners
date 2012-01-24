@@ -1,6 +1,6 @@
 name: SilkSpawners
 main: me.exphc.SilkSpawners.SilkSpawners
-version: 0.1
+version: 0.3
 commands:
     spawner:
         description: Change or view the monster spawner creature type
