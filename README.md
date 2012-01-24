@@ -7,7 +7,7 @@ Ever wanted to move a mob spawner? Now you can, using tools with the
 
 > **[SilkSpawners 0.2 alpha](http://dl.dropbox.com/u/57628348/SilkSpawners-0.2.jar)**
 
-Featurs:
+Features:
 
 * Spawner retains creature type
 * Works on legit spawners
@@ -81,6 +81,8 @@ verified to fix this problem on the latest source from
 as of 2012/01/22.
 
 ## Limitations
+Requires CraftBukkit 1.1+. Will not work on 1.0.1-R1 (no plans to backport).
+
 SilkSpawners only changes the spawner type, it does not manage the spawning itself;
 the spawning algorithm remains up to Minecraft. Other plugins offer more control.
 
