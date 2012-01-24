@@ -156,9 +156,15 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadConfig() {
+        // Minimum version check
+        try {
+            Material.valueOf("MONSTER_EGG");
+        } catch (Exception e) {
+            log.severe("SilkSpawners failed to find MONSTER_EGG, do you have CraftBukkit 1.1+?");
+        }
+
         getConfig().options().copyDefaults(true);
         saveConfig();
-
 
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();

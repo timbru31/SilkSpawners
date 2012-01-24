@@ -1,3 +1,4 @@
+# See documentation at http://dev.bukkit.org/server-mods/silkspawners/
 craftableSpawners: true
 workaroundBukkitBug602: true
 defaultCreature: null

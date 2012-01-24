@@ -41,7 +41,8 @@ silkspawners.freeitem (op) -
 Allows you to get spawner items in your hand for free using /spawner [creature]
 
 ## Configuration
-No configuration is required.
+No configuration is required in the common case, but a few options can be 
+tweaked in SilkSpawners/config.yml:
 
 *craftableSpawners* (true): enable crafting mob spawners using spawner egg + 8 iron bars
 
