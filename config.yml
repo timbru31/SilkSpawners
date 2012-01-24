@@ -1,4 +1,15 @@
 
+# Craft mob spawner using spawner egg + 8 iron bars
+spawnerRecipes: true
+
+# For crafting spawners, if isn't fixed, workaround:
+# https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output 
+workaroundBukkitBug602: true
+
+# Override creature type of untagged spawner, or null for Minecraft default (pigs, wtf)
+defaultCreature: null
+
+
 # Key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
 # legacyID is pre-1222 creaturebox(+other plugins) scheme, see order on http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
