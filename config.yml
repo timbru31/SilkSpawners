@@ -1,5 +1,5 @@
 # See documentation at http://dev.bukkit.org/server-mods/silkspawners/
-craftableSpawners: true
+craftableSpawners: false
 workaroundBukkitBug602: true
 defaultCreature: null
 spawnerCommandReachDistance: 6
