@@ -16,7 +16,7 @@ Features:
 * /spawner [creature] to put a new spawner item in your empty hand
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Spawners are craftable using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
-[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/))
+[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) - *disabled by default, see below to enable*
 * Permissions support
 
 ## Permissions
@@ -39,10 +39,7 @@ silkspawners.freeitem (op) -
 Allows you to get spawner items in your hand for free using /spawner [creature]
 
 ## Configuration
-No configuration is required in the common case, but a few options can be 
-tweaked in SilkSpawners/config.yml:
-
-craftableSpawners (true) - Enable crafting mob spawners using spawner egg + 8 iron bars.
+craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
 workaroundBukkitBug602 (true): Workaround 
 [BUKKIT-602](https://bukkit.atlassian.net/browse/BUKKIT-602#Enchantments_lost_on_crafting_recipe_output) for crafting spawners (keep enabled until fixed).
