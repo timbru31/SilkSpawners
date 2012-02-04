@@ -20,6 +20,7 @@ import org.bukkit.plugin.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.*;
 import org.bukkit.event.player.*;
+import org.bukkit.entity.*;
 import org.bukkit.Material.*;
 import org.bukkit.material.*;
 import org.bukkit.block.*;
@@ -68,21 +69,27 @@ class SilkSpawnersBlockListener implements Listener {
         boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
 
         ItemStack dropItem;
+        World world = player.getWorld();
 
         if (silkTouch && player.hasPermission("silkspawners.silkdrop")) {
             // Drop spawner
             dropItem = plugin.newSpawnerItem(creatureType);
-        } else if (player.hasPermission("silkspawners.eggdrop")) {
+            world.dropItemNaturally(block.getLocation(), dropItem);
+            return;
+        } 
+
+        if (player.hasPermission("silkspawners.eggdrop")) {
             // Drop egg
             dropItem = plugin.creature2Egg.get(creatureType);
-        } else {
-            // No permission to drop anything
-            return;
+            world.dropItemNaturally(block.getLocation(), dropItem);
+        } 
+
+        // TODO: disable all these by default!
+        if (player.hasPermission("silkspawners.xpdrop")) {
+            ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
+            // TODO: get working!
+            orb.setExperience(50);  // TODO: must be configurable
         }
-
-        World world = player.getWorld();
-        world.dropItemNaturally(block.getLocation(), dropItem);
-
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -124,7 +131,8 @@ class SilkSpawnersBlockListener implements Listener {
             plugin.informPlayer(player, "Failed to find placed spawner, creature not set");
             return;
         }
-        spawner.setCreatureType(creature); 
+        spawner.setCreatureType(creature);
+        // TODO: what happened? in 1.1-R3, doesn't set??
     }
 
 }

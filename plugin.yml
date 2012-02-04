@@ -24,6 +24,9 @@ permissions:
     silkspawners.eggdrop:
         description: Allows you to destroy mob spawners to acquire mob spawn eggs
         default: true
+    silkspawners.xpdrop:
+        description: Allows you to destroy mob spawners to acquire experience points
+        default: true
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
         default: true
