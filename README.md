@@ -3,13 +3,13 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
-*Update 2012/01/23*: SilkSpawners 0.3 beta released (requires CraftBukkit 1.1). [Alternate download link](http://dl.dropbox.com/u/57628348/SilkSpawners-0.3.jar) until submission is approved on BukkitDev.
+*Update 2012/02/05*: SilkSpawners 0.4 beta released for CraftBukkit 1.1-R3! 
 
 Features:
 
 * Spawner retains creature type
 * Works on legit spawners
-* If a spawner is mined _without_ silk touch, drops spawner eggs instead (optional)
+* If a spawner is mined _without_ silk touch, drops spawner eggs / XP / iron bars instead (optional)
 * Show creature type when spawners are placed or broken
 * /spawner command to view spawner you are looking at 
 * /spawner [creature] to change an existing spawner in the world, if in your crosshairs
@@ -61,8 +61,8 @@ Allows you to see informative messages about the spawners as you place and break
 silkspawners.silkdrop (true) -
 Allows you to use silk touch to acquire mob spawner items
 
-silkspawners.eggdrop (true) -
-Allows you to destroy mob spawners to acquire mob spawn eggs
+silkspawners.destroydrop (true) -
+Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
 
 silkspawners.viewtype (true) -
 Allows you to view the spawner type using /spawner
@@ -92,8 +92,6 @@ use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or
 enchantment level storing the creature type [Entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs).
 
 ## Limitations
-Requires CraftBukkit 1.1+. Will not work on 1.0.1-R1 (no plans to backport).
-
 SilkSpawners only changes the spawner type, it does not manage the spawning itself;
 the spawning algorithm remains up to Minecraft. Other plugins offer more control.
 
@@ -105,10 +103,10 @@ Want to make Silk Touch yet more useful? Also try [Sublimation](http://dev.bukki
 
 Other relevant plugins:
 
+* [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
+* [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
+* [Mob Spawner Changer](http://forums.bukkit.org/threads/misc-mech-mob-spawner-changer-v0-3-change-what-a-mob-spawner-spawns-1337.26038/)
 * [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
 * [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
-* [Mob Spawner Changer](http://forums.bukkit.org/threads/misc-mech-mob-spawner-changer-v0-3-change-what-a-mob-spawner-spawns-1337.26038/)
 * [felega.block](http://forums.bukkit.org/threads/multiple-felegas-plugin-pile.54916/)
-* [MonsterBox](http://dev.bukkit.org/server-mods/monsterbox/)
-* [creaturebox](http://dev.bukkit.org/server-mods/creaturebox/)
 
