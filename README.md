@@ -17,28 +17,12 @@ Features:
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Spawners are craftable using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
 [source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) - *disabled by default, see below to enable*
-* Permissions support
+* Optional permissions support
 
-## Permissions
-silkspawners.info (true) -
-Allows you to see informative messages about the spawners as you place and break them
-
-silkspawners.silkdrop (true) -
-Allows you to use silk touch to acquire mob spawner items
-
-silkspawners.eggdrop (true) -
-Allows you to destroy mob spawners to acquire mob spawn eggs
-
-silkspawners.viewtype (true) -
-Allows you to view the spawner type using /spawner
-
-silkspawners.changetype (op) -
-Allows you to change the spawner type using /spawner [creature]
-
-silkspawners.freeitem (op) -
-Allows you to get spawner items in your hand for free using /spawner [creature]
 
 ## Configuration
+usePermissions (false)
+
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
 workaroundBukkitBug602 (true): Workaround 
@@ -58,6 +42,27 @@ spawnerCommandReachDistance (6) - How close you have to be to use the /spawner c
 
 creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
 [entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name.
+
+## Permissions
+
+
+silkspawners.info (true) -
+Allows you to see informative messages about the spawners as you place and break them
+
+silkspawners.silkdrop (true) -
+Allows you to use silk touch to acquire mob spawner items
+
+silkspawners.eggdrop (true) -
+Allows you to destroy mob spawners to acquire mob spawn eggs
+
+silkspawners.viewtype (true) -
+Allows you to view the spawner type using /spawner
+
+silkspawners.changetype (op) -
+Allows you to change the spawner type using /spawner [creature]
+
+silkspawners.freeitem (op) -
+Allows you to get spawner items in your hand for free using /spawner [creature]
 
 ## Technical Details
 SilkSpawners stores the entity ID of creature in two places within the mob spawner item:

@@ -43,8 +43,8 @@ class SilkSpawnersBlockListener implements Listener {
 
     SilkSpawners plugin;
 
-    public SilkSpawnersBlockListener(SilkSpawners pl) {
-        plugin = pl;
+    public SilkSpawnersBlockListener(SilkSpawners plugin) {
+        this.plugin = plugin;
         
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -71,21 +71,21 @@ class SilkSpawnersBlockListener implements Listener {
         ItemStack dropItem;
         World world = player.getWorld();
 
-        if (silkTouch && player.hasPermission("silkspawners.silkdrop")) {
+        if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop")) {
             // Drop spawner
             dropItem = plugin.newSpawnerItem(creatureType);
             world.dropItemNaturally(block.getLocation(), dropItem);
             return;
         } 
 
-        if (player.hasPermission("silkspawners.eggdrop")) {
+        if (plugin.hasPermission(player, "silkspawners.eggdrop")) {
             // Drop egg
             dropItem = plugin.creature2Egg.get(creatureType);
             world.dropItemNaturally(block.getLocation(), dropItem);
         } 
 
         // TODO: disable all these by default!
-        if (player.hasPermission("silkspawners.xpdrop")) {
+        if (plugin.hasPermission(player, "silkspawners.xpdrop")) {
             ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
             // TODO: get working!
             orb.setExperience(50);  // TODO: must be configurable
@@ -182,6 +182,7 @@ public class SilkSpawners extends JavaPlugin {
     ConcurrentHashMap<String,CreatureType> name2Creature;
 
     short defaultEntityID;
+    boolean usePermissions;
 
     public void onEnable() {
         loadConfig();
@@ -194,6 +195,21 @@ public class SilkSpawners extends JavaPlugin {
         blockListener = new SilkSpawnersBlockListener(this);
 
         log.info("SilkSpawners enabled");
+    }
+
+    public boolean hasPermission(Player player, String node) {
+        if (usePermissions) {
+            return player.hasPermission(node);
+        } else {
+            if (node.equals("silkspawners.info") ||
+                node.equals("silkspawners.silkdrop") ||
+                node.equals("silkspawners.eggdrop") ||
+                node.equals("silkspawners.viewtype")) {
+                return true;
+            } else {
+                return player.isOp();
+            }
+        }
     }
 
     private void loadConfig() {
@@ -277,6 +293,8 @@ public class SilkSpawners extends JavaPlugin {
                 log.info("Invalid creature type: " + defaultCreatureString);
             }
         }
+
+        usePermissions = getConfig().getBoolean("usePermissions", false);
     }
 
     private void loadRecipes() {
@@ -342,7 +360,7 @@ public class SilkSpawners extends JavaPlugin {
 
         if (args.length == 0) {
             // Get spawner type
-            if (!player.hasPermission("silkspawners.viewtype")) {
+            if (!hasPermission(player, "silkspawners.viewtype")) {
                 sender.sendMessage("You do not have permission to view the spawner type");
                 return true;
             }
@@ -376,7 +394,7 @@ public class SilkSpawners extends JavaPlugin {
 
             if (block != null) {
                 // Set spawner type
-                if (!player.hasPermission("silkspawners.changetype")) {
+                if (!hasPermission(player, "silkspawners.changetype")) {
                     sender.sendMessage("You do not have permission to change spawners");
                     return true;
                 }
@@ -392,7 +410,7 @@ public class SilkSpawners extends JavaPlugin {
                 sender.sendMessage(getCreatureName(creatureType) + " spawner");
             } else {
                 // Get free spawner item in hand
-                if (!player.hasPermission("silkspawners.freeitem")) {
+                if (!hasPermission(player, "silkspawners.freeitem")) {
                     sender.sendMessage("You must be looking directly at a spawner to use this command");
                     return true;
                 }
@@ -486,8 +504,8 @@ public class SilkSpawners extends JavaPlugin {
         return 0;
     }
 
-    public static void informPlayer(Player player, String message) {
-        if (player.hasPermission("silkspawners.info")) {
+    public void informPlayer(Player player, String message) {
+        if (hasPermission(player, "silkspawners.info")) {
             player.sendMessage(message);
         }
     }
