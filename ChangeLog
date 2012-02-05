@@ -7,7 +7,9 @@
     * Add destroyDropEgg option to control dropping of eggs on destroy
     * Add destroyDropXP option to set level of XP drop on destroy (0 to disable)
     * Add destroyDropBars option to drop iron bars on destroy (0 to disable)
-    * Add recognizing 
+    * Add recognizing spawners picked up from creaturebox, tagged with Respiration enchantment
+        (SilkSpawners NOT compatible with creaturebox when both are installed simultaneously)
+    * New license (BSD)
 
 2012-01-23  0.3
     * Implemented workaround for BUKKIT-602, spawners are now craftable! (optional)
