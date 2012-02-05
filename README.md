@@ -83,8 +83,7 @@ SilkSpawners stores the entity ID of creature in two places within the mob spawn
 When a spawner block is broken, a spawner item drops with the appropriate entity ID stored,
 obtained from the creature spawner tile entity (CraftCreatureSpawner). 
 When a spawner block is placed, the entity ID is read from the item and the spawner creature
-type is set (also using CraftCreatureSpawner). 
-
+type is set (using the CreatureSpawner BlockState). 
 
 *For plugin developers*: if you want to interoperate with SilkSpawners' monster spawner items,
 use `entityID = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH)` or
