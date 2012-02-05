@@ -95,6 +95,8 @@ enchantment level storing the creature type [Entity ID](http://www.minecraftwiki
 SilkSpawners only changes the spawner type, it does not manage the spawning itself;
 the spawning algorithm remains up to Minecraft. Other plugins offer more control.
 
+If creaturebox is also installed, drops two spawners. Install either SilkSpawners or creaturebox, not both.
+
 In the inventory window, item description is "Monster Spawner" for all kinds of spawners. 
 Fixing this requires a client-side mod.
 

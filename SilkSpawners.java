@@ -517,9 +517,13 @@ public class SilkSpawners extends JavaPlugin {
 
         // Creaturebox compatibility
         short legacyID = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
-        id = legacyID2Eid.get(legacyID);
-        if (id != 0) {
-            return id;
+        // Bukkit API doesn't allow you tell if an enchantment is present vs. level 0 (=pigs),
+        // so ignore if level 0. This is a disadvantage of creaturebox's tagging system.
+        if (legacyID != 0) {
+            id = legacyID2Eid.get(legacyID);
+            if (id != 0) {
+                return id;
+            }
         }
 
         return 0;
