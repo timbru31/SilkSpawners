@@ -417,7 +417,11 @@ public class SilkSpawners extends JavaPlugin {
             } else {
                 // Get free spawner item in hand
                 if (!hasPermission(player, "silkspawners.freeitem")) {
-                    sender.sendMessage("You must be looking directly at a spawner to use this command");
+                    if (hasPermission(player, "silkspawners.viewtype")) {
+                        sender.sendMessage("You must be looking directly at a spawner to use this command");
+                    } else {
+                        sender.sendMessage("You do not have permission to use this command");
+                    }
                     return true;
                 }
 
