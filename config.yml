@@ -5,6 +5,12 @@ defaultCreature: null
 spawnerCommandReachDistance: 6
 workaroundBukkitBug602: true
 
+destroyDropEgg: true
+destroyDropXP: 0
+#destroyDropXP: 1000
+destroyDropBars: 0
+#destroyDropBars: 8
+
 # creatures: key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
 # legacyID is pre-1222 creaturebox(+other plugins) scheme, see order on http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
