@@ -147,9 +147,12 @@ class SilkSpawnersBlockListener implements Listener {
         CreatureSpawner spawner = (CreatureSpawner)bs;
 
         spawner.setCreatureType(creature);
-    }
 
+        bs.update();
+    }
 }
+
+//class SilkSpawnersSetCreatureTask implements Runnable
 
 public class SilkSpawners extends JavaPlugin {
     static Logger log = Logger.getLogger("Minecraft");
