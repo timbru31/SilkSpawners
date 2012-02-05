@@ -1,0 +1,17 @@
+0.4
+    * Update for 1.1-R3, working around ignored block update (= pigs) regression from 1.1-R1
+    * Change craftableSpawners default to false
+
+2012-01-23  0.3
+    * Implemented workaround for BUKKIT-602, spawners are now craftable! (optional)
+    * Show creature type when a free spawner item is obtained using /spawner
+    * Added more aliases, and copy configuration file to make changes easier
+    * Added minimum requirements check, to show an informative error on 1.0.1
+    * Documentation
+
+2012-01-22  0.2
+    * Added ability to put a free spawner item in your hand using /spawner [creature]
+    * Added silkspawners.freeitem permission node
+
+2012-01-22  0.1
+    * Initial pre-release for CraftBukkit 1.1 (tested on 1.1-R1-20120122.172420-8)
