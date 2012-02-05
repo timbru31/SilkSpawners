@@ -1,6 +1,6 @@
 name: SilkSpawners
 main: me.exphc.SilkSpawners.SilkSpawners
-version: 0.3
+version: 0.4
 commands:
     spawner:
         description: Change or view the monster spawner creature type
@@ -10,29 +10,26 @@ permissions:
         children:
             silkspawners.info: true
             silkspawners.silkdrop: true
-            silkspawners.eggdrop: true
+            silkspawners.destroydrop: true
             silkspawners.viewtype: true
             silkspawners.changetype: true
             silkspawners.freeitem: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
-        default: true
+        default: false
     silkspawners.silkdrop:
         description: Allows you to use silk touch to acquire mob spawner items
-        default: true
-    silkspawners.eggdrop:
-        description: Allows you to destroy mob spawners to acquire mob spawn eggs
-        default: true
-    silkspawners.xpdrop:
-        description: Allows you to destroy mob spawners to acquire experience points
-        default: true
+        default: false
+    silkspawners.destroydrop:
+        description: Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
+        default: false
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
-        default: true
+        default: false
     silkspawners.changetype:
         description: Allows you to change the spawner type using /spawner [creature]
-        default: op
+        default: false
     silkspawners.freeitem:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
-        default: op
+        default: false

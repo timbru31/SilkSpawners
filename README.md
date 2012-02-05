@@ -21,7 +21,7 @@ Features:
 
 
 ## Configuration
-usePermissions (false)
+usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
@@ -40,11 +40,20 @@ default creature will be used if the spawner is obtained using:
 
 spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
 
+destroyDropEgg (true) - Whether to give a spawn egg when spawner is destroyed.
+
+destroyDropXP (0) - Experience points to drop when spawner is destroyed.
+
+destroyDropBars (0) - Iron bars to drop when spawner is destroyed.
+
 creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
 [entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name.
 
 ## Permissions
-
+**Permission support is optional** and off by default. When turned off, the settings shown in parentheses 
+below are used, intended to allow for easy setup with minimal configuration. For more advanced setup, 
+set *usePermissions: true* in config.yml, and all permission nodes will be set to *false*, allowing for
+flexible configuration through your permission plugin as desired.
 
 silkspawners.info (true) -
 Allows you to see informative messages about the spawners as you place and break them

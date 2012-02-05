@@ -78,18 +78,24 @@ class SilkSpawnersBlockListener implements Listener {
             return;
         } 
 
-        if (plugin.hasPermission(player, "silkspawners.eggdrop")) {
-            // Drop egg
-            dropItem = plugin.creature2Egg.get(creatureType);
-            world.dropItemNaturally(block.getLocation(), dropItem);
-        } 
+        if (plugin.hasPermission(player, "silkspawners.destroydrop")) {
+            if (plugin.getConfig().getBoolean("destroyDropEgg")) {
+                // Drop egg
+                dropItem = plugin.creature2Egg.get(creatureType);
+                world.dropItemNaturally(block.getLocation(), dropItem);
+            }
 
-        // TODO: disable all these by default!
-        if (plugin.hasPermission(player, "silkspawners.xpdrop")) {
-            ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
-            // TODO: get working!
-            orb.setExperience(50);  // TODO: must be configurable
-        }
+            int addXP = plugin.getConfig().getInt("destroyDropXP");
+            if (addXP != 0) {
+                ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
+                orb.setExperience(addXP);
+            }
+
+            int dropBars = plugin.getConfig().getInt("destroyDropBars");
+            if (dropBars != 0) {
+                world.dropItem(block.getLocation(), new ItemStack(Material.IRON_FENCE, dropBars));
+            }
+        } 
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -203,7 +209,7 @@ public class SilkSpawners extends JavaPlugin {
         } else {
             if (node.equals("silkspawners.info") ||
                 node.equals("silkspawners.silkdrop") ||
-                node.equals("silkspawners.eggdrop") ||
+                node.equals("silkspawners.destroydrop") ||
                 node.equals("silkspawners.viewtype")) {
                 return true;
             } else {

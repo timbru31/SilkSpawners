@@ -1,6 +1,12 @@
-0.4
-    * Update for 1.1-R3, working around ignored block update (= pigs) regression from 1.1-R1
+2012-02-05  0.4
+    * Update for 1.1-R3, working around ignored block update (= pigs) CraftBukkit regression from 1.1-R1
     * Change craftableSpawners default to false
+    * Add usePermissions option, to disable use of permission system
+    * Change default permissions to 'false' when usePermissions is on
+    * Change silkspawners.eggdrop permission node to silkspawners.destroydrop to better reflect purpose
+    * Add destroyDropEgg option to control dropping of eggs on destroy
+    * Add destroyDropXP option to set level of XP drop on destroy (0 to disable)
+    * Add destroyDropBars option to drop iron bars on destroy (0 to disable)
 
 2012-01-23  0.3
     * Implemented workaround for BUKKIT-602, spawners are now craftable! (optional)
