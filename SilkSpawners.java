@@ -183,6 +183,8 @@ public class SilkSpawners extends JavaPlugin {
     ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
     ConcurrentHashMap<Short,CreatureType> eid2Creature;
     ConcurrentHashMap<CreatureType,Short> creature2Eid;
+    
+    static ConcurrentHashMap<Short,Short> legacyID2Eid;
 
     ConcurrentHashMap<CreatureType,String> creature2DisplayName;
     ConcurrentHashMap<String,CreatureType> name2Creature;
@@ -232,6 +234,8 @@ public class SilkSpawners extends JavaPlugin {
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
         creature2Eid = new ConcurrentHashMap<CreatureType,Short>();
+        
+        legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
         creature2DisplayName = new ConcurrentHashMap<CreatureType,String>();
         name2Creature = new ConcurrentHashMap<String,CreatureType>();
@@ -255,8 +259,8 @@ public class SilkSpawners extends JavaPlugin {
             eid2Creature.put(new Short(entityID), creatureType);
             creature2Eid.put(creatureType, new Short(entityID));
 
-            int legacyID = getConfig().getInt("creatures."+creatureString+".legacyID");
-            // TODO: store?
+            short legacyID = (short)getConfig().getInt("creatures."+creatureString+".legacyID");
+            legacyID2Eid.put(new Short(legacyID), new Short(entityID));
 
 
             // In-game name for user display, and other recognized names for user input lookup
@@ -507,6 +511,13 @@ public class SilkSpawners extends JavaPlugin {
         }*/
 
         id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
+        if (id != 0) {
+            return id;
+        }
+
+        // Creaturebox compatibility
+        short legacyID = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
+        id = legacyID2Eid.get(legacyID);
         if (id != 0) {
             return id;
         }
