@@ -126,6 +126,7 @@ class SilkSpawnersBlockListener implements Listener {
         }
         plugin.informPlayer(player, plugin.getCreatureName(creature)+" spawner placed");
 
+        /* // works in 1.1-R1
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
         if (spawner == null) {
             plugin.informPlayer(player, "Failed to find placed spawner, creature not set");
@@ -133,6 +134,19 @@ class SilkSpawnersBlockListener implements Listener {
         }
         spawner.setCreatureType(creature);
         // TODO: what happened? in 1.1-R3, doesn't set??
+        */
+
+       
+        // even this doesn't work in 1.1-R3
+        BlockState bs = blockPlaced.getState(); // yes, it is bs
+        if (!(bs instanceof CreatureSpawner)) {
+            plugin.informPlayer(player, "Failed to get block state, creature not set");
+            return;
+        }
+
+        CreatureSpawner spawner = (CreatureSpawner)bs;
+
+        spawner.setCreatureType(creature);
     }
 
 }
