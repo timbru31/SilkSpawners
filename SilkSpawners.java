@@ -78,6 +78,10 @@ class SilkSpawnersBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(final BlockBreakEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
         Block block = event.getBlock();
 
         if (block.getType() != Material.MOB_SPAWNER) {
@@ -127,6 +131,10 @@ class SilkSpawnersBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockPlace(final BlockPlaceEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
         Block blockPlaced = event.getBlockPlaced();
 
         if (blockPlaced.getType() != Material.MOB_SPAWNER) {

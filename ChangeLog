@@ -1,3 +1,6 @@
+2012-02-07  0.5
+    * Ignore cancelled events
+
 2012-02-05  0.4
     * Update for 1.1-R3, working around ignored block update (= pigs) CraftBukkit regression from 1.1-R1
     * Change craftableSpawners default to false
