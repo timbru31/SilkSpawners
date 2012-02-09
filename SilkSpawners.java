@@ -256,13 +256,6 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadConfig() {
-        // Minimum version check
-        try {
-            Material.valueOf("MONSTER_EGG");
-        } catch (Exception e) {
-            log.severe("SilkSpawners failed to find MONSTER_EGG, do you have CraftBukkit 1.1+?");
-        }
-
         getConfig().options().copyDefaults(true);
         saveConfig();
 
@@ -288,7 +281,10 @@ public class SilkSpawners extends JavaPlugin {
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
-            ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
+            // Some modded versions of craftbukkit-1.1-R3 lack Material.MONSTER_EGG, so hardcode the ID
+            final int spawnEggID = 383;    // http://www.minecraftwiki.net/wiki/Data_values
+            //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
+            ItemStack eggItem = new ItemStack(spawnEggID, 1, entityID);
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
@@ -343,6 +339,13 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadRecipes() {
+        try {
+            Material.valueOf("MONSTER_EGG");
+        } catch (NoSuchFieldError e) {
+            log.info("Your Bukkit is missing Material.MONSTER_EGG; disabling craftableSpawners");
+            return;
+        }
+
         for (ItemStack egg: creature2Egg.values()) {
             short entityID = egg.getDurability();
             CreatureType creatureType = eid2Creature.get(entityID);
@@ -352,6 +355,8 @@ public class SilkSpawners extends JavaPlugin {
 
             // TODO: ShapedRecipe, box
             recipe.addIngredient(8, Material.IRON_FENCE);
+            // Bukkit addIngredient() only accepts Material, not type id, so if MONSTER_EGG isn't
+            // available we can't add it
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
             if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
