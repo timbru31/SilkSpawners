@@ -178,28 +178,34 @@ class SilkSpawnersBlockListener implements Listener {
             return;
         }
 
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            ItemStack item = event.getItem();
+        ItemStack item = event.getItem();
+        Block block = event.getClickedBlock();
+        Player player = event.getPlayer();
 
-            // Clicked spawner with monster egg to change type
-            if (item != null && item.getTypeId() == plugin.SPAWN_EGG_ID) {
-                Block block = event.getClickedBlock();
-                Player player = event.getPlayer();
+        // Clicked spawner with monster egg to change type
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
+            item != null && item.getTypeId() == plugin.SPAWN_EGG_ID &&
+            block != null && block.getType() == Material.MOB_SPAWNER) {
 
-                short entityID = item.getDurability();
-                CreatureType creatureType = plugin.eid2Creature.get(entityID);
+            if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
+                player.sendMessage("You do not have permission to change spawners with spawn eggs");
+                return;
+            }
 
-                if (creatureType == null) {
-                    player.sendMessage("Unrecognized creature in spawn egg ("+entityID+")");
-                    return;
-                }
 
-                plugin.setSpawnerType(block, creatureType, player);
+            short entityID = item.getDurability();
+            CreatureType creatureType = plugin.eid2Creature.get(entityID);
 
-                // Consume egg
-                if (plugin.getConfig().getBoolean("consumeEgg", true)) {
-                    player.getInventory().removeItem(new ItemStack(plugin.SPAWN_EGG_ID, 1, entityID));
-                }
+            if (creatureType == null) {
+                player.sendMessage("Unrecognized creature in spawn egg ("+entityID+")");
+                return;
+            }
+
+            plugin.setSpawnerType(block, creatureType, player);
+
+            // Consume egg
+            if (plugin.getConfig().getBoolean("consumeEgg", true)) {
+                player.getInventory().removeItem(new ItemStack(plugin.SPAWN_EGG_ID, 1, entityID));
             }
         }
     }
@@ -374,7 +380,7 @@ public class SilkSpawners extends JavaPlugin {
     private void loadRecipes() {
         try {
             Material.valueOf("MONSTER_EGG");
-        } catch (NoSuchFieldError e) {
+        } catch (Exception e) {
             log.info("Your Bukkit is missing Material.MONSTER_EGG; disabling craftableSpawners");
             return;
         }
@@ -477,6 +483,11 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             if (block != null) {
+                if (!hasPermission(player, "silkspawners.changetype")) {
+                    player.sendMessage("You do not have permission to change spawners with /spawner");
+                    return true;
+                }
+
                 setSpawnerType(block, creatureType, player);
             } else {
                 // Get free spawner item in hand
@@ -505,11 +516,6 @@ public class SilkSpawners extends JavaPlugin {
 
     // Set spawner type from user
     public void setSpawnerType(Block block, CreatureType creatureType, Player player) {
-        if (!hasPermission(player, "silkspawners.changetype")) {
-            player.sendMessage("You do not have permission to change spawners");
-            return;
-        }
-
         // TODO: use Bukkit CreatureSpawner, get block state
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
         if (spawner == null) {
