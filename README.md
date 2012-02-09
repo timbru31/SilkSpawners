@@ -3,7 +3,7 @@ SilkSpawners - pick up and move monster spawners using silk touch
 Ever wanted to move a mob spawner? Now you can, using tools with the
 "silk touch" enchantment. 
 
-*Update 2012/02/05*: SilkSpawners 0.4 beta released for CraftBukkit 1.1-R3! 
+*Update 2012/02/08*: SilkSpawners 0.5 released for CraftBukkit 1.1-R3! 
 
 Features:
 
@@ -25,7 +25,7 @@ Features:
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
-consumeEgg (true) - Whether to consume spawn eggs used to change spawners.
+consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
