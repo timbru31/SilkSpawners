@@ -171,6 +171,35 @@ class SilkSpawnersBlockListener implements Listener {
         // TODO: file or find bug about this, get it fixed so can remove this lame workaround
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(creature, blockPlaced, plugin, player), 0);
     }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            ItemStack item = event.getItem();
+
+            // Click spawner with monster egg to change type
+            if (item != null && item.getTypeId() == plugin.SPAWN_EGG_ID) {
+                Block block = event.getClickedBlock();
+                Player player = event.getPlayer();
+
+                short entityID = item.getDurability();
+                CreatureType creatureType = plugin.eid2Creature.get(entityID);
+
+                if (creatureType == null) {
+                    player.sendMessage("Unrecognized creature in spawn egg ("+entityID+")");
+                    return;
+                }
+
+                plugin.setSpawnerType(block, creatureType, player);
+
+                // TODO: consume egg!
+            }
+        }
+    }
 }
 
 class SilkSpawnersSetCreatureTask implements Runnable {
@@ -227,6 +256,9 @@ public class SilkSpawners extends JavaPlugin {
     short defaultEntityID;
     boolean usePermissions;
 
+    // Some modded versions of craftbukkit-1.1-R3 lack Material.MONSTER_EGG, so hardcode the ID
+    final static int SPAWN_EGG_ID = 383;    // http://www.minecraftwiki.net/wiki/Data_values
+
     public void onEnable() {
         loadConfig();
 
@@ -281,10 +313,8 @@ public class SilkSpawners extends JavaPlugin {
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
-            // Some modded versions of craftbukkit-1.1-R3 lack Material.MONSTER_EGG, so hardcode the ID
-            final int spawnEggID = 383;    // http://www.minecraftwiki.net/wiki/Data_values
             //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
-            ItemStack eggItem = new ItemStack(spawnEggID, 1, entityID);
+            ItemStack eggItem = new ItemStack(SPAWN_EGG_ID, 1, entityID);
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
@@ -436,6 +466,7 @@ public class SilkSpawners extends JavaPlugin {
             Block block = getSpawnerFacing(player);
 
             String creatureString = args[0];
+
             CreatureType creatureType = name2Creature.get(creatureString);
             if (creatureType == null) {
                 sender.sendMessage("Unrecognized creature "+creatureString);
@@ -443,21 +474,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             if (block != null) {
-                // Set spawner type
-                if (!hasPermission(player, "silkspawners.changetype")) {
-                    sender.sendMessage("You do not have permission to change spawners");
-                    return true;
-                }
-
-
-                CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
-                if (spawner == null) {
-                    sender.sendMessage("Failed to find spawner, creature not set");
-                    return true;
-                }
-                spawner.setCreatureType(creatureType); 
-
-                sender.sendMessage(getCreatureName(creatureType) + " spawner");
+                setSpawnerType(block, creatureType, player);
             } else {
                 // Get free spawner item in hand
                 if (!hasPermission(player, "silkspawners.freeitem")) {
@@ -481,6 +498,24 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         return true;
+    }
+
+    // Set spawner type from user
+    public void setSpawnerType(Block block, CreatureType creatureType, Player player) {
+        if (!hasPermission(player, "silkspawners.changetype")) {
+            player.sendMessage("You do not have permission to change spawners");
+            return;
+        }
+
+        // TODO: use Bukkit CreatureSpawner, get block state
+        CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
+        if (spawner == null) {
+            player.sendMessage("Failed to find spawner, creature not set");
+            return;
+        }
+        spawner.setCreatureType(creatureType); 
+
+        player.sendMessage(getCreatureName(creatureType) + " spawner");
     }
 
     // Return the spawner block the player is looking at, or null if isn't
