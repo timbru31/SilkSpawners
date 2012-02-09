@@ -17,6 +17,8 @@ Features:
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Spawners are craftable using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
 [source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) - *disabled by default, see below to enable*
+* Left-click spawner with spawn egg to change type (optional, ops only by default)
+* Changing spawner type with spawn egg consumes egg (can be turned off)
 * Optional permissions support
 
 
@@ -71,6 +73,9 @@ Allows you to view the spawner type using /spawner
 
 silkspawners.changetype (op) -
 Allows you to change the spawner type using /spawner [creature]
+
+silkspawners.changetypewithegg (op) -
+Allows you to change the spawner type by left-clicking with a spawn egg
 
 silkspawners.freeitem (op) -
 Allows you to get spawner items in your hand for free using /spawner [creature]

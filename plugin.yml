@@ -15,6 +15,7 @@ permissions:
             silkspawners.destroydrop: true
             silkspawners.viewtype: true
             silkspawners.changetype: true
+            silkspawners.changetypewithegg: true
             silkspawners.freeitem: true
         default: false
     silkspawners.info:
@@ -31,6 +32,9 @@ permissions:
         default: false
     silkspawners.changetype:
         description: Allows you to change the spawner type using /spawner [creature]
+        default: false
+    silkspawners.changetypewithegg:
+        description: Allows you to change the spawner type by left-clicking with a spawn egg
         default: false
     silkspawners.freeitem:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
