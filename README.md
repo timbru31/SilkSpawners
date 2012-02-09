@@ -23,6 +23,8 @@ Features:
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
+consumeEgg (true) - Whether to consume spawn eggs used to change spawners.
+
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
 workaroundBukkitBug602 (true): Workaround 

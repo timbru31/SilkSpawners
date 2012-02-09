@@ -1,9 +1,10 @@
 
 2012-02-08  0.5
+    * Add clicking spawner with spawn egg to change type (by default, ops only)
+    * Add option to consume spawn egg when clicking spawner to change type
     * Compatibility with modded craftbukkits missing Material.MONSTER_EGG
     (craftableSpawners will be disabled, but otherwise everything should work,
     including spawn egg drops - please report any problems)
-    * 
 
 2012-02-07  0.4.1
     * Ignore cancelled events

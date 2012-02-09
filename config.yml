@@ -1,5 +1,6 @@
 # See documentation at http://dev.bukkit.org/server-mods/silkspawners/
 craftableSpawners: false
+consumeEgg: true
 usePermissions: false
 defaultCreature: null
 spawnerCommandReachDistance: 6
