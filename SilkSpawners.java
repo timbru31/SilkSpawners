@@ -181,7 +181,7 @@ class SilkSpawnersBlockListener implements Listener {
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
             ItemStack item = event.getItem();
 
-            // Click spawner with monster egg to change type
+            // Clicked spawner with monster egg to change type
             if (item != null && item.getTypeId() == plugin.SPAWN_EGG_ID) {
                 Block block = event.getClickedBlock();
                 Player player = event.getPlayer();
@@ -196,7 +196,10 @@ class SilkSpawnersBlockListener implements Listener {
 
                 plugin.setSpawnerType(block, creatureType, player);
 
-                // TODO: consume egg!
+                // Consume egg
+                if (plugin.getConfig().getBoolean("consumeEgg", true)) {
+                    player.getInventory().removeItem(new ItemStack(plugin.SPAWN_EGG_ID, 1, entityID));
+                }
             }
         }
     }
