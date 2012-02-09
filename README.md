@@ -117,4 +117,4 @@ Other relevant plugins:
 * [SilkierTouch](http://dev.bukkit.org/server-mods/silkiertouch/)
 * [ChangeSilkTouch](http://dev.bukkit.org/server-mods/changesilktouch/)
 * [felega.block](http://forums.bukkit.org/threads/multiple-felegas-plugin-pile.54916/)
-
+* [SuperSimpleSpawners](http://dev.bukkit.org/server-mods/supersimplespawners/)
