@@ -205,7 +205,18 @@ class SilkSpawnersBlockListener implements Listener {
 
             // Consume egg
             if (plugin.getConfig().getBoolean("consumeEgg", true)) {
-                player.getInventory().removeItem(new ItemStack(plugin.SPAWN_EGG_ID, 1, entityID));
+                PlayerInventory inventory = player.getInventory();
+                int slot = inventory.getHeldItemSlot();
+
+                ItemStack eggs = inventory.getItem(slot);
+
+                if (eggs.getAmount() == 1) {
+                    // Common case.. one egg, used up
+                    inventory.clear(slot);
+                } else {
+                    // Cannot legitimately get >1 egg per slot, but should support it regardless
+                    inventory.setItem(slot, new ItemStack(plugin.SPAWN_EGG_ID, eggs.getAmount() - 1, entityID));
+                }
             }
         }
     }
