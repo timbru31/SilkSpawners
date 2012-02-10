@@ -310,6 +310,7 @@ public class SilkSpawners extends JavaPlugin {
     private void loadConfig() {
         getConfig().options().copyDefaults(true);
         saveConfig();
+        reloadConfig();
 
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
         eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
