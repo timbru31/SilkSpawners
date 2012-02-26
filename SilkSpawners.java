@@ -460,35 +460,7 @@ public class SilkSpawners extends JavaPlugin {
             // available we can't add it
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
-            if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
-                // Workaround Bukkit bug:
-                // https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output
-                // CraftBukkit/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-                ArrayList<MaterialData> ingred = recipe.getIngredientList();
-                Object[] data = new Object[ingred.size()];
-                int i = 0;
-                for (MaterialData mdata : ingred) {
-                    int id = mdata.getItemTypeId();
-                    byte dmg = mdata.getData();
-                    data[i] = new net.minecraft.server.ItemStack(id, 1, dmg);
-                    i++;
-                }
-
-                // Convert Bukkit ItemStack to net.minecraft.server.ItemStack
-                int id = recipe.getResult().getTypeId();
-                int amount = recipe.getResult().getAmount();
-                short durability = recipe.getResult().getDurability();
-                Map<Enchantment, Integer> enchantments = recipe.getResult().getEnchantments();
-                net.minecraft.server.ItemStack result = new net.minecraft.server.ItemStack(id, amount, durability);
-                for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-                    result.addEnchantment(CraftEnchantment.getRaw(entry.getKey()), entry.getValue().intValue());
-                }
-
-                CraftingManager.getInstance().registerShapelessRecipe(result, data);
-
-            } else {
-                Bukkit.getServer().addRecipe(recipe);
-            }
+            Bukkit.getServer().addRecipe(recipe);
         }
     }
 

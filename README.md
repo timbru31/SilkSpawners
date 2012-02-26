@@ -29,9 +29,6 @@ consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or ot
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
-workaroundBukkitBug602 (true): Workaround 
-[BUKKIT-602](https://bukkit.atlassian.net/browse/BUKKIT-602#Enchantments_lost_on_crafting_recipe_output) for crafting spawners (keep enabled until fixed).
-
 defaultCreature (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
 
 All spawner items obtained using SilkSpawners will have the creature type stored, but the
