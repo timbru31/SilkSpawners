@@ -1,8 +1,9 @@
-X   1.0
+2012-02-26  1.0
     * Change default destroyDropEgg to false in config.yml
     * Change command to /silkspawners, add /spawner and /ss aliases
     * Preserve comments in config.yml
     * Remove workaround for BUKKIT-602 since its fixed in 1.1-R4
+    * Remove workaround for Material.MONSTER_EGG since its fixed in 1.1-R4 ModLoaderMP 1.1r3
     * Remove dependence on CreatureType 
     * Add /ss all to list all creature types
     * Add /ss [creature]egg to get a free spawn egg item, as opposed to a spawner box
@@ -19,7 +20,6 @@ X   1.0
     * Compatibility with modded craftbukkits missing Material.MONSTER_EGG [1.1-R3 ModLoaderMP 1.1r2]
       (craftableSpawners will be disabled, but otherwise everything should work,
       including spawn egg drops - please report any problems)
-      Note: this problem has been fixed in 1.1-R4 ModLoaderMP 1.1r3, workaround no longer needed
 
 2012-02-07  0.4.1
     * Ignore cancelled events
