@@ -123,6 +123,8 @@ creatures:
     
     # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
+    # These don't actually work - at least in 1.1-R4, CreatureType isn't extended by the mod so it can't find them :(
+    # TODO: report bug or fix it? 1.1-R5 will bring EntityType replacing CreatureType, should retest after release
     Buck:
         entityID: 166
         aliases: ['maledeer', 'mdeer']
