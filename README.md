@@ -22,6 +22,12 @@ Features:
 * Optional permissions support
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 
+## Usage
+Acquire a tool with Silk Touch, break a mob spawner using said tool, place the spawner. Your spawner has now been moved. 
+
+Many additional features can be enabled if desired, see below.
+
+[Forum thread](http://forums.bukkit.org/threads/mech-fix-info-admn-silkspawners-v1-0-harvest-mob-spawners-1-1-r4.59077/)
 
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
