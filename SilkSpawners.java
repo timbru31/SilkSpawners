@@ -273,22 +273,6 @@ public class SilkSpawners extends JavaPlugin {
     public void onEnable() {
         loadConfig();
 
-        if (getConfig().getBoolean("craftableSpawners", true)) {
-            loadRecipes();
-        }
-
-        try {
-            tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
-            tileField.setAccessible(true);
-
-            mobIDField = net.minecraft.server.TileEntityMobSpawner.class.getDeclaredField("mobName");  // MCP "mobID"
-            mobIDField.setAccessible(true);
-        } catch (Exception e) {
-            log.info("Failed to reflect, falling back to wrapper methods: " + e);
-            tileField = null;
-            mobIDField = null;
-        }
-
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
 
@@ -360,6 +344,8 @@ public class SilkSpawners extends JavaPlugin {
         }
         reloadConfig();
 
+        boolean verbose = getConfig().getBoolean("verboseConfig", true);
+
         legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
@@ -371,6 +357,13 @@ public class SilkSpawners extends JavaPlugin {
         MemorySection creatureSection = (MemorySection)getConfig().get("creatures");
     
         for (String creatureString: creatureSection.getKeys(false)) {
+            if (!getConfig().getBoolean("useExtraMobs", false) && !isRecognizedMob(creatureString)) {
+                if (verbose) { 
+                    log.info("Skipping unrecognized mob "+creatureString+", set useExtraMob: true to enable");
+                }
+                continue;
+            }
+
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             // TODO: there is in 1.1-R5! see getCreatureType(), and EntityType - but check if it works with mods!
             // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
@@ -420,23 +413,46 @@ public class SilkSpawners extends JavaPlugin {
                 ItemStack defaultItemStack = newEggItem(defaultEid);
                 if (defaultItemStack != null) {
                     defaultEntityID = defaultItemStack.getDurability();
-                    log.info("Default monster spawner set to "+eid2DisplayName.get(defaultEid));
+                    if (verbose) { 
+                        log.info("Default monster spawner set to "+eid2DisplayName.get(defaultEid));
+                    }
                 } else {
-                    log.info("Unable to lookup name of " + defaultCreatureString);
+                    log.warning("Unable to lookup name of " + defaultCreatureString+", default monster spawner not set");
                 }
             } else {
-                log.info("Invalid creature type: " + defaultCreatureString);
+                log.warning("Invalid creature type: " + defaultCreatureString+", default monster spawner not set");
             }
         }
 
         usePermissions = getConfig().getBoolean("usePermissions", false);
+
+        if (getConfig().getBoolean("craftableSpawners", true)) {
+            loadRecipes();
+        }
+
+        if (getConfig().getBoolean("useReflection", true)) {
+            try {
+                tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+                tileField.setAccessible(true);
+
+                mobIDField = net.minecraft.server.TileEntityMobSpawner.class.getDeclaredField("mobName");  // MCP "mobID"
+                mobIDField.setAccessible(true);
+            } catch (Exception e) {
+                log.warning("Failed to reflect, falling back to wrapper methods: " + e);
+                tileField = null;
+                mobIDField = null;
+            }
+        } else {
+            tileField = null;
+            mobIDField = null;
+        }
     }
 
     private void loadRecipes() {
         try {
             Material.valueOf("MONSTER_EGG");
         } catch (Exception e) {
-            log.info("Your Bukkit is missing Material.MONSTER_EGG; disabling craftableSpawners");
+            log.warning("Your Bukkit is missing Material.MONSTER_EGG; disabling craftableSpawners");
             return;
         }
 
@@ -556,8 +572,6 @@ public class SilkSpawners extends JavaPlugin {
             informPlayer(player, "Failed to set type: " + e);
         }
 
-        //spawner.setSpawnedType(EntityType.fromId(entityID)); // TODO: 1.1-R5
-
         player.sendMessage(getCreatureName(entityID) + " spawner");
     }
 
@@ -657,6 +671,13 @@ public class SilkSpawners extends JavaPlugin {
         if (hasPermission(player, "silkspawners.info")) {
             player.sendMessage(message);
         }
+    }
+
+    // Return whether mob is recognized by Bukkit's wrappers
+    public boolean isRecognizedMob(String mobID) {
+        // TODO: 1.1-R5 
+        //return EntityType.fromName(mobID) != null;
+        return CreatureType.fromName(mobID) != null;
     }
 
     // Better methods for setting/getting spawner type

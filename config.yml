@@ -14,6 +14,9 @@ destroyDropXP: 0
 destroyDropBars: 0
 #destroyDropBars: 8
 
+verboseConfig: false
+useExtraMobs: false
+
 # creatures: key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
 # legacyID is pre-1222 creaturebox(+other plugins) scheme, see order on http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
@@ -123,8 +126,6 @@ creatures:
     
     # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
-    # These don't actually work - at least in 1.1-R4, CreatureType isn't extended by the mod so it can't find them :(
-    # TODO: report bug or fix it? 1.1-R5 will bring EntityType replacing CreatureType, should retest after release
     Buck:
         entityID: 166
         aliases: ['maledeer', 'mdeer']
@@ -143,9 +144,8 @@ creatures:
     Boar:
         entityID: 171
         aliases: ['wildpig']
-    # no 173?
     Dingo:
-        entityID: 173
+        entityID: 173       # no 172?
     Magicman:
         entityID: 174
         aliases: ['magician']

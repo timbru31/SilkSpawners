@@ -36,6 +36,12 @@ minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to har
 
 consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 
+useReflection (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
+
+useExtraMobs (false) - Load custom mobs such as those from the [Natural Selection](http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/) mod. The extra mobs must be specified in the 'creatures' section. 
+
+verboseConfig (false) - Log verbose configuration information on load.
+
 spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
