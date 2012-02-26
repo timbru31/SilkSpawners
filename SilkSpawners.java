@@ -675,10 +675,10 @@ public class SilkSpawners extends JavaPlugin {
         if (tileField != null && mobIDField != null) {
             try {
                 net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner)tileField.get(spawner);
-                log.info("tile ="+tile);
+                //log.info("tile ="+tile);
 
                 String mobID = (String)mobIDField.get(tile);
-                log.info("mobID ="+mobID);
+                //log.info("mobID ="+mobID);
 
                 return mobID2Eid.get(mobID);
             } catch (Exception e) {
@@ -706,9 +706,10 @@ public class SilkSpawners extends JavaPlugin {
                 String mobID = eid2MobID.get(entityID);
 
                 net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner)tileField.get(spawner);
-                log.info("tile ="+tile);
+                //log.info("tile ="+tile);
 
                 tile.a(mobID);      // MCP setMobID
+                return;
             } catch (Exception e) {
                 log.info("Reflection failed: " + e);
                 // fall through

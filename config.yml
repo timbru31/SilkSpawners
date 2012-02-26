@@ -133,16 +133,20 @@ creatures:
         aliases: ['femaledeer', 'fdeer', 'deer']
     Tom:
         entityID: 168
+        aliases: ['maleturkey', 'mturkey']
     Hen:
         entityID: 169
+        aliases: ['femaleturkey', 'fturkey', 'turkey']
     Grizzly:
         entityID: 170
         aliases: ['bear']
     Boar:
         entityID: 171
+        aliases: ['wildpig']
     # no 173?
     Dingo:
         entityID: 173
     Magicman:
         entityID: 174
+        aliases: ['magician']
 
