@@ -6,6 +6,7 @@ X   1.0
     * Remove dependence on CreatureType 
     * Add /ss [creature]egg to get a free spawn egg item, as opposed to a spawner
     * Add silkspawners.freeitemegg permission
+    * Add minSilkTouchLevel config option, to control Silk Touch enchantment requirement
     * Add support for custom mobs, including those from Natural Selection
     * Compile for CraftBukkit 1.1-R4
 
