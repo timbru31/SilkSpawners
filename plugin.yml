@@ -4,7 +4,8 @@ version: 1.0
 url: http://dev.bukkit.org/server-mods/silkspawners/
 description: pick up and move monster spawners using silk touch
 commands:
-    spawner:
+    silkspawners:
+        aliases: [silkspawner, ss, spawner]
         description: Change or view the monster spawner creature type
         usage: /<command> [creature]
 permissions:

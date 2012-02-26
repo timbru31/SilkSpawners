@@ -25,7 +25,18 @@ Features:
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
+destroyDropEgg (false) - Whether to give a spawn egg when spawner is destroyed.
+
+destroyDropXP (0) - Experience points to drop when spawner is destroyed.
+
+destroyDropBars (0) - Iron bars to drop when spawner is destroyed.
+
+minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
+ but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
+
 consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
+
+spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
@@ -38,14 +49,6 @@ default creature will be used if the spawner is obtained using:
 * 1.9 beta pre-release 6 silk touch
 * other plugins not knowledgeable of SilkSpawners' conventions
 
-
-spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
-
-destroyDropEgg (true) - Whether to give a spawn egg when spawner is destroyed.
-
-destroyDropXP (0) - Experience points to drop when spawner is destroyed.
-
-destroyDropBars (0) - Iron bars to drop when spawner is destroyed.
 
 creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
 [entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name.
@@ -100,11 +103,14 @@ the spawning algorithm remains up to Minecraft. Other plugins offer more control
 
 If creaturebox is also installed, drops two spawners. Install either SilkSpawners or creaturebox, not both.
 
+Not Enough Items shows all spawners as "Pig", because it does not recognize how SilkSpawners stores
+the spawner creature type.
+
 In the inventory window, item description is "Monster Spawner" for all kinds of spawners. 
 Fixing this requires a client-side mod.
 
 ## See Also
-Want to make Silk Touch yet more useful? Also try [Sublimation](http://dev.bukkit.org/server-mods/sublimation/).
+Want to make Silk Touch yet more useful? Also try Pickaxe + Silk Touch II from [EnchantMore](http://dev.bukkit.org/server-mods/enchantmore/).
 
 Other relevant plugins:
 
