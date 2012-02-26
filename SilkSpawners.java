@@ -514,6 +514,12 @@ public class SilkSpawners extends JavaPlugin {
             Block block = getSpawnerFacing(player);
 
             String creatureString = args[0];
+            if (creatureString.equalsIgnoreCase("all")) {
+                // Get list of all creatures..anyone can do this
+                showAllCreatures(player);
+                return true;
+            }
+
             boolean isEgg = false;
 
             if (creatureString.endsWith("egg")) {
@@ -665,6 +671,16 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         return 0;
+    }
+
+    public void showAllCreatures(Player player) {
+        String message = "";
+        for (String displayName: eid2DisplayName.values()) {
+            displayName = displayName.replaceAll(" ", "");
+            message += displayName + ", ";
+        }
+        message = message.substring(0, message.length() - ", ".length());
+        player.sendMessage(message);
     }
 
     public void informPlayer(Player player, String message) {

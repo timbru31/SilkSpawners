@@ -1,25 +1,24 @@
-SilkSpawners - pick up and move monster spawners using silk touch
+SilkSpawners - harvest mob spawners
 
-Ever wanted to move a mob spawner? Now you can, using tools with the
-"silk touch" enchantment. 
-
-*Update 2012/02/08*: SilkSpawners 0.5 released for CraftBukkit 1.1-R3! 
+Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
+monster spawners using tools with the "silk touch" enchantment.
 
 Features:
 
 * Spawner retains creature type
 * Works on legit spawners
-* If a spawner is mined _without_ silk touch, drops spawner eggs / XP / iron bars instead (optional)
-* Show creature type when spawners are placed or broken
-* /spawner command to view spawner you are looking at 
-* /spawner [creature] to change an existing spawner in the world, if in your crosshairs
-* /spawner [creature] to put a new spawner item in your empty hand
-* Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
-* Spawners are craftable using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
-[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) - *disabled by default, see below to enable*
-* Left-click spawner with spawn egg to change type (optional, ops only by default)
-* Changing spawner type with spawn egg consumes egg (can be turned off)
+* Optional showing of creature type when spawners are placed or broken
+* Optional /spawner command to view creature type of spawner you are looking at 
+* Optional /spawner [creature] to change an existing spawner in the world, if in your crosshairs
+* Optional /spawner [creature] to put a new spawner item in your empty hand
+* Optional /spawner [creature]egg to put a new spawn egg in your empty hand
+* Optional crafting of spawners using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
+[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) 
+* Optional left-click spawner with spawn egg to change type (ops only by default)
+* Optional changing spawner type with spawn egg (either consuming or not consuming egg)
+* Optional support for custom mobs including those from the [Natural Selection](http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/) mod
 * Optional permissions support
+* Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 
 
 ## Configuration
@@ -38,7 +37,7 @@ consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or ot
 
 useReflection (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
 
-useExtraMobs (false) - Load custom mobs such as those from the [Natural Selection](http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/) mod. The extra mobs must be specified in the 'creatures' section. 
+useExtraMobs (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
 
 verboseConfig (false) - Log verbose configuration information on load.
 

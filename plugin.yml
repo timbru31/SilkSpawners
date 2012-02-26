@@ -7,7 +7,7 @@ commands:
     silkspawners:
         aliases: [silkspawner, ss, spawner]
         description: Change or view the monster spawner creature type
-        usage: /<command> [creature]
+        usage: /<command> [creature]|[creature]egg|all
 permissions:
     silkspawners.*:
         children:
