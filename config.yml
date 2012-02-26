@@ -117,6 +117,30 @@ creatures:
         legacyID: 23
         aliases: ['npc', 'v']
     #Monster:
-    #   no entityID?
+    #   no entityID - this isn't real, and was removed in 1.1-R4
     #   aliases: ['human']
     #   legacyID: 12
+    
+    # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
+    # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
+    Buck:
+        entityID: 166
+        aliases: ['maledeer', 'mdeer']
+    Doe:
+        entityID: 167
+        aliases: ['femaledeer', 'fdeer', 'deer']
+    Tom:
+        entityID: 168
+    Hen:
+        entityID: 169
+    Grizzly:
+        entityID: 170
+        aliases: ['bear']
+    Boar:
+        entityID: 171
+    # no 173?
+    Dingo:
+        entityID: 173
+    Magicman:
+        entityID: 174
+

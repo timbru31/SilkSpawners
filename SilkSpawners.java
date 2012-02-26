@@ -391,15 +391,22 @@ public class SilkSpawners extends JavaPlugin {
     
         for (String creatureString: creatureSection.getKeys(false)) {
             CreatureType creatureType = CreatureType.fromName(creatureString);
-            if (creatureType == null) {
-                log.info("Invalid creature type: " + creatureString);
-                continue;
-            }
 
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             // TODO: there is in 1.1-R5! see getCreatureType(), and EntityType - but check if it works with mods!
             // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
+
+            if (creatureType == null) {
+                log.info("Invalid creature type by name: " + creatureString);
+
+                creatureType = CreatureType.fromId(entityID);
+                if (creatureType == null) {
+                    log.info("Invalid creature type by ID: " + entityID + ", ignored");
+                    continue;
+                }
+            }
+
 
             //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
             ItemStack eggItem = new ItemStack(SPAWN_EGG_ID, 1, entityID);
