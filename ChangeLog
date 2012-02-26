@@ -5,6 +5,7 @@ X   1.0
     * Remove workaround for BUKKIT-602 since its fixed in 1.1-R4
     * Add /ss [creature]egg to get a free spawn egg item, as opposed to a spawner
     * Add silkspawners.freeitemegg permission
+    * Reduce dependence on CreatureType 
     * Compile for CraftBukkit 1.1-R4
 
 2012-02-08  0.5
