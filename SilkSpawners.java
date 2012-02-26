@@ -536,6 +536,12 @@ public class SilkSpawners extends JavaPlugin {
             Block block = getSpawnerFacing(player);
 
             String creatureString = args[0];
+            boolean isEgg = false;
+
+            if (creatureString.endsWith("egg")) {
+                isEgg = true;
+                creatureString = creatureString.replaceFirst("egg$", "");
+            }
 
             CreatureType creatureType = name2Creature.get(creatureString);
             if (creatureType == null) {
@@ -543,7 +549,7 @@ public class SilkSpawners extends JavaPlugin {
                 return true;
             }
 
-            if (block != null) {
+            if (block != null && !isEgg) {
                 if (!hasPermission(player, "silkspawners.changetype")) {
                     player.sendMessage("You do not have permission to change spawners with /spawner");
                     return true;
@@ -566,9 +572,13 @@ public class SilkSpawners extends JavaPlugin {
                     return true;
                 }
 
-                player.setItemInHand(newSpawnerItem(creatureType));
-                
-                sender.sendMessage(getCreatureName(creatureType) + " spawner");
+                if (isEgg) {
+                    player.setItemInHand(new ItemStack(SPAWN_EGG_ID, 1, creatureType.getTypeId()));
+                    sender.sendMessage(getCreatureName(creatureType) + " spawn egg");
+                } else {
+                    player.setItemInHand(newSpawnerItem(creatureType));
+                    sender.sendMessage(getCreatureName(creatureType) + " spawner");
+                }
             }
         }
 
