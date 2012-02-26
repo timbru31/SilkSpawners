@@ -3,6 +3,8 @@ SilkSpawners - harvest mob spawners
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
+**New! [SilkSpawners 1.0](http://dev.bukkit.org/server-mods/silkspawners/files/6-silk-spawners-1-0/) now available - released on 2012/02/26 for 1.1-R4**
+
 Features:
 
 * Spawner retains creature type
@@ -55,8 +57,8 @@ default creature will be used if the spawner is obtained using:
 * other plugins not knowledgeable of SilkSpawners' conventions
 
 
-creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html),
-[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs), and optional aliases / display name.
+creatures - Mapping between internal mob ID string for spawners,
+[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) for spawn eggs, and optional aliases / display name.
 
 ## Permissions
 **Permission support is optional** and off by default. When turned off, the settings shown in parentheses 
