@@ -491,16 +491,14 @@ public class SilkSpawners extends JavaPlugin {
                 return false;
             }
 
-            CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
-            if (spawner == null) {
-                sender.sendMessage("Failed to find spawner");
-                return true;
+            try {
+                short entityID = getSpawnerEntityID(block);
+
+                sender.sendMessage(getCreatureName(entityID) + " spawner");
+            } catch (Exception e) {
+                informPlayer(player, "Failed to identify spawner: " + e);
             }
 
-            short entityID = spawner.getCreatureType().getTypeId();
-            //short entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
-
-            sender.sendMessage(getCreatureName(entityID) + " spawner");
         } else {
             // Set or get spawner
 
