@@ -4,10 +4,12 @@ X   1.0
     * Preserve comments in config.yml
     * Remove workaround for BUKKIT-602 since its fixed in 1.1-R4
     * Remove dependence on CreatureType 
-    * Add /ss [creature]egg to get a free spawn egg item, as opposed to a spawner
+    * Add /ss all to list all creature types
+    * Add /ss [creature]egg to get a free spawn egg item, as opposed to a spawner box
     * Add silkspawners.freeitemegg permission
     * Add minSilkTouchLevel config option, to control Silk Touch enchantment requirement
-    * Add support for custom mobs, including those from Natural Selection
+    * Add support for custom mobs
+    * Add mob and entity IDs from Natural Selection mod
     * Compile for CraftBukkit 1.1-R4
 
 2012-02-08  0.5
