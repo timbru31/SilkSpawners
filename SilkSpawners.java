@@ -197,7 +197,7 @@ class SilkSpawnersBlockListener implements Listener {
 
         // Clicked spawner with monster egg to change type
         if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
-            item != null && item.getTypeId() == SilkSpawners.SPAWN_EGG_ID &&
+            item != null && item.getType() == SilkSpawners.SPAWN_EGG &&
             block != null && block.getType() == Material.MOB_SPAWNER) {
 
             if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
@@ -267,8 +267,8 @@ public class SilkSpawners extends JavaPlugin {
 
     Field tileField, mobIDField;
 
-    // Some modded versions of craftbukkit-1.1-R3 lack Material.MONSTER_EGG, so hardcode the ID
-    final static int SPAWN_EGG_ID = 383;    // http://www.minecraftwiki.net/wiki/Data_values
+    // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own material
+    final static Material SPAWN_EGG = Material.MONSTER_EGG;
 
     public void onEnable() {
         loadConfig();
@@ -449,13 +449,6 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadRecipes() {
-        try {
-            Material.valueOf("MONSTER_EGG");
-        } catch (Exception e) {
-            log.warning("Your Bukkit is missing Material.MONSTER_EGG; disabling craftableSpawners");
-            return;
-        }
-
         for (short entityID: eid2DisplayName.keySet()) {
             ItemStack spawnerItem = newSpawnerItem(entityID);
             ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
@@ -612,7 +605,7 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     public static ItemStack newEggItem(short entityID, int amount) {
-        return new ItemStack(SPAWN_EGG_ID, 1, entityID);
+        return new ItemStack(SPAWN_EGG, 1, entityID);
     }
 
     public static ItemStack newEggItem(short entityID) {

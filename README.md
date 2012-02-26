@@ -24,16 +24,16 @@ Features:
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
-destroyDropEgg (false) - Whether to give a spawn egg when spawner is destroyed.
+minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
+ but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
+
+destroyDropEgg (false) - Whether to give a spawn egg when spawner is destroyed without Silk Touch.
 
 destroyDropXP (0) - Experience points to drop when spawner is destroyed.
 
 destroyDropBars (0) - Iron bars to drop when spawner is destroyed.
 
-minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
- but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
-
-consumeEgg (true) - Whether to consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
+consumeEgg (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 
 useReflection (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
 
@@ -60,7 +60,9 @@ creatures - Mapping between [CreatureType](http://jd.bukkit.org/apidocs/org/bukk
 
 ## Permissions
 **Permission support is optional** and off by default. When turned off, the settings shown in parentheses 
-below are used, intended to allow for easy setup with minimal configuration. For more advanced setup, 
+below are used, intended to allow for easy setup with minimal configuration. 
+
+For more advanced setup, 
 set *usePermissions: true* in config.yml, and all permission nodes will be set to *false*, allowing for
 flexible configuration through your permission plugin as desired.
 
@@ -84,6 +86,9 @@ Allows you to change the spawner type by left-clicking with a spawn egg
 
 silkspawners.freeitem (op) -
 Allows you to get spawner items in your hand for free using /spawner [creature]
+
+silkspawners.freeitemegg (op) -
+Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
 
 ## Technical Details
 SilkSpawners stores the entity ID of creature in two places within the mob spawner item:
