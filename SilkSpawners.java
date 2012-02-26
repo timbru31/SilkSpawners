@@ -109,10 +109,8 @@ class SilkSpawnersBlockListener implements Listener {
         }
 
         Player player = event.getPlayer();
-        CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        short entityID = spawner.getCreatureType().getTypeId();
-        //int entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
+        short entityID = plugin.getSpawnerEntityID(block);
 
         plugin.informPlayer(player, plugin.getCreatureName(entityID)+" spawner broken");
 
@@ -233,45 +231,23 @@ class SilkSpawnersBlockListener implements Listener {
 
 class SilkSpawnersSetCreatureTask implements Runnable {
     short entityID;
-    Block blockPlaced;
+    Block block;
     SilkSpawners plugin;
     Player player;
 
-    public SilkSpawnersSetCreatureTask(short entityID, Block blockPlaced, SilkSpawners plugin, Player player) {
+    public SilkSpawnersSetCreatureTask(short entityID, Block block, SilkSpawners plugin, Player player) {
         this.entityID = entityID;
-        this.blockPlaced = blockPlaced;
+        this.block = block;
         this.plugin = plugin;
         this.player = player;
     }
 
     public void run() {
-        /* non-Bukkit-API method 
-        CraftCreatureSpawner spawner = new CraftCreatureSpawner(blockPlaced);
-        if (spawner == null) {
-            plugin.informPlayer(player, "Failed to find placed spawner, creature not set");
-            return;
+        try {
+            plugin.setSpawnerEntityID(block, entityID);
+        } catch (Exception e) {
+            plugin.informPlayer(player, "Failed to set type: " + e);
         }
-        spawner.setCreatureType(creature);
-        */
-
-       
-        BlockState bs = blockPlaced.getState(); // yes, it is bs
-        if (!(bs instanceof CreatureSpawner)) {
-            plugin.informPlayer(player, "Failed to get block state, creature not set");
-            return;
-        }
-
-        CreatureSpawner spawner = (CreatureSpawner)bs;
-        // TODO: use TileEntityMobSpawner a() if fails, for Natural Selection support
-        CreatureType ct = CreatureType.fromId(entityID);
-        if (ct == null) {
-            plugin.informPlayer(player, "Failed to get creature from "+entityID+", creature not set");
-            return;
-        }
-
-        spawner.setCreatureType(ct);
-
-        bs.update();
     }
 }
 
@@ -281,11 +257,15 @@ public class SilkSpawners extends JavaPlugin {
 
     static ConcurrentHashMap<Short,Short> legacyID2Eid;
 
-    ConcurrentHashMap<Short,String> eid2DisplayName;
-    ConcurrentHashMap<String,Short> name2Eid;
+    ConcurrentHashMap<Short,String> eid2DisplayName;    // human-readable friendly name
+    ConcurrentHashMap<Short,String> eid2MobID;          // internal String used by spawners
+    ConcurrentHashMap<String,Short> mobID2Eid;
+    ConcurrentHashMap<String,Short> name2Eid;           // aliases to entity ID
 
     short defaultEntityID;
     boolean usePermissions;
+
+    Field tileField, mobIDField;
 
     // Some modded versions of craftbukkit-1.1-R3 lack Material.MONSTER_EGG, so hardcode the ID
     final static int SPAWN_EGG_ID = 383;    // http://www.minecraftwiki.net/wiki/Data_values
@@ -295,6 +275,18 @@ public class SilkSpawners extends JavaPlugin {
 
         if (getConfig().getBoolean("craftableSpawners", true)) {
             loadRecipes();
+        }
+
+        try {
+            tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+            tileField.setAccessible(true);
+
+            mobIDField = net.minecraft.server.TileEntityMobSpawner.class.getDeclaredField("mobName");  // MCP "mobID"
+            mobIDField.setAccessible(true);
+        } catch (Exception e) {
+            log.info("Failed to reflect, falling back to wrapper methods: " + e);
+            tileField = null;
+            mobIDField = null;
         }
 
         // Listeners
@@ -371,6 +363,8 @@ public class SilkSpawners extends JavaPlugin {
         legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
+        eid2MobID = new ConcurrentHashMap<Short,String>();
+        mobID2Eid = new ConcurrentHashMap<String,Short>();
         name2Eid = new ConcurrentHashMap<String,Short>();
 
         // Creature info
@@ -382,7 +376,9 @@ public class SilkSpawners extends JavaPlugin {
             // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
-            ItemStack eggItem = newEggItem(entityID);
+            // Internal mob ID used for spawner type 
+            eid2MobID.put(entityID, creatureString);
+            mobID2Eid.put(creatureString, entityID);
 
             // TODO: replace config file with built-in info! see
             // http://forums.bukkit.org/threads/help-how-to-get-an-animals-type-id.60156/
@@ -554,20 +550,12 @@ public class SilkSpawners extends JavaPlugin {
 
     // Set spawner type from user
     public void setSpawnerType(Block block, short entityID, Player player) {
-        // TODO: use Bukkit CreatureSpawner, get block state
-        CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
-        if (spawner == null) {
-            player.sendMessage("Failed to find spawner, creature not set");
-            return;
+        try {
+            setSpawnerEntityID(block, entityID);
+        } catch (Exception e) {
+            informPlayer(player, "Failed to set type: " + e);
         }
-        CreatureType ct = CreatureType.fromId(entityID);
-        if (ct == null) {
-            player.sendMessage("Failed to find creature type for "+entityID+", creature not set");
-            // TODO: for compatibility with Natural Selection mod, we probably need to drop down
-            // to private final TileEntityMobSpawner a() = setMobId - it actually _is_ a string..Buck
-            return;
-        }
-        spawner.setCreatureType(ct); 
+
         //spawner.setSpawnedType(EntityType.fromId(entityID)); // TODO: 1.1-R5
 
         player.sendMessage(getCreatureName(entityID) + " spawner");
@@ -670,6 +658,75 @@ public class SilkSpawners extends JavaPlugin {
             player.sendMessage(message);
         }
     }
+
+    // Better methods for setting/getting spawner type
+    // These don't rely on CreatureSpawner, if possible, and instead set/get the 
+    // mobID directly from the tile entity
+
+    public short getSpawnerEntityID(Block block) {
+        BlockState blockState = block.getState();
+        if (!(blockState instanceof CreatureSpawner)) {
+            throw new IllegalArgumentException("getSpawnerEntityID called on non-spawner block: " + block);
+        }
+
+        CraftCreatureSpawner spawner = ((CraftCreatureSpawner)blockState);
+
+        // Get the mob ID ourselves if we can
+        if (tileField != null && mobIDField != null) {
+            try {
+                net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner)tileField.get(spawner);
+                log.info("tile ="+tile);
+
+                String mobID = (String)mobIDField.get(tile);
+                log.info("mobID ="+mobID);
+
+                return mobID2Eid.get(mobID);
+            } catch (Exception e) {
+                log.info("Reflection failed: " + e);
+                // fall through
+            } 
+        }
+
+        // or ask Bukkit if we have to
+        //int entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
+        return spawner.getCreatureType().getTypeId();
+    }
+    
+    public void setSpawnerEntityID(Block block, short entityID) {
+        BlockState blockState = block.getState();
+        if (!(blockState instanceof CreatureSpawner)) {
+            throw new IllegalArgumentException("setSpawnerEntityID called on non-spawner block: " + block);
+        }
+
+        CraftCreatureSpawner spawner = ((CraftCreatureSpawner)blockState);
+
+        // Try the more powerful native methods first
+        if (tileField != null && mobIDField != null) {
+            try {
+                String mobID = eid2MobID.get(entityID);
+
+                net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner)tileField.get(spawner);
+                log.info("tile ="+tile);
+
+                tile.a(mobID);      // MCP setMobID
+            } catch (Exception e) {
+                log.info("Reflection failed: " + e);
+                // fall through
+            }
+        }
+
+        // Fallback to wrapper
+        CreatureType ct = CreatureType.fromId(entityID);
+        if (ct == null) {
+            throw new IllegalArgumentException("Failed to find creature type for "+entityID);
+        }
+
+        spawner.setCreatureType(ct);
+        //spawner.setSpawnedType(EntityType.fromId(entityID)); // TODO: 1.1-R5
+        blockState.update();
+   }
+
+ 
 }
 
 
