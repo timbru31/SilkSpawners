@@ -307,9 +307,54 @@ public class SilkSpawners extends JavaPlugin {
         }
     }
 
+    // Copy default configuration
+    // Sure we could use getConfig().options().copyDefaults(true);, but it strips all comments :(
+    public boolean newConfig(File file) {
+        FileWriter fileWriter;
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdir();
+        }
+
+        try {
+            fileWriter = new FileWriter(file);
+        } catch (IOException e) {
+            log.severe("Couldn't write config file: " + e.getMessage());
+            Bukkit.getServer().getPluginManager().disablePlugin(this);
+            return false;
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(getResource("config.yml"))));
+        BufferedWriter writer = new BufferedWriter(fileWriter);
+        try {
+            String line = reader.readLine();
+            while (line != null) {
+                writer.write(line + System.getProperty("line.separator"));
+                line = reader.readLine();
+            }
+            log.info("Wrote default config");
+        } catch (IOException e) {
+            log.severe("Error writing config: " + e.getMessage());
+        } finally {
+            try {
+                writer.close();
+                reader.close();
+            } catch (IOException e) {
+                log.severe("Error saving config: " + e.getMessage());
+                Bukkit.getServer().getPluginManager().disablePlugin(this);
+            }
+        }
+        return true;
+    }
+
     private void loadConfig() {
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        String filename = getDataFolder() + System.getProperty("file.separator") + "config.yml";
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            if (!newConfig(file)) {
+                throw new IllegalArgumentException("Could not create new configuration file");
+            }
+        }
         reloadConfig();
 
         creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
@@ -332,6 +377,8 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
+            // TODO: there is in 1.1-R5! see getCreatureType(), and EntityType - but check if it works with mods!
+            // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
             //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
@@ -339,6 +386,9 @@ public class SilkSpawners extends JavaPlugin {
 
             creature2Egg.put(creatureType, eggItem);
             eid2Creature.put(new Short(entityID), creatureType);
+            // TODO: replace config file with built-in info! see
+            // http://forums.bukkit.org/threads/help-how-to-get-an-animals-type-id.60156/
+            // "[HELP]How to get an animal's type id"
             creature2Eid.put(creatureType, new Short(entityID));
 
             short legacyID = (short)getConfig().getInt("creatures."+creatureString+".legacyID");
