@@ -514,7 +514,7 @@ public class SilkSpawners extends JavaPlugin {
                 return true;
             }
 
-            short entityID = name2Eid.get(args[0]);
+            short entityID = name2Eid.get(creatureString);
 
             if (block != null && !isEgg) {
                 if (!hasPermission(player, "silkspawners.changetype")) {
