@@ -111,9 +111,10 @@ class SilkSpawnersBlockListener implements Listener {
         Player player = event.getPlayer();
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
 
-        CreatureType creatureType = spawner.getCreatureType();
+        short entityID = spawner.getCreatureType().getTypeId();
+        //int entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
 
-        plugin.informPlayer(player, plugin.getCreatureName(creatureType)+" spawner broken");
+        plugin.informPlayer(player, plugin.getCreatureName(entityID)+" spawner broken");
 
         // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
@@ -124,7 +125,7 @@ class SilkSpawnersBlockListener implements Listener {
 
         if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop")) {
             // Drop spawner
-            dropItem = plugin.newSpawnerItem(creatureType);
+            dropItem = plugin.newSpawnerItem(entityID);
             world.dropItemNaturally(block.getLocation(), dropItem);
             return;
         } 
@@ -132,8 +133,7 @@ class SilkSpawnersBlockListener implements Listener {
         if (plugin.hasPermission(player, "silkspawners.destroydrop")) {
             if (plugin.getConfig().getBoolean("destroyDropEgg")) {
                 // Drop egg
-                dropItem = plugin.creature2Egg.get(creatureType);
-                world.dropItemNaturally(block.getLocation(), dropItem);
+                world.dropItemNaturally(block.getLocation(), SilkSpawners.newEggItem(entityID));
             }
 
             int addXP = plugin.getConfig().getInt("destroyDropXP");
@@ -180,16 +180,11 @@ class SilkSpawnersBlockListener implements Listener {
             }
         }
 
-        CreatureType creature = plugin.eid2Creature.get(entityID);
-        if (creature == null) {
-            plugin.informPlayer(player, "No creature associated with spawner");
-            return;
-        }
-        plugin.informPlayer(player, plugin.getCreatureName(creature)+" spawner placed");
+        plugin.informPlayer(player, plugin.getCreatureName(entityID)+" spawner placed");
 
         // Bukkit 1.1-R3 regressed from 1.1-R1, ignores block state update on onBlockPlace
         // TODO: file or find bug about this, get it fixed so can remove this lame workaround
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(creature, blockPlaced, plugin, player), 0);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(entityID, blockPlaced, plugin, player), 0);
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -204,7 +199,7 @@ class SilkSpawnersBlockListener implements Listener {
 
         // Clicked spawner with monster egg to change type
         if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
-            item != null && item.getTypeId() == plugin.SPAWN_EGG_ID &&
+            item != null && item.getTypeId() == SilkSpawners.SPAWN_EGG_ID &&
             block != null && block.getType() == Material.MOB_SPAWNER) {
 
             if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
@@ -214,14 +209,8 @@ class SilkSpawnersBlockListener implements Listener {
 
 
             short entityID = item.getDurability();
-            CreatureType creatureType = plugin.eid2Creature.get(entityID);
 
-            if (creatureType == null) {
-                player.sendMessage("Unrecognized creature in spawn egg ("+entityID+")");
-                return;
-            }
-
-            plugin.setSpawnerType(block, creatureType, player);
+            plugin.setSpawnerType(block, entityID, player);
 
             // Consume egg
             if (plugin.getConfig().getBoolean("consumeEgg", true)) {
@@ -234,8 +223,8 @@ class SilkSpawnersBlockListener implements Listener {
                     // Common case.. one egg, used up
                     inventory.clear(slot);
                 } else {
-                    // Cannot legitimately get >1 egg per slot, but should support it regardless
-                    inventory.setItem(slot, new ItemStack(plugin.SPAWN_EGG_ID, eggs.getAmount() - 1, entityID));
+                    // Cannot legitimately get >1 egg per slot (in 1.1, but supposedly 1.2 will support it), but should support it regardless
+                    inventory.setItem(slot, SilkSpawners.newEggItem(entityID, eggs.getAmount() - 1));
                 }
             }
         }
@@ -243,13 +232,13 @@ class SilkSpawnersBlockListener implements Listener {
 }
 
 class SilkSpawnersSetCreatureTask implements Runnable {
-    CreatureType creature;
+    short entityID;
     Block blockPlaced;
     SilkSpawners plugin;
     Player player;
 
-    public SilkSpawnersSetCreatureTask(CreatureType creature, Block blockPlaced, SilkSpawners plugin, Player player) {
-        this.creature = creature;
+    public SilkSpawnersSetCreatureTask(short entityID, Block blockPlaced, SilkSpawners plugin, Player player) {
+        this.entityID = entityID;
         this.blockPlaced = blockPlaced;
         this.plugin = plugin;
         this.player = player;
@@ -273,8 +262,14 @@ class SilkSpawnersSetCreatureTask implements Runnable {
         }
 
         CreatureSpawner spawner = (CreatureSpawner)bs;
+        // TODO: use TileEntityMobSpawner a() if fails, for Natural Selection support
+        CreatureType ct = CreatureType.fromId(entityID);
+        if (ct == null) {
+            plugin.informPlayer(player, "Failed to get creature from "+entityID+", creature not set");
+            return;
+        }
 
-        spawner.setCreatureType(creature);
+        spawner.setCreatureType(ct);
 
         bs.update();
     }
@@ -284,14 +279,10 @@ public class SilkSpawners extends JavaPlugin {
     static Logger log = Logger.getLogger("Minecraft");
     SilkSpawnersBlockListener blockListener;
 
-    ConcurrentHashMap<CreatureType,ItemStack> creature2Egg;
-    ConcurrentHashMap<Short,CreatureType> eid2Creature;
-    ConcurrentHashMap<CreatureType,Short> creature2Eid;
-    
     static ConcurrentHashMap<Short,Short> legacyID2Eid;
 
-    ConcurrentHashMap<CreatureType,String> creature2DisplayName;
-    ConcurrentHashMap<String,CreatureType> name2Creature;
+    ConcurrentHashMap<Short,String> eid2DisplayName;
+    ConcurrentHashMap<String,Short> name2Eid;
 
     short defaultEntityID;
     boolean usePermissions;
@@ -377,46 +368,25 @@ public class SilkSpawners extends JavaPlugin {
         }
         reloadConfig();
 
-        creature2Egg = new ConcurrentHashMap<CreatureType,ItemStack>();
-        eid2Creature = new ConcurrentHashMap<Short,CreatureType>();
-        creature2Eid = new ConcurrentHashMap<CreatureType,Short>();
-        
         legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
-        creature2DisplayName = new ConcurrentHashMap<CreatureType,String>();
-        name2Creature = new ConcurrentHashMap<String,CreatureType>();
+        eid2DisplayName = new ConcurrentHashMap<Short,String>();
+        name2Eid = new ConcurrentHashMap<String,Short>();
 
         // Creature info
         MemorySection creatureSection = (MemorySection)getConfig().get("creatures");
     
         for (String creatureString: creatureSection.getKeys(false)) {
-            CreatureType creatureType = CreatureType.fromName(creatureString);
-
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
             // TODO: there is in 1.1-R5! see getCreatureType(), and EntityType - but check if it works with mods!
             // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
-            if (creatureType == null) {
-                log.info("Invalid creature type by name: " + creatureString);
+            ItemStack eggItem = newEggItem(entityID);
 
-                creatureType = CreatureType.fromId(entityID);
-                if (creatureType == null) {
-                    log.info("Invalid creature type by ID: " + entityID + ", ignored");
-                    continue;
-                }
-            }
-
-
-            //ItemStack eggItem = new ItemStack(Material.MONSTER_EGG, 1, entityID);
-            ItemStack eggItem = new ItemStack(SPAWN_EGG_ID, 1, entityID);
-
-            creature2Egg.put(creatureType, eggItem);
-            eid2Creature.put(new Short(entityID), creatureType);
             // TODO: replace config file with built-in info! see
             // http://forums.bukkit.org/threads/help-how-to-get-an-animals-type-id.60156/
             // "[HELP]How to get an animal's type id"
-            creature2Eid.put(creatureType, new Short(entityID));
 
             short legacyID = (short)getConfig().getInt("creatures."+creatureString+".legacyID");
             legacyID2Eid.put(new Short(legacyID), new Short(entityID));
@@ -429,7 +399,7 @@ public class SilkSpawners extends JavaPlugin {
                 displayName = creatureString;
             }
 
-            creature2DisplayName.put(creatureType, displayName);
+            eid2DisplayName.put(entityID, displayName);
 
             List<String> aliases = getConfig().getStringList("creatures."+creatureString+".aliases");
 
@@ -439,7 +409,7 @@ public class SilkSpawners extends JavaPlugin {
             aliases.add("#"+legacyID);
 
             for (String alias: aliases) {
-                name2Creature.put(alias, creatureType);
+                name2Eid.put(alias, entityID);
             }
         }
 
@@ -449,12 +419,12 @@ public class SilkSpawners extends JavaPlugin {
 
         String defaultCreatureString = getConfig().getString("defaultCreature", null);
         if (defaultCreatureString != null) {
-            CreatureType defaultCreatureType = name2Creature.get(defaultCreatureString);
-            if (defaultCreatureType != null) {
-                ItemStack defaultItemStack = creature2Egg.get(defaultCreatureType);
+            if (name2Eid.containsKey(defaultCreatureString)) {
+                short defaultEid = name2Eid.get(defaultCreatureString);
+                ItemStack defaultItemStack = newEggItem(defaultEid);
                 if (defaultItemStack != null) {
                     defaultEntityID = defaultItemStack.getDurability();
-                    log.info("Default monster spawner set to "+creature2DisplayName.get(defaultCreatureType));
+                    log.info("Default monster spawner set to "+eid2DisplayName.get(defaultEid));
                 } else {
                     log.info("Unable to lookup name of " + defaultCreatureString);
                 }
@@ -474,17 +444,12 @@ public class SilkSpawners extends JavaPlugin {
             return;
         }
 
-        for (ItemStack egg: creature2Egg.values()) {
-            short entityID = egg.getDurability();
-            CreatureType creatureType = eid2Creature.get(entityID);
-
-            ItemStack spawnerItem = newSpawnerItem(creatureType);
+        for (short entityID: eid2DisplayName.keySet()) {
+            ItemStack spawnerItem = newSpawnerItem(entityID);
             ShapelessRecipe recipe = new ShapelessRecipe(spawnerItem);
 
             // TODO: ShapedRecipe, box
             recipe.addIngredient(8, Material.IRON_FENCE);
-            // Bukkit addIngredient() only accepts Material, not type id, so if MONSTER_EGG isn't
-            // available we can't add it
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
             Bukkit.getServer().addRecipe(recipe);
@@ -527,9 +492,10 @@ public class SilkSpawners extends JavaPlugin {
                 return true;
             }
 
-            CreatureType creatureType = spawner.getCreatureType();
+            short entityID = spawner.getCreatureType().getTypeId();
+            //short entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
 
-            sender.sendMessage(getCreatureName(creatureType) + " spawner");
+            sender.sendMessage(getCreatureName(entityID) + " spawner");
         } else {
             // Set or get spawner
 
@@ -543,11 +509,12 @@ public class SilkSpawners extends JavaPlugin {
                 creatureString = creatureString.replaceFirst("egg$", "");
             }
 
-            CreatureType creatureType = name2Creature.get(creatureString);
-            if (creatureType == null) {
-                sender.sendMessage("Unrecognized creature "+creatureString);
+            if (!name2Eid.containsKey(creatureString)) {
+                player.sendMessage("Unrecognized creature "+creatureString);
                 return true;
             }
+
+            short entityID = name2Eid.get(args[0]);
 
             if (block != null && !isEgg) {
                 if (!hasPermission(player, "silkspawners.changetype")) {
@@ -555,7 +522,7 @@ public class SilkSpawners extends JavaPlugin {
                     return true;
                 }
 
-                setSpawnerType(block, creatureType, player);
+                setSpawnerType(block, entityID, player);
             } else {
                 // Get free spawner item in hand
                 if (!hasPermission(player, "silkspawners.freeitem")) {
@@ -573,11 +540,11 @@ public class SilkSpawners extends JavaPlugin {
                 }
 
                 if (isEgg) {
-                    player.setItemInHand(new ItemStack(SPAWN_EGG_ID, 1, creatureType.getTypeId()));
-                    sender.sendMessage(getCreatureName(creatureType) + " spawn egg");
+                    player.setItemInHand(newEggItem(entityID));
+                    sender.sendMessage(getCreatureName(entityID) + " spawn egg");
                 } else {
-                    player.setItemInHand(newSpawnerItem(creatureType));
-                    sender.sendMessage(getCreatureName(creatureType) + " spawner");
+                    player.setItemInHand(newSpawnerItem(entityID));
+                    sender.sendMessage(getCreatureName(entityID) + " spawner");
                 }
             }
         }
@@ -586,16 +553,24 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     // Set spawner type from user
-    public void setSpawnerType(Block block, CreatureType creatureType, Player player) {
+    public void setSpawnerType(Block block, short entityID, Player player) {
         // TODO: use Bukkit CreatureSpawner, get block state
         CraftCreatureSpawner spawner = new CraftCreatureSpawner(block);
         if (spawner == null) {
             player.sendMessage("Failed to find spawner, creature not set");
             return;
         }
-        spawner.setCreatureType(creatureType); 
+        CreatureType ct = CreatureType.fromId(entityID);
+        if (ct == null) {
+            player.sendMessage("Failed to find creature type for "+entityID+", creature not set");
+            // TODO: for compatibility with Natural Selection mod, we probably need to drop down
+            // to private final TileEntityMobSpawner a() = setMobId - it actually _is_ a string..Buck
+            return;
+        }
+        spawner.setCreatureType(ct); 
+        //spawner.setSpawnedType(EntityType.fromId(entityID)); // TODO: 1.1-R5
 
-        player.sendMessage(getCreatureName(creatureType) + " spawner");
+        player.sendMessage(getCreatureName(entityID) + " spawner");
     }
 
     // Return the spawner block the player is looking at, or null if isn't
@@ -611,29 +586,35 @@ public class SilkSpawners extends JavaPlugin {
 
 
     // Get a creature name suitable for displaying to the user
-    // CreatureType getName has internal names like 'LavaSlime', this will return
+    // Internal mob names are are like 'LavaSlime', this will return
     // the in-game name like 'Magma Cube'
-    public String getCreatureName(CreatureType creature) {
-        String displayName = creature2DisplayName.get(creature);
+    public String getCreatureName(short entityID) {
+        String displayName = eid2DisplayName.get(entityID);
 
         if (displayName == null) {
-            displayName = "("+creature.getName()+")";
+            CreatureType ct = CreatureType.fromId(entityID);
+            if (ct != null) {
+                displayName = "("+ct.getName()+")";
+            } else {
+                displayName = String.valueOf(entityID);
+            }
         }
     
         return displayName;
     }
 
+    public static ItemStack newEggItem(short entityID, int amount) {
+        return new ItemStack(SPAWN_EGG_ID, 1, entityID);
+    }
+
+    public static ItemStack newEggItem(short entityID) {
+        return newEggItem(entityID, 1);
+    }
+
 
     // Create a tagged a mob spawner _item_ with its entity ID so we know what it spawns
-    // This is not part of vanilla
-    public ItemStack newSpawnerItem(CreatureType creatureType) {
-        Short entityIDObject = creature2Eid.get(creatureType);
-        if (entityIDObject == null) {
-            log.info("newSpawnerItem("+creatureType+") unexpectedly failed to lookup entityID");
-            return null;
-        }
-
-        short entityID = entityIDObject.shortValue();
+    // This is not part of vanilla, but our own convention
+    public static ItemStack newSpawnerItem(short entityID) {
         ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
 
         // Tag the entity ID several ways, for compatibility
