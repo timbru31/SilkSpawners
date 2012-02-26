@@ -5,6 +5,8 @@ usePermissions: false
 defaultCreature: null
 spawnerCommandReachDistance: 6
 
+minSilkTouchLevel: 1
+
 destroyDropEgg: false
 #destroyDropEgg: true
 destroyDropXP: 0

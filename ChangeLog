@@ -2,6 +2,7 @@ X   1.0
     * Change default destroyDropEgg to false in config.yml
     * Preserve comments in config.yml
     * Remove workaround for BUKKIT-602 since its fixed in 1.1-R4
+    * Change command to /silkspawners, add /spawner and /ss aliases
     * Compile for CraftBukkit 1.1-R4
 
 2012-02-08  0.5

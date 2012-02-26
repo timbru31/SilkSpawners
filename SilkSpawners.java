@@ -76,6 +76,26 @@ class SilkSpawnersBlockListener implements Listener {
         Bukkit.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
+    public boolean hasSilkTouch(ItemStack tool) {
+        int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
+        if (minLevel == 0) {
+            return true;    // always have it
+        }
+
+        if (tool == null) {
+            return false;    // no silk touch fists..
+        }
+
+
+        // This check isn't actually necessary, since containsEnchantment just checks level>0,
+        // but is kept here for clarity, and in case Bukkit allows level-0 enchantments like vanilla
+        if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            return false;
+        }
+
+        return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBlockBreak(final BlockBreakEvent event) {
         if (event.isCancelled()) {
@@ -97,7 +117,7 @@ class SilkSpawnersBlockListener implements Listener {
 
         // If using silk touch, drop spawner itself 
         ItemStack tool = player.getItemInHand();
-        boolean silkTouch = tool != null && tool.containsEnchantment(Enchantment.SILK_TOUCH);
+        boolean silkTouch = hasSilkTouch(tool);
 
         ItemStack dropItem;
         World world = player.getWorld();
@@ -469,7 +489,7 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (!cmd.getName().equalsIgnoreCase("spawner")) {
+        if (!cmd.getName().equalsIgnoreCase("silkspawners")) {
             return false;
         }
 
