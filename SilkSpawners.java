@@ -457,17 +457,19 @@ public class SilkSpawners extends JavaPlugin {
             recipe.addIngredient(8, Material.IRON_FENCE);
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
-            /*
             if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
                 // Workaround Bukkit bug:
                 // https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output
                 // CraftBukkit/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
-                ArrayList<MaterialData> ingred = recipe.getIngredientList();
-                Object[] data = new Object[ingred.size()];
+                // fixed in 1.1-R4
+                // regressed in 1.1-R6
+                // TODO: fix workaround
+                List<ItemStack> ingredients = recipe.getIngredientList();
+                Object[] data = new Object[ingredients.size()];
                 int i = 0;
-                for (MaterialData mdata : ingred) {
-                    int id = mdata.getItemTypeId();
-                    byte dmg = mdata.getData();
+                for (ItemStack ingredient: ingredients) {
+                    int id = ingredient.getTypeId();
+                    byte dmg = ingredient.getData().getData();
                     data[i] = new net.minecraft.server.ItemStack(id, 1, dmg);
                     i++;
                 }
@@ -487,7 +489,6 @@ public class SilkSpawners extends JavaPlugin {
             } else {
                 Bukkit.getServer().addRecipe(recipe);
             }
-            */
 
             Bukkit.getServer().addRecipe(recipe);
         }
