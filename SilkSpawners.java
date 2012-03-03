@@ -365,7 +365,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
-            // TODO: there is in 1.1-R5! see getCreatureType(), and EntityType - but check if it works with mods!
+            // TODO: there is in 1.1-R5! see getSpawnedType(), and EntityType - but check if it works with mods!
             // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
             short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
 
@@ -456,6 +456,38 @@ public class SilkSpawners extends JavaPlugin {
             // TODO: ShapedRecipe, box
             recipe.addIngredient(8, Material.IRON_FENCE);
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
+
+            /*
+            if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
+                // Workaround Bukkit bug:
+                // https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output
+                // CraftBukkit/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
+                ArrayList<MaterialData> ingred = recipe.getIngredientList();
+                Object[] data = new Object[ingred.size()];
+                int i = 0;
+                for (MaterialData mdata : ingred) {
+                    int id = mdata.getItemTypeId();
+                    byte dmg = mdata.getData();
+                    data[i] = new net.minecraft.server.ItemStack(id, 1, dmg);
+                    i++;
+                }
+
+                // Convert Bukkit ItemStack to net.minecraft.server.ItemStack
+                int id = recipe.getResult().getTypeId();
+                int amount = recipe.getResult().getAmount();
+                short durability = recipe.getResult().getDurability();
+                Map<Enchantment, Integer> enchantments = recipe.getResult().getEnchantments();
+                net.minecraft.server.ItemStack result = new net.minecraft.server.ItemStack(id, amount, durability);
+                for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                    result.addEnchantment(CraftEnchantment.getRaw(entry.getKey()), entry.getValue().intValue());
+                }
+
+                CraftingManager.getInstance().registerShapelessRecipe(result, data);
+
+            } else {
+                Bukkit.getServer().addRecipe(recipe);
+            }
+            */
 
             Bukkit.getServer().addRecipe(recipe);
         }
@@ -591,7 +623,7 @@ public class SilkSpawners extends JavaPlugin {
         String displayName = eid2DisplayName.get(entityID);
 
         if (displayName == null) {
-            CreatureType ct = CreatureType.fromId(entityID);
+            EntityType ct = EntityType.fromId(entityID);
             if (ct != null) {
                 displayName = "("+ct.getName()+")";
             } else {
@@ -684,7 +716,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean isRecognizedMob(String mobID) {
         // TODO: 1.1-R5 
         //return EntityType.fromName(mobID) != null;
-        return CreatureType.fromName(mobID) != null;
+        return EntityType.fromName(mobID) != null;
     }
 
     // Better methods for setting/getting spawner type
@@ -717,7 +749,7 @@ public class SilkSpawners extends JavaPlugin {
 
         // or ask Bukkit if we have to
         //int entityID = spawner.getSpawnedType().getTypeId();    // TODO: 1.1-R5
-        return spawner.getCreatureType().getTypeId();
+        return spawner.getSpawnedType().getTypeId();
     }
     
     public void setSpawnerEntityID(Block block, short entityID) {
@@ -745,12 +777,12 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         // Fallback to wrapper
-        CreatureType ct = CreatureType.fromId(entityID);
+        EntityType ct = EntityType.fromId(entityID);
         if (ct == null) {
             throw new IllegalArgumentException("Failed to find creature type for "+entityID);
         }
 
-        spawner.setCreatureType(ct);
+        spawner.setSpawnedType(ct);
         //spawner.setSpawnedType(EntityType.fromId(entityID)); // TODO: 1.1-R5
         blockState.update();
    }
