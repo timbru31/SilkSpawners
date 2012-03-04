@@ -458,6 +458,7 @@ public class SilkSpawners extends JavaPlugin {
             recipe.addIngredient(Material.MONSTER_EGG, (int)entityID);
 
             if (getConfig().getBoolean("workaroundBukkitBug602", true)) {
+                log.info("working around "+entityID);
                 // Workaround Bukkit bug:
                 // https://bukkit.atlassian.net/browse/BUKKIT-602 Enchantments lost on crafting recipe output
                 // CraftBukkit/src/main/java/org/bukkit/craftbukkit/inventory/CraftShapelessRecipe.java
@@ -479,8 +480,11 @@ public class SilkSpawners extends JavaPlugin {
                 int amount = recipe.getResult().getAmount();
                 short durability = recipe.getResult().getDurability();
                 Map<Enchantment, Integer> enchantments = recipe.getResult().getEnchantments();
+                log.info("enchs="+enchantments);
                 net.minecraft.server.ItemStack result = new net.minecraft.server.ItemStack(id, amount, durability);
+                log.info("result="+result);
                 for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
+                    log.info("entry ="+entry);
                     result.addEnchantment(CraftEnchantment.getRaw(entry.getKey()), entry.getValue().intValue());
                 }
 
