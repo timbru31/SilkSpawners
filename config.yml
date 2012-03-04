@@ -1,5 +1,5 @@
 # See documentation at http://dev.bukkit.org/server-mods/silkspawners/
-craftableSpawners: false
+
 consumeEgg: true
 usePermissions: false
 defaultCreature: null
@@ -13,6 +13,11 @@ destroyDropXP: 0
 #destroyDropXP: 1000
 destroyDropBars: 0
 #destroyDropBars: 8
+
+
+# BROKEN IN CRAFTBUKKIT 1.1-R6 - see https://bukkit.atlassian.net/browse/BUKKIT-602
+# This worked in earlier versions, and should be fixed in later versions
+craftableSpawners: false
 
 verboseConfig: false
 useExtraMobs: false

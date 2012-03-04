@@ -1,3 +1,7 @@
+2012-03-03  1.1
+    * Update for CraftBukkit 1.1-R6
+    * KNOWN BUG: crafting spawners is broken due to regression BUKKIT-602
+
 2012-02-26  1.0.1
     * Fix NPE when using /ss to view type of non-standard spawners
     * Tested with CraftBukkit 1.1-R5 (1961 development build)
