@@ -3,7 +3,7 @@ SilkSpawners - harvest mob spawners with silk touch
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
-**New! [SilkSpawners 1.1](http://dev.bukkit.org/server-mods/silkspawners/files/8-silk-spawners-1-1/) now available - released on 2012/03/03 for 1.1-R6**
+**[SilkSpawners 1.1](http://dev.bukkit.org/server-mods/silkspawners/files/8-silk-spawners-1-1/) now available** - recommended for 1.2.3-R0.1, 1.1-R7, and 1.1-R4
 
 Features:
 
@@ -141,4 +141,3 @@ Other relevant plugins:
 * [SuperSimpleSpawners](http://dev.bukkit.org/server-mods/supersimplespawners/)
 
 ***[Fork me on GitHub](https://github.com/mushroomhostage/SilkSpawners)***
-

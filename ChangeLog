@@ -1,6 +1,7 @@
 2012-03-03  1.1
     * Update for new API
-    * Requires CraftBukkit 1.2.3-R0.1 or 1.1-R7 for craftable spawners (BUKKIT-602 fix post-1.1-R6)
+    * Craftable spawners supported on: CraftBukkit 1.2.3-R0.1, 1.1-R7, 1.1-R4
+     (not on 1.1-R6, due to BUKKIT-602)
 
 2012-02-26  1.0.1
     * Fix NPE when using /ss to view type of non-standard spawners
