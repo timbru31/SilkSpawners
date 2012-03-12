@@ -14,9 +14,6 @@ destroyDropXP: 0
 destroyDropBars: 0
 #destroyDropBars: 8
 
-
-# BROKEN IN CRAFTBUKKIT 1.1-R6 - see https://bukkit.atlassian.net/browse/BUKKIT-602
-# This worked in earlier versions, and should be fixed in later versions
 craftableSpawners: false
 
 verboseConfig: false
@@ -106,6 +103,10 @@ creatures:
         entityID: 94
         legacyID: 4
         aliases: ['sq', 'octopus']
+    #Monster:
+    #   no entityID - this isn't real, and was removed in 1.1-R4
+    #   aliases: ['human']
+    #   legacyID: 12
     Wolf: 
         entityID: 95
         legacyID: 14
@@ -120,14 +121,20 @@ creatures:
         legacyID: 22
         displayName: 'Snow Golem'
         aliases: ['golem', 'sgolem', 'sg', 'sm', 'snowmen']
+    Ozelot:
+        entityID: 98
+        legacyID: 23
+        displayName: 'Ocelot'
+        aliases: ['ocelot', 'oce', 'o', 'cat', 'kitty']
+    VillagerGolem:
+        entityID: 99
+        legacyID: 24
+        displayName: 'Iron Golem'
+        aliases: ['igolem', 'ironman', 'iron', 'ig']
     Villager: 
         entityID: 120
         legacyID: 23
         aliases: ['npc', 'v']
-    #Monster:
-    #   no entityID - this isn't real, and was removed in 1.1-R4
-    #   aliases: ['human']
-    #   legacyID: 12
     
     # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
