@@ -1,3 +1,7 @@
+X   1.1a
+    * Add ocelot and iron golem
+    * Tested on 1.2.3-R0.2, 1.1-R8, and 1.1-R4
+
 2012-03-03  1.1
     * Update for new API
     * Craftable spawners supported on: CraftBukkit 1.2.3-R0.1, 1.1-R7, 1.1-R4
