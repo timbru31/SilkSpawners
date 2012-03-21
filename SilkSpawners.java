@@ -61,9 +61,12 @@ import org.bukkit.enchantments.*;
 import org.bukkit.*;
 
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
 
 import net.minecraft.server.CraftingManager;        
-import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
+
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+
 
 class SilkSpawnersBlockListener implements Listener {
     static Logger log = Logger.getLogger("Minecraft");
@@ -107,6 +110,13 @@ class SilkSpawnersBlockListener implements Listener {
         if (block.getType() != Material.MOB_SPAWNER) {
             return;
         }
+
+        // TODO: enable and test! most important
+        // http://dev.bukkit.org/server-mods/silkspawners/tickets/2-silk-spawners-still-duplicates-broken-mined-spa/
+        /*
+        if (!plugin.canBuildHere(player, block.getLocation())) {
+            return;
+        }*/
 
         Player player = event.getPlayer();
 
@@ -755,7 +765,24 @@ public class SilkSpawners extends JavaPlugin {
         blockState.update();
    }
 
- 
+    // http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
+    public WorldGuardPlugin getWorldGuard() {
+        Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
+        if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
+            return null;
+        }
+
+        return (WorldGuardPlugin)plugin;
+    }
+
+    public boolean canBuildHere(Player player, Location location) {
+        WorldGuardPlugin wg = getWorldGuard();
+        if (wg == null) {
+            return true;
+        }
+
+        return wg.canBuild(player, location);
+    }
 }
 
 

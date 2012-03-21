@@ -43,3 +43,5 @@ permissions:
     silkspawners.freeitemegg:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
         default: false
+softdepend:
+    - WorldGuard
