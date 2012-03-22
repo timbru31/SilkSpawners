@@ -1,4 +1,4 @@
-X   1.2
+2012-03-21  1.2
     * Respect WorldGuard protection
     * Add spawnersUnstackable config option (default false) 
     * Add mob and entity IDs from Rancraft Penguins 1.1c in config.yml
