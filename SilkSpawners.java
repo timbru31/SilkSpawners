@@ -99,12 +99,8 @@ class SilkSpawnersBlockListener implements Listener {
         return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=true)
     public void onBlockBreak(final BlockBreakEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         Block block = event.getBlock();
 
         if (block.getType() != Material.MOB_SPAWNER) {
@@ -157,12 +153,8 @@ class SilkSpawnersBlockListener implements Listener {
         } 
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=true)
     public void onBlockPlace(final BlockPlaceEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         Block blockPlaced = event.getBlockPlaced();
 
         if (blockPlaced.getType() != Material.MOB_SPAWNER) {
@@ -195,12 +187,8 @@ class SilkSpawnersBlockListener implements Listener {
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(entityID, blockPlaced, plugin, player), 0);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         ItemStack item = event.getItem();
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
