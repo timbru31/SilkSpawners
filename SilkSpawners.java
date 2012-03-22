@@ -107,14 +107,12 @@ class SilkSpawnersBlockListener implements Listener {
             return;
         }
 
-        // TODO: enable and test! most important
-        // http://dev.bukkit.org/server-mods/silkspawners/tickets/2-silk-spawners-still-duplicates-broken-mined-spa/
-        /*
+        Player player = event.getPlayer();
+
         if (!plugin.canBuildHere(player, block.getLocation())) {
             return;
-        }*/
+        }
 
-        Player player = event.getPlayer();
 
         short entityID = plugin.getSpawnerEntityID(block);
 
@@ -163,6 +161,12 @@ class SilkSpawnersBlockListener implements Listener {
 
         Player player = event.getPlayer();
 
+        if (!plugin.canBuildHere(player, blockPlaced.getLocation())) {
+            return;
+        }
+
+
+
         // https://bukkit.atlassian.net/browse/BUKKIT-596 - BlockPlaceEvent getItemInHand() loses enchantments
         // so, have to get item from player instead
         //ItemStack item = event.getItemInHand();
@@ -197,6 +201,10 @@ class SilkSpawnersBlockListener implements Listener {
         if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
             item != null && item.getType() == SilkSpawners.SPAWN_EGG &&
             block != null && block.getType() == Material.MOB_SPAWNER) {
+
+            if (!plugin.canBuildHere(player, block.getLocation())) {
+                return;
+            }
 
             if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
                 player.sendMessage("You do not have permission to change spawners with spawn eggs");
@@ -499,6 +507,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             Block block = getSpawnerFacing(player);
+
             if (block == null) {
                 sender.sendMessage("You must be looking directly at a spawner to use this command");
                 return false;
@@ -576,6 +585,11 @@ public class SilkSpawners extends JavaPlugin {
 
     // Set spawner type from user
     public void setSpawnerType(Block block, short entityID, Player player) {
+        if (!canBuildHere(player, block.getLocation())) {
+            player.sendMessage("Changing spawner type denied by WorldGuard protection");
+            return;
+        }
+
         try {
             setSpawnerEntityID(block, entityID);
         } catch (Exception e) {
@@ -770,6 +784,10 @@ public class SilkSpawners extends JavaPlugin {
 
     // http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
     public WorldGuardPlugin getWorldGuard() {
+        if (!getConfig().getBoolean("useWorldGuard", true)) {
+            return null;
+        }
+
         Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
         if (plugin == null || !(plugin instanceof WorldGuardPlugin)) {
             return null;
