@@ -32,6 +32,8 @@ Many additional features can be enabled if desired, see below.
 ## Configuration
 usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
+useWorldGuard (true) - Whether to use [WorldGuard](http://dev.bukkit.org/server-mods/worldguard/) protection, if present.
+
 minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
  but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
 
