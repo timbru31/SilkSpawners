@@ -1,5 +1,6 @@
 X   1.2
     * Respect WorldGuard protection
+    * Add spawnersUnstackable config option (default false) 
 
 2012-03-11  1.1a
     * Add ocelot and iron golem

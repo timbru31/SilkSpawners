@@ -55,6 +55,8 @@ spawnerCommandReachDistance (6) - How close you have to be to use the /spawner c
 
 craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
+spawnersUnstackable (false) - Prevent spawners from stacking, by setting max stack size to 1.
+
 defaultCreature (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
 
 All spawner items obtained using SilkSpawners will have the creature type stored, but the
