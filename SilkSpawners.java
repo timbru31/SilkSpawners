@@ -455,16 +455,15 @@ public class SilkSpawners extends JavaPlugin {
 
         // Optionally make spawners unstackable in an attempt to be more compatible with CraftBukkit++
         // Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
-        // TODO: test
         if (getConfig().getBoolean("spawnersUnstackable", false)) {
             // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
             try {
-                Field maxStackSizeField = net.minecraft.server.Item.class.getDeclaredField("maxStackSize");
+                Field maxStackSizeField = net.minecraft.server.Item.class.getDeclaredField(getConfig().getString("spawnersUnstackableField", "maxStackSize"));
                 
                 maxStackSizeField.setAccessible(true);
-                maxStackSizeField.setInt(net.minecraft.server.Block.MOB_SPAWNER, 1);
+                maxStackSizeField.setInt(net.minecraft.server.Item.byId[Material.MOB_SPAWNER.getId()], 1);
             } catch (Exception e) {
-                log.warning("Failed to set max stack size, ignoring: " + e);
+                log.warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e);
             }
         }
     }

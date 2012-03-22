@@ -16,6 +16,7 @@ destroyDropBars: 0
 #destroyDropBars: 8
 
 craftableSpawners: false
+spawnersUnstackable: false
 
 verboseConfig: false
 useExtraMobs: false
