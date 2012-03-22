@@ -137,7 +137,9 @@ creatures:
         entityID: 120
         legacyID: 23
         aliases: ['npc', 'v']
-    
+   
+    # Modded mobs - if you're using 'useExtraMobs: true', comment/uncomment lines below as needed
+
     # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
     Buck:
@@ -163,4 +165,15 @@ creatures:
     Magicman:
         entityID: 174
         aliases: ['magician']
+
+    # Rancraft Penguins http://www.minecraftforum.net/topic/910095-123-rancraft-penguins-spmp-now-with-3-species/
+#    Little Blue Penguin:
+#        entityID: 16
+#        aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
+#    Flame Penguin:
+#        entityID: 17
+#        aliases: ['fpenguin', 'fp']
+#    Emperor Penguin:
+#        entityID: 87
+#        aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
 
