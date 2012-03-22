@@ -2,6 +2,7 @@
 
 consumeEgg: true
 usePermissions: false
+useWorldGuard: true
 defaultCreature: null
 spawnerCommandReachDistance: 6
 
