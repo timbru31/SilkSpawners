@@ -140,33 +140,101 @@ creatures:
    
     # Modded mobs - if you're using 'useExtraMobs: true', comment/uncomment lines below as needed
 
-    # Natural Selection mod from http://www.mcportcentral.co.za/index.php?topic=1360.0
-    # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
-    Buck:
+    # Animal Bikes mod for MCPC 1.2.3 from http://www.mcportcentral.co.za/index.php?topic=1692.0
+    # and http://www.minecraftforum.net/topic/762794-124-animal-bikes-v1111-sspsmp-added-iron-golem/
+    EntityCowBike:
+        entityID: 159
+        displayName: 'Cow Bike'
+        aliases: ['cbike', 'cowb']
+    EntitySpiderBike:
+        entityID: 160
+        displayName: 'Spider Bike'
+        aliases: ['sbike', 'spbike', 'spiderb']
+    EntityPigBike:
+        entityID: 161
+        displayName: 'Pig Bike'
+        aliases: ['pbike', 'pigb']
+    EntitySheepBike:
+        entityID: 162
+        displayName: 'Sheep Bike'
+        aliases: ['shbike', 'sheepb']
+    EntityChickenBike:
+        entityID: 163
+        displayName: 'Chicken Bike'
+        aliases: ['chbike', 'chickenb']
+    EntityWolfBike:
+        entityID: 164
+        displayName: 'Wolf Bike'
+        aliases: ['wbike', 'wolfb']
+    EntitySquidBike:
+        entityID: 165
+        displayName: 'Squid Bike'
+        aliases: ['sqbike', 'squidb']
+    EntityCreeperBike:
         entityID: 166
-        aliases: ['maledeer', 'mdeer']
-    Doe:
+        displayName: 'Creeper Bike'
+        aliases: ['crbike', 'creeperb']
+    EntityPonyBike:
         entityID: 167
-        aliases: ['femaledeer', 'fdeer', 'deer']
-    Tom:
+        displayName: 'Pony Bike'
+        aliases: ['pobike', 'ponyb', 'pony', 'horse']
+    EntityEndermanBike:
         entityID: 168
-        aliases: ['maleturkey', 'mturkey']
-    Hen:
+        displayName: 'Enderman Bike'
+        aliases: ['ebike', 'enderb', 'endermanb', 'enderbike']
+    EntityDragonBike:
         entityID: 169
-        aliases: ['femaleturkey', 'fturkey', 'turkey']
-    Grizzly:
+        displayName: 'Dragon Bike'
+        aliases: ['dbike', 'dragonb']
+    EntityNotchBike:
         entityID: 170
-        aliases: ['bear']
-    Boar:
+        displayName: 'Notch Bike'
+        aliases: ['nbike', 'notchb', 'notch']
+    EntityReindeerBike:
         entityID: 171
-        aliases: ['wildpig']
-    Dingo:
-        entityID: 173       # no 172?
-    Magicman:
+        displayName: 'Reindeer Bike'
+        aliases: ['rbike', 'reindeerb', 'reindeer', 'deer']
+    EntitySnowGolemBike:
+        entityID: 172
+        displayName: 'Snow Golem Bike'
+        aliases: ['sgbike', 'snowbike', 'snowgolemb', 'sgolemb', 'snowgollembike', 'snowgolembike']
+    EntityGhastBike:
+        entityID: 173
+        displayName: 'Ghast Bike'
+        aliases: ['gbike', 'ghastb']
+    EntityIronmanBike:
         entityID: 174
-        aliases: ['magician']
+        displayName: 'Iron Golem Bike'
+        aliases: ['igbike', 'irongolemb', 'igolemb']
 
-    # Rancraft Penguins http://www.minecraftforum.net/topic/910095-123-rancraft-penguins-spmp-now-with-3-species/
+    # Natural Selection mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
+    # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
+#    Buck:
+#        entityID: 166
+#        aliases: ['maledeer', 'mdeer']
+#    Doe:
+#        entityID: 167
+#        aliases: ['femaledeer', 'fdeer', 'deer']
+#    Tom:
+#        entityID: 168
+#        aliases: ['maleturkey', 'mturkey']
+#    Hen:
+#        entityID: 169
+#        aliases: ['femaleturkey', 'fturkey', 'turkey']
+#    Grizzly:
+#        entityID: 170
+#        aliases: ['bear']
+#    Boar:
+#        entityID: 171
+#        aliases: ['wildpig']
+#    Dingo:
+#        entityID: 173       # no 172?
+#    Magicman:
+#        entityID: 174
+#        aliases: ['magician']
+
+    # Rancraft Penguins mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
+    # and http://www.minecraftforum.net/topic/910095-123-rancraft-penguins-spmp-now-with-3-species/
 #    Little Blue Penguin:
 #        entityID: 16
 #        aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
