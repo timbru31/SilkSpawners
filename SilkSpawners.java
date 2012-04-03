@@ -266,7 +266,9 @@ class SilkSpawnersBlockListener implements Listener {
                     // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
                     // nms EntityTypes.a() will let you spawn by entity id
 
-                    player.sendMessage("Spawning entity " + entityID);
+                    if (player.isOp()) {
+                        player.sendMessage("Spawning entity " + entityID);
+                    }
 
                     net.minecraft.server.World world = ((CraftWorld)player.getWorld()).getHandle();
 
