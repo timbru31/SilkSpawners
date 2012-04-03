@@ -49,6 +49,11 @@ useReflection (true) - Use reflection to get/set mob IDs, or otherwise use Bukki
 
 useExtraMobs (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
 
+spawnEggOverride (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs)
+whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed, including
+enderdragons, ender crystals, primed TNT, boats, or even invalid entities, so be careful. Mainly intended for testing purposes,
+or if you want to spawn modded items not recognized by CraftBukkit.
+
 verboseConfig (false) - Log verbose configuration information on load.
 
 spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
