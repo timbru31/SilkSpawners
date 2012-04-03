@@ -60,6 +60,7 @@ import org.bukkit.scheduler.*;
 import org.bukkit.enchantments.*;
 import org.bukkit.*;
 
+import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
 
@@ -197,38 +198,103 @@ class SilkSpawnersBlockListener implements Listener {
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
 
-        // Clicked spawner with monster egg to change type
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
-            item != null && item.getType() == SilkSpawners.SPAWN_EGG &&
-            block != null && block.getType() == Material.MOB_SPAWNER) {
-
-            if (!plugin.canBuildHere(player, block.getLocation())) {
-                return;
-            }
-
-            if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
-                player.sendMessage("You do not have permission to change spawners with spawn eggs");
-                return;
-            }
-
-
+        if (item != null && item.getType() == SilkSpawners.SPAWN_EGG) {
             short entityID = item.getDurability();
 
-            plugin.setSpawnerType(block, entityID, player);
+            // Clicked spawner with monster egg to change type
+            if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
+                block != null && block.getType() == Material.MOB_SPAWNER) {
 
-            // Consume egg
-            if (plugin.getConfig().getBoolean("consumeEgg", true)) {
-                PlayerInventory inventory = player.getInventory();
-                int slot = inventory.getHeldItemSlot();
+                if (!plugin.canBuildHere(player, block.getLocation())) {
+                    return;
+                }
 
-                ItemStack eggs = inventory.getItem(slot);
+                if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
+                    player.sendMessage("You do not have permission to change spawners with spawn eggs");
+                    return;
+                }
 
-                if (eggs.getAmount() == 1) {
-                    // Common case.. one egg, used up
-                    inventory.clear(slot);
-                } else {
-                    // Cannot legitimately get >1 egg per slot (in 1.1, but supposedly 1.2 will support it), but should support it regardless
-                    inventory.setItem(slot, SilkSpawners.newEggItem(entityID, eggs.getAmount() - 1));
+
+                plugin.setSpawnerType(block, entityID, player);
+
+                // Consume egg
+                if (plugin.getConfig().getBoolean("consumeEgg", true)) {
+                    PlayerInventory inventory = player.getInventory();
+                    int slot = inventory.getHeldItemSlot();
+
+                    ItemStack eggs = inventory.getItem(slot);
+
+                    if (eggs.getAmount() == 1) {
+                        // Common case.. one egg, used up
+                        inventory.clear(slot);
+                    } else {
+                        // Cannot legitimately get >1 egg per slot (in 1.1, but supposedly 1.2 will support it), but should support it regardless
+                        inventory.setItem(slot, SilkSpawners.newEggItem(entityID, eggs.getAmount() - 1));
+                    }
+                }
+            } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                // Using spawn egg
+                if (plugin.getConfig().getBoolean("spawnEggOverride", false)) { // disabled by default, since it is dangerous
+
+                    // CB blacklists dragon (63) and 48,49 for some reason.. and it also prevents spawning of entities without
+                    // its CB EntityType wrapper class, or entities that aren't living. Proof:
+                    // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java
+                    //       if (world.isStatic || itemstack.getData() == 48 || itemstack.getData() == 49 || itemstack.getData() == 63) { // CraftBukkit
+                    /*
+                    Entity entity = EntityTypes.a(i, world);
+
+                    if (entity != null && entity instanceof EntityLiving) { // CraftBukkit
+                        entity.setPositionRotation(d0, d1, d2, world.random.nextFloat() * 360.0F, 0.0F);
+                        world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG); // CraftBukkit
+                        ((EntityLiving) entity).az();
+                    }
+                    */
+
+                    // Its mob spawner also tries to detect "bad" entities", but is less stringent, in that it can spawn dragons!
+                    // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java
+                    /*
+                    Entity mob = EntityTypes.createEntityByName(this.mobName, this.world);
+                    if (!(mob instanceof EntityLiving)) {
+                        mobName = "Pig";
+                        return;
+                    }
+                    EntityLiving entityliving = (EntityLiving) ((EntityLiving) mob);
+                    // CraftBukkit end
+                    */
+
+                    // where is EntityTypes? it isn't in CB, but can be found decompiled in mc-dev:
+                    // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
+                    // nms EntityTypes.a() will let you spawn by entity id
+
+                    player.sendMessage("Spawning entity " + entityID);
+
+                    net.minecraft.server.World world = ((CraftWorld)player.getWorld()).getHandle();
+
+                    net.minecraft.server.Entity entity = net.minecraft.server.EntityTypes.a(entityID, world);
+
+                    if (entity == null) {
+                        player.sendMessage("Failed to spawn, falling through");
+                        return; // not cancelled
+                    }
+
+                    // Spawn right above player TODO: in front of, instead
+                    double x = player.getLocation().getX();
+                    double y = player.getLocation().getY() + 1;
+                    double z = player.getLocation().getZ();
+
+                    // Magic
+                    entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
+                    world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
+                    if (entity instanceof net.minecraft.server.EntityLiving) {
+                        ((net.minecraft.server.EntityLiving)entity).az();
+                    }
+
+                    // Remove item from player hand
+                    // TODO: unstack
+                    player.setItemInHand(null);
+                    
+                    // prevent normal spawning
+                    event.setCancelled(true);
                 }
             }
         }

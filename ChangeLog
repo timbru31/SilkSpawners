@@ -1,3 +1,7 @@
+
+    * Add mob and entity IDs from AnimalBikes 1.11.0 in config.yml
+    * Add spawnEggOverride in case you want to spawn dragons, crystals, etc. (dangerous, default off)
+
 2012-03-21  1.2
     * Respect WorldGuard protection
     * Add spawnersUnstackable config option (default false) 
