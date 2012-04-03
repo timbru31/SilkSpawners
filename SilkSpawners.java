@@ -407,6 +407,25 @@ public class SilkSpawners extends JavaPlugin {
         return true;
     }
 
+    @SuppressWarnings("unchecked")
+    private void dumpEntityMap() {
+        // Use reflection to dump native EntityTypes
+        // This bypasses Bukkit's wrappers
+        try {
+            // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
+            // f.put(s, Integer.valueOf(i));
+            Field field = net.minecraft.server.EntityTypes.class.getDeclaredField(getConfig().getString("entityMapField", "f"));
+            field.setAccessible(true);
+            Map map = (Map)field.get(null);
+
+            for (Map.Entry<String,Integer> entry: ((Map<String,Integer>)map).entrySet()) {
+                log.info("Entity: " + entry.getKey() + " = " + entry.getValue());
+            }
+        } catch (Exception e) {
+            log.info("Failed to dump entity map: " + e);
+        }
+    }
+
     private void loadConfig() {
         String filename = getDataFolder() + System.getProperty("file.separator") + "config.yml";
         File file = new File(filename);
@@ -419,6 +438,10 @@ public class SilkSpawners extends JavaPlugin {
         reloadConfig();
 
         boolean verbose = getConfig().getBoolean("verboseConfig", true);
+
+        if (getConfig().getBoolean("dumpEntityMap", true)) {
+            dumpEntityMap();
+        }
 
         legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
@@ -776,8 +799,6 @@ public class SilkSpawners extends JavaPlugin {
 
     // Return whether mob is recognized by Bukkit's wrappers
     public boolean isRecognizedMob(String mobID) {
-        // TODO: 1.1-R5 
-        //return EntityType.fromName(mobID) != null;
         return EntityType.fromName(mobID) != null;
     }
 
