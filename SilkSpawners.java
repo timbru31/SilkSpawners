@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -418,7 +420,9 @@ public class SilkSpawners extends JavaPlugin {
             field.setAccessible(true);
             Map map = (Map)field.get(null);
 
-            for (Map.Entry<String,Integer> entry: ((Map<String,Integer>)map).entrySet()) {
+            SortedMap sortedMap = new TreeMap(map);
+
+            for (Map.Entry<String,Integer> entry: ((SortedMap<String,Integer>)sortedMap).entrySet()) {
                 log.info("Entity: " + entry.getKey() + " = " + entry.getValue());
             }
         } catch (Exception e) {
