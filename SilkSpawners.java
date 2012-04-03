@@ -420,11 +420,16 @@ public class SilkSpawners extends JavaPlugin {
             field.setAccessible(true);
             Map map = (Map)field.get(null);
 
-            SortedMap sortedMap = new TreeMap(map);
+            SortedMap<Integer,String> sortedMap = new TreeMap<Integer,String>();
 
-            for (Map.Entry<String,Integer> entry: ((SortedMap<String,Integer>)sortedMap).entrySet()) {
-                log.info("Entity: " + entry.getKey() + " = " + entry.getValue());
+            for (Map.Entry<String,Integer> entry: ((Map<String,Integer>)map).entrySet()) {
+                sortedMap.put(entry.getValue(), entry.getKey());
             }
+
+            for (Map.Entry<Integer,String> entry: sortedMap.entrySet()) {
+                log.info("Entity " + entry.getKey() + " = " + entry.getValue());
+            }
+
         } catch (Exception e) {
             log.info("Failed to dump entity map: " + e);
         }
@@ -443,7 +448,7 @@ public class SilkSpawners extends JavaPlugin {
 
         boolean verbose = getConfig().getBoolean("verboseConfig", true);
 
-        if (getConfig().getBoolean("dumpEntityMap", true)) {
+        if (getConfig().getBoolean("dumpEntityMap", false)) {
             dumpEntityMap();
         }
 

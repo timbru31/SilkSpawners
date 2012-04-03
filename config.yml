@@ -21,6 +21,7 @@ spawnersUnstackable: false
 verboseConfig: false
 useExtraMobs: false
 spawnEggOverride: false
+dumpEntityMap: false
 
 # creatures: key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
