@@ -268,7 +268,7 @@ class SilkSpawnersBlockListener implements Listener {
                     // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
                     // nms EntityTypes.a() will let you spawn by entity id
 
-                    if (player.isOp()) {
+                    if (hasPermission(player, "silkspawners.info")) {
                         player.sendMessage("Spawning entity " + entityID);
                     }
 
@@ -277,7 +277,9 @@ class SilkSpawnersBlockListener implements Listener {
                     net.minecraft.server.Entity entity = net.minecraft.server.EntityTypes.a(entityID, world);
 
                     if (entity == null) {
-                        player.sendMessage("Failed to spawn, falling through");
+                        if (hasPermission(player, "silkspawners.info")) {
+                            player.sendMessage("Failed to spawn, falling through");
+                        }
                         return; // not cancelled
                     }
 

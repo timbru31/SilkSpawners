@@ -30,44 +30,44 @@ Many additional features can be enabled if desired, see below.
 [Forum thread](http://forums.bukkit.org/threads/mech-fix-info-admn-silkspawners-v1-0-harvest-mob-spawners-1-1-r4.59077/)
 
 ## Configuration
-usePermissions (false) - Whether to use Bukkit's superperms system, or the defaults below.
+*usePermissions* (false) - Whether to use Bukkit's superperms system, or the defaults below.
 
-useWorldGuard (true) - Whether to use [WorldGuard](http://dev.bukkit.org/server-mods/worldguard/) protection, if present.
+*useWorldGuard* (true) - Whether to use [WorldGuard](http://dev.bukkit.org/server-mods/worldguard/) protection, if present.
 
-minSilkTouchLevel (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
+*minSilkTouchLevel* (1) - Minimum enchantment level required for Silk Touch to harvest spawners. Normally Silk Touch I is required,
  but you can set this to 0 to make no enchantment required, or 2+ to require non-standard (normally unobtainable) enchantments.
 
-destroyDropEgg (false) - Whether to give a spawn egg when spawner is destroyed without Silk Touch.
+*destroyDropEgg* (false) - Whether to give a spawn egg when spawner is destroyed without Silk Touch.
 
-destroyDropXP (0) - Experience points to drop when spawner is destroyed.
+*destroyDropXP* (0) - Experience points to drop when spawner is destroyed.
 
-destroyDropBars (0) - Iron bars to drop when spawner is destroyed.
+*destroyDropBars* (0) - Iron bars to drop when spawner is destroyed.
 
-consumeEgg (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
+*consumeEgg* (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 
-useReflection (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
+*useReflection* (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
 
-useExtraMobs (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
+*useExtraMobs* (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
 
-spawnEggOverride (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs)
+*spawnEggOverride* (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs)
 whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed, including
 enderdragons, ender crystals, primed TNT, boats, or even invalid entities, so be careful
 (note that SilkSpawners won't give you an egg for any item using /ss if it isn't in the config).
 Mainly intended for testing purposes, or if you want to spawn modded items not recognized by CraftBukkit.
 
-dumpEntityMap (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
+*dumpEntityMap* (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
 classes (not Bukkit's wrappers). This is useful if you want to debug mods which add new entities. After dumping
 the list you can manually add the IDs and any aliases you want to the creatures list (see below).
 
-verboseConfig (false) - Log verbose configuration information on load.
+*verboseConfig* (false) - Log verbose configuration information on load.
 
-spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
+*spawnerCommandReachDistance* (6) - How close you have to be to use the /spawner command.
 
-craftableSpawners (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
+*craftableSpawners* (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
 
-spawnersUnstackable (false) - Prevent spawners from stacking, by setting max stack size to 1.
+*spawnersUnstackable* (false) - Prevent spawners from stacking, by setting max stack size to 1.
 
-defaultCreature (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
+*defaultCreature* (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
 
 All spawner items obtained using SilkSpawners will have the creature type stored, but the
 default creature will be used if the spawner is obtained using:
@@ -77,7 +77,7 @@ default creature will be used if the spawner is obtained using:
 * other plugins not knowledgeable of SilkSpawners' conventions
 
 
-creatures - Mapping between internal mob ID string for spawners,
+*creatures* - Mapping between internal mob ID string for spawners,
 [entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) for spawn eggs, and optional aliases / display name.
 If a mob isn't listed here it won't be recognized by SilkSpawners so you can add/delete entities as desired.
 
@@ -89,28 +89,28 @@ For more advanced setup,
 set *usePermissions: true* in config.yml, and all permission nodes will be set to *false*, allowing for
 flexible configuration through your permission plugin as desired.
 
-silkspawners.info (true) -
+*silkspawners.info* (true) -
 Allows you to see informative messages about the spawners as you place and break them
 
-silkspawners.silkdrop (true) -
+*silkspawners.silkdrop* (true) -
 Allows you to use silk touch to acquire mob spawner items
 
-silkspawners.destroydrop (true) -
+*silkspawners.destroydrop* (true) -
 Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
 
-silkspawners.viewtype (true) -
+*silkspawners.viewtype* (true) -
 Allows you to view the spawner type using /spawner
 
-silkspawners.changetype (op) -
+*silkspawners.changetype* (op) -
 Allows you to change the spawner type using /spawner [creature]
 
-silkspawners.changetypewithegg (op) -
+*silkspawners.changetypewithegg* (op) -
 Allows you to change the spawner type by left-clicking with a spawn egg
 
-silkspawners.freeitem (op) -
+*silkspawners.freeitem* (op) -
 Allows you to get spawner items in your hand for free using /spawner [creature]
 
-silkspawners.freeitemegg (op) -
+*silkspawners.freeitemegg* (op) -
 Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
 
 ## Technical Details
