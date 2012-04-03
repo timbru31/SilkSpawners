@@ -1,6 +1,8 @@
 
     * Add mob and entity IDs from AnimalBikes 1.11.0 in config.yml
-    * Add spawnEggOverride in case you want to spawn dragons, crystals, etc. (dangerous, default off)
+    * Add spawnEggOverride option in case you want to spawn dragons, crystals, etc. 
+      using spawn eggs (dangerous, default off)
+    * Add dumpEntityMap option to show entity ID mapping for debugging purposes
 
 2012-03-21  1.2
     * Respect WorldGuard protection

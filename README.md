@@ -54,6 +54,9 @@ whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed
 enderdragons, ender crystals, primed TNT, boats, or even invalid entities, so be careful. Mainly intended for testing purposes,
 or if you want to spawn modded items not recognized by CraftBukkit.
 
+dumpEntityMap (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
+classes (not Bukkit's wrappers). This is useful if you want to debug mobs which add new entities.
+
 verboseConfig (false) - Log verbose configuration information on load.
 
 spawnerCommandReachDistance (6) - How close you have to be to use the /spawner command.
