@@ -572,13 +572,13 @@ public class SilkSpawners extends JavaPlugin {
 
     private void loadRecipes() {
         for (short entityID: eid2DisplayName.keySet()) {
-            ItemStack spawnerItem = newSpawnerItem(entityID);
-            ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
-		      recipe.shape(new String[] { "AAA", "ABA", "AAA" });
-		      recipe.setIngredient('A', Material.IRON_FENCE);
-	      	recipe.setIngredient('B', Material.MONSTER_EGG, (int)entityID);
+		ItemStack spawnerItem = newSpawnerItem(entityID);
+		ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
+		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
+		recipe.setIngredient('A', Material.IRON_FENCE);
+		recipe.setIngredient('B', Material.MONSTER_EGG, (int)entityID);
 
-            Bukkit.getServer().addRecipe(recipe);
+		Bukkit.getServer().addRecipe(recipe);
         }
     }
 
