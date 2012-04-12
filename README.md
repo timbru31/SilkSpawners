@@ -3,6 +3,8 @@ SilkSpawners - harvest mob spawners with silk touch
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
+**[Download SilkSpawners 1.4](http://dev.bukkit.org/server-mods/silkspawners/files/12-silk-spawners-1-4/)** - released 2012/04/11
+
 Features:
 
 * Spawner retains creature type
@@ -50,6 +52,7 @@ Many additional features can be enabled if desired, see below.
 *useReflection* (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
 
 *useExtraMobs* (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
+Please note, SilkSpawners does not add any new mob types itself, but it is compatible with mobs added by other mods.
 
 *spawnEggOverride* (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs)
 whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed, including
