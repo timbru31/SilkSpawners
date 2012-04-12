@@ -3,8 +3,6 @@ SilkSpawners - harvest mob spawners with silk touch
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
-**New! [SilkSpawners 1.3](http://dev.bukkit.org/server-mods/silkspawners/files/11-silk-spawners-1-3/)** - for 1.2.4-R0.1 and 1.2.3-R0.3 - released 2012/04/02
-
 Features:
 
 * Spawner retains creature type
@@ -22,6 +20,8 @@ Features:
 * Optional support for custom mobs added by client/server mods
 * Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Optional support for dumping entity ID map on startup for debugging mods
+* Compatible with MCPC builds of CraftBukkit (see useExtraMobs config option)
+* Compatible with CraftBukkit++ (see spawnersUnstackable)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 
 ## Usage
@@ -65,9 +65,13 @@ the list you can manually add the IDs and any aliases you want to the creatures 
 
 *spawnerCommandReachDistance* (6) - How close you have to be to use the /spawner command.
 
-*craftableSpawners* (false) - Enable crafting mob spawners using spawner egg + 8 iron bars.
+*craftableSpawners* (false) - Enable crafting mob spawners using spawner egg in center surrounded by 8 iron bars.
+Once enabled, crafting spawners for individual creatures can be disabled by setting *enableCraftingSpawner* to false
+in the *creatures* section below (if omitted, will default to true, but both config options must be enabled for
+spawners to be craftable).
 
-*spawnersUnstackable* (false) - Prevent spawners from stacking, by setting max stack size to 1.
+*spawnersUnstackable* (false) - Prevent spawners from stacking, by setting max stack size to 1. Useful
+on CraftBukkit++ to prevent spawners from stacking when dropped as items. Not needed on vanilla CraftBukkit builds.
 
 *defaultCreature* (null) - When generic spawner items are placed, spawn this creature (or null for Minecraft's default, pigs).
 
@@ -79,9 +83,19 @@ default creature will be used if the spawner is obtained using:
 * other plugins not knowledgeable of SilkSpawners' conventions
 
 
-*creatures* - Mapping between internal mob ID string for spawners,
-[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) for spawn eggs, and optional aliases / display name.
-If a mob isn't listed here it won't be recognized by SilkSpawners so you can add/delete entities as desired.
+*creatures* - Mapping between internal mob ID string for spawners, and other crucial information.
+If a mob isn't listed here it won't be recognized by SilkSpawners so you can add/delete entities as desired. Keys include:
+
+*creatures.X.entityID*: Numeric ID for the entity in the world, also corresponds to the damage value of spawn eggs. See
+[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) on Minecraft wiki for vanilla entity IDs, or use
+dumpEntityMap to see the list of custom entities.
+
+*creatures.X.aliases*: An optional list of aliases to recognize as alternate names for the mob.
+
+*creatures.X.displayName*: The human-readable name of the mob.
+
+*creatures.X.enableCraftingSpawner*: If *craftableSpawners* is enabled (see above), then a crafting recipe will be enabled
+for this mob unless this config option is false.
 
 ## Permissions
 **Permission support is optional** and off by default. When turned off, the settings shown in parentheses 
