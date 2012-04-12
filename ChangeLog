@@ -1,4 +1,4 @@
-
+2012-04-11  1.4
     * Improve spawnEggOverride to spawn on clicked block instead of above player
     * Change craftableSpawners recipes to shaped (egg surrounded by iron bars)
     * Add per-creature crafting recipe config options (enableCraftingSpawner)
