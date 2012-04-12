@@ -283,10 +283,12 @@ class SilkSpawnersBlockListener implements Listener {
                         return; // not cancelled
                     }
 
-                    // Spawn right above player TODO: in front of, instead
-                    double x = player.getLocation().getX();
-                    double y = player.getLocation().getY() + 1;
-                    double z = player.getLocation().getZ();
+                    // Spawn on top of targetted block
+                    Location location = block.getLocation().add(0, 1, 0);
+
+                    double x = location.getX();
+                    double y = location.getY();
+                    double z = location.getZ();
 
                     // Magic
                     entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
