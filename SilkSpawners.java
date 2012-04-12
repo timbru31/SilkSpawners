@@ -268,7 +268,7 @@ class SilkSpawnersBlockListener implements Listener {
                     // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
                     // nms EntityTypes.a() will let you spawn by entity id
 
-                    if (hasPermission(player, "silkspawners.info")) {
+                    if (plugin.hasPermission(player, "silkspawners.info")) {
                         player.sendMessage("Spawning entity " + entityID);
                     }
 
@@ -277,7 +277,7 @@ class SilkSpawnersBlockListener implements Listener {
                     net.minecraft.server.Entity entity = net.minecraft.server.EntityTypes.a(entityID, world);
 
                     if (entity == null) {
-                        if (hasPermission(player, "silkspawners.info")) {
+                        if (plugin.hasPermission(player, "silkspawners.info")) {
                             player.sendMessage("Failed to spawn, falling through");
                         }
                         return; // not cancelled
@@ -534,7 +534,7 @@ public class SilkSpawners extends JavaPlugin {
 
         usePermissions = getConfig().getBoolean("usePermissions", false);
 
-        if (getConfig().getBoolean("craftableSpawners", true)) {
+        if (getConfig().getBoolean("craftableSpawners", false)) {
             loadRecipes();
         }
 
@@ -571,14 +571,25 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadRecipes() {
-        for (short entityID: eid2DisplayName.keySet()) {
-		ItemStack spawnerItem = newSpawnerItem(entityID);
-		ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
-		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
-		recipe.setIngredient('A', Material.IRON_FENCE);
-		recipe.setIngredient('B', Material.MONSTER_EGG, (int)entityID);
+        for (short entityID: eid2MobID.keySet()) {
+            String mobID = eid2MobID.get(entityID);
 
-		Bukkit.getServer().addRecipe(recipe);
+            if (!getConfig().getBoolean("creatures."+mobID+".enableCraftingSpawner", true)) {
+                if (getConfig().getBoolean("verboseConfig", true)) {
+                    log.info("Skipping crafting recipe for "+mobID+" per config");
+                }
+                continue;
+            }
+
+            ItemStack spawnerItem = newSpawnerItem(entityID);
+
+            ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
+
+            recipe.shape(new String[] { "AAA", "ABA", "AAA" });
+            recipe.setIngredient('A', Material.IRON_FENCE);
+            recipe.setIngredient('B', Material.MONSTER_EGG, (int)entityID);
+
+            Bukkit.getServer().addRecipe(recipe);
         }
     }
 
