@@ -22,8 +22,10 @@ Features:
 * Optional support for custom mobs added by client/server mods
 * Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Optional support for dumping entity ID map on startup for debugging mods
-* Compatible with MCPC builds of CraftBukkit (see useExtraMobs config option)
 * Compatible with CraftBukkit++ (see spawnersUnstackable)
+* Compatible with MCPC (see useExtraMobsoption)
+* Compatible with Not Enough Items (newer builds only)
+* Compatible with Spout (optional)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 
 ## Usage
@@ -72,6 +74,13 @@ the list you can manually add the IDs and any aliases you want to the creatures 
 Once enabled, crafting spawners for individual creatures can be disabled by setting *enableCraftingSpawner* to false
 in the *creatures* section below (if omitted, will default to true, but both config options must be enabled for
 spawners to be craftable).
+
+*useSpout* (true) - Set to false to not use Spout features even if Spout plugin is present. If Spout is not detected,
+this option has no effect.
+
+*notifyOnClick* (true) - Whether to notify a player the spawner type when clicking a spawner in inventory.
+
+*notifyOnHold* (true) - Whether to notify a player the spawner type when holding a spawner.
 
 *spawnersUnstackable* (false) - Prevent spawners from stacking, by setting max stack size to 1. Useful
 on CraftBukkit++ to prevent spawners from stacking when dropped as items. Not needed on vanilla CraftBukkit builds.
