@@ -3,6 +3,7 @@ main: me.exphc.SilkSpawners.SilkSpawners
 version: 1.3
 url: http://dev.bukkit.org/server-mods/silkspawners/
 description: pick up and move monster spawners using silk touch
+softdepend: [Spout]
 commands:
     silkspawners:
         aliases: [silkspawner, ss, spawner]

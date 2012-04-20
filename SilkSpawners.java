@@ -27,46 +27,53 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package me.exphc.SilkSpawners;
 
-import java.util.Collections;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.UUID;
-import java.util.Iterator;
-import java.util.logging.Logger;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.Formatter;
-import java.lang.Byte;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.plugin.*;
-import org.bukkit.event.*;
-import org.bukkit.event.block.*;
-import org.bukkit.event.player.*;
-import org.bukkit.entity.*;
-import org.bukkit.Material.*;
-import org.bukkit.material.*;
-import org.bukkit.block.*;
-import org.bukkit.entity.*;
-import org.bukkit.command.*;
-import org.bukkit.inventory.*;
-import org.bukkit.configuration.*;
-import org.bukkit.configuration.file.*;
-import org.bukkit.scheduler.*;
-import org.bukkit.enchantments.*;
-import org.bukkit.*;
-
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.CreatureSpawner;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.MemorySection;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
-import org.bukkit.craftbukkit.enchantments.CraftEnchantment;
-
-import net.minecraft.server.CraftingManager;        
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ExperienceOrb;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.getspout.spoutapi.player.SpoutPlayer;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
@@ -102,6 +109,88 @@ class SilkSpawnersBlockListener implements Listener {
         return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
 
+    /**
+	 * To show a chat message that a player clicked on an mob spawner
+	 * @param event
+	 * @author Chris Churchwell (thedudeguy)
+	 */
+	@EventHandler
+	public void OnClickSpawner(InventoryClickEvent event) {
+		
+		if (
+				plugin.getConfig().getBoolean("notifyOnClick") &&
+				event.getCurrentItem() != null &&
+				event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) &&
+				event.getWhoClicked() instanceof Player &&
+				plugin.hasPermission((Player)event.getWhoClicked(), "silkspawners.info")
+				) {
+			
+			if (
+					SilkSpawners.getStoredSpawnerItemEntityID(event.getCurrentItem()) == 0 &&
+					plugin.defaultEntityID == 0
+					) {
+				return ;
+			}
+			
+			short entityID = SilkSpawners.getStoredSpawnerItemEntityID(event.getCurrentItem());
+			if (entityID == 0) entityID = plugin.defaultEntityID;
+			
+			String spawnerName = plugin.getCreatureName(entityID);
+			
+			if (
+					plugin.spoutEnabled &&
+					((SpoutPlayer)event.getWhoClicked()).isSpoutCraftEnabled()
+					) {
+				((SpoutPlayer)event.getWhoClicked()).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
+			} else {
+				Player player = (Player)event.getWhoClicked();
+				player.sendMessage(" ");
+				player.sendMessage("-- Monster Spawner --");
+				player.sendMessage("-- Type: " + spawnerName);
+			}
+		}
+		
+	}
+    
+	/**
+	 * To show a chat message that a player is holding a mob spawner and its type
+	 * @param event
+	 * @author Chris Churchwell (thedudeguy)
+	 */
+	@EventHandler
+	public void OnHoldSpawner(PlayerItemHeldEvent event) {
+		if (
+				plugin.getConfig().getBoolean("notifyOnHold") &&
+				plugin.hasPermission((Player)event.getPlayer(), "silkspawners.info") &&
+				event.getPlayer().getInventory().getItem(event.getNewSlot()) != null &&
+				event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)
+				) {
+			
+			if (
+					SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 &&
+					plugin.defaultEntityID == 0
+					) {
+				return ;
+			}
+			
+			short entityID = SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+			if (entityID == 0) entityID = plugin.defaultEntityID;
+			
+			String spawnerName = plugin.getCreatureName(entityID);
+			
+			if(
+					plugin.spoutEnabled && 
+					((SpoutPlayer)event.getPlayer()).isSpoutCraftEnabled()
+					) {
+				((SpoutPlayer)event.getPlayer()).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
+			} else {
+				event.getPlayer().sendMessage(" ");
+				event.getPlayer().sendMessage("-- Monster Spawner --");
+				event.getPlayer().sendMessage("-- Type: " + spawnerName);
+			}
+		}
+	}
+	
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled=true)
     public void onBlockBreak(final BlockBreakEvent event) {
         Block block = event.getBlock();
@@ -130,7 +219,7 @@ class SilkSpawnersBlockListener implements Listener {
 
         if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop")) {
             // Drop spawner
-            dropItem = plugin.newSpawnerItem(entityID);
+            dropItem = SilkSpawners.newSpawnerItem(entityID);
             world.dropItemNaturally(block.getLocation(), dropItem);
             return;
         } 
@@ -176,7 +265,7 @@ class SilkSpawnersBlockListener implements Listener {
         ItemStack item = player.getItemInHand();
 
         // Get data from item
-        short entityID = plugin.getStoredSpawnerItemEntityID(item);
+        short entityID = SilkSpawners.getStoredSpawnerItemEntityID(item);
         if (entityID == 0) {
             plugin.informPlayer(player, "Placing default spawner");
             entityID = plugin.defaultEntityID;
@@ -268,7 +357,7 @@ class SilkSpawnersBlockListener implements Listener {
                     // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
                     // nms EntityTypes.a() will let you spawn by entity id
 
-                    if (hasPermission(player, "silkspawners.info")) {
+                    if (plugin.hasPermission(player, "silkspawners.info")) {
                         player.sendMessage("Spawning entity " + entityID);
                     }
 
@@ -277,7 +366,7 @@ class SilkSpawnersBlockListener implements Listener {
                     net.minecraft.server.Entity entity = net.minecraft.server.EntityTypes.a(entityID, world);
 
                     if (entity == null) {
-                        if (hasPermission(player, "silkspawners.info")) {
+                        if (plugin.hasPermission(player, "silkspawners.info")) {
                             player.sendMessage("Failed to spawn, falling through");
                         }
                         return; // not cancelled
@@ -347,10 +436,22 @@ public class SilkSpawners extends JavaPlugin {
 
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own material
     final static Material SPAWN_EGG = Material.MONSTER_EGG;
+    
+    public boolean spoutEnabled = false;
 
     public void onEnable() {
         loadConfig();
-
+        
+        //check for spout
+      	if (Bukkit.getPluginManager().isPluginEnabled("Spout")) {
+      		if (getConfig().getBoolean("useSpout")) {
+      			Bukkit.getLogger().log(Level.INFO, "[SilkSpawners] Spout present. Enabling Spout features.");
+      			spoutEnabled = true;
+      		} else {
+      			Bukkit.getLogger().log(Level.INFO, "[SilkSpawners] Disabling Spout features even though Spout is present.");
+      		}
+      	}
+        
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this);
 
@@ -420,7 +521,7 @@ public class SilkSpawners extends JavaPlugin {
             // f.put(s, Integer.valueOf(i));
             Field field = net.minecraft.server.EntityTypes.class.getDeclaredField(getConfig().getString("entityMapField", "f"));
             field.setAccessible(true);
-            Map map = (Map)field.get(null);
+            Map<String,Integer> map = (Map<String,Integer>)field.get(null);
 
             SortedMap<Integer,String> sortedMap = new TreeMap<Integer,String>();
 
