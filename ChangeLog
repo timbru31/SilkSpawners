@@ -1,6 +1,9 @@
+X   X   
+    * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)
+
 2012-04-11  1.4
     * Improve spawnEggOverride to spawn on clicked block instead of above player
-    * Change craftableSpawners recipes to shaped (egg surrounded by iron bars)
+    * Change craftableSpawners recipes to shaped, egg surrounded by iron bars (thanks xGh0sTkiLLeRx)
     * Add per-creature crafting recipe config options (enableCraftingSpawner)
 
 2012-04-02  1.3

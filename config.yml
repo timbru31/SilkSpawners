@@ -1,12 +1,5 @@
 # See documentation at http://dev.bukkit.org/server-mods/silkspawners/
 
-# Set to false to not use spout features even if spout is present
-useSpout: true
-# Whether to notify a player the spawner type when clicking a spawner in inventory
-notifyOnClick: true
-# Whether to notify a player the spawner type when holding a spawner
-notifyOnHold: true
-
 consumeEgg: true
 usePermissions: false
 useWorldGuard: true
@@ -29,6 +22,10 @@ verboseConfig: false
 useExtraMobs: false
 spawnEggOverride: false
 dumpEntityMap: false
+
+useSpout: true
+notifyOnClick: true
+notifyOnHold: true
 
 # creatures: key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
