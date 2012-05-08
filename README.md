@@ -3,6 +3,8 @@ SilkSpawners - harvest mob spawners with silk touch
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
+**[Download SilkSpawners 1.5](http://dev.bukkit.org/server-mods/silkspawners/files/13-silk-spawners-1-5/)** - released 2012/05/07
+
 Features:
 
 * Spawner retains creature type
