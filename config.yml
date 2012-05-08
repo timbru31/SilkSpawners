@@ -291,18 +291,30 @@ creatures:
 #        aliases: ['magician']
 #        enableCraftingSpawner: true
 
-    # Rancraft Penguins mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
-    # and http://www.minecraftforum.net/topic/910095-123-rancraft-penguins-spmp-now-with-3-species/
+    # Rancraft Penguins 1.2.5f mod for CraftBukkit 1.2.5 from http://www.mcportcentral.co.za/index.php?topic=2491.0
+    # and http://www.minecraftforum.net/topic/910095-125-rancraft-penguins-seven-species-mlmp-forge-bukkit/
     # IMPORTANT: You have to mod your client and server as above before this will work.
-#    Little Blue Penguin:
-#        entityID: 16
-#        aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
-#        enableCraftingSpawner: true
-#    Flame Penguin:
-#        entityID: 17
-#        aliases: ['fpenguin', 'fp']
-#        enableCraftingSpawner: true
-#    Emperor Penguin:
-#        entityID: 87
-#        aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
-#        enableCraftingSpawner: true
+    Little Blue Penguin:
+        entityID: 16
+        aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
+        enableCraftingSpawner: true
+    Flame Penguin:
+        entityID: 17
+        aliases: ['fpenguin', 'fp']
+        enableCraftingSpawner: true
+    King Penguin:
+        entityID: 18
+        aliases: ['kpenguin', 'kp']
+        enableCraftingSpawner: true
+    Yellow-Eyed Penguin:
+        entityID: 19
+        aliases: ['ypenguin', 'yp']
+        enableCraftingSpawner: true
+    Magellanic Penguin:
+        entityID: 20
+        aliases: ['mpenguin', 'mp']
+        enableCraftingSpawner: true
+    Emperor Penguin:
+        entityID: 87
+        aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
+        enableCraftingSpawner: true
