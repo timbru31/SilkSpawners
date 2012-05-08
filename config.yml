@@ -314,6 +314,10 @@ creatures:
         entityID: 20
         aliases: ['mpenguin', 'mp']
         enableCraftingSpawner: true
+    Adelie Penguin:
+        entityID: 21        # interestingly, this is the same as FallingSand.. but it doesn't seem to conflict(?)
+        aliases: ['apenguin', 'ap']
+        enableCraftingSpawner
     Emperor Penguin:
         entityID: 87
         aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
