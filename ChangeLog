@@ -1,5 +1,6 @@
-X   X   
+2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)
+    * Add mob and Entity IDs from RanCraft Penguins 1.2.5f in config.yml
 
 2012-04-11  1.4
     * Improve spawnEggOverride to spawn on clicked block instead of above player
@@ -16,7 +17,7 @@ X   X
 2012-03-21  1.2
     * Respect WorldGuard protection
     * Add spawnersUnstackable config option (default false) 
-    * Add mob and entity IDs from Rancraft Penguins 1.1c in config.yml
+    * Add mob and entity IDs from RanCraft Penguins 1.1c in config.yml
 
 2012-03-11  1.1a
     * Add ocelot and iron golem
