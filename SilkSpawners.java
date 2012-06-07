@@ -387,8 +387,12 @@ class SilkSpawnersBlockListener implements Listener {
                     }
 
                     // Remove item from player hand
-                    // TODO: unstack
-                    player.setItemInHand(null);
+                    if (item.getAmount() == 1) {
+                        player.setItemInHand(null);
+                    } else {
+                        item.setAmount(item.getAmount() - 1);
+                        player.setItemInHand(item);
+                    }
                     
                     // prevent normal spawning
                     event.setCancelled(true);

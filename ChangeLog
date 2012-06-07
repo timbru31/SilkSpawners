@@ -1,3 +1,6 @@
+X   X
+    * Fix spawning stacks of spawn eggs with spawnEggOverride
+
 2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)
     * Add mob and Entity IDs from RanCraft Penguins 1.2.5f in config.yml
