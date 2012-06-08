@@ -531,7 +531,7 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     @SuppressWarnings("unchecked")
-    private void scanEntityMap() {
+    public SortedMap<Integer,String> scanEntityMap() {
         SortedMap<Integer,String> sortedMap = new TreeMap<Integer,String>();
 
         // Use reflection to dump native EntityTypes
@@ -550,17 +550,7 @@ public class SilkSpawners extends JavaPlugin {
             log.severe("Failed to dump entity map: " + e);
         }
 
-        for (Map.Entry<Integer,String> entry: sortedMap.entrySet()) {
-            short eid = (short)(int)entry.getKey();
-            String mobID = entry.getValue();
-
-            if (getConfig().getBoolean("dumpEntityMap", false)) {
-                log.info("Entity " + eid + " = " + mobID);
-            }
-
-            eid2MobID.put(eid, mobID);
-            mobID2Eid.put(mobID, eid);
-        }
+        return sortedMap;
     }
 
     private void loadConfig() {
@@ -579,24 +569,29 @@ public class SilkSpawners extends JavaPlugin {
         eid2MobID = new ConcurrentHashMap<Short,String>();
         mobID2Eid = new ConcurrentHashMap<String,Short>();
 
-        scanEntityMap();
+        SortedMap<Integer,String> sortedMap = scanEntityMap();
 
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
         name2Eid = new ConcurrentHashMap<String,Short>();
 
-        for (Map.Entry<String,Short> entry: mobID2Eid.entrySet()) {
-            String mobID = entry.getKey();      // internal mod IB used for spawner type
-            short entityID = entry.getValue();       // entity ID used for spawn eggs
+        for (Map.Entry<Integer,String> entry: sortedMap.entrySet()) {
+            short entityID = (short)(int)entry.getKey();    // entity ID used for spawn eggs
+            String mobID = entry.getValue();                // internal mod ID used for spawner type
 
             // Lookup creature info
 
             boolean enable = getConfig().getBoolean("enableCreatureDefault", true);
             enable = getConfig().getBoolean("creatures."+mobID+".enable", enable);
             if (!enable) {
-                mobID2Eid.remove(mobID);
-                eid2MobID.remove(entityID);
+                if (verbose) {
+                    log.info("Entity " + entityID + " = " + mobID + " (disabled)");
+                }
                 continue;
             }
+
+            eid2MobID.put(entityID, mobID);
+            mobID2Eid.put(mobID, entityID);
+
 
             // In-game name for user display, and other recognized names for user input lookup
 
@@ -615,6 +610,10 @@ public class SilkSpawners extends JavaPlugin {
 
             for (String alias: aliases) {
                 name2Eid.put(alias, entityID);
+            }
+
+            if (verbose) {
+                log.info("Entity " + entityID + " = " + mobID + " (display name: " + displayName + ", aliases: " + aliases + ")");
             }
         }
 

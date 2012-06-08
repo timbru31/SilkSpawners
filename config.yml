@@ -18,11 +18,10 @@ destroyDropBars: 0
 craftableSpawners: false
 spawnersUnstackable: false
 
-verboseConfig: false
+verboseConfig: true #falsm
 spawnEggOverride: true #false
 spawnEggOverrideSpawnDefault: true
 enableCreatureDefault: true
-dumpEntityMap: true #false
 
 useSpout: true
 notifyOnClick: true

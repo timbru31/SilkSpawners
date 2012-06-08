@@ -63,10 +63,6 @@ Mainly intended for testing purposes, or if you want to spawn modded items not r
 
 *enableCreatureDefault* (true) - If no *enable* is given per-creature, use this instead.
 
-*dumpEntityMap* (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
-classes (not Bukkit's wrappers). This is useful if you want to debug mods which add new entities. After dumping
-the list you can manually add the IDs and any aliases you want to the creatures list (see below).
-
 *verboseConfig* (false) - Log verbose configuration information on load.
 
 *spawnerCommandReachDistance* (6) - How close you have to be to use the /spawner command.
