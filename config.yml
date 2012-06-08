@@ -208,8 +208,8 @@ creatures:
     # Modded mobs 
     # IMPORTANT: You have to mod your client and server before any of these will work!
 
-    # Animal Bikes mod for MCPC 1.2.3 from http://www.mcportcentral.co.za/index.php?topic=1692.0
-    # and http://www.minecraftforum.net/topic/762794-124-animal-bikes-v1111-sspsmp-added-iron-golem/
+    # Animal Bikes mod for MCPC 1.2.5
+    # http://www.minecraftforum.net/topic/762794-124-animal-bikes-v1111-sspsmp-added-iron-golem/
     EntityCowBike:
         displayName: 'Cow Bike'
         aliases: ['cbike', 'cowb']
@@ -306,6 +306,44 @@ creatures:
         enable: true
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
+    EntitySnowmanBike:
+        displayName: 'Snowman Bike'
+        aliases: ['smbike', 'snowbike']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    EntityBunnyBike:
+        displayName: 'Bunny Bike'
+        aliases: ['bbike']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    EntityDinoBike:
+        displayName: 'Dino Bike I'
+        aliases: ['dinobike', 'dbike', 'db1', 'greendino']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    EntityDinoBike2:
+        displayName: 'Dino Bike II'
+        aliases: ['dinobike2', 'db2', 'reddino']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    EntityDinoBike3:
+        displayName: 'Dino Bike III'
+        aliases: ['dinobike3', 'db3', 'pterodactyl']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    EntityDinoBike4:
+        displayName: 'Dino Bike IV'
+        aliases: ['dinobike4', 'db4', 'horndino']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+
+
 
     # Natural Selection mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
