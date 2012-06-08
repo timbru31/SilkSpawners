@@ -519,9 +519,11 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     @SuppressWarnings("unchecked")
-    private void dumpEntityMap() {
+    private void scanEntityMap() {
+        SortedMap<Integer,String> sortedMap = new TreeMap<Integer,String>();
+
         // Use reflection to dump native EntityTypes
-        // This bypasses Bukkit's wrappers
+        // This bypasses Bukkit's wrappers, so it works with mods
         try {
             // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
             // f.put(s, Integer.valueOf(i));
@@ -529,18 +531,23 @@ public class SilkSpawners extends JavaPlugin {
             field.setAccessible(true);
             Map<String,Integer> map = (Map<String,Integer>)field.get(null);
 
-            SortedMap<Integer,String> sortedMap = new TreeMap<Integer,String>();
-
             for (Map.Entry<String,Integer> entry: ((Map<String,Integer>)map).entrySet()) {
                 sortedMap.put(entry.getValue(), entry.getKey());
             }
+        } catch (Exception e) {
+            log.severe("Failed to dump entity map: " + e);
+        }
 
-            for (Map.Entry<Integer,String> entry: sortedMap.entrySet()) {
-                log.info("Entity " + entry.getKey() + " = " + entry.getValue());
+        for (Map.Entry<Integer,String> entry: sortedMap.entrySet()) {
+            short eid = (short)(int)entry.getKey();
+            String mobID = entry.getValue();
+
+            if (getConfig().getBoolean("dumpEntityMap", false)) {
+                log.info("Entity " + eid + " = " + mobID);
             }
 
-        } catch (Exception e) {
-            log.info("Failed to dump entity map: " + e);
+            eid2MobID.put(eid, mobID);
+            mobID2Eid.put(mobID, eid);
         }
     }
 
@@ -557,15 +564,14 @@ public class SilkSpawners extends JavaPlugin {
 
         boolean verbose = getConfig().getBoolean("verboseConfig", true);
 
-        if (getConfig().getBoolean("dumpEntityMap", false)) {
-            dumpEntityMap();
-        }
+        eid2MobID = new ConcurrentHashMap<Short,String>();
+        mobID2Eid = new ConcurrentHashMap<String,Short>();
+
+        scanEntityMap();
 
         legacyID2Eid = new ConcurrentHashMap<Short,Short>();
 
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
-        eid2MobID = new ConcurrentHashMap<Short,String>();
-        mobID2Eid = new ConcurrentHashMap<String,Short>();
         name2Eid = new ConcurrentHashMap<String,Short>();
 
         // Creature info
