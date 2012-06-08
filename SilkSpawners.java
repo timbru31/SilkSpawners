@@ -428,8 +428,6 @@ public class SilkSpawners extends JavaPlugin {
     static Logger log = Logger.getLogger("Minecraft");
     SilkSpawnersBlockListener blockListener;
 
-    static ConcurrentHashMap<Short,Short> legacyID2Eid;
-
     ConcurrentHashMap<Short,String> eid2DisplayName;    // human-readable friendly name
     ConcurrentHashMap<Short,String> eid2MobID;          // internal String used by spawners
     ConcurrentHashMap<String,Short> mobID2Eid;
@@ -569,8 +567,6 @@ public class SilkSpawners extends JavaPlugin {
 
         scanEntityMap();
 
-        legacyID2Eid = new ConcurrentHashMap<Short,Short>();
-
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
         name2Eid = new ConcurrentHashMap<String,Short>();
 
@@ -598,9 +594,6 @@ public class SilkSpawners extends JavaPlugin {
             // http://forums.bukkit.org/threads/help-how-to-get-an-animals-type-id.60156/
             // "[HELP]How to get an animal's type id"
 
-            short legacyID = (short)getConfig().getInt("creatures."+creatureString+".legacyID");
-            legacyID2Eid.put(new Short(legacyID), new Short(entityID));
-
 
             // In-game name for user display, and other recognized names for user input lookup
 
@@ -616,7 +609,6 @@ public class SilkSpawners extends JavaPlugin {
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(creatureString.toLowerCase().replace(" ", ""));
             aliases.add(entityID+"");
-            aliases.add("#"+legacyID);
 
             for (String alias: aliases) {
                 name2Eid.put(alias, entityID);
@@ -899,17 +891,6 @@ public class SilkSpawners extends JavaPlugin {
         id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
         if (id != 0) {
             return id;
-        }
-
-        // Creaturebox compatibility
-        short legacyID = (short)item.getEnchantmentLevel(Enchantment.OXYGEN);
-        // Bukkit API doesn't allow you tell if an enchantment is present vs. level 0 (=pigs),
-        // so ignore if level 0. This is a disadvantage of creaturebox's tagging system.
-        if (legacyID != 0) {
-            id = legacyID2Eid.get(legacyID);
-            if (id != 0) {
-                return id;
-            }
         }
 
         return 0;
