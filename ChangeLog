@@ -1,13 +1,14 @@
-X   X
+2012-06-07  2.0
     * Add auto-detecting entity IDs
     * Add option to block spawn eggs per-creature (enableSpawnEggOverrideAllowSpawn)
     * Add option to enable/disable mobs from appearing in SilkSpawners (enable)
-    * Add Mo' Creatures aliases
+    * Add Mo' Creatures aliases, update AnimalBikes, add non-mob IDs from other mods
     * Add ignoreFakeBreakEvent option to fix duping spawners with mcMMO superbreaker
     * Fix spawning stacks of spawn eggs with spawnEggOverride
-    * Remove entity IDs, useExtraMobs from config (since now auto-detected)
+    * Remove entity IDs and useExtraMobs from config (since now auto-detected)
     * Remove dumpEntityMap from config, replaced by verboseConfig
     * Remove legacy IDs
+    * Tested on 1.2.5-R3.0
 
 2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)

@@ -14,12 +14,13 @@ destroyDropXP: 0
 #destroyDropXP: 1000
 destroyDropBars: 0
 #destroyDropBars: 8
+ignoreFakeBreakEvent: true
 
 craftableSpawners: false
 spawnersUnstackable: false
 
-verboseConfig: true #falsm
-spawnEggOverride: true #false
+verboseConfig: false
+spawnEggOverride: false
 spawnEggOverrideSpawnDefault: true
 enableCreatureDefault: true
 
