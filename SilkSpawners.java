@@ -205,8 +205,14 @@ class SilkSpawnersBlockListener implements Listener {
             return;
         }
 
-
         short entityID = plugin.getSpawnerEntityID(block);
+
+        // mcMMO sends its own FakeBlockBreakEvent with super breaker ability, causing us to think
+        // the spawner is broken when it isn't, allowing for duping: http://www.youtube.com/watch?v=GGlyZmph8NM
+        // Ignore these events if configured
+        if (event.getClass() != BlockBreakEvent.class && plugin.getConfig().getBoolean("ignoreFakeBreakEvents", true)) {
+            return;
+        }
 
         plugin.informPlayer(player, plugin.getCreatureName(entityID)+" spawner broken");
 

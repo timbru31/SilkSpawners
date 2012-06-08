@@ -23,7 +23,7 @@ Features:
 * Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Optional support for dumping entity ID map on startup for debugging mods
 * Compatible with CraftBukkit++ (see spawnersUnstackable)
-* Compatible with MCPC
+* Compatible with MCPC and ported mods
 * Compatible with Not Enough Items (newer builds only)
 * Compatible with Spout (optional)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
@@ -48,6 +48,8 @@ Many additional features can be enabled if desired, see below.
 *destroyDropXP* (0) - Experience points to drop when spawner is destroyed.
 
 *destroyDropBars* (0) - Iron bars to drop when spawner is destroyed.
+
+*ignoreFakeBreakEvents* (true) - Ignore subclassed spawner block break events sent by other plugins (such as mcMMO with superbreaker).
 
 *consumeEgg* (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 

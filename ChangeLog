@@ -3,6 +3,7 @@ X   X
     * Add option to block spawn eggs per-creature (enableSpawnEggOverrideAllowSpawn)
     * Add option to enable/disable mobs from appearing in SilkSpawners (enable)
     * Add Mo' Creatures aliases
+    * Add ignoreFakeBreakEvent option to fix duping spawners with mcMMO superbreaker
     * Fix spawning stacks of spawn eggs with spawnEggOverride
     * Remove entity IDs, useExtraMobs from config (since now auto-detected)
     * Remove dumpEntityMap from config, replaced by verboseConfig
