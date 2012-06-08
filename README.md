@@ -61,6 +61,8 @@ Mainly intended for testing purposes, or if you want to spawn modded items not r
 
 *spawnEggOverrideSpawnDefault* (true) - If no *enableSpawnEggOverrideAllowSpawn* is given per-creature, use this instead.
 
+*enableCreatureDefault* (true) - If no *enable* is given per-creature, use this instead.
+
 *dumpEntityMap* (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
 classes (not Bukkit's wrappers). This is useful if you want to debug mods which add new entities. After dumping
 the list you can manually add the IDs and any aliases you want to the creatures list (see below).
@@ -99,6 +101,11 @@ default creature will be used if the spawner is obtained using:
 *creatures.X.aliases*: An optional list of aliases to recognize as alternate names for the mob.
 
 *creatures.X.displayName*: The human-readable name of the mob.
+
+*creatures.X.enable* (true): If false, this entity is skipped entirely and not recognized by SilkSpawners.
+Useful to exclude non-mob entities.  If this key is missing, *enableCreatureDefault* will be checked instead.
+Note that entities not auto-detected are always skipped, so this key is safe to leave false for entities
+for mods you don't have installed.
 
 *creatures.X.enableCraftingSpawner* (true): If *craftableSpawners* is enabled (see above), then a crafting recipe will be enabled
 for this mob unless this config option is false.
