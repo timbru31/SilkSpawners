@@ -1,5 +1,6 @@
 X   X
     * Add auto-detecting entity IDs
+    * Add option to block spawn eggs per-creature (enableSpawnEggOverrideAllowSpawn)
     * Fix spawning stacks of spawn eggs with spawnEggOverride
     * Remove legacy IDs
     * Remove entity IDs and useExtraMobs from config (since now auto-detected)
