@@ -468,7 +468,7 @@ creatures:
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
     WildWolf:
-        displayName: 'Wilf Wolf'
+        displayName: 'Wild Wolf'
         aliases: ['wwolf', 'ww']
         enable: true
         enableCraftingSpawner: true
