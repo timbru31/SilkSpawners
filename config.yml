@@ -207,10 +207,10 @@ creatures:
         enable: false
    
     # Modded mobs 
+    # IMPORTANT: You have to mod your client and server before any of these will work!
 
     # Animal Bikes mod for MCPC 1.2.3 from http://www.mcportcentral.co.za/index.php?topic=1692.0
     # and http://www.minecraftforum.net/topic/762794-124-animal-bikes-v1111-sspsmp-added-iron-golem/
-    # IMPORTANT: You have to mod your client and server as above before this will work.
     EntityCowBike:
         displayName: 'Cow Bike'
         aliases: ['cbike', 'cowb']
@@ -261,7 +261,7 @@ creatures:
         enableSpawnEggOverrideAllowSpawn: true
     EntityPonyBike:
         displayName: 'Pony Bike'
-        aliases: ['pobike', 'ponyb', 'pony', 'horse']
+        aliases: ['pobike', 'ponyb', 'pony', 'horsebike']
         enable: true
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
@@ -285,7 +285,7 @@ creatures:
         enableSpawnEggOverrideAllowSpawn: true
     EntityReindeerBike:
         displayName: 'Reindeer Bike'
-        aliases: ['rbike', 'reindeerb', 'reindeer', 'deer']
+        aliases: ['rbike', 'reindeerb', 'reindeer', 'deerbike']
         enable: true
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
@@ -310,7 +310,6 @@ creatures:
 
     # Natural Selection mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
-    # IMPORTANT: You have to mod your client and server as above before this will work.
     Buck:
         aliases: ['maledeer', 'mdeer']
         enable: true
@@ -353,7 +352,6 @@ creatures:
 
     # Rancraft Penguins 1.2.5f mod for CraftBukkit 1.2.5 from http://www.mcportcentral.co.za/index.php?topic=2491.0
     # and http://www.minecraftforum.net/topic/910095-125-rancraft-penguins-seven-species-mlmp-forge-bukkit/
-    # IMPORTANT: You have to mod your client and server as above before this will work.
     Little Blue Penguin:
         aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
         enable: true
@@ -390,3 +388,204 @@ creatures:
         enable: true
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
+
+    # Mo' Creatures 3.6.2 for 1.2.5 from http://www.mcportcentral.co.za/index.php?topic=2535.0
+    Horse:
+        aliases: ['h']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    FireOgre:
+        displayName: 'Fire Ogre'
+        aliases: ['fogre', 'fo', 'ogre']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    CaveOgre:
+        displayName: 'Cave Ogre'
+        aliases: ['cogre', 'fo']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Boar:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Bear:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Duck:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    BigCat:
+        displayName: 'Big Cat'
+        aliases: ['bcat', 'bc', 'leopard', 'lion']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Deer:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    WildWolf:
+        displayName: 'Wilf Wolf'
+        aliases: ['wwolf', 'ww']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    PolarBear:
+        displayName: 'Polar Bear'
+        aliases: ['pbear', 'pb']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Wraith:
+        aliases: ['w']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    FlameWraith:
+        displayName: 'Flame Wraith'
+        aliases: ['fwraith', 'fw']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Bunny:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Fox:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Fishy:
+        aliases: ['fish']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    LitterBox:
+        enable: false
+    Rat:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Mouse:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    HellRat:
+        displayName: 'Hell Rat'
+        aliases: ['hrat', 'hr']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Scorpion:
+        aliases: ['s', 'scorp']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Turtle:
+        aliases: ['tortoise']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Crocodile:
+        aliases: ['croc']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Ray:
+        aliases: ['stingray']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    JellyFish:
+        displayName: 'Jellyfish'
+        aliases: ['jfish', 'jf']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Goat:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Snake:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    MoCEgg:
+        enable: false
+    FishBowl:
+        enable: false
+    Ostrich:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+
+    # THX Helicopter Mod v018 from http://www.mcportcentral.co.za/index.php?topic=2646.0
+    # http://www.minecraftforum.net/topic/763209-125-mod-thx-helicopter-v018/
+    thxHelicopter:
+        enable: false
+    thxRocket:
+        enable: false
+
+    # Hot Air Balloons 2.06 from http://www.mcportcentral.co.za/index.php?topic=2455.0
+    # http://www.minecraftforum.net/topic/214108-125-hot-air-balloons-v206-multiplayer-smp/
+    HotAirBalloon:
+        enable: false
+    HotAirBalloonPropelled:
+        enable: false
+
+    # Balkon's Weapon Mod 8.6
+    # http://www.minecraftforum.net/topic/211517-125-balkons-weaponmod-v86/
+    Spear:
+        enable: false
+    Knife:
+        enable: false
+    Flail:
+        enable: false
+    Dynamite:
+        enable: false
+    Javelin:
+        enable: false
+    Bullet:
+        enable: false
+    Dart:
+        enable: false
+    Bolt:
+        enable: false
+    Cannon:
+        enable: false
+    CannonBall:
+        enable: false
+    Shot:
+        enable: false
+    Dummy:
+        enable: false
+
+    # Railcraft 5.2.0
+    # http://www.minecraftforum.net/topic/701990-125-railcraft-532-forge-smp/
+    'entity.cart.chest':
+        enable: false
+    TNTcart:
+        enable: false
+    Tankcart:
+        enable: false
+    'entity.cart.furnace':
+        enable: false
+    TunnelBore:
+        enable: false
+    EnergyCart:
+        enable: false
+    Anchorcart:
+        enable: false
+    Workcart:
+        enable: false
+
+    # Wireless Redstone Chicken Bones Edition (WRCBE) 1.2.0
+    # http://www.minecraftforum.net/topic/909223-125-smp-chickenbones-mods/
+    WRTracker:
+        enable: false
+
