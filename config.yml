@@ -29,144 +29,117 @@ notifyOnHold: true
 
 # creatures: key is official creature type name, case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
-# legacyID is pre-1222 creaturebox(+other plugins) scheme, see order on http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
 creatures:
     Creeper: 
         entityID: 50
-        legacyID: 5
         aliases: ['c', 'creep', 'cataclysm']
         enableCraftingSpawner: true
     Skeleton: 
         entityID: 51
-        legacyID: 8
         aliases: ['s', 'sk', 'skelly', 'skellington']
         enableCraftingSpawner: true
     Spider: 
         entityID: 52
-        legacyID: 9
         aliases: ['sp', 'bug']
         enableCraftingSpawner: true
     Giant: 
         entityID: 53
-        legacyID: 13
         aliases: ['giantzombie']
         enableCraftingSpawner: true
     Zombie: 
         entityID: 54
-        legacyID: 10
         aliases: ['z']
         enableCraftingSpawner: true
     Slime: 
         entityID: 55
-        legacyID: 11
         aliases: ['sl']
         enableCraftingSpawner: true
     Ghast: 
         entityID: 56
-        legacyID: 6
         aliases: ['g']
         enableCraftingSpawner: true
     PigZombie: 
         entityID: 57
-        legacyID: 7
         aliases: ['pigman', 'zombiepigman', 'pg', 'zp']
         displayName: 'Zombie Pigman'
         enableCraftingSpawner: true
     Enderman: 
         entityID: 58
-        legacyID: 16
         aliases: ['e', 'ender', 'endermen', 'slenderman']
         enableCraftingSpawner: true
     CaveSpider: 
         entityID: 59
-        legacyID: 15
         aliases: ['cspider', 'cs', 'bluespider']
         displayName: 'Cave Spider'
         enableCraftingSpawner: true
     Silverfish: 
         entityID: 60
-        legacyID: 17
         aliases: ['sf', 'fish']
         enableCraftingSpawner: true
     Blaze: 
         entityID: 61
-        legacyID: 18
         aliases: ['b']
         enableCraftingSpawner: true
     LavaSlime: 
         entityID: 62
-        legacyID: 20
         aliases: ['magmacube', 'mcube', 'magma', 'm', 'mc']
         displayName: 'Magma Cube'
         enableCraftingSpawner: true
     EnderDragon:
         entityID: 63
-        legacyID: 19
         displayName: 'Enderdragon'
         aliases: ['dragon', 'raqreqentba']
         enableCraftingSpawner: true
     Pig: 
         entityID: 90
-        legacyID: 0
         aliases: ['p']
         enableCraftingSpawner: true
     Sheep: 
         entityID: 91
-        legacyID: 3
         aliases: ['sh']
         enableCraftingSpawner: true
     Cow: 
         entityID: 92
-        legacyID: 2
         aliases: ['bovine']
         enableCraftingSpawner: true
     Chicken: 
         entityID: 93
-        legacyID: 1
         aliases: ['chick', 'ch', 'bird']
         enableCraftingSpawner: true
     Squid: 
         entityID: 94
-        legacyID: 4
         aliases: ['sq', 'octopus']
         enableCraftingSpawner: true
     #Monster:
     #   no entityID - this isn't real, and was removed in 1.1-R4
     #   aliases: ['human']
-    #   legacyID: 12
     #   enableCraftingSpawner: true
     Wolf: 
         entityID: 95
-        legacyID: 14
         aliases: ['w', 'dog']
         enableCraftingSpawner: true
     MushroomCow: 
         entityID: 96
-        legacyID: 21
         displayName: 'Mooshroom'
         aliases: ['m', 'mcow']
         enableCraftingSpawner: true
     SnowMan: 
         entityID: 97
-        legacyID: 22
         displayName: 'Snow Golem'
         aliases: ['golem', 'sgolem', 'sg', 'sm', 'snowmen']
         enableCraftingSpawner: true
     Ozelot:
         entityID: 98
-        legacyID: 23
         displayName: 'Ocelot'
         aliases: ['ocelot', 'oce', 'o', 'cat', 'kitty']
         enableCraftingSpawner: true
     VillagerGolem:
         entityID: 99
-        legacyID: 24
         displayName: 'Iron Golem'
         aliases: ['igolem', 'ironman', 'iron', 'ig']
         enableCraftingSpawner: true
     Villager: 
         entityID: 120
-        legacyID: 23
         aliases: ['npc', 'v']
         enableCraftingSpawner: true
    

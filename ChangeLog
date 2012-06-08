@@ -1,5 +1,6 @@
 X   X
     * Fix spawning stacks of spawn eggs with spawnEggOverride
+    * Remove legacy IDs
 
 2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)
