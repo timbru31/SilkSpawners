@@ -59,6 +59,8 @@ enderdragons, ender crystals, primed TNT, boats, or even invalid entities, so be
 (note that SilkSpawners won't give you an egg for any item using /ss if it isn't in the config).
 Mainly intended for testing purposes, or if you want to spawn modded items not recognized by CraftBukkit.
 
+*spawnEggOverrideSpawnDefault* (true) - If no *enableSpawnEggOverrideAllowSpawn* is given per-creature, use this instead.
+
 *dumpEntityMap* (false) - Dump a list of entity IDs and their names to the console, as recognized by the native
 classes (not Bukkit's wrappers). This is useful if you want to debug mods which add new entities. After dumping
 the list you can manually add the IDs and any aliases you want to the creatures list (see below).
@@ -92,19 +94,18 @@ default creature will be used if the spawner is obtained using:
 * other plugins not knowledgeable of SilkSpawners' conventions
 
 
-*creatures* - Mapping between internal mob ID string for spawners, and other crucial information.
-If a mob isn't listed here it won't be recognized by SilkSpawners so you can add/delete entities as desired. Keys include:
-
-*creatures.X.entityID*: Numeric ID for the entity in the world, also corresponds to the damage value of spawn eggs. See
-[entity ID](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs) on Minecraft wiki for vanilla entity IDs, or use
-dumpEntityMap to see the list of custom entities.
+*creatures* - Mapping between internal mob ID string for spawners, and other crucial information. Keys include:
 
 *creatures.X.aliases*: An optional list of aliases to recognize as alternate names for the mob.
 
 *creatures.X.displayName*: The human-readable name of the mob.
 
-*creatures.X.enableCraftingSpawner*: If *craftableSpawners* is enabled (see above), then a crafting recipe will be enabled
+*creatures.X.enableCraftingSpawner* (true): If *craftableSpawners* is enabled (see above), then a crafting recipe will be enabled
 for this mob unless this config option is false.
+
+*creatures.X.enableSpawnEggOverrideAllowSpawn* (true): If *spawnEggOverride* is enabled, allow spawn eggs to be used for this 
+creature. Set to false to block spawn eggs. If this key is missing, *spawnEggOverrideSpawnDefault* will be checked instead.
+Note that if *spawnEggOverride* is disabled, this option has no effect.
 
 ## Permissions
 **Permission support is optional** and off by default. When turned off, the settings shown in parentheses 

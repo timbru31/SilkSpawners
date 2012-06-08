@@ -20,6 +20,7 @@ spawnersUnstackable: false
 
 verboseConfig: false
 spawnEggOverride: false
+spawnEggOverrideSpawnDefault: true
 dumpEntityMap: false
 
 useSpout: true
@@ -32,86 +33,111 @@ creatures:
     Creeper: 
         aliases: ['c', 'creep', 'cataclysm']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Skeleton: 
         aliases: ['s', 'sk', 'skelly', 'skellington']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Spider: 
         aliases: ['sp', 'bug']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Giant: 
         aliases: ['giantzombie']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Zombie: 
         aliases: ['z']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Slime: 
         aliases: ['sl']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Ghast: 
         aliases: ['g']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     PigZombie: 
         aliases: ['pigman', 'zombiepigman', 'pg', 'zp']
         displayName: 'Zombie Pigman'
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Enderman: 
         aliases: ['e', 'ender', 'endermen', 'slenderman']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     CaveSpider: 
         aliases: ['cspider', 'cs', 'bluespider']
         displayName: 'Cave Spider'
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Silverfish: 
         aliases: ['sf', 'fish']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Blaze: 
         aliases: ['b']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     LavaSlime: 
         aliases: ['magmacube', 'mcube', 'magma', 'm', 'mc']
         displayName: 'Magma Cube'
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EnderDragon:
         displayName: 'Enderdragon'
         aliases: ['dragon', 'raqreqentba']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Pig: 
         aliases: ['p']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Sheep: 
         aliases: ['sh']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Cow: 
         aliases: ['bovine']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Chicken: 
         aliases: ['chick', 'ch', 'bird']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Squid: 
         aliases: ['sq', 'octopus']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Wolf: 
         aliases: ['w', 'dog']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     MushroomCow: 
         displayName: 'Mooshroom'
         aliases: ['m', 'mcow']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     SnowMan: 
         displayName: 'Snow Golem'
         aliases: ['golem', 'sgolem', 'sg', 'sm', 'snowmen']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Ozelot:
         displayName: 'Ocelot'
         aliases: ['ocelot', 'oce', 'o', 'cat', 'kitty']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     VillagerGolem:
         displayName: 'Iron Golem'
         aliases: ['igolem', 'ironman', 'iron', 'ig']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Villager: 
         aliases: ['npc', 'v']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
    
     # Modded mobs - if you're using 'useExtraMobs: true', comment/uncomment lines below as needed
 
@@ -122,93 +148,118 @@ creatures:
         displayName: 'Cow Bike'
         aliases: ['cbike', 'cowb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntitySpiderBike:
         displayName: 'Spider Bike'
         aliases: ['sbike', 'spbike', 'spiderb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityPigBike:
         displayName: 'Pig Bike'
         aliases: ['pbike', 'pigb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntitySheepBike:
         displayName: 'Sheep Bike'
         aliases: ['shbike', 'sheepb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityChickenBike:
         displayName: 'Chicken Bike'
         aliases: ['chbike', 'chickenb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityWolfBike:
         displayName: 'Wolf Bike'
         aliases: ['wbike', 'wolfb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntitySquidBike:
         displayName: 'Squid Bike'
         aliases: ['sqbike', 'squidb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityCreeperBike:
         displayName: 'Creeper Bike'
         aliases: ['crbike', 'creeperb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityPonyBike:
         displayName: 'Pony Bike'
         aliases: ['pobike', 'ponyb', 'pony', 'horse']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityEndermanBike:
         displayName: 'Enderman Bike'
         aliases: ['ebike', 'enderb', 'endermanb', 'enderbike']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityDragonBike:
         displayName: 'Dragon Bike'
         aliases: ['dbike', 'dragonb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityNotchBike:
         displayName: 'Notch Bike'
         aliases: ['nbike', 'notchb', 'notch']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityReindeerBike:
         displayName: 'Reindeer Bike'
         aliases: ['rbike', 'reindeerb', 'reindeer', 'deer']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntitySnowGolemBike:
         displayName: 'Snow Golem Bike'
         aliases: ['sgbike', 'snowbike', 'snowgolemb', 'sgolemb', 'snowgollembike', 'snowgolembike']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityGhastBike:
         displayName: 'Ghast Bike'
         aliases: ['gbike', 'ghastb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     EntityIronmanBike:
         displayName: 'Iron Golem Bike'
         aliases: ['igbike', 'irongolemb', 'igolemb']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
 
     # Natural Selection mod for CraftBukkit 1.1-R4 from http://www.mcportcentral.co.za/index.php?topic=1360.0
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
     # IMPORTANT: You have to mod your client and server as above before this will work.
-#    Buck:
-#        aliases: ['maledeer', 'mdeer']
-#        enableCraftingSpawner: true
-#    Doe:
-#        aliases: ['femaledeer', 'fdeer', 'deer']
-#        enableCraftingSpawner: true
-#    Tom:
-#        aliases: ['maleturkey', 'mturkey']
-#        enableCraftingSpawner: true
-#    Hen:
-#        aliases: ['femaleturkey', 'fturkey', 'turkey']
-#        enableCraftingSpawner: true
-#    Grizzly:
-#        aliases: ['bear']
-#        enableCraftingSpawner: true
-#    Boar:
-#        aliases: ['wildpig']
-#        enableCraftingSpawner: true
-#    Dingo:
-#        enableCraftingSpawner: true
-#    Magicman:
-#        aliases: ['magician']
-#        enableCraftingSpawner: true
+    Buck:
+        aliases: ['maledeer', 'mdeer']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Doe:
+        aliases: ['femaledeer', 'fdeer', 'deer']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Tom:
+        aliases: ['maleturkey', 'mturkey']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Hen:
+        aliases: ['femaleturkey', 'fturkey', 'turkey']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Grizzly:
+        aliases: ['bear']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Boar:
+        aliases: ['wildpig']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Dingo:
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Magicman:
+        aliases: ['magician']
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
 
     # Rancraft Penguins 1.2.5f mod for CraftBukkit 1.2.5 from http://www.mcportcentral.co.za/index.php?topic=2491.0
     # and http://www.minecraftforum.net/topic/910095-125-rancraft-penguins-seven-species-mlmp-forge-bukkit/
@@ -216,22 +267,29 @@ creatures:
     Little Blue Penguin:
         aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Flame Penguin:
         aliases: ['fpenguin', 'fp']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     King Penguin:
         aliases: ['kpenguin', 'kp']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Yellow-Eyed Penguin:
         aliases: ['ypenguin', 'yp']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Magellanic Penguin:
         aliases: ['mpenguin', 'mp']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Adelie Penguin:
         #entityID: 21        # interestingly, this is the same as FallingSand.. but it doesn't seem to conflict(?)
         aliases: ['apenguin', 'ap']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
     Emperor Penguin:
         aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
         enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true

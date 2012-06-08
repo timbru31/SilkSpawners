@@ -327,6 +327,19 @@ class SilkSpawnersBlockListener implements Listener {
                 // Using spawn egg
                 if (plugin.getConfig().getBoolean("spawnEggOverride", false)) { // disabled by default, since it is dangerous
 
+                    String mobID = plugin.eid2MobID.get(entityID);
+
+                    boolean allowed = plugin.getConfig().getBoolean("spawnEggOverrideSpawnDefault", true);
+                    if (mobID != null) {
+                        allowed = plugin.getConfig().getBoolean("creatures."+mobID+".enableSpawnEggOverrideAllowSpawn", allowed);
+                    }
+                    if (!allowed) {
+                        player.sendMessage("Spawning "+entityID+" denied");
+                        event.setCancelled(true);
+                        return;
+                    }
+ 
+
                     // CB blacklists dragon (63) and 48,49 for some reason.. and it also prevents spawning of entities without
                     // its CB EntityType wrapper class, or entities that aren't living. Proof:
                     // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java
@@ -356,6 +369,7 @@ class SilkSpawnersBlockListener implements Listener {
                     // where is EntityTypes? it isn't in CB, but can be found decompiled in mc-dev:
                     // https://github.com/MinecraftPortCentral/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
                     // nms EntityTypes.a() will let you spawn by entity id
+
 
                     if (plugin.hasPermission(player, "silkspawners.info")) {
                         player.sendMessage("Spawning entity " + entityID);
