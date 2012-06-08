@@ -3,7 +3,7 @@ SilkSpawners - harvest mob spawners with silk touch
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move 
 monster spawners using tools with the "silk touch" enchantment.
 
-**[Download SilkSpawners 1.5](http://dev.bukkit.org/server-mods/silkspawners/files/13-silk-spawners-1-5/)** - released 2012/05/07
+**[Download SilkSpawners 2.0](http://dev.bukkit.org/server-mods/silkspawners/files/14-silk-spawners-2-0/)** - released 2012/06/07
 
 Features:
 
@@ -14,8 +14,7 @@ Features:
 * Optional /spawner [creature] to change an existing spawner in the world, if in your crosshairs
 * Optional /spawner [creature] to put a new spawner item in your empty hand
 * Optional /spawner [creature]egg to put a new spawn egg in your empty hand
-* Optional crafting of spawners using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), 
-[source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) 
+* Optional crafting of spawners using monster eggs + eight iron bars ([as seen here](http://imgur.com/KrWGI), [source](http://www.reddit.com/r/Minecraft/comments/oodql/great_idea_mob_spawner_recipe/)) 
 * Optional left-click spawner with spawn egg to change type (ops only by default)
 * Optional changing spawner type with spawn egg (either consuming or not consuming egg)
 * Optional permissions support
@@ -23,7 +22,7 @@ Features:
 * Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Optional support for dumping entity ID map on startup for debugging mods
 * Compatible with CraftBukkit++ (see spawnersUnstackable)
-* Compatible with MCPC and ported mods
+* Compatible with MCPC and ported mods (auto-detects IDs)
 * Compatible with Not Enough Items (newer builds only)
 * Compatible with Spout (optional)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
