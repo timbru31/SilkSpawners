@@ -590,6 +590,14 @@ public class SilkSpawners extends JavaPlugin {
 
             // Lookup creature info
 
+            boolean enable = getConfig().getBoolean("enableCreatureDefault", true);
+            enable = getConfig().getBoolean("creatures."+mobID+".enable", enable);
+            if (!enable) {
+                mobID2Eid.remove(mobID);
+                eid2MobID.remove(entityID);
+                continue;
+            }
+
             // In-game name for user display, and other recognized names for user input lookup
 
             String displayName = getConfig().getString("creatures."+mobID+".displayName");
