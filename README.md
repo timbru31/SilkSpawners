@@ -23,7 +23,7 @@ Features:
 * Optional support for spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Optional support for dumping entity ID map on startup for debugging mods
 * Compatible with CraftBukkit++ (see spawnersUnstackable)
-* Compatible with MCPC (see useExtraMobsoption)
+* Compatible with MCPC
 * Compatible with Not Enough Items (newer builds only)
 * Compatible with Spout (optional)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
@@ -52,9 +52,6 @@ Many additional features can be enabled if desired, see below.
 *consumeEgg* (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 
 *useReflection* (true) - Use reflection to get/set mob IDs, or otherwise use Bukkit's wrapper. Required for custom mobs.
-
-*useExtraMobs* (false) - Load custom mobs not normally recognized by Bukkit. The extra mobs must be specified in the 'creatures' section. 
-Please note, SilkSpawners does not add any new mob types itself, but it is compatible with mobs added by other mods.
 
 *spawnEggOverride* (false) - Override CraftBukkit's spawn egg routine and allow you to spawn [any entity](http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs)
 whatsoever by right-clicking the appropriate spawn eggs -- any entity is allowed, including

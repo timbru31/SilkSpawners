@@ -19,7 +19,6 @@ craftableSpawners: false
 spawnersUnstackable: false
 
 verboseConfig: false
-useExtraMobs: false
 spawnEggOverride: false
 dumpEntityMap: false
 
@@ -31,115 +30,86 @@ notifyOnHold: true
 # entityID is used in spawn eggs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
 creatures:
     Creeper: 
-        entityID: 50
         aliases: ['c', 'creep', 'cataclysm']
         enableCraftingSpawner: true
     Skeleton: 
-        entityID: 51
         aliases: ['s', 'sk', 'skelly', 'skellington']
         enableCraftingSpawner: true
     Spider: 
-        entityID: 52
         aliases: ['sp', 'bug']
         enableCraftingSpawner: true
     Giant: 
-        entityID: 53
         aliases: ['giantzombie']
         enableCraftingSpawner: true
     Zombie: 
-        entityID: 54
         aliases: ['z']
         enableCraftingSpawner: true
     Slime: 
-        entityID: 55
         aliases: ['sl']
         enableCraftingSpawner: true
     Ghast: 
-        entityID: 56
         aliases: ['g']
         enableCraftingSpawner: true
     PigZombie: 
-        entityID: 57
         aliases: ['pigman', 'zombiepigman', 'pg', 'zp']
         displayName: 'Zombie Pigman'
         enableCraftingSpawner: true
     Enderman: 
-        entityID: 58
         aliases: ['e', 'ender', 'endermen', 'slenderman']
         enableCraftingSpawner: true
     CaveSpider: 
-        entityID: 59
         aliases: ['cspider', 'cs', 'bluespider']
         displayName: 'Cave Spider'
         enableCraftingSpawner: true
     Silverfish: 
-        entityID: 60
         aliases: ['sf', 'fish']
         enableCraftingSpawner: true
     Blaze: 
-        entityID: 61
         aliases: ['b']
         enableCraftingSpawner: true
     LavaSlime: 
-        entityID: 62
         aliases: ['magmacube', 'mcube', 'magma', 'm', 'mc']
         displayName: 'Magma Cube'
         enableCraftingSpawner: true
     EnderDragon:
-        entityID: 63
         displayName: 'Enderdragon'
         aliases: ['dragon', 'raqreqentba']
         enableCraftingSpawner: true
     Pig: 
-        entityID: 90
         aliases: ['p']
         enableCraftingSpawner: true
     Sheep: 
-        entityID: 91
         aliases: ['sh']
         enableCraftingSpawner: true
     Cow: 
-        entityID: 92
         aliases: ['bovine']
         enableCraftingSpawner: true
     Chicken: 
-        entityID: 93
         aliases: ['chick', 'ch', 'bird']
         enableCraftingSpawner: true
     Squid: 
-        entityID: 94
         aliases: ['sq', 'octopus']
         enableCraftingSpawner: true
-    #Monster:
-    #   no entityID - this isn't real, and was removed in 1.1-R4
-    #   aliases: ['human']
-    #   enableCraftingSpawner: true
     Wolf: 
-        entityID: 95
         aliases: ['w', 'dog']
         enableCraftingSpawner: true
     MushroomCow: 
-        entityID: 96
         displayName: 'Mooshroom'
         aliases: ['m', 'mcow']
         enableCraftingSpawner: true
     SnowMan: 
-        entityID: 97
         displayName: 'Snow Golem'
         aliases: ['golem', 'sgolem', 'sg', 'sm', 'snowmen']
         enableCraftingSpawner: true
     Ozelot:
-        entityID: 98
         displayName: 'Ocelot'
         aliases: ['ocelot', 'oce', 'o', 'cat', 'kitty']
         enableCraftingSpawner: true
     VillagerGolem:
-        entityID: 99
         displayName: 'Iron Golem'
         aliases: ['igolem', 'ironman', 'iron', 'ig']
         enableCraftingSpawner: true
     Villager: 
-        entityID: 120
         aliases: ['npc', 'v']
         enableCraftingSpawner: true
    
@@ -149,82 +119,66 @@ creatures:
     # and http://www.minecraftforum.net/topic/762794-124-animal-bikes-v1111-sspsmp-added-iron-golem/
     # IMPORTANT: You have to mod your client and server as above before this will work.
     EntityCowBike:
-        entityID: 159
         displayName: 'Cow Bike'
         aliases: ['cbike', 'cowb']
         enableCraftingSpawner: true
     EntitySpiderBike:
-        entityID: 160
         displayName: 'Spider Bike'
         aliases: ['sbike', 'spbike', 'spiderb']
         enableCraftingSpawner: true
     EntityPigBike:
-        entityID: 161
         displayName: 'Pig Bike'
         aliases: ['pbike', 'pigb']
         enableCraftingSpawner: true
     EntitySheepBike:
-        entityID: 162
         displayName: 'Sheep Bike'
         aliases: ['shbike', 'sheepb']
         enableCraftingSpawner: true
     EntityChickenBike:
-        entityID: 163
         displayName: 'Chicken Bike'
         aliases: ['chbike', 'chickenb']
         enableCraftingSpawner: true
     EntityWolfBike:
-        entityID: 164
         displayName: 'Wolf Bike'
         aliases: ['wbike', 'wolfb']
         enableCraftingSpawner: true
     EntitySquidBike:
-        entityID: 165
         displayName: 'Squid Bike'
         aliases: ['sqbike', 'squidb']
         enableCraftingSpawner: true
     EntityCreeperBike:
-        entityID: 166
         displayName: 'Creeper Bike'
         aliases: ['crbike', 'creeperb']
         enableCraftingSpawner: true
     EntityPonyBike:
-        entityID: 167
         displayName: 'Pony Bike'
         aliases: ['pobike', 'ponyb', 'pony', 'horse']
         enableCraftingSpawner: true
     EntityEndermanBike:
-        entityID: 168
         displayName: 'Enderman Bike'
         aliases: ['ebike', 'enderb', 'endermanb', 'enderbike']
         enableCraftingSpawner: true
     EntityDragonBike:
-        entityID: 169
         displayName: 'Dragon Bike'
         aliases: ['dbike', 'dragonb']
         enableCraftingSpawner: true
     EntityNotchBike:
-        entityID: 170
         displayName: 'Notch Bike'
         aliases: ['nbike', 'notchb', 'notch']
         enableCraftingSpawner: true
     EntityReindeerBike:
-        entityID: 171
         displayName: 'Reindeer Bike'
         aliases: ['rbike', 'reindeerb', 'reindeer', 'deer']
         enableCraftingSpawner: true
     EntitySnowGolemBike:
-        entityID: 172
         displayName: 'Snow Golem Bike'
         aliases: ['sgbike', 'snowbike', 'snowgolemb', 'sgolemb', 'snowgollembike', 'snowgolembike']
         enableCraftingSpawner: true
     EntityGhastBike:
-        entityID: 173
         displayName: 'Ghast Bike'
         aliases: ['gbike', 'ghastb']
         enableCraftingSpawner: true
     EntityIronmanBike:
-        entityID: 174
         displayName: 'Iron Golem Bike'
         aliases: ['igbike', 'irongolemb', 'igolemb']
         enableCraftingSpawner: true
@@ -233,34 +187,26 @@ creatures:
     # and http://www.minecraftforum.net/topic/950329-110smpforgenatural-selection-a-minecraft-survival-accession-v21/
     # IMPORTANT: You have to mod your client and server as above before this will work.
 #    Buck:
-#        entityID: 166
 #        aliases: ['maledeer', 'mdeer']
 #        enableCraftingSpawner: true
 #    Doe:
-#        entityID: 167
 #        aliases: ['femaledeer', 'fdeer', 'deer']
 #        enableCraftingSpawner: true
 #    Tom:
-#        entityID: 168
 #        aliases: ['maleturkey', 'mturkey']
 #        enableCraftingSpawner: true
 #    Hen:
-#        entityID: 169
 #        aliases: ['femaleturkey', 'fturkey', 'turkey']
 #        enableCraftingSpawner: true
 #    Grizzly:
-#        entityID: 170
 #        aliases: ['bear']
 #        enableCraftingSpawner: true
 #    Boar:
-#        entityID: 171
 #        aliases: ['wildpig']
 #        enableCraftingSpawner: true
 #    Dingo:
-#        entityID: 173       # no 172?
 #        enableCraftingSpawner: true
 #    Magicman:
-#        entityID: 174
 #        aliases: ['magician']
 #        enableCraftingSpawner: true
 
@@ -268,30 +214,24 @@ creatures:
     # and http://www.minecraftforum.net/topic/910095-125-rancraft-penguins-seven-species-mlmp-forge-bukkit/
     # IMPORTANT: You have to mod your client and server as above before this will work.
     Little Blue Penguin:
-        entityID: 16
         aliases: ['lbpenguin', 'lpenguin', 'littlepenguin', 'bluepenguin', 'bpenguin', 'littleblue', 'lbp', 'lp']
         enableCraftingSpawner: true
     Flame Penguin:
-        entityID: 17
         aliases: ['fpenguin', 'fp']
         enableCraftingSpawner: true
     King Penguin:
-        entityID: 18
         aliases: ['kpenguin', 'kp']
         enableCraftingSpawner: true
     Yellow-Eyed Penguin:
-        entityID: 19
         aliases: ['ypenguin', 'yp']
         enableCraftingSpawner: true
     Magellanic Penguin:
-        entityID: 20
         aliases: ['mpenguin', 'mp']
         enableCraftingSpawner: true
     Adelie Penguin:
-        entityID: 21        # interestingly, this is the same as FallingSand.. but it doesn't seem to conflict(?)
+        #entityID: 21        # interestingly, this is the same as FallingSand.. but it doesn't seem to conflict(?)
         aliases: ['apenguin', 'ap']
         enableCraftingSpawner: true
     Emperor Penguin:
-        entityID: 87
         aliases: ['epenguin', 'emperor', 'ep', 'penguin', 'peng']
         enableCraftingSpawner: true
