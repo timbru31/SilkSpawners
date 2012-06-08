@@ -4,8 +4,9 @@ X   X
     * Add option to enable/disable mobs from appearing in SilkSpawners (enable)
     * Add Mo' Creatures aliases
     * Fix spawning stacks of spawn eggs with spawnEggOverride
+    * Remove entity IDs, useExtraMobs from config (since now auto-detected)
+    * Remove dumpEntityMap from config, replaced by verboseConfig
     * Remove legacy IDs
-    * Remove entity IDs and useExtraMobs from config (since now auto-detected)
 
 2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)
