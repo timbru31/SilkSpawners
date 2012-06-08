@@ -1,6 +1,8 @@
 X   X
+    * Add auto-detecting entity IDs
     * Fix spawning stacks of spawn eggs with spawnEggOverride
     * Remove legacy IDs
+    * Remove entity IDs and useExtraMobs from config (since now auto-detected)
 
 2012-05-07  1.5
     * Add optional support for Spout and clicking item to show spawner type (thanks thedudeguy)

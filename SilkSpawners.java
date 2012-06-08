@@ -570,44 +570,25 @@ public class SilkSpawners extends JavaPlugin {
         eid2DisplayName = new ConcurrentHashMap<Short,String>();
         name2Eid = new ConcurrentHashMap<String,Short>();
 
-        // Creature info
-        MemorySection creatureSection = (MemorySection)getConfig().get("creatures");
-    
-        for (String creatureString: creatureSection.getKeys(false)) {
-            if (!getConfig().getBoolean("useExtraMobs", false) && !isRecognizedMob(creatureString)) {
-                if (verbose) { 
-                    log.info("Skipping unrecognized mob "+creatureString+", set useExtraMob: true to enable");
-                }
-                continue;
-            }
+        for (Map.Entry<String,Short> entry: mobID2Eid.entrySet()) {
+            String mobID = entry.getKey();      // internal mod IB used for spawner type
+            short entityID = entry.getValue();       // entity ID used for spawn eggs
 
-            // TODO: http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs in Bukkit?
-            // TODO: there is in 1.1-R5! see getSpawnedType(), and EntityType - but check if it works with mods!
-            // http://forums.bukkit.org/threads/branch-getcreaturetype.61838/
-            short entityID = (short)getConfig().getInt("creatures."+creatureString+".entityID");
-
-            // Internal mob ID used for spawner type 
-            eid2MobID.put(entityID, creatureString);
-            mobID2Eid.put(creatureString, entityID);
-
-            // TODO: replace config file with built-in info! see
-            // http://forums.bukkit.org/threads/help-how-to-get-an-animals-type-id.60156/
-            // "[HELP]How to get an animal's type id"
-
+            // Lookup creature info
 
             // In-game name for user display, and other recognized names for user input lookup
 
-            String displayName = getConfig().getString("creatures."+creatureString+".displayName");
+            String displayName = getConfig().getString("creatures."+mobID+".displayName");
             if (displayName == null) {
-                displayName = creatureString;
+                displayName = mobID;
             }
 
             eid2DisplayName.put(entityID, displayName);
 
-            List<String> aliases = getConfig().getStringList("creatures."+creatureString+".aliases");
+            List<String> aliases = getConfig().getStringList("creatures."+mobID+".aliases");
 
             aliases.add(displayName.toLowerCase().replace(" ", ""));
-            aliases.add(creatureString.toLowerCase().replace(" ", ""));
+            aliases.add(mobID.toLowerCase().replace(" ", ""));
             aliases.add(entityID+"");
 
             for (String alias: aliases) {
