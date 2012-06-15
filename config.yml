@@ -627,3 +627,82 @@ creatures:
     WRTracker:
         enable: false
 
+    # Elemental Creepers 1.2.5
+    # http://www.minecraftforum.net/topic/498342-125-elemental-creepers-v23-smp-fixes-open-source-and-more/   
+    # https://github.com/xSmallDeadGuyx/ElementalCreepers/pull/1
+    FriendlyCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['frcreeper', 'frcreep', 'friendlyc', 'friend', 'frc']
+    GhostCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['gcreeper', 'gcreep', 'gc', 'ghost']
+    EarthCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['ecreeper', 'ecreep', 'ec', 'earth']
+    DarkCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['dcreeper', 'dcreep', 'dc']
+    LightCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['lcreeper', 'lcreep', 'lc']
+    IllusionCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['icreeper', 'icreep', 'ic']
+    ElectricCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['elcreeper', 'elcreep', 'elc']
+    FakeIllusionCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['ficreeper', 'ficreep', 'fakeicreeper', 'fic']
+    MagmaCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['mcreeper', 'mcreep', 'mc']
+    IceCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['icecreep', 'icec']
+    ReverseCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['rcreeper', 'rcreep', 'rc']
+    CookieCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['ccreeper', 'cookiec', 'cc']
+    FireCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['fcreeper', 'fcreep', 'fc']
+    PsychicCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['pcreeper', 'pcreep', 'pc']
+    WaterCreeper:
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+        aliases: ['wcreeper', 'wcreep', 'wc']
+
