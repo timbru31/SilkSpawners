@@ -2,7 +2,7 @@ SilkSpawners - harvest mob spawners with silk touch
 
 Ever wanted to move a mob spawner? With SilkSpawners, you can now pick up and move monster spawners using tools with the "silk touch" enchantment.
 
-**[Download SilkSpawners 2.0.1](http://dev.bukkit.org/server-mods/silkspawners/files/15-silk-spawners-2-0-1/)** - released 2012/06/16
+**[Download SilkSpawners 2.0.2](http://dev.bukkit.org/server-mods/silkspawners/files/16-silk-spawners-2-0-2/)** - released 2012/07/04
 
 Features:
 
@@ -47,6 +47,8 @@ Many additional features can be enabled if desired, see below.
 *destroyDropBars* (0) - Iron bars to drop when spawner is destroyed.
 
 *ignoreFakeBreakEvents* (true) - Ignore subclassed spawner block break events sent by other plugins (such as mcMMO with superbreaker).
+
+*denyBreakHoldingSpawner* (true) - Deny players from breaking blocks while holding mob spawners, to prevent silk touch exploit.
 
 *consumeEgg* (true) - Consume spawn eggs used to change spawners, or otherwise keep the egg in the player's inventory.
 

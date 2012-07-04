@@ -15,6 +15,7 @@ destroyDropXP: 0
 destroyDropBars: 0
 #destroyDropBars: 8
 ignoreFakeBreakEvent: true
+denyBreakHoldingSpawner: true
 
 craftableSpawners: false
 spawnersUnstackable: false

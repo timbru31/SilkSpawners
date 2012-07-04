@@ -1,3 +1,6 @@
+2012-07-04  2.0.2
+    * Deny breaking blocks using spawners to prevent silk touch exploit (denyBreakHoldingSpawner)
+
 2012-06-16  2.0.1
     * Add Elemental Creepers 1.2.5 mod mob aliases
     * Fix typo in Mo' Creatures wild wolf alias
