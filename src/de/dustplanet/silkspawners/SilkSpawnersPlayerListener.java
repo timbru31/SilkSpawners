@@ -16,32 +16,33 @@ import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SilkSpawnersPlayerListener implements Listener {
-
-
 	private SilkSpawners plugin;
-
 	public SilkSpawnersPlayerListener(SilkSpawners plugin) {
 		this.plugin = plugin;
 	}
+	
 	/**
 	 * To show a chat message that a player is holding a mob spawner and its type
 	 * @param event
-	 * @author Chris Churchwell (thedudeguy)
+	 * @author (former) Chris Churchwell (thedudeguy)
+	 * @author xGhOsTkiLLeRx
 	 */
+	
 	@EventHandler
-	public void OnHoldSpawner(PlayerItemHeldEvent event) {
+	public void onPlayerHoldItem(PlayerItemHeldEvent event) {
+		// Check if we should notify the player. The second condition is the permission and that the slot isn't null and the item is a mob spawner
 		if (plugin.getConfig().getBoolean("notifyOnHold") && plugin.hasPermission((Player)event.getPlayer(), "silkspawners.info") && event.getPlayer().getInventory().getItem(event.getNewSlot()) != null && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
-			if (SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 &&	plugin.defaultEntityID == 0) {
-				return ;
-			}
+			// Don't spam with pigs
+			/*TODO static here*/if (SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 &&	plugin.defaultEntityID == 0) return;
 
+			// TODO STATIC
 			short entityID = SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
 			if (entityID == 0) entityID = plugin.defaultEntityID;
-
+			
 			String spawnerName = plugin.getCreatureName(entityID);
 
-			if(plugin.spoutEnabled && ((SpoutPlayer)event.getPlayer()).isSpoutCraftEnabled()) {
-				((SpoutPlayer)event.getPlayer()).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
+			if (plugin.spoutEnabled && ((SpoutPlayer) event.getPlayer()).isSpoutCraftEnabled()) {
+				((SpoutPlayer) event.getPlayer()).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
 			} else {
 				event.getPlayer().sendMessage(" ");
 				event.getPlayer().sendMessage("-- Monster Spawner --");

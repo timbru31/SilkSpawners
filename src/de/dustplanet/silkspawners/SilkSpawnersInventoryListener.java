@@ -8,7 +8,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SilkSpawnersInventoryListener implements Listener {
-
 	private SilkSpawners plugin;
 	public SilkSpawnersInventoryListener(SilkSpawners plugin) {
 		this.plugin = plugin;
@@ -17,12 +16,18 @@ public class SilkSpawnersInventoryListener implements Listener {
 	/**
 	 * To show a chat message that a player clicked on an mob spawner
 	 * @param event
-	 * @author Chris Churchwell (thedudeguy)
+	 * @author (former) Chris Churchwell (thedudeguy)
+	 * @author xGhOsTkiLLeRx
 	 */
 	
 	@EventHandler
-	public void OnClickSpawner(InventoryClickEvent event) {
-		if (plugin.getConfig().getBoolean("notifyOnClick") && event.getCurrentItem() != null && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player)event.getWhoClicked(), "silkspawners.info")) {
+	public void onInventoryClick(InventoryClickEvent event) {
+		// Null checks, somehow erros appeared...
+		if (event.getCurrentItem() == null || event.getWhoClicked() == null) return;
+		// If we should notify and the item is a mobspawner and we have a player here who has the permission
+		if (plugin.getConfig().getBoolean("notifyOnClick") && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player)event.getWhoClicked(), "silkspawners.info")) {
+			// TODO Static
+			// Don't spam with pigs
 			if (SilkSpawners.getStoredSpawnerItemEntityID(event.getCurrentItem()) == 0 && plugin.defaultEntityID == 0) return;
 
 			short entityID = SilkSpawners.getStoredSpawnerItemEntityID(event.getCurrentItem());
