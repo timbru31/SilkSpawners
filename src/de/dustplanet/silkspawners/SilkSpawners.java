@@ -33,7 +33,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-
 public class SilkSpawners extends JavaPlugin {
 	Logger log = Logger.getLogger("Minecraft");
 	SilkSpawnersBlockListener blockListener  = new SilkSpawnersBlockListener(this);
@@ -54,10 +53,9 @@ public class SilkSpawners extends JavaPlugin {
 	final static Material SPAWN_EGG = Material.MONSTER_EGG;
 
 	public boolean spoutEnabled = false;
-
+	
 	public void onEnable() {
 		loadConfig();
-
 		// Check for spout
 		if (Bukkit.getPluginManager().isPluginEnabled("Spout")) {
 			if (getConfig().getBoolean("useSpout")) {
@@ -300,10 +298,6 @@ public class SilkSpawners extends JavaPlugin {
 		}
 	}
 
-	public void onDisable() {
-		log.info("SilkSpawners disabled");
-	}
-
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (!cmd.getName().equalsIgnoreCase("silkspawners")) {
 			return false;
@@ -418,12 +412,12 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// Return the spawner block the player is looking at, or null if isn't
+	// TODO Replace the config
 	private Block getSpawnerFacing(Player player) {
 		Block block = player.getTargetBlock(null, getConfig().getInt("spawnerCommandReachDistance", 6));
 		if (block == null || block.getType() != Material.MOB_SPAWNER) {
 			return null;
 		}
-
 		return block;
 	}
 
@@ -456,31 +450,32 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 
-	// Create a tagged a mob spawner _item_ with its entity ID so we know what it spawns
+	// Create a tagged a mob spawner item with it's entity ID so we know what it spawns
 	// This is not part of vanilla, but our own convention
+	// TODO Checked
 	public static ItemStack newSpawnerItem(short entityID) {
 		ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
-
 		// Tag the entity ID several ways, for compatibility
 
 		// The way it should be stored
 		item.setDurability(entityID);
-
+		
 		// TODO: Creaturebox compatibility
 		// see http://dev.bukkit.org/server-mods/creaturebox/pages/trading-mob-spawners/
 		//item.addUnsafeEnchantment(Enchantment.OXYGEN, entityID);
+		
+		
 		// Second method, for old compat and to be sure!
 		item.addUnsafeEnchantment(Enchantment.SILK_TOUCH, entityID);
-
 		return item;
 	}
 
 	// Get the entity ID
+	// TODO Checked
 	public static short getStoredSpawnerItemEntityID(ItemStack item) {
 		short id = item.getDurability();
-		if (id != 0) {
-			return id;
-		}
+		// Is it stored and working? Great return this!
+		if (id != 0) return id;
 
 		// TODO: compatibility with Creaturebox's 0-22
 		/*
@@ -488,12 +483,11 @@ public class SilkSpawners extends JavaPlugin {
         if (id != 0) {
             return id;
         }*/
-
-		id = (short)item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
-		if (id != 0) {
-			return id;
-		}
-
+		
+		// Else use the enchantment
+		id = (short) item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
+		if (id != 0) return id;
+		// Return 0 -> should be default
 		return 0;
 	}
 
@@ -586,14 +580,23 @@ public class SilkSpawners extends JavaPlugin {
 		blockState.update();
 	}
 
-	// http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
-	public WorldGuardPlugin getWorldGuard() {
+	/*
+	 * WorldGuard stuff
+	 * Allowed to build and enabled check
+	 * http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
+	 */
+	
+	// Is WourldGuard enabled?
+	// TODO Checked
+	private WorldGuardPlugin getWorldGuard() {
 		if (!getConfig().getBoolean("useWorldGuard")) return null;
 		Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("WorldGuard");
 		if (plugin == null || !(plugin instanceof WorldGuardPlugin)) return null;
 		return (WorldGuardPlugin)plugin;
 	}
 
+	// Is the player allowed to build here?
+	// TODO Checked
 	public boolean canBuildHere(Player player, Location location) {
 		WorldGuardPlugin wg = getWorldGuard();
 		if (wg == null)	return true;

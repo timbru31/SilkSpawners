@@ -53,6 +53,15 @@ public class SilkSpawnersBlockListener implements Listener {
 		ItemStack dropItem;
 		World world = player.getWorld();
 
+		// Prevent XP farming/duping
+		event.setExpToDrop(0);
+		if (plugin.hasPermission(player, "silkspawners.silkdrop") || plugin.hasPermission(player, "silkspawners.destroydrop")) {
+			int addXP = plugin.getConfig().getInt("destroyDropXP");
+			if (addXP != 0) {
+				event.setExpToDrop(addXP);
+			}
+		}
+
 		if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop")) {
 			// Drop spawner
 			dropItem = SilkSpawners.newSpawnerItem(entityID);
@@ -60,21 +69,10 @@ public class SilkSpawnersBlockListener implements Listener {
 			return;
 		}
 
-		// Prevent XP farming/duping
-		event.setExpToDrop(0);
-		
 		if (plugin.hasPermission(player, "silkspawners.destroydrop")) {
 			if (plugin.getConfig().getBoolean("destroyDropEgg")) {
 				// Drop egg
 				world.dropItemNaturally(block.getLocation(), SilkSpawners.newEggItem(entityID));
-			}
-
-			int addXP = plugin.getConfig().getInt("destroyDropXP");
-			if (addXP != 0) {
-				/*ExperienceOrb orb = world.spawn(block.getLocation(), ExperienceOrb.class);
-				orb.setExperience(addXP);*/
-				// Use new API to set
-				event.setExpToDrop(addXP);
 			}
 
 			int dropBars = plugin.getConfig().getInt("destroyDropBars");
@@ -103,7 +101,7 @@ public class SilkSpawnersBlockListener implements Listener {
 		// https://bukkit.atlassian.net/browse/BUKKIT-596 - BlockPlaceEvent getItemInHand() loses enchantments
 		// so, have to get item from player instead
 		//ItemStack item = event.getItemInHand();
-		
+
 		/*
 		 * RESEARCH SAYS IT'S FIXED!
 		 * 
@@ -128,11 +126,11 @@ public class SilkSpawnersBlockListener implements Listener {
 		// TODO: file or find bug about this, get it fixed so can remove this lame workaround
 		Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(entityID, blockPlaced, plugin, player), 0);
 	}
-	
+
 	// Checks if the given ItemStack has got the SilkTouch
 	private boolean hasSilkTouch(ItemStack tool) {
 		int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
-	    // Always have it
+		// Always have it
 		if (minLevel == 0) return true;
 
 		//  No silk touch fists..
