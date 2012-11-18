@@ -57,12 +57,12 @@ public class SilkSpawners extends JavaPlugin {
 	public void onEnable() {
 		loadConfig();
 		// Check for spout
-		if (Bukkit.getPluginManager().isPluginEnabled("Spout")) {
+		if (getServer().getPluginManager().isPluginEnabled("Spout")) {
 			if (getConfig().getBoolean("useSpout")) {
-				Bukkit.getLogger().log(Level.INFO, "[SilkSpawners] Spout present. Enabling Spout features.");
+				getServer().getLogger().log(Level.INFO, "[SilkSpawners] Spout present. Enabling Spout features.");
 				spoutEnabled = true;
 			} else {
-				Bukkit.getLogger().log(Level.INFO, "[SilkSpawners] Disabling Spout features even though Spout is present.");
+				getServer().getLogger().log(Level.INFO, "[SilkSpawners] Disabling Spout features even though Spout is present.");
 			}
 		}
 

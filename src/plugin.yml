@@ -1,6 +1,6 @@
 name: SilkSpawners
 main: de.dustplanet.silkspawners.SilkSpawners
-version: 2.0.4.1
+version: 2.0.5
 url: http://dev.bukkit.org/server-mods/silkspawners/
 description: pick up and move monster spawners using silk touch
 commands:

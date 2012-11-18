@@ -166,7 +166,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 					entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
 					world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
 					if (entity instanceof net.minecraft.server.EntityLiving) {
-						((net.minecraft.server.EntityLiving)entity).aH();
+						((net.minecraft.server.EntityLiving)entity).aN();
 					}
 
 					// Remove item from player hand
