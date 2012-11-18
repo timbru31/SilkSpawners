@@ -17,12 +17,15 @@ import org.getspout.spoutapi.player.SpoutPlayer;
 
 public class SilkSpawnersPlayerListener implements Listener {
 	private SilkSpawners plugin;
-	public SilkSpawnersPlayerListener(SilkSpawners plugin) {
-		this.plugin = plugin;
+	private SilkUtil su;
+	
+	public SilkSpawnersPlayerListener(SilkSpawners instance, SilkUtil util) {
+		plugin = instance;
+		su = util;
 	}
 	
 	/**
-	 * To show a chat message that a player is holding a mob spawner and its type
+	 * To show a chat message that a player is holding a mob spawner and it's type
 	 * @param event
 	 * @author (former) Chris Churchwell (thedudeguy)
 	 * @author xGhOsTkiLLeRx
@@ -33,13 +36,11 @@ public class SilkSpawnersPlayerListener implements Listener {
 		// Check if we should notify the player. The second condition is the permission and that the slot isn't null and the item is a mob spawner
 		if (plugin.getConfig().getBoolean("notifyOnHold") && plugin.hasPermission((Player)event.getPlayer(), "silkspawners.info") && event.getPlayer().getInventory().getItem(event.getNewSlot()) != null && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
 			// Don't spam with pigs
-			/*TODO static here*/if (SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 &&	plugin.defaultEntityID == 0) return;
-
-			// TODO STATIC
-			short entityID = SilkSpawners.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
-			if (entityID == 0) entityID = plugin.defaultEntityID;
+			if (su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 && su.defaultEntityID == 0) return;
+			short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+			if (entityID == 0) entityID = su.defaultEntityID;
 			
-			String spawnerName = plugin.getCreatureName(entityID);
+			String spawnerName = su.getCreatureName(entityID);
 
 			if (plugin.spoutEnabled && ((SpoutPlayer) event.getPlayer()).isSpoutCraftEnabled()) {
 				((SpoutPlayer) event.getPlayer()).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
@@ -58,14 +59,14 @@ public class SilkSpawnersPlayerListener implements Listener {
 		Block block = event.getClickedBlock();
 		Player player = event.getPlayer();
 
-		if (item != null && item.getType() == SilkSpawners.SPAWN_EGG) {
+		if (item != null && item.getType() == su.SPAWN_EGG) {
 			short entityID = item.getDurability();
 
 			// Clicked spawner with monster egg to change type
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK &&
 					block != null && block.getType() == Material.MOB_SPAWNER) {
 
-				if (!plugin.canBuildHere(player, block.getLocation())) {
+				if (!su.canBuildHere(player, block.getLocation())) {
 					return;
 				}
 
@@ -75,7 +76,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 				}
 
 
-				plugin.setSpawnerType(block, entityID, player);
+				su.setSpawnerType(block, entityID, player);
 
 				// Consume egg
 				if (plugin.getConfig().getBoolean("consumeEgg", true)) {
@@ -89,14 +90,14 @@ public class SilkSpawnersPlayerListener implements Listener {
 						inventory.clear(slot);
 					} else {
 						// Cannot legitimately get >1 egg per slot (in 1.1, but supposedly 1.2 will support it), but should support it regardless
-						inventory.setItem(slot, SilkSpawners.newEggItem(entityID, eggs.getAmount() - 1));
+						inventory.setItem(slot, su.newEggItem(entityID, eggs.getAmount() - 1));
 					}
 				}
 			} else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 				// Using spawn egg
 				if (plugin.getConfig().getBoolean("spawnEggOverride", false)) { // disabled by default, since it is dangerous
 
-					String mobID = plugin.eid2MobID.get(entityID);
+					String mobID = su.eid2MobID.get(entityID);
 
 					boolean allowed = plugin.getConfig().getBoolean("spawnEggOverrideSpawnDefault", true);
 					if (mobID != null) {
