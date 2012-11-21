@@ -4,6 +4,7 @@ consumeEgg: true
 usePermissions: false
 useWorldGuard: true
 defaultCreature: null
+# null is Minecraft default for the pig
 spawnerCommandReachDistance: 6
 
 minSilkTouchLevel: 1
@@ -15,7 +16,9 @@ destroyDropXP: 0
 destroyDropBars: 0
 #destroyDropBars: 8
 ignoreFakeBreakEvent: true
+# Should prevent some duping, recommend to let it true
 denyBreakHoldingSpawner: true
+# recommend, since old spawners have got a silk touch enchantment
 
 craftableSpawners: false
 spawnersUnstackable: false
@@ -28,6 +31,11 @@ enableCreatureDefault: true
 useSpout: true
 notifyOnClick: true
 notifyOnHold: true
+
+# Internal stuff, do not change unless advised
+entityMapField: f
+useReflection: true
+
 
 # creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
 creatures:
@@ -165,10 +173,25 @@ creatures:
         enable: true
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
+    Witch: 
+        aliases: ['hag', 'sibly', 'sorceress']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    Bat: 
+        aliases: ['b']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
+    WitherBoss:
+        displayName: 'Wither'
+        aliases: ['wither', 'w', 'boss']
+        enable: true
+        enableCraftingSpawner: true
+        enableSpawnEggOverrideAllowSpawn: true
 
     # Non-mob vanilla entities
-    # These are off since they can't be spawned with a mob spawner since they aren't mobs,
-    # although they can be spawned with spawn eggs if you really want to
+    # Enable on your own risk, some might work, some not!
     Item:
         enable: false
     XPOrb:
@@ -199,12 +222,17 @@ creatures:
         enable: false
     Boat:
         enable: false
-    # can't be spawned with monster spawner, and spawn egg fails to instantiate
     Mob:
         enable: false
     Monster:
         enable: false
     EnderCrystal:
+        enable: false
+    ItemFrame
+        enable: false
+    WitherSkull:
+        enable: false
+    FallingSand
         enable: false
    
     # Modded mobs 
@@ -428,7 +456,7 @@ creatures:
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
 
-    # Mo' Creatures 3.6.2 for 1.2.5 from http://www.mcportcentral.co.za/index.php?topic=2535.0
+    # Mo' Creatures 4.1.2 from http://mcportcentral.co.za/wiki/index.php?title=Ports_for_1.4.2
     Horse:
         aliases: ['h']
         enable: true
@@ -706,4 +734,3 @@ creatures:
         enableCraftingSpawner: true
         enableSpawnEggOverrideAllowSpawn: true
         aliases: ['wcreeper', 'wcreep', 'wc']
-

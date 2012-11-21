@@ -134,7 +134,7 @@ public class SpawnerCommand implements CommandExecutor {
 				}
 
 				// If emtpy, add a mob spawner or egg
-				if (!plugin.hasPermission(player, "silkspawners.freeitem")) {
+				if (!plugin.hasPermission(player, "silkspawners.freeitem") && !plugin.hasPermission(player, "silkspawners.freeitem.egg")) {
 					// Only viewing
 					if (plugin.hasPermission(player, "silkspawners.viewtype")) {
 						sender.sendMessage(ChatColor.RED + "You must be looking directly at a spawner or have a spawner in your hand to use this command");
@@ -150,12 +150,20 @@ public class SpawnerCommand implements CommandExecutor {
 				}
 
 				// Add egg or spawner
-				if (isEgg) {
+				if (isEgg && plugin.hasPermission(player, "silkspawners.freeitem.egg")) {
 					player.setItemInHand(su.newEggItem(entityID));
 					sender.sendMessage(ChatColor.GREEN + "Successfully added a " + ChatColor.YELLOW + su.getCreatureName(entityID).toLowerCase() + " spawn egg" + ChatColor.GREEN + " to your inventory");
-				} else {
+					return true;
+				}
+				if (plugin.hasPermission(player, "silkspawners.freeitem")) {
 					player.setItemInHand(su.newSpawnerItem(entityID));
 					sender.sendMessage(ChatColor.GREEN + "Successfully added a " + ChatColor.YELLOW + su.getCreatureName(entityID).toLowerCase() + " spawner" + ChatColor.GREEN + " to your inventory");
+					return true;
+				}
+				else {
+					if (isEgg) sender.sendMessage(ChatColor.RED + "You are not allowed to get a free egg!");
+					else sender.sendMessage(ChatColor.RED + "You are not allowed to get a spawner!");
+					return true;
 				}
 			}
 		}
