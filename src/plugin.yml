@@ -22,6 +22,7 @@ permissions:
             silkspawners.changetype: true
             silkspawners.changetypewithegg: true
             silkspawners.freeitem: true
+            silkspawners.freeitem.egg: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -44,7 +45,7 @@ permissions:
     silkspawners.freeitem:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
         default: false
-    silkspawners.freeitemegg:
+    silkspawners.freeitem.egg:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
         default: false
 softdepend:

@@ -50,7 +50,7 @@ public class EggCommand implements CommandExecutor {
 
 				// If it's a spawner change it.
 				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
-					if (!plugin.hasPermission(player, "silkspawners.changetype.egg")) {
+					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
 						player.sendMessage(ChatColor.RED + "You do not have permission to change spawning eggs with /egg");
 						return true;
 					}
