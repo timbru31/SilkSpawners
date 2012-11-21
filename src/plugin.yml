@@ -8,6 +8,10 @@ commands:
         aliases: [silkspawner, ss, spawner]
         description: Change or view the monster spawner creature type
         usage: /<command> [creature]|[creature]egg|all
+    egg:
+        aliases: [eggs, eg]
+        description: Change the egg type
+        usage: /<command> [creature]|[creature]egg|all   
 permissions:
     silkspawners.*:
         children:

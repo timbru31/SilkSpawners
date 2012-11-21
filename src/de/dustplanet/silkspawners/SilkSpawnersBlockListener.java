@@ -1,5 +1,6 @@
 package de.dustplanet.silkspawners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -20,6 +21,12 @@ public class SilkSpawnersBlockListener implements Listener {
 		plugin = instance;
 		su = util;
 	}
+	
+	/**
+	 * Handle the placement and breaking of a spawner
+	 * @author (former) mushroomhostage
+	 * @author xGhOsTkiLLeRx
+	 */
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onBlockBreak(final BlockBreakEvent event) {
@@ -43,11 +50,12 @@ public class SilkSpawnersBlockListener implements Listener {
 		// mcMMO sends its own FakeBlockBreakEvent with super breaker ability, causing us to think
 		// the spawner is broken when it isn't, allowing for duping: http://www.youtube.com/watch?v=GGlyZmph8NM
 		// Ignore these events if configured
-		// TODO still used?
+		
+		// Researches say it's fixed, just in case
 		if (event.getClass() != BlockBreakEvent.class && plugin.getConfig().getBoolean("ignoreFakeBreakEvents", true)) return;
 		
 		// Message the player about the broken spawner
-		plugin.informPlayer(player, su.getCreatureName(entityID) + " spawner broken");
+		plugin.informPlayer(player, ChatColor.YELLOW + su.getCreatureName(entityID).toLowerCase() + " spawner broken");
 
 		// If using silk touch, drop spawner itself 
 		ItemStack tool = player.getItemInHand();
@@ -100,11 +108,11 @@ public class SilkSpawnersBlockListener implements Listener {
 		short entityID = su.getStoredSpawnerItemEntityID(item);
 		if (entityID == su.defaultEntityID) {
 			// Default
-			plugin.informPlayer(player, "Placing default spawner");
+			plugin.informPlayer(player, ChatColor.YELLOW + "Placing default spawner");
 			return;
 		}
 		// Else message the type
-		plugin.informPlayer(player, su.getCreatureName(entityID) + " spawner placed");
+		plugin.informPlayer(player, ChatColor.YELLOW + su.getCreatureName(entityID).toLowerCase() + " spawner placed");
 
 		// Bukkit 1.1-R3 regressed from 1.1-R1, ignores block state update on onBlockPlace
 		// TODO: file or find bug about this, get it fixed so can remove this lame workaround
