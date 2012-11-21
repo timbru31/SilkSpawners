@@ -18,8 +18,7 @@ public class SilkSpawnersInventoryListener implements Listener {
 	
 	/**
 	 * To show a chat message that a player clicked on an mob spawner
-	 * @param event
-	 * @author (former) Chris Churchwell (thedudeguy)
+	 * @author (former) mushroomhostage
 	 * @author xGhOsTkiLLeRx
 	 */
 	
@@ -44,8 +43,10 @@ public class SilkSpawnersInventoryListener implements Listener {
 				((SpoutPlayer) player).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
 			}
 			else {
+				player.sendMessage(" ");
 				player.sendMessage("-- Monster Spawner --");
 				player.sendMessage("-- Type: " + spawnerName);
+				player.sendMessage("-- EntityID: " + entityID);
 			}
 		}
 

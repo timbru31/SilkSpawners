@@ -19,12 +19,13 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SilkSpawners extends JavaPlugin {
+	
 	private SilkSpawnersBlockListener blockListener;
 	private SilkSpawnersPlayerListener playerListener;
 	private SilkSpawnersInventoryListener inventoryListener;
-	private SilkSpawnersCommands silkCommands;
+	private SpawnerCommand spawnerCommand;
+	private EggCommand eggCommand;
 	private SilkUtil su;
-
 	public boolean spoutEnabled, usePermissions;
 
 	public void onDisbale() {
@@ -44,8 +45,10 @@ public class SilkSpawners extends JavaPlugin {
 			}
 		}
 
-		silkCommands = new SilkSpawnersCommands(this, su);
-		getCommand("spawner").setExecutor(silkCommands);
+		spawnerCommand = new SpawnerCommand(this, su);
+		eggCommand = new EggCommand(this, su);
+		getCommand("spawner").setExecutor(spawnerCommand);
+		getCommand("egg").setExecutor(eggCommand);
 		blockListener  = new SilkSpawnersBlockListener(this, su);
 		playerListener  = new SilkSpawnersPlayerListener(this, su);
 		inventoryListener = new SilkSpawnersInventoryListener(this, su);

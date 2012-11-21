@@ -6,11 +6,13 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -46,7 +48,7 @@ public class SilkUtil {
 	public static SilkUtil hookIntoSilkSpanwers() {
 		SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
 		if (plugin != null) return new SilkUtil(plugin);
-		System.out.println("SilkSpawners instance not found");
+		System.out.println("SilkSpawners instance not found, returning null");
 		return null;
 	}
 
@@ -113,11 +115,11 @@ public class SilkUtil {
 				return mobID2Eid.get(mobID);
 			} catch (Exception e) {
 				Bukkit.getServer().getLogger().info("Reflection failed: " + e);
-				// Fallback to bukkit
+				e.printStackTrace();
 			} 
 		}
 
-		// or ask Bukkit if we have to
+		// Fallback to bukkit
 		return spawner.getSpawnedType().getTypeId();
 	}
 	
@@ -148,6 +150,7 @@ public class SilkUtil {
 			catch (Exception e) {
 				// Fallback to bukkit;
 				Bukkit.getServer().getLogger().info("Reflection failed: " + e);
+				e.printStackTrace();
 			}
 		}
 
@@ -167,12 +170,21 @@ public class SilkUtil {
 	public void setSpawnerType(Block block, short entityID, Player player) {
 		// Changing denied by WorldGuard?
 		if (!canBuildHere(player, block.getLocation())) {
-			player.sendMessage("Changing spawner type denied by WorldGuard protection");
+			player.sendMessage(ChatColor.RED + "Changing spawner type denied by WorldGuard protection");
 			return;
 		}
 		// Set the spawner and message the player
 		setSpawnerEntityID(block, entityID);
 		player.sendMessage(getCreatureName(entityID) + " spawner");
+	}
+	
+	public ItemStack setSpawnerType(ItemStack item, short entityID) {
+		if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
+			System.out.println(":/");
+			return item;
+		}
+		item.setDurability(entityID);
+		return item;
 	}
 
 	// Return the spawner block the player is looking at, or null if isn't
@@ -201,7 +213,7 @@ public class SilkUtil {
 		return displayName;
 	}
 	// Show them all the possible creature names
-	public void showAllCreatures(Player player) {
+	public void showAllCreatures(CommandSender sender) {
 		String message = "";
 		// For each entry in the list
 		for (String displayName: eid2DisplayName.values()) {
@@ -210,7 +222,7 @@ public class SilkUtil {
 		}
 		// Strip last comma out
 		message = message.substring(0, message.length() - ", ".length());
-		player.sendMessage(message);
+		sender.sendMessage(message);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -233,6 +245,7 @@ public class SilkUtil {
 		// Fail
 		catch (Exception e) {
 			Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e);
+			e.printStackTrace();
 		}
 		return sortedMap;
 	}
