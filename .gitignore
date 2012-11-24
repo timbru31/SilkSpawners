@@ -1,3 +1,6 @@
 *.jar
 me
 *.swp
+/ChangeLog
+/LICENSE
+/README.md
