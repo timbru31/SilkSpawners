@@ -19,7 +19,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SilkSpawners extends JavaPlugin {
-	
+
 	private SilkSpawnersBlockListener blockListener;
 	private SilkSpawnersPlayerListener playerListener;
 	private SilkSpawnersInventoryListener inventoryListener;
@@ -36,7 +36,7 @@ public class SilkSpawners extends JavaPlugin {
 		su = new SilkUtil(this);
 		loadConfig();
 		// Check for spout
-		if (getConfig().getBoolean("useSpout")) {
+		if (getConfig().getBoolean("useSpout", true)) {
 			if (getServer().getPluginManager().isPluginEnabled("Spout")) {
 				getServer().getLogger().info("[SilkSpawners] Spout present. Enabling Spout features.");
 				spoutEnabled = true;
@@ -69,8 +69,9 @@ public class SilkSpawners extends JavaPlugin {
 
 		try {
 			fileWriter = new FileWriter(file);
-		} catch (IOException e) {
-			getServer().getLogger().severe("Couldn't write config file: " + e.getMessage());
+		}
+		catch (IOException e) {
+			getServer().getLogger().severe("[SilkSpawners] Couldn't write config file: " + e.getMessage());
 			getServer().getPluginManager().disablePlugin(this);
 			return false;
 		}
@@ -83,15 +84,17 @@ public class SilkSpawners extends JavaPlugin {
 				writer.write(line + System.getProperty("line.separator"));
 				line = reader.readLine();
 			}
-			getServer().getLogger().info("Wrote default config");
-		} catch (IOException e) {
-			getServer().getLogger().severe("Error writing config: " + e.getMessage());
-		} finally {
+			getServer().getLogger().info("[SilkSpawners] Wrote default config");
+		}
+		catch (IOException e) {
+			getServer().getLogger().severe("[SilkSpawners] Error writing config: " + e.getMessage());
+		}
+		finally {
 			try {
 				writer.close();
 				reader.close();
 			} catch (IOException e) {
-				getServer().getLogger().severe("Error saving config: " + e.getMessage());
+				getServer().getLogger().severe("[SilkSpawners] Error saving config: " + e.getMessage());
 				getServer().getPluginManager().disablePlugin(this);
 			}
 		}
@@ -224,7 +227,8 @@ public class SilkSpawners extends JavaPlugin {
 				// Set the stackable field back to 1
 				maxStackSizeField.setAccessible(true);
 				maxStackSizeField.setInt(net.minecraft.server.Item.byId[Material.MOB_SPAWNER.getId()], 1);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				getServer().getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e);
 			}
 		}
