@@ -232,8 +232,6 @@ creatures:
         enable: false
     WitherSkull:
         enable: false
-    FallingSand
-        enable: false
    
     # Modded mobs 
     # IMPORTANT: You have to mod your client and server before any of these will work!
