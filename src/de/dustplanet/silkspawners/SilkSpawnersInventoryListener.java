@@ -1,11 +1,18 @@
 package de.dustplanet.silkspawners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+/**
+ * To show a chat message that a player clicked on an mob spawner
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
 
 public class SilkSpawnersInventoryListener implements Listener {
 	private SilkSpawners plugin;
@@ -16,18 +23,12 @@ public class SilkSpawnersInventoryListener implements Listener {
 		su = util;
 	}
 	
-	/**
-	 * To show a chat message that a player clicked on an mob spawner
-	 * @author (former) mushroomhostage
-	 * @author xGhOsTkiLLeRx
-	 */
-	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
 		// Null checks, somehow erros appeared...
 		if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) return;
 		// If we should notify and the item is a mobspawner and we have a player here who has the permission
-		if (plugin.getConfig().getBoolean("notifyOnClick") && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player) event.getWhoClicked(), "silkspawners.info")) {
+		if (plugin.config.getBoolean("notifyOnClick") && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player) event.getWhoClicked(), "silkspawners.info")) {
 			// Don't spam with pigs
 			if (su.getStoredSpawnerItemEntityID(event.getCurrentItem()) == 0 && su.defaultEntityID == 0) return;
 			// Get the entity ID
@@ -43,10 +44,9 @@ public class SilkSpawnersInventoryListener implements Listener {
 				((SpoutPlayer) player).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
 			}
 			else {
-				player.sendMessage(" ");
-				player.sendMessage("-- Monster Spawner --");
-				player.sendMessage("-- Type: " + spawnerName);
-				player.sendMessage("-- EntityID: " + entityID);
+				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner1").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
+				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner2").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
+				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner3").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
 			}
 		}
 

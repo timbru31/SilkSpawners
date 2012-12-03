@@ -1,21 +1,23 @@
 package de.dustplanet.silkspawners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
+
+/**
+ * Workaround! :(
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
 
 public class SilkSpawnersSetCreatureTask  implements Runnable {
 	private SilkUtil su;
 	private short entityID;
 	private Block block;
 	private SilkSpawners plugin;
-	private Player player;
 
-	public SilkSpawnersSetCreatureTask(short entityID, Block block, SilkSpawners plugin, Player player, SilkUtil su) {
+	public SilkSpawnersSetCreatureTask(short entityID, Block block, SilkSpawners plugin, SilkUtil su) {
 		this.entityID = entityID;
 		this.block = block;
 		this.plugin = plugin;
-		this.player = player;
 		this.su = su;
 	}
 
@@ -23,7 +25,7 @@ public class SilkSpawnersSetCreatureTask  implements Runnable {
 		try {
 			su.setSpawnerEntityID(block, entityID);
 		} catch (Exception e) {
-			plugin.informPlayer(player, ChatColor.RED + "Please report this! Failed to set type: " + ChatColor.YELLOW + e);
+			plugin.getLogger().warning("Please report this! Failed to set type: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

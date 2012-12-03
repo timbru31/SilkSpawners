@@ -21,6 +21,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+/**
+ * This is the util class where all the magic happens!
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
+
 public class SilkUtil {
 	// EntityID to displayName
 	public ConcurrentHashMap<Short,String> eid2DisplayName = new ConcurrentHashMap<Short, String>();
@@ -38,6 +44,8 @@ public class SilkUtil {
 	public Material SPAWN_EGG = Material.MONSTER_EGG;
 	// WorldGuard instance
 	private WorldGuardPlugin wg;
+	// Should we use the normal names or a colored one?
+	public boolean coloredNames;
 
 	public SilkUtil(SilkSpawners plugin) {
 		getWorldGuard(plugin);
@@ -64,10 +72,15 @@ public class SilkUtil {
 
 
 	// Create a tagged a mob spawner item with it's entity ID so we know what it spawns
-	public ItemStack newSpawnerItem(short entityID) {
-		ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
-
-		// The way it should be stored
+	public ItemStack newSpawnerItem(short entityID, String customName) {
+		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
+		ItemStack item = null;
+		if (coloredNames) item = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, 1, entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
+		else {
+			System.out.println("hier11");
+			item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+		}
+		// The way it should be stored (double sure!)
 		item.setDurability(entityID);
 
 		// Removed the old unsafeEnchantment method since BUKKIT-329 is fixed and it caused glowing issues
@@ -144,7 +157,7 @@ public class SilkUtil {
 				tile.a(mobID);
 
 				// Call an update
-				blockState.update();
+				blockState.update(true);
 				return;
 			}
 			catch (Exception e) {
@@ -163,14 +176,14 @@ public class SilkUtil {
 		// Set the spawner (less powerful)
 		spawner.setSpawnedType(ct);
 		// Update the spawner
-		blockState.update();
+		blockState.update(true);
 	}
 
 	// Set spawner type from user
-	public void setSpawnerType(Block block, short entityID, Player player) {
+	public void setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
 		// Changing denied by WorldGuard?
 		if (!canBuildHere(player, block.getLocation())) {
-			player.sendMessage(ChatColor.RED + "Changing spawner type denied by WorldGuard protection");
+			player.sendMessage(messageDenied);
 			return;
 		}
 		// Set the spawner and message the player
@@ -178,13 +191,25 @@ public class SilkUtil {
 		player.sendMessage(getCreatureName(entityID) + " spawner");
 	}
 
-	public ItemStack setSpawnerType(ItemStack item, short entityID) {
+	public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
+		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
 		if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
-			System.out.println(":/");
 			return item;
 		}
-		item.setDurability(entityID);
-		return item;
+		if (item.getType() == Material.MOB_SPAWNER) {
+			ItemStack itemNew = null;
+			if (coloredNames) itemNew = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, item.getAmount(), entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
+			else {
+				itemNew = item;
+				itemNew.setDurability(entityID);
+				System.out.println("hier");
+			}
+			return itemNew;
+		}
+		else {
+			item.setDurability(entityID);
+			return item;
+		}
 	}
 
 	// Return the spawner block the player is looking at, or null if isn't
@@ -266,7 +291,7 @@ public class SilkUtil {
 
 	// Is WourldGuard enabled?
 	private void getWorldGuard(SilkSpawners plugin) {
-		if (!plugin.getConfig().getBoolean("useWorldGuard")) return;
+		if (!plugin.config.getBoolean("useWorldGuard")) return;
 		Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
 		if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) return;
 		wg = (WorldGuardPlugin) worldGuard;

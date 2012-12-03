@@ -12,14 +12,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class SilkSpawners extends JavaPlugin {
+/**
+ * General stuff
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
 
+public class SilkSpawners extends JavaPlugin {
 	private SilkSpawnersBlockListener blockListener;
 	private SilkSpawnersPlayerListener playerListener;
 	private SilkSpawnersInventoryListener inventoryListener;
@@ -27,27 +34,27 @@ public class SilkSpawners extends JavaPlugin {
 	private EggCommand eggCommand;
 	private SilkUtil su;
 	public boolean spoutEnabled, usePermissions;
+	public FileConfiguration config, localization;
 
 	public void onDisbale() {
 		su.clearAll();
 	}
 
 	public void onEnable() {
-		su = new SilkUtil(this);
 		loadConfig();
 		// Check for spout
-		if (getConfig().getBoolean("useSpout", true)) {
+		if (config.getBoolean("useSpout", true)) {
 			if (getServer().getPluginManager().isPluginEnabled("Spout")) {
-				getServer().getLogger().info("[SilkSpawners] Spout present. Enabling Spout features.");
+				getLogger().info("Spout present. Enabling Spout features.");
 				spoutEnabled = true;
 			} else {
-				getServer().getLogger().info("[SilkSpawners] Spout not found. Disabling Spout features.");
+				getLogger().info("Spout not found. Disabling Spout features.");
 			}
 		}
 
 		spawnerCommand = new SpawnerCommand(this, su);
 		eggCommand = new EggCommand(this, su);
-		getCommand("spawner").setExecutor(spawnerCommand);
+		getCommand("silkspawners").setExecutor(spawnerCommand);
 		getCommand("egg").setExecutor(eggCommand);
 		blockListener  = new SilkSpawnersBlockListener(this, su);
 		playerListener  = new SilkSpawnersPlayerListener(this, su);
@@ -60,8 +67,8 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// Copy default configuration
-	// Sure we could use getConfig().options().copyDefaults(true);, but it strips all comments :(
-	private boolean newConfig(File file) {
+	// Sure we could use config.options().copyDefaults(true);, but it strips all comments :(
+	private boolean newConfig(File file, String ressourceName) {
 		FileWriter fileWriter;
 		if (!file.getParentFile().exists()) {
 			file.getParentFile().mkdir();
@@ -71,12 +78,13 @@ public class SilkSpawners extends JavaPlugin {
 			fileWriter = new FileWriter(file);
 		}
 		catch (IOException e) {
-			getServer().getLogger().severe("[SilkSpawners] Couldn't write config file: " + e.getMessage());
+			getLogger().severe("Couldn't write " + ressourceName + " file: " + e.getMessage());
+			e.printStackTrace();
 			getServer().getPluginManager().disablePlugin(this);
 			return false;
 		}
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(getResource("config.yml"))));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(getResource(ressourceName))));
 		BufferedWriter writer = new BufferedWriter(fileWriter);
 		try {
 			String line = reader.readLine();
@@ -84,17 +92,20 @@ public class SilkSpawners extends JavaPlugin {
 				writer.write(line + System.getProperty("line.separator"));
 				line = reader.readLine();
 			}
-			getServer().getLogger().info("[SilkSpawners] Wrote default config");
+			getLogger().info("Wrote default " + ressourceName);
 		}
 		catch (IOException e) {
-			getServer().getLogger().severe("[SilkSpawners] Error writing config: " + e.getMessage());
+			getLogger().severe("Error writing " + ressourceName + ": " + e.getMessage());
+			e.printStackTrace();
 		}
 		finally {
 			try {
+				writer.flush();
 				writer.close();
 				reader.close();
 			} catch (IOException e) {
-				getServer().getLogger().severe("[SilkSpawners] Error saving config: " + e.getMessage());
+				getLogger().severe("Error saving " + ressourceName + ": " + e.getMessage());
+				e.printStackTrace();
 				getServer().getPluginManager().disablePlugin(this);
 			}
 		}
@@ -104,32 +115,45 @@ public class SilkSpawners extends JavaPlugin {
 
 
 	private void loadConfig() {
+		String localizationName = getDataFolder() + System.getProperty("file.separator") + "localization.yml";
+		File localizationFile = new File(localizationName);
+		if (!localizationFile.exists()) {
+			if (!newConfig(localizationFile, "localization.yml")) {
+				throw new IllegalArgumentException("[SilkSpawners] Could not create new localization file");
+			}
+		}
+		
 		// Copy default if not already created
 		String filename = getDataFolder() + System.getProperty("file.separator") + "config.yml";
 		File file = new File(filename);
 
 		if (!file.exists()) {
-			if (!newConfig(file)) {
-				throw new IllegalArgumentException("Could not create new configuration file");
+			if (!newConfig(file, "config.yml")) {
+				throw new IllegalArgumentException("[SilkSpawners] Could not create new configuration file");
 			}
 		}
 		reloadConfig();
+		config = getConfig();
+		localization = YamlConfiguration.loadConfiguration(localizationFile);
+		su = new SilkUtil(this);
+		if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) su.coloredNames = false;
+		else su.coloredNames = true;
 		// Should we display more information
-		boolean verbose = getConfig().getBoolean("verboseConfig", true);
+		boolean verbose = config.getBoolean("verboseConfig", true);
 		// Maybe we need to change it later because reflection field changed, user can adjust it then
 		// Scan the entities
-		SortedMap<Integer, String> sortedMap = su.scanEntityMap(getConfig().getString("entityMapField", "f"));
+		SortedMap<Integer, String> sortedMap = su.scanEntityMap(config.getString("entityMapField", "f"));
 		for (Map.Entry<Integer, String> entry: sortedMap.entrySet()) {
 			// entity ID used for spawn eggs
 			short entityID = (short)(int) entry.getKey();
 			// internal mod ID used for spawner type
 			String mobID = entry.getValue();
 			// Lookup creature info
-			boolean enable = getConfig().getBoolean("enableCreatureDefault", true);
-			enable = getConfig().getBoolean("creatures." + mobID + ".enable", enable);
+			boolean enable = config.getBoolean("enableCreatureDefault", true);
+			enable = config.getBoolean("creatures." + mobID + ".enable", enable);
 			if (!enable) {
 				if (verbose) {
-					getServer().getLogger().info("Entity " + entityID + " = " + mobID + " (disabled)");
+					getLogger().info("Entity " + entityID + " = " + mobID + " (disabled)");
 				}
 				continue;
 			}
@@ -138,7 +162,7 @@ public class SilkSpawners extends JavaPlugin {
 			su.mobID2Eid.put(mobID, entityID);
 
 			// In-game name for user display, and other recognized names for user input lookup
-			String displayName = getConfig().getString("creatures." + mobID + ".displayName");
+			String displayName = config.getString("creatures." + mobID + ".displayName");
 			if (displayName == null) {
 				displayName = mobID;
 			}
@@ -146,7 +170,7 @@ public class SilkSpawners extends JavaPlugin {
 			su.eid2DisplayName.put(entityID, displayName);
 
 			// Get our lit of aliases
-			List<String> aliases = getConfig().getStringList("creatures." + mobID+ ".aliases");
+			List<String> aliases = config.getStringList("creatures." + mobID+ ".aliases");
 			// Get the name, make it lowercase and strip out the spaces
 			aliases.add(displayName.toLowerCase().replace(" ", ""));
 			// Add the internal name
@@ -159,7 +183,7 @@ public class SilkSpawners extends JavaPlugin {
 			}
 			// Detailed message
 			if (verbose) {
-				getServer().getLogger().info("Entity " + entityID + " = " + mobID + " (display name: " + displayName + ", aliases: " + aliases + ")");
+				getLogger().info("Entity " + entityID + " = " + mobID + " (display name: " + displayName + ", aliases: " + aliases + ")");
 			}
 		}
 
@@ -168,34 +192,33 @@ public class SilkSpawners extends JavaPlugin {
 		su.defaultEntityID = 0;
 
 		// Should we use something else as the default?
-		String defaultCreatureString = getConfig().getString("defaultCreature", null);
+		String defaultCreatureString = config.getString("defaultCreature", null);
 		if (defaultCreatureString != null) {
 			// If we know the internal name
 			if (su.name2Eid.containsKey(defaultCreatureString)) {
 				// Get our entityID
 				short defaultEid = su.name2Eid.get(defaultCreatureString);
-				// TODO
-				// Check for egg support?
+				// Check for egg support
 				ItemStack defaultItemStack = su.newEggItem(defaultEid);
 				if (defaultItemStack != null) {
 					// Change default
 					su.defaultEntityID = defaultItemStack.getDurability();
-					if (verbose) getServer().getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
+					if (verbose) getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
 				}
-				else getServer().getLogger().warning("Unable to lookup name of " + defaultCreatureString + ", default monster spawner not set");
+				else getLogger().warning("Unable to lookup name of " + defaultCreatureString + ", default monster spawner not set");
 			}
 			// Unknown, fallback
-			else getServer().getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");
+			else getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");
 		}
 
 		// See if we should use permissions
-		usePermissions = getConfig().getBoolean("usePermissions", false);
+		usePermissions = config.getBoolean("usePermissions", false);
 
 		// Enable craftable spawners?
-		if (getConfig().getBoolean("craftableSpawners", false)) loadRecipes();
+		if (config.getBoolean("craftableSpawners", false)) loadRecipes();
 
 		// Are we allowed to use native methods?
-		if (getConfig().getBoolean("useReflection", true)) {
+		if (config.getBoolean("useReflection", true)) {
 			try {
 				// Get the spawner field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L13
@@ -208,7 +231,8 @@ public class SilkSpawners extends JavaPlugin {
 				su.mobIDField.setAccessible(true);
 			}
 			catch (Exception e) {
-				getServer().getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e);
+				getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
+				e.printStackTrace();
 				su.tileField = null;
 				su.mobIDField = null;
 			}
@@ -220,16 +244,17 @@ public class SilkSpawners extends JavaPlugin {
 
 		// Optionally make spawners unstackable in an attempt to be more compatible with CraftBukkit++
 		// Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
-		if (getConfig().getBoolean("spawnersUnstackable", false)) {
+		if (config.getBoolean("spawnersUnstackable", false)) {
 			// http://forums.bukkit.org/threads/setting-max-stack-size.66364/
 			try {
-				Field maxStackSizeField = net.minecraft.server.Item.class.getDeclaredField(getConfig().getString("spawnersUnstackableField", "maxStackSize"));
+				Field maxStackSizeField = net.minecraft.server.Item.class.getDeclaredField(config.getString("spawnersUnstackableField", "maxStackSize"));
 				// Set the stackable field back to 1
 				maxStackSizeField.setAccessible(true);
 				maxStackSizeField.setInt(net.minecraft.server.Item.byId[Material.MOB_SPAWNER.getId()], 1);
 			}
 			catch (Exception e) {
-				getServer().getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e);
+				getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 	}
@@ -241,14 +266,14 @@ public class SilkSpawners extends JavaPlugin {
 			// Name
 			String mobID = su.eid2MobID.get(entityID);
 			// If the mob is disabled, skip it
-			if (!getConfig().getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
-				if (getConfig().getBoolean("verboseConfig", true)) {
-					getServer().getLogger().info("Skipping crafting recipe for "+mobID+" per config");
+			if (!config.getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
+				if (config.getBoolean("verboseConfig", true)) {
+					getLogger().info("Skipping crafting recipe for " + mobID + " per config");
 				}
 				continue;
 			}
 			// Output is one (1) spawner of this type
-			ItemStack spawnerItem = su.newSpawnerItem(entityID);
+			ItemStack spawnerItem = su.newSpawnerItem(entityID, localization.getString("spawnerName"));
 			ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
 			/*
 			 * A A A
