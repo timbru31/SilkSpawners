@@ -14,7 +14,7 @@ import java.util.SortedMap;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_4_5.block.CraftCreatureSpawner;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -227,7 +227,7 @@ public class SilkSpawners extends JavaPlugin {
 
 				// Get the modID field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L8
-				su.mobIDField = net.minecraft.server.TileEntityMobSpawner.class.getDeclaredField("mobName");
+				su.mobIDField = net.minecraft.server.v1_4_5.TileEntityMobSpawner.class.getDeclaredField("mobName");
 				su.mobIDField.setAccessible(true);
 			}
 			catch (Exception e) {
@@ -247,10 +247,10 @@ public class SilkSpawners extends JavaPlugin {
 		if (config.getBoolean("spawnersUnstackable", false)) {
 			// http://forums.bukkit.org/threads/setting-max-stack-size.66364/
 			try {
-				Field maxStackSizeField = net.minecraft.server.Item.class.getDeclaredField(config.getString("spawnersUnstackableField", "maxStackSize"));
+				Field maxStackSizeField = net.minecraft.server.v1_4_5.Item.class.getDeclaredField(config.getString("spawnersUnstackableField", "maxStackSize"));
 				// Set the stackable field back to 1
 				maxStackSizeField.setAccessible(true);
-				maxStackSizeField.setInt(net.minecraft.server.Item.byId[Material.MOB_SPAWNER.getId()], 1);
+				maxStackSizeField.setInt(net.minecraft.server.v1_4_5.Item.byId[Material.MOB_SPAWNER.getId()], 1);
 			}
 			catch (Exception e) {
 				getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());

@@ -13,7 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_4_5.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -122,7 +122,7 @@ public class SilkUtil {
 		// Get the mob ID ourselves if we can
 		if (tileField != null && mobIDField != null) {
 			try {
-				net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner) tileField.get(spawner);
+				net.minecraft.server.v1_4_5.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_5.TileEntityMobSpawner) tileField.get(spawner);
 				// Get the name from the field of our spawner
 				String mobID = (String) mobIDField.get(tile);
 				return mobID2Eid.get(mobID);
@@ -153,7 +153,7 @@ public class SilkUtil {
 				String mobID = eid2MobID.get(entityID);
 				// Refer to the NMS TileEntityMobSpawner and change the name, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L23
-				net.minecraft.server.TileEntityMobSpawner tile = (net.minecraft.server.TileEntityMobSpawner) tileField.get(spawner);
+				net.minecraft.server.v1_4_5.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_5.TileEntityMobSpawner) tileField.get(spawner);
 				tile.a(mobID);
 
 				// Call an update
@@ -259,7 +259,7 @@ public class SilkUtil {
 		try {
 			// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
 			// f.put(s, Integer.valueOf(i)); --> Name of ID
-			Field field = net.minecraft.server.EntityTypes.class.getDeclaredField(fieldValue);
+			Field field = net.minecraft.server.v1_4_5.EntityTypes.class.getDeclaredField(fieldValue);
 			field.setAccessible(true);
 			Map<String, Integer> map = (Map<String, Integer>) field.get(null);
 			// For each entry in our name -- ID map but it into the sortedMap

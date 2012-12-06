@@ -1,10 +1,10 @@
 package de.dustplanet.silkspawners;
 
 import java.util.ArrayList;
-import net.minecraft.server.NBTTagCompound;
-import net.minecraft.server.NBTTagList;
-import net.minecraft.server.NBTTagString;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import net.minecraft.server.v1_4_5.NBTTagCompound;
+import net.minecraft.server.v1_4_5.NBTTagList;
+import net.minecraft.server.v1_4_5.NBTTagString;
+import org.bukkit.craftbukkit.v1_4_5.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class NamedItemStack {
 	private CraftItemStack craftStack;
-	private net.minecraft.server.ItemStack itemStack;
+	private net.minecraft.server.v1_4_5.ItemStack itemStack;
 
 	public NamedItemStack(ItemStack item) {
 		if (item instanceof CraftItemStack) {
