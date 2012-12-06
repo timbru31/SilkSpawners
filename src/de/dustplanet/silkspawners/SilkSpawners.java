@@ -122,7 +122,7 @@ public class SilkSpawners extends JavaPlugin {
 				throw new IllegalArgumentException("[SilkSpawners] Could not create new localization file");
 			}
 		}
-		
+
 		// Copy default if not already created
 		String filename = getDataFolder() + System.getProperty("file.separator") + "config.yml";
 		File file = new File(filename);
@@ -280,12 +280,54 @@ public class SilkSpawners extends JavaPlugin {
 			 * A B A
 			 * A A A
 			 */
-			recipe.shape(new String[] { "AAA", "ABA", "AAA" });
-			recipe.setIngredient('A', Material.IRON_FENCE);
-			// Use the right egg!
-			recipe.setIngredient('B', Material.MONSTER_EGG, (int) entityID);
-			// Add it
-			getServer().addRecipe(recipe);
+			
+			// We try to use the custom recipe, but we don't know if the user changed it right ;)
+			try {
+				// At leaste we have defaults here!
+				recipe.shape(config.getString("recipeTop", "AAA"), config.getString("recipeMiddle", "AXA"), config.getString("recipeBottom", "AAA"));
+				// No list what we should use -> not adding
+				if (!config.contains("ingredients")) return;
+				for (String ingredient : config.getStringList("ingredients")) {
+					// They are added like this A,DIRT
+					// Lets split the "," then
+					String[] ingredients = ingredient.split(",");
+					// Maybe they put a string in here, so first position and uppercase
+					char character = ingredients[0].toUpperCase().charAt(0);
+					// We try to get the material
+					Material material=  Material.getMaterial(ingredients[1]);
+					// Failed!
+					if (material == null)  {
+						// Maybe the put an integer here?
+						try {
+							int id = Integer.valueOf(ingredients[1]);
+							material = Material.getMaterial(id);
+							// Not all IDs are valid!
+							if (material == null) material = Material.IRON_FENCE;
+						}
+						// Still no ID, fallback
+						catch (IllegalArgumentException e) {
+							material = Material.IRON_FENCE;
+						}
+					}
+					// Just in case my logic was wrong...
+					if (material == null) material = Material.IRON_FENCE;
+					recipe.setIngredient(character, material);
+				}
+				// Use the right egg!
+				recipe.setIngredient('X', Material.MONSTER_EGG, (int) entityID);
+			}
+			// If the custom recipe fails, we have a fallback
+			catch (IllegalArgumentException e) {
+				e.printStackTrace();
+				recipe.shape(new String[] { "AAA", "ABA", "AAA" });
+				recipe.setIngredient('A', Material.IRON_FENCE);
+				// Use the right egg!
+				recipe.setIngredient('B', Material.MONSTER_EGG, (int) entityID);
+			}
+			finally {
+				// Add it
+				getServer().addRecipe(recipe);
+			}
 		}
 	}
 

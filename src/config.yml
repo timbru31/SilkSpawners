@@ -21,6 +21,26 @@ denyBreakHoldingSpawner: true
 # recommend, since old spawners have got a silk touch enchantment
 
 craftableSpawners: false
+# Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free
+# X is always the egg
+recipeTop: 'AAA'
+recipeMiddle: 'AXA'
+recipeBottom: 'AAA'
+# You can put IDs or the NAME here (please uppercase)
+# Add it for each custom ingredient you add, too!
+ingredients:
+  - 'A,IRON_FENCE'
+  
+# Custom example:
+#recipeTop: 'A A'
+#recipeMiddle: 'BXA'
+#recipeBottom: 'C D'
+#ingredients:
+#  - 'A,IRON_FENCE'
+#  - 'B,DIRT'
+#  - 'C,2'
+#  - 'D,5'
+
 spawnersUnstackable: false
 
 verboseConfig: false
