@@ -15,17 +15,13 @@ import org.bukkit.inventory.ItemStack;
  */
 
 public class NamedItemStack {
-	private CraftItemStack craftStack;
 	private net.minecraft.server.v1_4_5.ItemStack itemStack;
 
 	public NamedItemStack(ItemStack item) {
-		if (item instanceof CraftItemStack) {
-			craftStack = (CraftItemStack) item;
-			itemStack = craftStack.getHandle();
-		}
-		else if (item instanceof ItemStack) {
-			craftStack = new CraftItemStack(item);
-			itemStack = craftStack.getHandle();
+		itemStack = CraftItemStack.asNMSCopy(item);
+		if (itemStack == null) System.out.println("null here ");
+		else {
+			System.out.println(itemStack.r() + " " + itemStack.id);
 		}
 		NBTTagCompound tag = itemStack.tag;
 		if (tag == null) {
@@ -80,6 +76,6 @@ public class NamedItemStack {
 	}
 
 	public ItemStack getItemStack() {
-		return craftStack;
+		return CraftItemStack.asBukkitCopy(itemStack);
 	}
 }

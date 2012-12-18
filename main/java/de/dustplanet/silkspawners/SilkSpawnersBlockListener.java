@@ -4,6 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.craftbukkit.v1_4_5.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,10 +44,30 @@ public class SilkSpawnersBlockListener implements Listener {
 
 		// We just want the mob spawner events
 		if (block.getType() != Material.MOB_SPAWNER) return;
-		
+
 		// We can't build here? Return then
 		if (!su.canBuildHere(player, block.getLocation())) return;
 		
+		// TODO TEST
+		BlockState blockState = event.getBlock().getState();
+		// Get our spawner;
+		CraftCreatureSpawner spawner = ((CraftCreatureSpawner)blockState);
+
+		// Get the mob ID ourselves if we can
+		if (plugin.config.getBoolean("checkNBTTag") && su.tileField != null && su.mobIDField != null) {
+			try {
+				net.minecraft.server.v1_4_5.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_5.TileEntityMobSpawner) su.tileField.get(spawner);
+				if (tile.mobName == null || tile.mobName.equalsIgnoreCase("")) {
+					System.out.println("Needed to change the name! Please report if this worked or not...");
+					tile.mobName = spawner.getCreatureTypeName();
+				}
+				//tile.mobName = su.getCreatureName(su.getSpawnerEntityID(block));
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		// Get the entityID from the spawner
 		short entityID = su.getSpawnerEntityID(block);
 

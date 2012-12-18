@@ -75,11 +75,10 @@ public class SilkUtil {
 	public ItemStack newSpawnerItem(short entityID, String customName) {
 		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
 		ItemStack item = null;
+		// Check if we need a colored name
 		if (coloredNames) item = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, 1, entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
-		else {
-			System.out.println("hier11");
-			item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
-		}
+		else item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+		
 		// The way it should be stored (double sure!)
 		item.setDurability(entityID);
 
@@ -202,7 +201,6 @@ public class SilkUtil {
 			else {
 				itemNew = item;
 				itemNew.setDurability(entityID);
-				System.out.println("hier");
 			}
 			return itemNew;
 		}

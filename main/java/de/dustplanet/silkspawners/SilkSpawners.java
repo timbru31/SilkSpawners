@@ -64,6 +64,13 @@ public class SilkSpawners extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(blockListener, this);
 		getServer().getPluginManager().registerEvents(playerListener, this);
 		getServer().getPluginManager().registerEvents(inventoryListener, this);
+		
+		// Metrics
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		}
+		catch (IOException e) {}
 	}
 
 	// Copy default configuration
