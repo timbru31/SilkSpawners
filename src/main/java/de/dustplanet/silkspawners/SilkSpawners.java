@@ -70,7 +70,10 @@ public class SilkSpawners extends JavaPlugin {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
 		}
-		catch (IOException e) {}
+		catch (IOException e) {
+			getLogger().info("Couldn't start Metrics, please report this!");
+			e.printStackTrace();
+		}
 	}
 
 	// Copy default configuration
