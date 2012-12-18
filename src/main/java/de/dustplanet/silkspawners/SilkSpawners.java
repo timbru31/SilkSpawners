@@ -122,8 +122,6 @@ public class SilkSpawners extends JavaPlugin {
 		return true;
 	}
 
-
-
 	private void loadConfig() {
 		String localizationName = getDataFolder() + System.getProperty("file.separator") + "localization.yml";
 		File localizationFile = new File(localizationName);
