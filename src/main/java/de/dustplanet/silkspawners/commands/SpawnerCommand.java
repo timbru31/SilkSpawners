@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.silkspawners.commands;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,6 +8,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.SilkUtil;
 
 /**
  * Handles the command /spawner

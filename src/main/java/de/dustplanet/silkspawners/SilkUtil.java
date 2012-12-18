@@ -21,6 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
+import de.dustplanet.util.NamedItemStack;
+
 /**
  * This is the util class where all the magic happens!
  * @author (former) mushroomhostage

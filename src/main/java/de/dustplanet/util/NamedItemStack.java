@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.util;
 
 import java.util.ArrayList;
 import net.minecraft.server.v1_4_5.NBTTagCompound;

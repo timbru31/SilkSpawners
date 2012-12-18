@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.silkspawners.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -7,6 +7,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.SilkUtil;
 
 /**
  * To show a chat message that a player clicked on an mob spawner

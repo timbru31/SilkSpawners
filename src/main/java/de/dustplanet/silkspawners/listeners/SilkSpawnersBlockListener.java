@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.silkspawners.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -14,6 +14,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+
+import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.SilkSpawnersSetCreatureTask;
+import de.dustplanet.silkspawners.SilkUtil;
 
 /**
  * Handle the placement and breaking of a spawner

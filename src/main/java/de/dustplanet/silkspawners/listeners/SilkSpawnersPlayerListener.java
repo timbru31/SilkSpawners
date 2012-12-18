@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.silkspawners.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,6 +16,9 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
+
+import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.SilkUtil;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type

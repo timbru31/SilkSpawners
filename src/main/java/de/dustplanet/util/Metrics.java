@@ -26,7 +26,7 @@
  * either expressed or implied, of anybody else.
  */
 
-package de.dustplanet.silkspawners;
+package de.dustplanet.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
