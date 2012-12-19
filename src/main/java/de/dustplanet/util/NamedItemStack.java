@@ -19,10 +19,6 @@ public class NamedItemStack {
 
 	public NamedItemStack(ItemStack item) {
 		itemStack = CraftItemStack.asNMSCopy(item);
-		if (itemStack == null) System.out.println("null here ");
-		else {
-			System.out.println(itemStack.r() + " " + itemStack.id);
-		}
 		NBTTagCompound tag = itemStack.tag;
 		if (tag == null) {
 			tag = new NBTTagCompound();
