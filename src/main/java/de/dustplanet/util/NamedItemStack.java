@@ -1,10 +1,10 @@
 package de.dustplanet.util;
 
 import java.util.ArrayList;
-import net.minecraft.server.v1_4_5.NBTTagCompound;
-import net.minecraft.server.v1_4_5.NBTTagList;
-import net.minecraft.server.v1_4_5.NBTTagString;
-import org.bukkit.craftbukkit.v1_4_5.inventory.CraftItemStack;
+import net.minecraft.server.v1_4_6.NBTTagCompound;
+import net.minecraft.server.v1_4_6.NBTTagList;
+import net.minecraft.server.v1_4_6.NBTTagString;
+import org.bukkit.craftbukkit.v1_4_6.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
  */
 
 public class NamedItemStack {
-	private net.minecraft.server.v1_4_5.ItemStack itemStack;
+	private net.minecraft.server.v1_4_6.ItemStack itemStack;
 
 	public NamedItemStack(ItemStack item) {
 		itemStack = CraftItemStack.asNMSCopy(item);

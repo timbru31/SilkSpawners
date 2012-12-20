@@ -5,7 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_4_5.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_4_6.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -60,7 +60,7 @@ public class SilkSpawnersBlockListener implements Listener {
 		// Get the mob ID ourselves if we can
 		if (plugin.config.getBoolean("checkNBTTag") && su.tileField != null && su.mobIDField != null) {
 			try {
-				net.minecraft.server.v1_4_5.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_5.TileEntityMobSpawner) su.tileField.get(spawner);
+				net.minecraft.server.v1_4_6.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_6.TileEntityMobSpawner) su.tileField.get(spawner);
 				if (tile.mobName == null || tile.mobName.equalsIgnoreCase("")) {
 					System.out.println("Needed to change the name! Please report if this worked or not...");
 					tile.mobName = spawner.getCreatureTypeName();
