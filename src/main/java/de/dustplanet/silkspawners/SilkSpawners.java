@@ -283,14 +283,30 @@ public class SilkSpawners extends JavaPlugin {
 	private void addPermissions() {
 		Permission freeItemParent = new Permission("silkspawners.freeitem.*", PermissionDefault.OP);
 		Permission freeItemEggParent = new Permission("silkspawners.freeitem.egg.*", PermissionDefault.OP);
+		Permission silkDropParent = new Permission("silkspawners.silkdrop.*", PermissionDefault.OP);
+		Permission destroyDropParent = new Permission("silkspawners.destroydrop.*", PermissionDefault.OP);
+		Permission changeTypeParent = new Permission("silkspawners.changetype.*", PermissionDefault.OP);
+		Permission changeTypeWithEggParent = new Permission("silkspawners.changetypewithegg.*", PermissionDefault.OP);
 		for (short entityID : su.eid2MobID.keySet()) {
 			String mobID = su.eid2MobID.get(entityID);
 			Permission freeItem = new Permission("silkspawners.freeitem." + mobID, PermissionDefault.OP);
 			Permission freeItemEgg = new Permission("silkspawners.freeitem.egg." + mobID, PermissionDefault.OP);
+			Permission silkDrop = new Permission("silkspawners.silkdrop." + mobID, PermissionDefault.OP);
+			Permission destroyDrop = new Permission("silkspawners.destroydrop." + mobID, PermissionDefault.OP);
+			Permission changeType = new Permission("silkspawners.changetype." + mobID, PermissionDefault.OP);
+			Permission changeTypeWithEgg = new Permission("silkspawners.changetypewithegg." + mobID, PermissionDefault.OP);
 			freeItem.addParent(freeItemParent, true);
 			freeItemEgg.addParent(freeItemEggParent, true);
+			silkDrop.addParent(silkDropParent, true);
+			destroyDrop.addParent(destroyDropParent, true);
+			changeType.addParent(changeTypeParent, true);
+			changeTypeWithEgg.addParent(changeTypeWithEggParent, true);
 			getServer().getPluginManager().addPermission(freeItemEgg);
 			getServer().getPluginManager().addPermission(freeItem);
+			getServer().getPluginManager().addPermission(silkDrop);
+			getServer().getPluginManager().addPermission(destroyDrop);
+			getServer().getPluginManager().addPermission(changeType);
+			getServer().getPluginManager().addPermission(changeTypeWithEgg);
 		}
 	}
 

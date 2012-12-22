@@ -16,30 +16,30 @@ permissions:
     silkspawners.*:
         children:
             silkspawners.info: true
-            silkspawners.silkdrop: true
-            silkspawners.destroydrop: true
+            silkspawners.silkdrop*: true
+            silkspawners.destroydrop*: true
             silkspawners.viewtype: true
-            silkspawners.changetype: true
-            silkspawners.changetypewithegg: true
+            silkspawners.changetype.*: true
+            silkspawners.changetypewithegg.*: true
             silkspawners.freeitem.*: true
             silkspawners.freeitem.egg.*: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
         default: false
-    silkspawners.silkdrop:
+    silkspawners.silkdrop.*:
         description: Allows you to use silk touch to acquire mob spawner items
         default: false
-    silkspawners.destroydrop:
+    silkspawners.destroydrop.*:
         description: Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
         default: false
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
         default: false
-    silkspawners.changetype:
+    silkspawners.changetype.*:
         description: Allows you to change the spawner type using /spawner [creature]
         default: false
-    silkspawners.changetypewithegg:
+    silkspawners.changetypewithegg.*:
         description: Allows you to change the spawner type by left-clicking with a spawn egg
         default: false
     silkspawners.freeitem.*:
