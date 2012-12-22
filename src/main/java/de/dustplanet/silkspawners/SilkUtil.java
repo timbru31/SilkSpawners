@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
+import net.minecraft.server.v1_4_6.EntityTypes;
+import net.minecraft.server.v1_4_6.TileEntityMobSpawner;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -123,7 +125,7 @@ public class SilkUtil {
 		// Get the mob ID ourselves if we can
 		if (tileField != null && mobIDField != null) {
 			try {
-				net.minecraft.server.v1_4_6.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_6.TileEntityMobSpawner) tileField.get(spawner);
+				TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 				// Get the name from the field of our spawner
 				String mobID = (String) mobIDField.get(tile);
 				return mobID2Eid.get(mobID);
@@ -154,7 +156,7 @@ public class SilkUtil {
 				String mobID = eid2MobID.get(entityID);
 				// Refer to the NMS TileEntityMobSpawner and change the name, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
-				net.minecraft.server.v1_4_6.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_6.TileEntityMobSpawner) tileField.get(spawner);
+				TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 				tile.a(mobID);
 
 				// Call an update
@@ -265,7 +267,7 @@ public class SilkUtil {
 		try {
 			// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L21
 			// f.put(s, Integer.valueOf(i)); --> Name of ID
-			Field field = net.minecraft.server.v1_4_6.EntityTypes.class.getDeclaredField(fieldValue);
+			Field field = EntityTypes.class.getDeclaredField(fieldValue);
 			field.setAccessible(true);
 			Map<String, Integer> map = (Map<String, Integer>) field.get(null);
 			// For each entry in our name -- ID map but it into the sortedMap

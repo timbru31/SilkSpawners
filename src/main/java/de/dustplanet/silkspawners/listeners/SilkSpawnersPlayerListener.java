@@ -1,5 +1,9 @@
 package de.dustplanet.silkspawners.listeners;
 
+import net.minecraft.server.v1_4_6.Entity;
+import net.minecraft.server.v1_4_6.EntityLiving;
+import net.minecraft.server.v1_4_6.EntityTypes;
+import net.minecraft.server.v1_4_6.World;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -122,8 +126,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 					// We can spawn using the direct method from EntityTypes
 					// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
-					net.minecraft.server.v1_4_6.World world = ((CraftWorld)player.getWorld()).getHandle();
-					net.minecraft.server.v1_4_6.Entity entity = net.minecraft.server.v1_4_6.EntityTypes.a(entityID, world);
+					World world = ((CraftWorld)player.getWorld()).getHandle();
+					Entity entity = EntityTypes.a(entityID, world);
 					// Should acutally never happen since the method above contains a null check, too
 					if (entity == null) {
 						plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
@@ -138,8 +142,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 					entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
 					// We need to add the entity to the world, reason is of course a spawn egg so that other events can handle this
 					world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
-					if (entity instanceof net.minecraft.server.v1_4_6.EntityLiving) {
-						((net.minecraft.server.v1_4_6.EntityLiving)entity).aO();
+					if (entity instanceof EntityLiving) {
+						((EntityLiving) entity).aO();
 					}
 
 					// Remove item from player hand
