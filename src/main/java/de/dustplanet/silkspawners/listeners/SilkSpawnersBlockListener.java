@@ -71,7 +71,7 @@ public class SilkSpawnersBlockListener implements Listener {
 
 		// Prevent XP farming/duping
 		event.setExpToDrop(0);
-		if (plugin.hasPermission(player, "silkspawners.silkdrop") || plugin.hasPermission(player, "silkspawners.destroydrop")) {
+		if (plugin.hasPermission(player, "silkspawners.silkdrop." + su.getCreatureName(entityID)) || plugin.hasPermission(player, "silkspawners.destroydrop." + su.getCreatureName(entityID))) {
 			// If we have more than 0 XP, drop them
 			int addXP = plugin.config.getInt("destroyDropXP");
 			if (addXP != 0) {
@@ -80,14 +80,14 @@ public class SilkSpawnersBlockListener implements Listener {
 		}
 
 		// Case 1 -> silk touch
-		if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop")) {
+		if (silkTouch && plugin.hasPermission(player, "silkspawners.silkdrop." + su.getCreatureName(entityID))) {
 			// Drop spawner
 			world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
 			return;
 		}
 
 		// Case 2 -> no silk touch
-		if (plugin.hasPermission(player, "silkspawners.destroydrop")) {
+		if (plugin.hasPermission(player, "silkspawners.destroydrop." + su.getCreatureName(entityID))) {
 			if (plugin.config.getBoolean("destroyDropEgg")) {
 				// Drop egg
 				world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID));

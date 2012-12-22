@@ -1,6 +1,6 @@
 name: SilkSpawners
 main: de.dustplanet.silkspawners.SilkSpawners
-version: 3.0 BETA 2
+version: ${project.version}
 url: http://dev.bukkit.org/server-mods/silkspawners/
 description: pick up and move monster spawners using silk touch
 commands:
@@ -21,8 +21,8 @@ permissions:
             silkspawners.viewtype: true
             silkspawners.changetype: true
             silkspawners.changetypewithegg: true
-            silkspawners.freeitem: true
-            silkspawners.freeitem.egg: true
+            silkspawners.freeitem.*: true
+            silkspawners.freeitem.egg.*: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -42,10 +42,10 @@ permissions:
     silkspawners.changetypewithegg:
         description: Allows you to change the spawner type by left-clicking with a spawn egg
         default: false
-    silkspawners.freeitem:
+    silkspawners.freeitem.*:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
         default: false
-    silkspawners.freeitem.egg:
+    silkspawners.freeitem.egg.*:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
         default: false
 softdepend:

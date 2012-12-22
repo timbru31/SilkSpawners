@@ -18,6 +18,8 @@ import org.bukkit.craftbukkit.v1_4_6.block.CraftCreatureSpawner;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
@@ -70,6 +72,9 @@ public class SilkSpawners extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(blockListener, this);
 		getServer().getPluginManager().registerEvents(playerListener, this);
 		getServer().getPluginManager().registerEvents(inventoryListener, this);
+		
+		// Permissions
+		addPermissions();
 		
 		// Metrics
 		try {
@@ -270,6 +275,20 @@ public class SilkSpawners extends JavaPlugin {
 				getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void addPermissions() {
+		Permission freeItemParent = new Permission("silkspawners.freeitem.*", PermissionDefault.OP);
+		Permission freeItemEggParent = new Permission("silkspawners.freeitem.egg.*", PermissionDefault.OP);
+		for (short entityID : su.eid2MobID.keySet()) {
+			String mobID = su.eid2MobID.get(entityID);
+			Permission freeItem = new Permission("silkspawners.freeitem." + mobID, PermissionDefault.OP);
+			Permission freeItemEgg = new Permission("silkspawners.freeitem.egg." + mobID, PermissionDefault.OP);
+			freeItem.addParent(freeItemParent, true);
+			freeItemEgg.addParent(freeItemEggParent, true);
+			getServer().getPluginManager().addPermission(freeItemEgg);
+			getServer().getPluginManager().addPermission(freeItem);
 		}
 	}
 

@@ -73,7 +73,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 				// WorldGuard region protection
 				if (!su.canBuildHere(player, block.getLocation())) return;
 
-				if (!plugin.hasPermission(player, "silkspawners.changetypewithegg")) {
+				if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + su.getCreatureName(entityID))) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingWithEggs")));
 					return;
 				}

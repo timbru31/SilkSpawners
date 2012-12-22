@@ -28,7 +28,7 @@ public class SilkSpawnersInventoryListener implements Listener {
 	
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent event) {
-		// Null checks, somehow erros appeared...
+		// Null checks, somehow errors appeared...
 		if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) return;
 		// If we should notify and the item is a mobspawner and we have a player here who has the permission
 		if (plugin.config.getBoolean("notifyOnClick") && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player) event.getWhoClicked(), "silkspawners.info")) {
