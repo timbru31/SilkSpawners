@@ -240,7 +240,7 @@ public class SilkSpawners extends JavaPlugin {
 				su.tileField.setAccessible(true);
 
 				// Get the modID field, see
-				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L8
+				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L11
 				su.mobIDField = net.minecraft.server.v1_4_6.TileEntityMobSpawner.class.getDeclaredField("mobName");
 				su.mobIDField.setAccessible(true);
 			}

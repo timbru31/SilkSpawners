@@ -16,7 +16,6 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
-
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.SilkUtil;
 
@@ -116,7 +115,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 						return;
 					}
 					// Bukkit doesn't allow us to spawn wither or dragons and so on. NMS here we go!
-					// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java#L22
+					// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java#L23
 
 					// Notify
 					plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawning").replaceAll("%creature%", su.getCreatureName(entityID)).replaceAll("%ID%", Short.toString(entityID))));
@@ -124,7 +123,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 					// We can spawn using the direct method from EntityTypes
 					// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
 					net.minecraft.server.v1_4_6.World world = ((CraftWorld)player.getWorld()).getHandle();
-					// TODO --> 1.4.6
 					net.minecraft.server.v1_4_6.Entity entity = net.minecraft.server.v1_4_6.EntityTypes.a(entityID, world);
 					// Should acutally never happen since the method above contains a null check, too
 					if (entity == null) {
@@ -140,7 +138,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 					entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
 					// We need to add the entity to the world, reason is of course a spawn egg so that other events can handle this
 					world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
-					// TODO --> 1.4.6
 					if (entity instanceof net.minecraft.server.v1_4_6.EntityLiving) {
 						((net.minecraft.server.v1_4_6.EntityLiving)entity).aO();
 					}

@@ -118,7 +118,7 @@ public class SilkUtil {
 			throw new IllegalArgumentException("getSpawnerEntityID called on non-spawner block: " + block);
 		}
 		// Get our spawner;
-		CraftCreatureSpawner spawner = ((CraftCreatureSpawner)blockState);
+		CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
 		// Get the mob ID ourselves if we can
 		if (tileField != null && mobIDField != null) {
@@ -153,7 +153,7 @@ public class SilkUtil {
 				// Get the name of the mon
 				String mobID = eid2MobID.get(entityID);
 				// Refer to the NMS TileEntityMobSpawner and change the name, see
-				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L23
+				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
 				net.minecraft.server.v1_4_6.TileEntityMobSpawner tile = (net.minecraft.server.v1_4_6.TileEntityMobSpawner) tileField.get(spawner);
 				tile.a(mobID);
 
@@ -193,19 +193,25 @@ public class SilkUtil {
 	}
 
 	public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
+		// Ensure that the name is correct
 		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
+		// Please eggs or spawners
 		if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
 			return item;
 		}
+		// Case spawner
 		if (item.getType() == Material.MOB_SPAWNER) {
 			ItemStack itemNew = null;
+			// Check if we should color
 			if (coloredNames) itemNew = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, item.getAmount(), entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
+			// Copy the stack
 			else {
 				itemNew = item;
 				itemNew.setDurability(entityID);
 			}
 			return itemNew;
 		}
+		// Case egg -> call normal method
 		else {
 			item.setDurability(entityID);
 			return item;
@@ -257,7 +263,7 @@ public class SilkUtil {
 		// Use reflection to dump native EntityTypes
 		// This bypasses Bukkit's wrappers, so it works with mods
 		try {
-			// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java
+			// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L21
 			// f.put(s, Integer.valueOf(i)); --> Name of ID
 			Field field = net.minecraft.server.v1_4_6.EntityTypes.class.getDeclaredField(fieldValue);
 			field.setAccessible(true);
