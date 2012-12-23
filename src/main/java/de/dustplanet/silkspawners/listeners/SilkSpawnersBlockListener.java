@@ -116,13 +116,13 @@ public class SilkSpawnersBlockListener implements Listener {
 		ItemStack item = event.getItemInHand();
 		// Get data from item
 		short entityID = su.getStoredSpawnerItemEntityID(item);
-		if (entityID == su.defaultEntityID) {
+		if (entityID == 0) {
 			// Default
+			entityID = su.defaultEntityID;
 			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
-			return;
 		}
 		// Else message the type
-		plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
+		else plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
 
 		// Bukkit 1.1-R3 regressed from 1.1-R1, ignores block state update on onBlockPlace
 		// TODO: file or find bug about this, get it fixed so can remove this lame workaround

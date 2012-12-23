@@ -44,8 +44,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 		if (plugin.config.getBoolean("notifyOnHold") && plugin.hasPermission((Player) event.getPlayer(), "silkspawners.info")
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
-			// Don't spam with pigs
-			if (su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 && su.defaultEntityID == 0) return;
 			short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
 			if (entityID == 0) entityID = su.defaultEntityID;
 			// Get the name from the entityID

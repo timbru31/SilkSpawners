@@ -32,8 +32,6 @@ public class SilkSpawnersInventoryListener implements Listener {
 		if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) return;
 		// If we should notify and the item is a mobspawner and we have a player here who has the permission
 		if (plugin.config.getBoolean("notifyOnClick") && event.getCurrentItem().getType().equals(Material.MOB_SPAWNER) && event.getWhoClicked() instanceof Player && plugin.hasPermission((Player) event.getWhoClicked(), "silkspawners.info")) {
-			// Don't spam with pigs
-			if (su.getStoredSpawnerItemEntityID(event.getCurrentItem()) == 0 && su.defaultEntityID == 0) return;
 			// Get the entity ID
 			short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
 			// Pig here again

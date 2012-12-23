@@ -122,7 +122,7 @@ public class SpawnerCommand implements CommandExecutor {
 
 			// See if the block is a MobSpawner, then change it
 			if (block != null && !isEgg) {
-				if (!plugin.hasPermission(player, "silkspawners.changetype") && (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) || !plugin.hasPermission(player, "silkspawners.changetype.*"))) {
+				if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
 					return true;
 				}

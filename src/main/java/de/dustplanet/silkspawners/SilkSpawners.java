@@ -203,25 +203,20 @@ public class SilkSpawners extends JavaPlugin {
 			}
 		}
 
-		// Get the entity ID of the creatures to spawn on damage 0 spawners, or otherwise not override
-		// (then will default to Minecraft's default of pigs)
-		su.defaultEntityID = 0;
+		// Set the defaultID for spawners (-> memo, on some spawners it seems 0 -> pig is 90)
+		su.defaultEntityID = 90;
 
 		// Should we use something else as the default?
-		String defaultCreatureString = config.getString("defaultCreature", null);
-		if (defaultCreatureString != null) {
+		if (config.getString("defaultCreature", null) != null) {
+			// Lowercase is better to search
+			String defaultCreatureString = config.getString("defaultCreature", null).toLowerCase();
 			// If we know the internal name
 			if (su.name2Eid.containsKey(defaultCreatureString)) {
 				// Get our entityID
 				short defaultEid = su.name2Eid.get(defaultCreatureString);
-				// Check for egg support
-				ItemStack defaultItemStack = su.newEggItem(defaultEid);
-				if (defaultItemStack != null) {
-					// Change default
-					su.defaultEntityID = defaultItemStack.getDurability();
-					if (verbose) getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
-				}
-				else getLogger().warning("Unable to lookup name of " + defaultCreatureString + ", default monster spawner not set");
+				// Change default
+				su.defaultEntityID = defaultEid;
+				if (verbose) getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
 			}
 			// Unknown, fallback
 			else getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");

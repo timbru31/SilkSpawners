@@ -41,7 +41,7 @@ public class SilkUtil {
 	// Name to entityID
 	public ConcurrentHashMap<String,Short> name2Eid = new ConcurrentHashMap<String, Short>();
 	// Default is 0 = PIG
-	public short defaultEntityID;
+	public short defaultEntityID = 90;
 	// Fields for reflection
 	public Field tileField, mobIDField;
 	// To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own material
