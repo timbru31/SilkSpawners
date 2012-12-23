@@ -41,7 +41,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerHoldItem(PlayerItemHeldEvent event) {
 		// Check if we should notify the player. The second condition is the permission and that the slot isn't null and the item is a mob spawner
-		if (plugin.config.getBoolean("notifyOnHold") && plugin.hasPermission((Player)event.getPlayer(), "silkspawners.info") && event.getPlayer().getInventory().getItem(event.getNewSlot()) != null && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
+		if (plugin.config.getBoolean("notifyOnHold") && plugin.hasPermission((Player) event.getPlayer(), "silkspawners.info")
+				&& event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
+				&& event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
 			// Don't spam with pigs
 			if (su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot())) == 0 && su.defaultEntityID == 0) return;
 			short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
@@ -77,7 +79,10 @@ public class SilkSpawnersPlayerListener implements Listener {
 				// WorldGuard region protection
 				if (!su.canBuildHere(player, block.getLocation())) return;
 
-				if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + su.getCreatureName(entityID))) {
+				// Mob
+				String mobName = su.getCreatureName(entityID).toLowerCase();
+				
+				if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingWithEggs")));
 					return;
 				}

@@ -16,8 +16,8 @@ permissions:
     silkspawners.*:
         children:
             silkspawners.info: true
-            silkspawners.silkdrop*: true
-            silkspawners.destroydrop*: true
+            silkspawners.silkdrop.*: true
+            silkspawners.destroydrop.*: true
             silkspawners.viewtype: true
             silkspawners.changetype.*: true
             silkspawners.changetypewithegg.*: true

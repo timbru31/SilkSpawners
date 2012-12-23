@@ -12,7 +12,7 @@ noPermissionChangingSpawner: '&4You do not have permission to change spawners wi
 noPermissionFreeEgg: '&4You do not have permission to spawn free eggs'
 noPermissionFreeSpawner: '&4You do not have the permission to spawn free spawners'
 noPermissionViewType: '&4You do not have the permission to view the type of this spawner!'
-noPermissionChangeWithEgg: '&4You do not have permission to change spawners with spawn eggs'
+noPermissionChangingWithEggs: '&4You do not have permission to change spawners with spawn eggs'
 
 changedEgg: '&2Successfully changed the spawning egg to a &e%creature% spawn egg'
 changedSpawner: '&2Successfully changed the spawner to a &e%creature% spawner'
@@ -39,4 +39,4 @@ spawningDenied: '&4Spawning of &e%creature% (ID %ID%) &4denied!'
 spawning: '&2Spawning  &e%creature% (ID %ID%)'
 
 lookAtSpawner: '&4You must be looking directly at a spawner.'
-lookAtSpanwerOrHand: '&4You must be looking directly at a spawner or have a spawner in your hand to use this command'
+lookAtSpawnerOrInHand: '&4You must be looking directly at a spawner or have a spawner in your hand to use this command'

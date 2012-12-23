@@ -75,7 +75,7 @@ public class SpawnerCommand implements CommandExecutor {
 		}
 
 		// We know it's safe
-		Player player = (Player)sender;
+		Player player = (Player) sender;
 
 		// Get information about the spawner
 		if (args.length == 0) {
@@ -115,13 +115,14 @@ public class SpawnerCommand implements CommandExecutor {
 			// entityID
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
+			String mobName = creatureString.toLowerCase();
 
 			// Get the block
 			Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));
 
 			// See if the block is a MobSpawner, then change it
 			if (block != null && !isEgg) {
-				if (!plugin.hasPermission(player, "silkspawners.changetype." + su.getCreatureName(entityID))) {
+				if (!plugin.hasPermission(player, "silkspawners.changetype") && (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) || !plugin.hasPermission(player, "silkspawners.changetype.*"))) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
 					return true;
 				}
@@ -135,7 +136,7 @@ public class SpawnerCommand implements CommandExecutor {
 
 				// If it's a spawner change it.
 				if (itemInHand != null && itemInHand.getType() == Material.MOB_SPAWNER) {
-					if (!plugin.hasPermission(player, "silkspawners.changetype." + su.getCreatureName(entityID))) {
+					if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
 						return true;
 					}
@@ -143,9 +144,20 @@ public class SpawnerCommand implements CommandExecutor {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", creatureString)));
 					return true;
 				}
+				// If it's a spawn egg change it.
+				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
+					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
+						return true;
+					}
+					su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
+					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
+					return true;
+				}
 
 				// If emtpy, add a mob spawner or egg
-				if (!plugin.hasPermission(player, "silkspawners.freeitem." + su.getCreatureName(entityID)) && !plugin.hasPermission(player, "silkspawners.freeitem.egg." + su.getCreatureName(entityID))) {
+				if ((!plugin.hasPermission(player, "silkspawners.freeitem." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.*"))
+						&& (!plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.egg.*"))) {
 					// Only viewing
 					if (plugin.hasPermission(player, "silkspawners.viewtype")) {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawnerOrInHand")));
@@ -161,12 +173,12 @@ public class SpawnerCommand implements CommandExecutor {
 				}
 
 				// Add egg or spawner
-				if (isEgg && plugin.hasPermission(player, "silkspawners.freeitem.egg." + su.getCreatureName(entityID))) {
+				if (isEgg && (plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) || plugin.hasPermission(player, "silkspawners.freeitem.egg.*"))) {
 					player.setItemInHand(su.newEggItem(entityID));
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg").replace("%creature%", creatureString)));
 					return true;
 				}
-				if (plugin.hasPermission(player, "silkspawners.freeitem." + su.getCreatureName(entityID))) {
+				if (plugin.hasPermission(player, "silkspawners.freeitem." + mobName) || plugin.hasPermission(player, "silkspawners.freeitem.*")) {
 					player.setItemInHand(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner").replace("%creature%", creatureString)));
 					return true;

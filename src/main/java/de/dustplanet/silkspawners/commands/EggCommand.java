@@ -51,6 +51,7 @@ public class EggCommand implements CommandExecutor {
 			// entityID
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
+			String mobName = creatureString.toLowerCase();
 
 			if (sender instanceof Player) {
 				// We know it's safe
@@ -58,7 +59,7 @@ public class EggCommand implements CommandExecutor {
 				ItemStack itemInHand = player.getItemInHand();
 				// If it's a spawn egg change it.
 				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
-					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + su.getCreatureName(entityID))) {
+					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
 						return true;
 					}
@@ -69,7 +70,7 @@ public class EggCommand implements CommandExecutor {
 
 				// If empty add a egg
 				// No permission
-				if (!plugin.hasPermission(player, "silkspawners.freeitem.egg." + su.getCreatureName(entityID))) {
+				if (!plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.egg.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
 					return true;
 				}
