@@ -70,7 +70,7 @@ public class EggCommand implements CommandExecutor {
 
 				// If empty add a egg
 				// No permission
-				if (!plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.egg.*")) {
+				if (!plugin.hasPermission(player, "silkspawners.freeitemegg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitemegg.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
 					return true;
 				}

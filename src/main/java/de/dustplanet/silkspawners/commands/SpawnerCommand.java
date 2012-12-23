@@ -157,7 +157,7 @@ public class SpawnerCommand implements CommandExecutor {
 
 				// If emtpy, add a mob spawner or egg
 				if ((!plugin.hasPermission(player, "silkspawners.freeitem." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.*"))
-						&& (!plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.egg.*"))) {
+						&& (!plugin.hasPermission(player, "silkspawners.freeitemegg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitemegg.*"))) {
 					// Only viewing
 					if (plugin.hasPermission(player, "silkspawners.viewtype")) {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawnerOrInHand")));
@@ -173,7 +173,7 @@ public class SpawnerCommand implements CommandExecutor {
 				}
 
 				// Add egg or spawner
-				if (isEgg && (plugin.hasPermission(player, "silkspawners.freeitem.egg." + mobName) || plugin.hasPermission(player, "silkspawners.freeitem.egg.*"))) {
+				if (isEgg && (plugin.hasPermission(player, "silkspawners.freeitemegg." + mobName) || plugin.hasPermission(player, "silkspawners.freeitemegg.*"))) {
 					player.setItemInHand(su.newEggItem(entityID));
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg").replace("%creature%", creatureString)));
 					return true;

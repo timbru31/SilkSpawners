@@ -353,17 +353,7 @@ public class SilkSpawners extends JavaPlugin {
 	public boolean hasPermission(Player player, String node) {
 		// Normal check if we use permissions
 		if (usePermissions)	return player.hasPermission(node);
-		// Else check more detailed
-		else {
-			// Any of the nodes, -> yes
-			if (node.equals("silkspawners.info") ||
-					node.equals("silkspawners.silkdrop") ||
-					node.equals("silkspawners.destroydrop") ||
-					node.equals("silkspawners.viewtype")) {
-				return true;
-			}
-			// Else ask for Op status
-			else return player.isOp();
-		}
+		// Else we don't use permissions
+		return true;
 	}
 }

@@ -22,32 +22,32 @@ permissions:
             silkspawners.changetype.*: true
             silkspawners.changetypewithegg.*: true
             silkspawners.freeitem.*: true
-            silkspawners.freeitem.egg.*: true
+            silkspawners.freeitemegg.*: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
-        default: false
+        default: true
     silkspawners.silkdrop.*:
         description: Allows you to use silk touch to acquire mob spawner items
-        default: false
+        default: true
     silkspawners.destroydrop.*:
         description: Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
-        default: false
+        default: true
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
-        default: false
+        default: true
     silkspawners.changetype.*:
         description: Allows you to change the spawner type using /spawner [creature]
-        default: false
+        default: op
     silkspawners.changetypewithegg.*:
         description: Allows you to change the spawner type by left-clicking with a spawn egg
-        default: false
+        default: op
     silkspawners.freeitem.*:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
-        default: false
-    silkspawners.freeitem.egg.*:
+        default: op
+    silkspawners.freeitemegg.*:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
-        default: false
+        default: op
 softdepend:
     - WorldGuard
     - Spout
