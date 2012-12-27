@@ -72,7 +72,7 @@ public class SilkSpawners extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(blockListener, this);
 		getServer().getPluginManager().registerEvents(playerListener, this);
 		getServer().getPluginManager().registerEvents(inventoryListener, this);
-		
+
 		// Metrics
 		try {
 			Metrics metrics = new Metrics(this);
@@ -291,7 +291,7 @@ public class SilkSpawners extends JavaPlugin {
 			 * A B A
 			 * A A A
 			 */
-			
+
 			// We try to use the custom recipe, but we don't know if the user changed it right ;)
 			try {
 				// At leaste we have defaults here!
@@ -353,7 +353,18 @@ public class SilkSpawners extends JavaPlugin {
 	public boolean hasPermission(Player player, String node) {
 		// Normal check if we use permissions
 		if (usePermissions)	return player.hasPermission(node);
-		// Else we don't use permissions
-		return true;
+		// Else check more detailed
+		else {
+			// Any of the nodes, -> yes
+			if (node.equals("silkspawners.info") ||
+					node.startsWith("silkspawners.silkdrop") ||
+					node.startsWith("silkspawners.destroydrop") ||
+					node.equals("silkspawners.viewtype")) {
+				return true;
+			}
+			// Else ask for Op status
+			else return player.isOp();
+
+		}
 	}
 }

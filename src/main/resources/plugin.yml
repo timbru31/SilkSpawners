@@ -1,4 +1,6 @@
 name: SilkSpawners
+author: xGhOsTkiLLeRx
+authors: [mushroomhostage]
 main: de.dustplanet.silkspawners.SilkSpawners
 version: ${project.version}
 url: http://dev.bukkit.org/server-mods/silkspawners/
@@ -26,28 +28,26 @@ permissions:
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
-        default: true
+        default: false
     silkspawners.silkdrop.*:
         description: Allows you to use silk touch to acquire mob spawner items
-        default: true
+        default: false
     silkspawners.destroydrop.*:
         description: Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
-        default: true
+        default: false
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
-        default: true
+        default: false
     silkspawners.changetype.*:
         description: Allows you to change the spawner type using /spawner [creature]
-        default: op
+        default: false
     silkspawners.changetypewithegg.*:
         description: Allows you to change the spawner type by left-clicking with a spawn egg
-        default: op
+        default: false
     silkspawners.freeitem.*:
         description: Allows you to get spawner items in your hand for free using /spawner [creature]
-        default: op
+        default: false
     silkspawners.freeitemegg.*:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
-        default: op
-softdepend:
-    - WorldGuard
-    - Spout
+        default: false
+softdepend: [WorldGuard, Spout]
