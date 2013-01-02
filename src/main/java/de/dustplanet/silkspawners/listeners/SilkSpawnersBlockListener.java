@@ -70,7 +70,7 @@ public class SilkSpawnersBlockListener implements Listener {
 		World world = player.getWorld();
 		
 		// Mob
-		String mobName = su.getCreatureName(entityID).toLowerCase();
+		String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
 
 		// Prevent XP farming/duping
 		event.setExpToDrop(0);

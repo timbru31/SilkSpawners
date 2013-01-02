@@ -78,7 +78,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 				if (!su.canBuildHere(player, block.getLocation())) return;
 
 				// Mob
-				String mobName = su.getCreatureName(entityID).toLowerCase();
+				String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
 				
 				if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingWithEggs")));

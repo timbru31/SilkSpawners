@@ -51,7 +51,8 @@ public class EggCommand implements CommandExecutor {
 			// entityID
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
-			String mobName = creatureString.toLowerCase();
+			// Filter spaces (like Zombie Pigman)
+			String mobName = creatureString.toLowerCase().replaceAll(" ", "");
 
 			if (sender instanceof Player) {
 				// We know it's safe

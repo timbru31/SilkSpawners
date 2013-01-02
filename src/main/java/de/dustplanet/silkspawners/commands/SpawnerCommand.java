@@ -115,7 +115,8 @@ public class SpawnerCommand implements CommandExecutor {
 			// entityID
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
-			String mobName = creatureString.toLowerCase();
+			// Filter spaces (like Zombie Pigman)
+			String mobName = creatureString.toLowerCase().replaceAll(" ", "");
 
 			// Get the block
 			Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));
