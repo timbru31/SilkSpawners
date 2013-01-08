@@ -80,7 +80,6 @@ public class SilkSpawnersBlockListener implements Listener {
 			int addXP = plugin.config.getInt("destroyDropXP");
 			if (addXP != 0) {
 				event.setExpToDrop(addXP);
-
 			}
 		}
 
