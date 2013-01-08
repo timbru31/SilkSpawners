@@ -55,7 +55,6 @@ notifyOnHold: true
 # Internal stuff, do not change unless advised
 entityMapField: f
 useReflection: true
-checkNBTTag: false
 
 
 # creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html

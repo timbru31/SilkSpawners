@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
-import de.dustplanet.silkspawners.SilkUtil;
+import de.dustplanet.util.SilkUtil;
 
 /**
  * Handles the command /spawner

@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.SilkSpawnersSetCreatureTask;
-import de.dustplanet.silkspawners.SilkUtil;
+import de.dustplanet.util.SilkUtil;
 
 /**
  * Handle the placement and breaking of a spawner
@@ -80,6 +80,7 @@ public class SilkSpawnersBlockListener implements Listener {
 			int addXP = plugin.config.getInt("destroyDropXP");
 			if (addXP != 0) {
 				event.setExpToDrop(addXP);
+
 			}
 		}
 

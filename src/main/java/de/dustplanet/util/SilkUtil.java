@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners;
+package de.dustplanet.util;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -20,10 +20,11 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
-import de.dustplanet.util.NamedItemStack;
+import de.dustplanet.silkspawners.SilkSpawners;
 
 /**
  * This is the util class where all the magic happens!
@@ -78,10 +79,13 @@ public class SilkUtil {
 	// Create a tagged a mob spawner item with it's entity ID so we know what it spawns
 	public ItemStack newSpawnerItem(short entityID, String customName) {
 		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
-		ItemStack item = null;
+		ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
 		// Check if we need a colored name
-		if (coloredNames) item = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, 1, entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
-		else item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+		if (coloredNames) {
+			ItemMeta meta = item.getItemMeta();
+			meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID))));
+			item.setItemMeta(meta);
+		}
 		
 		// The way it should be stored (double sure!)
 		item.setDurability(entityID);
@@ -203,21 +207,16 @@ public class SilkUtil {
 		}
 		// Case spawner
 		if (item.getType() == Material.MOB_SPAWNER) {
-			ItemStack itemNew = null;
 			// Check if we should color
-			if (coloredNames) itemNew = new NamedItemStack(new ItemStack(Material.MOB_SPAWNER, item.getAmount(), entityID)).setName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID)))).getItemStack();
-			// Copy the stack
-			else {
-				itemNew = item;
-				itemNew.setDurability(entityID);
+			if (coloredNames) {
+				ItemMeta meta = item.getItemMeta();
+				meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID))));
+				item.setItemMeta(meta);
 			}
-			return itemNew;
 		}
 		// Case egg -> call normal method
-		else {
-			item.setDurability(entityID);
-			return item;
-		}
+		item.setDurability(entityID);
+		return item;
 	}
 
 	// Return the spawner block the player is looking at, or null if isn't

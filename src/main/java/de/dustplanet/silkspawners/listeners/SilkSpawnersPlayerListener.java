@@ -21,7 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.getspout.spoutapi.player.SpoutPlayer;
 import de.dustplanet.silkspawners.SilkSpawners;
-import de.dustplanet.silkspawners.SilkUtil;
+import de.dustplanet.util.SilkUtil;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type

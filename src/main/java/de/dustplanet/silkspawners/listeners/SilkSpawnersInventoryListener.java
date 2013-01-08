@@ -9,7 +9,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.getspout.spoutapi.player.SpoutPlayer;
 
 import de.dustplanet.silkspawners.SilkSpawners;
-import de.dustplanet.silkspawners.SilkUtil;
+import de.dustplanet.util.SilkUtil;
 
 /**
  * To show a chat message that a player clicked on an mob spawner

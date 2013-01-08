@@ -26,7 +26,9 @@ import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
+import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.Metrics;
+import de.dustplanet.util.SilkUtil;
 
 /**
  * General stuff
@@ -49,6 +51,8 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	public void onEnable() {
+		// Nicer ErrorLogger http://forums.bukkit.org/threads/105321/
+		ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
 		loadConfig();
 		// Check for spout
 		if (config.getBoolean("useSpout", true)) {
