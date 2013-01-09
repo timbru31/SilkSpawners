@@ -19,7 +19,6 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SpawnerCommand implements CommandExecutor {
-
 	private SilkUtil su;
 	private SilkSpawners plugin;
 

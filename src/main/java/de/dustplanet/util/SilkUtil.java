@@ -41,7 +41,8 @@ public class SilkUtil {
 	public ConcurrentHashMap<String,Short> mobID2Eid = new ConcurrentHashMap<String, Short>();
 	// Name to entityID
 	public ConcurrentHashMap<String,Short> name2Eid = new ConcurrentHashMap<String, Short>();
-	// Default is 0 = PIG
+	// Default is 90 = PIG
+	// To prevent empty string use real ID and not 0 anymore
 	public short defaultEntityID = 90;
 	// Fields for reflection
 	public Field tileField, mobIDField;
@@ -258,7 +259,7 @@ public class SilkUtil {
 	}
 
 	@SuppressWarnings("unchecked")
-	// Scan through all entities;
+	// Scan through all entities
 	public SortedMap<Integer, String> scanEntityMap(String fieldValue) {
 		SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
 		// Use reflection to dump native EntityTypes

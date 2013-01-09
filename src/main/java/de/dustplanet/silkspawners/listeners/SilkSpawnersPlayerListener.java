@@ -163,6 +163,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		}
 	}
 	
+	// Color the pickup spawner
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 		if (event.getItem().getItemStack().getType() == Material.MOB_SPAWNER) {
