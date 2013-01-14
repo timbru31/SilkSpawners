@@ -1,31 +1,44 @@
-# See documentation at http://dev.bukkit.org/server-mods/silkspawners/
+# See documentation at http://dev.bukkit.org/server-mods/silkspawners/pages/configuration
 
-consumeEgg: true
+# Should permission be used
 usePermissions: false
+
+# Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
+
+# null is Minecraft default for the pig (put NAMES here, not IDs)
 defaultCreature: null
-# null is Minecraft default for the pig
+
+# How far is the spawner reachable with your crosshair
 spawnerCommandReachDistance: 6
 
+# Minimum silk touch level [can be changed via other plugins to a higher value]
 minSilkTouchLevel: 1
 
+# If a spawner is destroyed, should the egg be dropped
 destroyDropEgg: false
-#destroyDropEgg: true
-destroyDropXP: 0
-#destroyDropXP: 1000
-destroyDropBars: 0
-#destroyDropBars: 8
-ignoreFakeBreakEvent: true
-# Should prevent some duping, recommend to let it true
-denyBreakHoldingSpawner: true
-# recommend, since old spawners have got a silk touch enchantment
 
+# If a spawner is destroyed, should XP be dropped
+destroyDropXP: 0
+
+# If a spawner is destroyed, should iron bars be dropped
+destroyDropBars: 0
+
+# Should prevent some duping (mcMMO break events for example), recommend to let it true
+ignoreFakeBreakEvent: true
+
+# Recommend, since old spawners have got a silk touch enchantment
+denyBreakHoldingSpawner: true
+
+# Should the player be able to craft spawners
 craftableSpawners: false
+
 # Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free
 # X is always the egg
 recipeTop: 'AAA'
 recipeMiddle: 'AXA'
 recipeBottom: 'AAA'
+
 # You can put IDs or the NAME here (please uppercase)
 # Add it for each custom ingredient you add, too!
 ingredients:
@@ -41,18 +54,34 @@ ingredients:
 #  - 'C,2'
 #  - 'D,5'
 
+# Should spawners be unstackable
 spawnersUnstackable: false
 
-verboseConfig: false
-spawnEggOverride: false
-spawnEggOverrideSpawnDefault: true
-enableCreatureDefault: true
+# Should the egg be consumed when the spawner is changed with it
+consumeEgg: true
 
+# Should the spawn algorithm be overridden? Allows spawning of non-standard entities
+spawnEggOverride: false
+
+# If the player uses SpoutCraft and Spout is present, he will receive additional information
 useSpout: true
+
+# Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
+
+# Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
 
-# Internal stuff, do not change unless advised
+# Fallback if the creature should be enabled, if not specified for the entity
+enableCreatureDefault: true
+
+# Fallback if the creature should be spawned, if not specified for the entity
+spawnEggOverrideSpawnDefault: true
+
+# Puts more information out on startup
+verboseConfig: false
+
+# Internal stuff, do NOT change unless advised - the plugin will break otherwise
 entityMapField: f
 useReflection: true
 
