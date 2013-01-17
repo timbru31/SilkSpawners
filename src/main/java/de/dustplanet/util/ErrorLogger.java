@@ -1,10 +1,10 @@
 package de.dustplanet.util;
 
-import net.minecraft.server.v1_4_6.MinecraftServer;
+import net.minecraft.server.v1_4_R1.MinecraftServer;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_4_6.CraftServer;
+import org.bukkit.craftbukkit.v1_4_R1.CraftServer;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;

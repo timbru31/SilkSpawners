@@ -1,6 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -72,6 +73,9 @@ public class SilkSpawnersBlockListener implements Listener {
 		// Mob
 		String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
 
+		// No drops in creative
+		if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) return;
+		
 		// Prevent XP farming/duping
 		event.setExpToDrop(0);
 		if ((plugin.hasPermission(player, "silkspawners.silkdrop." + mobName) || plugin.hasPermission(player, "silkspawners.silkdrop.*"))

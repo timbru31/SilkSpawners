@@ -1,14 +1,14 @@
 package de.dustplanet.silkspawners.listeners;
 
-import net.minecraft.server.v1_4_6.Entity;
-import net.minecraft.server.v1_4_6.EntityLiving;
-import net.minecraft.server.v1_4_6.EntityTypes;
-import net.minecraft.server.v1_4_6.World;
+import net.minecraft.server.v1_4_R1.Entity;
+import net.minecraft.server.v1_4_R1.EntityLiving;
+import net.minecraft.server.v1_4_R1.EntityTypes;
+import net.minecraft.server.v1_4_R1.World;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_4_6.CraftWorld;
+import org.bukkit.craftbukkit.v1_4_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

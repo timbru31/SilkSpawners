@@ -15,6 +15,9 @@ spawnerCommandReachDistance: 6
 # Minimum silk touch level [can be changed via other plugins to a higher value]
 minSilkTouchLevel: 1
 
+# If a player in creative destroys a spawner nothing is dropped
+noDropsCreative: true
+
 # If a spawner is destroyed, should the egg be dropped
 destroyDropEgg: false
 
