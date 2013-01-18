@@ -29,7 +29,7 @@ usageSpawnerCommandCommandLine: '&4To use SilkSpawners from the command line use
 
 spawnerBroken: '&e%creature% spawner broken'
 spawnerPlaced: '&e%creature% spawner placed'
-placingDefault: '&ePlacing default spawner'
+placingDefault: '&ePlacing default spawner (either this spawner is invalid or disabled)'
 
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
