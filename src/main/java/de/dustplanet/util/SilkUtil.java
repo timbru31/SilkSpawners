@@ -1,6 +1,7 @@
 package de.dustplanet.util;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -41,6 +42,8 @@ public class SilkUtil {
 	public ConcurrentHashMap<String,Short> mobID2Eid = new ConcurrentHashMap<String, Short>();
 	// Name to entityID
 	public ConcurrentHashMap<String,Short> name2Eid = new ConcurrentHashMap<String, Short>();
+	// Known entityIDs
+	public ArrayList<Short> knownEids = new ArrayList<Short>();
 	// Default is 90 = PIG
 	// To prevent empty string use real ID and not 0 anymore
 	public short defaultEntityID = 90;
@@ -114,6 +117,11 @@ public class SilkUtil {
 	public boolean isRecognizedMob(String mobID) {
 		return EntityType.fromName(mobID) != null;
 	}
+	
+	// Check if the entityID is known or not
+	public boolean isKnownEntityID(short entityID) {
+		return knownEids.contains(entityID);
+	}
 
 	// Better methods for setting/getting spawner type
 	// These don't rely on CreatureSpawner, if possible, and instead set/get the 
@@ -157,8 +165,13 @@ public class SilkUtil {
 		// Try the more powerful native methods first
 		if (tileField != null && mobIDField != null) {
 			try {
-				// Get the name of the mon
+				// Get the name of the mob
 				String mobID = eid2MobID.get(entityID);
+				// Okay the spawner is not on our list [should NOT happen anymore]
+				// Fallback then!
+				if (mobID == null) mobID = getCreatureName(entityID);
+				// uh still null, default [PIG]!
+				if (mobID == null) mobID = getCreatureName((short) 90);
 				// Refer to the NMS TileEntityMobSpawner and change the name, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
 				TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
@@ -239,7 +252,7 @@ public class SilkUtil {
 			// Try to to get it from the EntityType
 			EntityType ct = EntityType.fromId(entityID);
 			// Case 1, found use the name method
-			if (ct != null) displayName = "("+ ct.getName()+ ")";
+			if (ct != null) displayName = ct.getName();
 			// Case 2, not found -> use the number...
 			else displayName = String.valueOf(entityID);
 		}

@@ -6,6 +6,7 @@ usePermissions: false
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
 
+# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
 # null is Minecraft default for the pig (put NAMES here, not IDs)
 defaultCreature: null
 
@@ -13,6 +14,7 @@ defaultCreature: null
 spawnerCommandReachDistance: 6
 
 # Minimum silk touch level [can be changed via other plugins to a higher value]
+# Set it to 0 to mine it without silk touch
 minSilkTouchLevel: 1
 
 # If a player in creative destroys a spawner nothing is dropped
@@ -63,8 +65,14 @@ spawnersUnstackable: false
 # Should the egg be consumed when the spawner is changed with it
 consumeEgg: true
 
+# Fallback if the creature should be enabled, if not specified for the entity
+enableCreatureDefault: true
+
 # Should the spawn algorithm be overridden? Allows spawning of non-standard entities
 spawnEggOverride: false
+
+# Fallback if the creature should be spawned, if not specified for the entity
+spawnEggOverrideSpawnDefault: true
 
 # If the player uses SpoutCraft and Spout is present, he will receive additional information
 useSpout: true
@@ -74,12 +82,6 @@ notifyOnClick: true
 
 # Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
-
-# Fallback if the creature should be enabled, if not specified for the entity
-enableCreatureDefault: true
-
-# Fallback if the creature should be spawned, if not specified for the entity
-spawnEggOverrideSpawnDefault: true
 
 # Puts more information out on startup
 verboseConfig: false

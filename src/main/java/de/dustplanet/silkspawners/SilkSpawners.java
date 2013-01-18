@@ -177,6 +177,8 @@ public class SilkSpawners extends JavaPlugin {
 				}
 				continue;
 			}
+			// Add the known ID [we omit all disabled entities]
+			su.knownEids.add(entityID);
 			// Put the different value in our lists
 			su.eid2MobID.put(entityID, mobID);
 			su.mobID2Eid.put(mobID, entityID);

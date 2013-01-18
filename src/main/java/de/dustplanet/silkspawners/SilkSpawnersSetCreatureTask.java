@@ -9,7 +9,7 @@ import de.dustplanet.util.SilkUtil;
  * @author xGhOsTkiLLeRx
  */
 
-public class SilkSpawnersSetCreatureTask  implements Runnable {
+public class SilkSpawnersSetCreatureTask implements Runnable {
 	private SilkUtil su;
 	private short entityID;
 	private Block block;
