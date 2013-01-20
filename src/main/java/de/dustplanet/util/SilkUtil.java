@@ -265,13 +265,14 @@ public class SilkUtil {
 	}
 	// Show them all the possible creature names
 	public void showAllCreatures(CommandSender sender) {
-		String message = "";
 		// For each entry in the list
+		StringBuffer buf = new StringBuffer();
 		for (String displayName: eid2DisplayName.values()) {
 			displayName = displayName.replaceAll(" ", "");
-			message += displayName + ", ";
+			buf.append(displayName + ", ");
 		}
 		// Strip last comma out
+		String message = buf.toString();
 		message = message.substring(0, message.length() - ", ".length());
 		sender.sendMessage(message);
 	}
