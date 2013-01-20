@@ -107,6 +107,7 @@ public class EggCommand implements CommandExecutor {
 		return true;
 	}
 
+	// Check if the given name is on our list
 	private boolean isUnkown(String creatureString) {
 		if (!su.name2Eid.containsKey(creatureString)) return true;
 		return false;

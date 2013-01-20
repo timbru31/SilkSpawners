@@ -28,11 +28,14 @@ public class SpawnerCommand implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		// Case console
 		if (!(sender instanceof Player)) {
+			// Not enought arguments -> list
 			if (args.length == 0 || args.length == 1) {
 				su.showAllCreatures(sender);
 				return true;
 			}
+			// We need exactly 2 arguments (creature and player)
 			if (args.length != 2) {
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageSpawnerCommandCommandLine")));
 				return true;
@@ -61,11 +64,12 @@ public class SpawnerCommand implements CommandExecutor {
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
 
-			// Add items
+			// Add egg
 			if (isEgg) {
 				player.getInventory().addItem(su.newEggItem(entityID));
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replace("%creature%", creatureString)).replaceAll("%player%", player.getName()));
 			}
+			// Add spawner
 			else {
 				player.getInventory().addItem(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawnerOtherPlayer").replace("%creature%", creatureString)).replaceAll("%player%", player.getName()));
