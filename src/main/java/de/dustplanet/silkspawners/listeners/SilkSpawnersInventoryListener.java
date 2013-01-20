@@ -1,13 +1,10 @@
 package de.dustplanet.silkspawners.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.getspout.spoutapi.player.SpoutPlayer;
-
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.util.SilkUtil;
 
@@ -40,15 +37,7 @@ public class SilkSpawnersInventoryListener implements Listener {
 			String spawnerName = su.getCreatureName(entityID);
 			// Player
 			Player player = (Player) event.getWhoClicked();
-			// If we use Spout & the player Spoutcraft, send a notification (achievement like)
-			if (plugin.spoutEnabled && ((SpoutPlayer) player).isSpoutCraftEnabled()) {
-				((SpoutPlayer) player).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
-			}
-			else {
-				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner1").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
-				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner2").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
-				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner3").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
-			}
+			su.notify(player, spawnerName, entityID);
 		}
 
 	}
