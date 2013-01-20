@@ -7,9 +7,13 @@
 	<name>SilkSpawners</name>
 	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
 	<description>Pickup, place and customize Monster Spawners</description>
+
+	<!-- Encode in UTF-8 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<!-- Repositories -->
 	<repositories>
 		<repository>
 			<id>bukkit-repo</id>
@@ -23,38 +27,13 @@
 			<id>sk89q-repo</id>
 			<url>http://maven.sk89q.com/repo/</url>
 		</repository>
+		<repository>
+			<id>Plugin Metrics</id>
+			<url>http://repo.mcstats.org/content/repositories/public</url>
+		</repository>
 	</repositories>
-	<build>
-		<defaultGoal>clean compile package</defaultGoal>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<verbose>true</verbose>
-					<fork>true</fork>
-					<executable>${JAVA_HOME_1_6}/bin/javac</executable>
-					<compilerVersion>1.6</compilerVersion>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-		<resources>
-			<resource>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>plugin.yml</include>
-					<include>config.yml</include>
-					<include>localization.yml</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
+
+	<!-- Dependencies -->
 	<dependencies>
 		<dependency>
 			<groupId>org.bukkit</groupId>
@@ -85,13 +64,87 @@
 			<artifactId>worldedit</artifactId>
 			<version>5.5.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.mcstats.bukkit</groupId>
+			<artifactId>metrics</artifactId>
+			<version>R6</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
+	
+	<build>
+		<!-- Compile for 1.6 and clean before -->
+		<defaultGoal>clean compile package</defaultGoal>
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>1.6</compilerVersion>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- Shade Plugin to include Metrics -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.mcstats.bukkit:metrics</include>
+								</includes>
+							</artifactSet>
+							<!-- Set the final name -->
+							<finalName>SilkSpawners</finalName>
+							<relocations>
+								<relocation>
+									<pattern>org.mcstats</pattern>
+									<shadedPattern>de.dustplanet.util</shadedPattern>
+								</relocation>
+							</relocations>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<!-- Include .yml files -->
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}/src/main/resources</directory>
+				<includes>
+					<include>plugin.yml</include>
+					<include>config.yml</include>
+					<include>localization.yml</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+	
+	<!-- Github information -->
 	<scm>
 		<url>https://github.com/xGhOsTkiLLeRx/SilkSpawners</url>
 		<connection>scm:git:git://github.com/xGhOsTkiLLeRx/SilkSpawners.git</connection>
 		<tag>master</tag>
 		<developerConnection>scm:git:git@github.com:xGhOsTkiLLeRx/SilkSpawners.git</developerConnection>
 	</scm>
+	
+	<!-- Jenkins information -->
 	<ciManagement>
 		<url>http://ci.dustplanet.de/job/SilkSpawners</url>
 		<system>jenkins</system>

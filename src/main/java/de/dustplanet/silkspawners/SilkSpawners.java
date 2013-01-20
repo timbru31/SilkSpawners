@@ -23,6 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
+
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
@@ -30,7 +32,6 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.ErrorLogger;
-import de.dustplanet.util.Metrics;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -67,7 +68,7 @@ public class SilkSpawners extends JavaPlugin {
 				getLogger().info("Spout not found. Disabling Spout features.");
 			}
 		}
-		
+
 		// Check if we should enable the auto Updater
 		if (config.getBoolean("autoUpdater", true)) {
 			// Updater http://forums.bukkit.org/threads/96681/
