@@ -11,6 +11,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+
+import net.h31ix.updater.Updater;
 import net.minecraft.server.v1_4_R1.Item;
 import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
 import org.bukkit.Material;
@@ -64,6 +66,12 @@ public class SilkSpawners extends JavaPlugin {
 			} else {
 				getLogger().info("Spout not found. Disabling Spout features.");
 			}
+		}
+		
+		// Check if we should enable the auto Updater
+		if (config.getBoolean("autoUpdater", true)) {
+			// Updater http://forums.bukkit.org/threads/96681/
+			new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, false);
 		}
 
 		spawnerCommand = new SpawnerCommand(this, su);
