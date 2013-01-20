@@ -16,14 +16,13 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
-		// Case console
-		System.out.println("called");
-		System.out.println(label);
+		// Long enough!
 		if (args.length > 0) {
 			ArrayList<String> results = new ArrayList<String>();
 			// Use ONLY lowercase
 			String argument = args[0].toLowerCase();
 			for (String displayName: su.eid2DisplayName.values()) {
+				// Lowercase, too
 				displayName = displayName.toLowerCase();
 				if (displayName.startsWith(argument)) results.add(displayName);
 			}
