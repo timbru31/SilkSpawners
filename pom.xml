@@ -22,7 +22,7 @@
 		</repository>
 	</repositories>
 	<build>
-		<defaultGoal>install</defaultGoal>
+		<defaultGoal>clean compile package</defaultGoal>
 		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<plugins>
 			<plugin>
