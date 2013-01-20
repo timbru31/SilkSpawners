@@ -1,18 +1,15 @@
 package de.dustplanet.silkspawners;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-
-import net.h31ix.updater.Updater;
 import net.minecraft.server.v1_4_R1.Item;
 import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
 import org.bukkit.Material;
@@ -23,16 +20,19 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
-
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
+// ErrorLogger
 import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.SilkUtil;
+// Metrics
+import org.mcstats.Metrics;
+// Updater
+import net.h31ix.updater.Updater;
 
 /**
  * General stuff
@@ -50,6 +50,7 @@ public class SilkSpawners extends JavaPlugin {
 	private SilkUtil su;
 	public boolean spoutEnabled, usePermissions;
 	public FileConfiguration config, localization;
+	private File configFile, localizationFile;
 
 	public void onDisbale() {
 		su.clearAll();
@@ -101,72 +102,49 @@ public class SilkSpawners extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
-
-	// Copy default configuration
-	// Sure we could use config.options().copyDefaults(true);, but it strips all comments :(
-	private boolean newConfig(File file, String ressourceName) {
-		FileWriter fileWriter;
-		if (!file.getParentFile().exists()) {
-			file.getParentFile().mkdir();
-		}
-
+	
+	// If no config is found, copy the default one(s)!
+	private void copy(InputStream in, File file) {
 		try {
-			fileWriter = new FileWriter(file);
-		}
-		catch (IOException e) {
-			getLogger().severe("Couldn't write " + ressourceName + " file: " + e.getMessage());
-			e.printStackTrace();
-			getServer().getPluginManager().disablePlugin(this);
-			return false;
-		}
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new BufferedInputStream(getResource(ressourceName))));
-		BufferedWriter writer = new BufferedWriter(fileWriter);
-		try {
-			String line = reader.readLine();
-			while (line != null) {
-				writer.write(line + System.getProperty("line.separator"));
-				line = reader.readLine();
+			OutputStream out = new FileOutputStream(file);
+			byte[] buf = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0) {
+				out.write(buf, 0, len);
 			}
-			getLogger().info("Wrote default " + ressourceName);
+			out.close();
+			in.close();
+		} catch (FileNotFoundException e) {
+			getLogger().warning("Failed to copy the default config! (FileNotFound)");
+		} catch (IOException e) {
+			getLogger().warning("Failed to copy the default config! (I/O)");
 		}
-		catch (IOException e) {
-			getLogger().severe("Error writing " + ressourceName + ": " + e.getMessage());
-			e.printStackTrace();
-		}
-		finally {
-			try {
-				writer.flush();
-				writer.close();
-				reader.close();
-			} catch (IOException e) {
-				getLogger().severe("Error saving " + ressourceName + ": " + e.getMessage());
-				e.printStackTrace();
-				getServer().getPluginManager().disablePlugin(this);
-			}
-		}
-		return true;
 	}
 
 	private void loadConfig() {
-		String localizationName = getDataFolder() + System.getProperty("file.separator") + "localization.yml";
-		File localizationFile = new File(localizationName);
-		if (!localizationFile.exists()) {
-			if (!newConfig(localizationFile, "localization.yml")) {
-				throw new IllegalArgumentException("[SilkSpawners] Could not create new localization file");
+		// Config
+		configFile = new File(getDataFolder(), "config.yml");
+		// One file and the folder not existent
+		if (!configFile.exists() && !configFile.getParentFile().exists()) {
+			// Break if no folder can be created!
+			if (!configFile.getParentFile().mkdirs()) {
+				getLogger().severe("The config folder could NOT be created, make sure it's writable!");
+				getLogger().severe("Disabling now!");
+				setEnabled(false);
+				return;
 			}
 		}
-
-		// Copy default if not already created
-		String filename = getDataFolder() + System.getProperty("file.separator") + "config.yml";
-		File file = new File(filename);
-
-		if (!file.exists()) {
-			if (!newConfig(file, "config.yml")) {
-				throw new IllegalArgumentException("[SilkSpawners] Could not create new configuration file");
-			}
+		// Copy default is neccessary
+		if (!configFile.exists()) {
+			copy(getResource("config.yml"), configFile);
 		}
-		reloadConfig();
+		
+		// Localization
+		localizationFile = new File(getDataFolder(), "localization.yml");
+		if(!localizationFile.exists()) {
+			copy(getResource("localization.yml"), localizationFile);
+		}
+		
 		config = getConfig();
 		localization = YamlConfiguration.loadConfiguration(localizationFile);
 		su = new SilkUtil(this);
