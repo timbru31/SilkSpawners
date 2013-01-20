@@ -38,7 +38,7 @@ public class SpawnerCommand implements CommandExecutor {
 				return true;
 			}
 			// Get strings
-			String creatureString = args[0];
+			String creatureString = args[0].toLowerCase();
 			String playerName = args[1];
 			Player player = plugin.getServer().getPlayer(playerName);
 			// Online check
@@ -95,7 +95,7 @@ public class SpawnerCommand implements CommandExecutor {
 		// Set or get spawner
 		else {
 			// Get list of all creatures
-			String creatureString = args[0];
+			String creatureString = args[0].toLowerCase();
 			if (creatureString.equalsIgnoreCase("all") || creatureString.equalsIgnoreCase("list")) {
 				su.showAllCreatures(sender);
 				return true;
@@ -115,7 +115,7 @@ public class SpawnerCommand implements CommandExecutor {
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
 			// Filter spaces (like Zombie Pigman)
-			String mobName = creatureString.toLowerCase().replaceAll(" ", "");
+			String mobName = creatureString.replaceAll(" ", "");
 
 			// Get the block
 			Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));

@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
 import de.dustplanet.silkspawners.commands.EggCommand;
+import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
@@ -42,6 +43,7 @@ public class SilkSpawners extends JavaPlugin {
 	private SilkSpawnersInventoryListener inventoryListener;
 	private SpawnerCommand spawnerCommand;
 	private EggCommand eggCommand;
+	private SilkSpawnersTabCompleter tabCompleter;
 	private SilkUtil su;
 	public boolean spoutEnabled, usePermissions;
 	public FileConfiguration config, localization;
@@ -66,8 +68,11 @@ public class SilkSpawners extends JavaPlugin {
 
 		spawnerCommand = new SpawnerCommand(this, su);
 		eggCommand = new EggCommand(this, su);
+		tabCompleter = new SilkSpawnersTabCompleter(su);
 		getCommand("silkspawners").setExecutor(spawnerCommand);
 		getCommand("egg").setExecutor(eggCommand);
+		getCommand("silkspawners").setTabCompleter(tabCompleter);
+		getCommand("egg").setTabCompleter(tabCompleter);
 		blockListener  = new SilkSpawnersBlockListener(this, su);
 		playerListener  = new SilkSpawnersPlayerListener(this, su);
 		inventoryListener = new SilkSpawnersInventoryListener(this, su);

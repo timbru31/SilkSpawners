@@ -33,7 +33,7 @@ public class EggCommand implements CommandExecutor {
 		}
 		else {
 			// Get list of all creatures
-			String creatureString = args[0];
+			String creatureString = args[0].toLowerCase();
 			if (creatureString.equalsIgnoreCase("all") || creatureString.equalsIgnoreCase("list")) {
 				su.showAllCreatures(sender);
 				return true;
