@@ -78,8 +78,8 @@ public class SilkSpawnersBlockListener implements Listener {
 		
 		// Prevent XP farming/duping
 		event.setExpToDrop(0);
-		if ((plugin.hasPermission(player, "silkspawners.silkdrop." + mobName) || plugin.hasPermission(player, "silkspawners.silkdrop.*"))
-				|| (plugin.hasPermission(player, "silkspawners.destroydrop." + mobName) || plugin.hasPermission(player, "silkspawners.destroydrop.*"))) {
+		if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName) || plugin.hasPermission(player, "silkspawners.silkdrop.*")
+				|| plugin.hasPermission(player, "silkspawners.destroydrop." + mobName) || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
 			// If we have more than 0 XP, drop them
 			int addXP = plugin.config.getInt("destroyDropXP");
 			if (addXP != 0) {
