@@ -30,7 +30,7 @@ public class SpawnerCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		// Case console
 		if (!(sender instanceof Player)) {
-			// Not enought arguments -> list
+			// Not enough arguments -> list
 			if (args.length == 0 || args.length == 1) {
 				su.showAllCreatures(sender);
 				return true;
@@ -159,7 +159,7 @@ public class SpawnerCommand implements CommandExecutor {
 					return true;
 				}
 
-				// If emtpy, add a mob spawner or egg
+				// If empty, add a mob spawner or egg
 				if ((!plugin.hasPermission(player, "silkspawners.freeitem." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitem.*"))
 						&& (!plugin.hasPermission(player, "silkspawners.freeitemegg." + mobName) && !plugin.hasPermission(player, "silkspawners.freeitemegg.*"))) {
 					// Only viewing

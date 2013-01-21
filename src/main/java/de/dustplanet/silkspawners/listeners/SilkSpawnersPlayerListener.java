@@ -121,13 +121,13 @@ public class SilkSpawnersPlayerListener implements Listener {
 					// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
 					World world = ((CraftWorld)player.getWorld()).getHandle();
 					Entity entity = EntityTypes.a(entityID, world);
-					// Should acutally never happen since the method above contains a null check, too
+					// Should actually never happen since the method above contains a null check, too
 					if (entity == null) {
 						plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
 						return;
 					}
 
-					// Spawn on top of targetted block
+					// Spawn on top of targeted block
 					Location location = block.getLocation().add(0, 1, 0);
 					double x = location.getX(), y = location.getY(), z = location.getZ();
 

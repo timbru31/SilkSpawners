@@ -57,7 +57,7 @@ public class SilkUtil {
 	private WorldGuardPlugin wg;
 	// Should we use the normal names or a colored one?
 	public boolean coloredNames;
-	// SilkSpawners instance, not neccessary
+	// SilkSpawners instance, not necessary
 	private SilkSpawners plugin;
 
 	public SilkUtil(SilkSpawners instance) {
@@ -153,7 +153,7 @@ public class SilkUtil {
 			} 
 		}
 
-		// Fallback to bukkit
+		// Fallback to Bukkit
 		return spawner.getSpawnedType().getTypeId();
 	}
 

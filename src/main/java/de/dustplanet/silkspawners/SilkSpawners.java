@@ -134,7 +134,7 @@ public class SilkSpawners extends JavaPlugin {
 				return;
 			}
 		}
-		// Copy default is neccessary
+		// Copy default is necessary
 		if (!configFile.exists()) {
 			copy(getResource("config.yml"), configFile);
 		}
@@ -292,7 +292,7 @@ public class SilkSpawners extends JavaPlugin {
 
 			// We try to use the custom recipe, but we don't know if the user changed it right ;)
 			try {
-				// At leaste we have defaults here!
+				// At least we have defaults here!
 				recipe.shape(config.getString("recipeTop", "AAA"), config.getString("recipeMiddle", "AXA"), config.getString("recipeBottom", "AAA"));
 				// No list what we should use -> not adding
 				if (!config.contains("ingredients")) return;
@@ -354,10 +354,10 @@ public class SilkSpawners extends JavaPlugin {
 		// Else check more detailed
 		else {
 			// Any of the nodes, -> yes
-			if (node.equals("silkspawners.info") ||
-					node.startsWith("silkspawners.silkdrop") ||
-					node.startsWith("silkspawners.destroydrop") ||
-					node.equals("silkspawners.viewtype")) {
+			if (node.equals("silkspawners.info")
+					|| node.startsWith("silkspawners.silkdrop")
+					|| node.startsWith("silkspawners.destroydrop")
+					|| node.equals("silkspawners.viewtype")) {
 				return true;
 			}
 			// Else ask for Op status
