@@ -70,8 +70,8 @@ public class SilkSpawners extends JavaPlugin {
 			}
 		}
 
-		// Check if we should enable the auto Updater
-		if (config.getBoolean("autoUpdater", true)) {
+		// Check if we should enable the auto Updater && have no snapshot (dev build)
+		if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
 			// Updater http://forums.bukkit.org/threads/96681/
 			new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, false);
 		}
