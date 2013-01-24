@@ -95,7 +95,7 @@ public class SilkUtil {
 			meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID))));
 			item.setItemMeta(meta);
 		}
-		
+
 		// The way it should be stored (double sure!)
 		item.setDurability(entityID);
 
@@ -122,7 +122,7 @@ public class SilkUtil {
 	public boolean isRecognizedMob(String mobID) {
 		return EntityType.fromName(mobID) != null;
 	}
-	
+
 	// Check if the entityID is known or not
 	public boolean isKnownEntityID(short entityID) {
 		return knownEids.contains(entityID);
@@ -301,7 +301,7 @@ public class SilkUtil {
 		}
 		return sortedMap;
 	}
-	
+
 	// Notify player
 	// Warning: Don't call the method unless you have the SilkSpawners instance!
 	public void notify(Player player, String spawnerName, short entityID) {
@@ -322,6 +322,7 @@ public class SilkUtil {
 		eid2MobID.clear();
 		mobID2Eid.clear();
 		name2Eid.clear(); 
+		knownEids.clear();
 	}
 
 	/*
