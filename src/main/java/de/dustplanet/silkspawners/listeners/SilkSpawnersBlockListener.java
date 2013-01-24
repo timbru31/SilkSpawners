@@ -128,11 +128,11 @@ public class SilkSpawnersBlockListener implements Listener {
 		}
 		// Else message the type
 		else plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
-
+		su.setSpawnerEntityID(blockPlaced, entityID);
 		// Bukkit 1.1-R3 regressed from 1.1-R1, ignores block state update on onBlockPlace
 		// TODO: file or find bug about this, get it fixed so can remove this lame workaround
 		// Still on 1.4 -> Ticket https://bukkit.atlassian.net/browse/BUKKIT-2974
-		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(entityID, blockPlaced, plugin, su), 2);
+		plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new SilkSpawnersSetCreatureTask(entityID, blockPlaced, plugin, su), 1);
 	}
 
 	// Checks if the given ItemStack has got the SilkTouch
