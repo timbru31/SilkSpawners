@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -160,12 +161,16 @@ public class SilkSpawners extends JavaPlugin {
 			short entityID = (short)(int) entry.getKey();
 			// internal mod ID used for spawner type
 			String mobID = entry.getValue();
+			// bukkit's wrapper enum
+			EntityType bukkitEntity = EntityType.fromId(entityID);
+			Class bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
+
 			// Lookup creature info
 			boolean enable = config.getBoolean("enableCreatureDefault", true);
 			enable = config.getBoolean("creatures." + mobID + ".enable", enable);
 			if (!enable) {
 				if (verbose) {
-					getLogger().info("Entity " + entityID + " = " + mobID + " (disabled)");
+					getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (disabled)");
 				}
 				continue;
 			}
@@ -197,7 +202,7 @@ public class SilkSpawners extends JavaPlugin {
 			}
 			// Detailed message
 			if (verbose) {
-				getLogger().info("Entity " + entityID + " = " + mobID + " (display name: " + displayName + ", aliases: " + aliases + ")");
+				getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (display name: " + displayName + ", aliases: " + aliases + ")");
 			}
 		}
 
