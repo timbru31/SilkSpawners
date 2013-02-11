@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -163,7 +164,7 @@ public class SilkSpawners extends JavaPlugin {
 			String mobID = entry.getValue();
 			// bukkit's wrapper enum
 			EntityType bukkitEntity = EntityType.fromId(entityID);
-			Class bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
+			Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
 
 			// Lookup creature info
 			boolean enable = config.getBoolean("enableCreatureDefault", true);
