@@ -813,6 +813,7 @@ Usage: /silkspawners [creature]|[creature]egg|all
 
 Egg:
 Aliases: eggs, eg
+Description: Change the egg type
 Usage: /egg [creature]|[creature]egg|all   
 
 **General**
