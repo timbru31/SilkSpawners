@@ -66,13 +66,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 			short entityID = item.getDurability();
 			// Clicked spawner with monster egg to change type
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK &&	block != null && block.getType() == Material.MOB_SPAWNER) {
-				// Call the event and maybe change things!
-				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
-				plugin.getServer().getPluginManager().callEvent(changeEvent);
-				// See if we need to stop
-				if (changeEvent.isCancelled()) return;
-				// Get the new ID (might be changed)
-				entityID = changeEvent.getEntityID();
 				// WorldGuard region protection
 				if (!su.canBuildHere(player, block.getLocation())) return;
 
@@ -83,6 +76,15 @@ public class SilkSpawnersPlayerListener implements Listener {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingWithEggs")));
 					return;
 				}
+				
+				// Call the event and maybe change things!
+				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
+				plugin.getServer().getPluginManager().callEvent(changeEvent);
+				// See if we need to stop
+				if (changeEvent.isCancelled()) return;
+				// Get the new ID (might be changed)
+				entityID = changeEvent.getEntityID();
+				
 				su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
 				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", su.getCreatureName(entityID))));
 

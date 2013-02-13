@@ -61,6 +61,10 @@ public class EggCommand implements CommandExecutor {
 				ItemStack itemInHand = player.getItemInHand();
 				// If it's a spawn egg change it.
 				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
+					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
+						return true;
+					}
 					// Call the event and maybe change things!
 					SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
 					plugin.getServer().getPluginManager().callEvent(changeEvent);
@@ -71,10 +75,6 @@ public class EggCommand implements CommandExecutor {
 					creatureString = su.getCreatureName(entityID);
 					// Filter spaces (like Zombie Pigman)
 					mobName = creatureString.toLowerCase().replaceAll(" ", "");
-					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
-						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
-						return true;
-					}
 					su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
 					return true;

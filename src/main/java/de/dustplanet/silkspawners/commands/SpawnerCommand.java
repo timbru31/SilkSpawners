@@ -127,6 +127,10 @@ public class SpawnerCommand implements CommandExecutor {
 
 			// See if the block is a MobSpawner, then change it
 			if (block != null && !isEgg) {
+				if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
+					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
+					return true;
+				}
 				// Call the event and maybe change things!
 				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
 				plugin.getServer().getPluginManager().callEvent(changeEvent);
@@ -137,10 +141,6 @@ public class SpawnerCommand implements CommandExecutor {
 				creatureString = su.getCreatureName(entityID);
 				// Filter spaces (like Zombie Pigman)
 				mobName = creatureString.toLowerCase().replaceAll(" ", "");
-				if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
-					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
-					return true;
-				}
 				su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
 				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", creatureString)));
 			}
@@ -149,22 +149,22 @@ public class SpawnerCommand implements CommandExecutor {
 				// Check the item 
 				ItemStack itemInHand = player.getItemInHand();
 				if (itemInHand != null) {
-					// Call the event and maybe change things!
-					SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
-					plugin.getServer().getPluginManager().callEvent(changeEvent);
-					// See if we need to stop
-					if (changeEvent.isCancelled()) return true;
-					// Get the new ID (might be changed)
-					entityID = changeEvent.getEntityID();
-					creatureString = su.getCreatureName(entityID);
-					// Filter spaces (like Zombie Pigman)
-					mobName = creatureString.toLowerCase().replaceAll(" ", "");
 					// If it's a spawner change it.
 					if (itemInHand.getType() == Material.MOB_SPAWNER) {
 						if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
 							player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
 							return true;
 						}
+						// Call the event and maybe change things!
+						SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
+						plugin.getServer().getPluginManager().callEvent(changeEvent);
+						// See if we need to stop
+						if (changeEvent.isCancelled()) return true;
+						// Get the new ID (might be changed)
+						entityID = changeEvent.getEntityID();
+						creatureString = su.getCreatureName(entityID);
+						// Filter spaces (like Zombie Pigman)
+						mobName = creatureString.toLowerCase().replaceAll(" ", "");
 						player.setItemInHand(su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName")));
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", creatureString)));
 						return true;
@@ -175,6 +175,16 @@ public class SpawnerCommand implements CommandExecutor {
 							player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
 							return true;
 						}
+						// Call the event and maybe change things!
+						SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
+						plugin.getServer().getPluginManager().callEvent(changeEvent);
+						// See if we need to stop
+						if (changeEvent.isCancelled()) return true;
+						// Get the new ID (might be changed)
+						entityID = changeEvent.getEntityID();
+						creatureString = su.getCreatureName(entityID);
+						// Filter spaces (like Zombie Pigman)
+						mobName = creatureString.toLowerCase().replaceAll(" ", "");
 						su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
 						return true;
