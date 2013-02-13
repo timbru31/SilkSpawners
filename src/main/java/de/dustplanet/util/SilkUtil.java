@@ -214,7 +214,6 @@ public class SilkUtil {
 		}
 		// Set the spawner and message the player
 		setSpawnerEntityID(block, entityID);
-		player.sendMessage(getCreatureName(entityID) + " spawner");
 	}
 
 	public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {

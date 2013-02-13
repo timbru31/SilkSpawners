@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
@@ -90,19 +89,15 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 				// Consume egg
 				if (plugin.config.getBoolean("consumeEgg", true)) {
-					PlayerInventory inventory = player.getInventory();
-					// Get slot & egg
-					int slot = inventory.getHeldItemSlot();
-					ItemStack eggs = inventory.getItem(slot);
+					ItemStack eggs = player.getItemInHand();
 					// Make it empty
 					if (eggs.getAmount() == 1) {
-						// Common case.. one egg, used up
-						inventory.clear(slot);
+						player.setItemInHand(null);
 					}
-					// Reduce
 					else {
-						// Cannot legitimately get >1 egg per slot (in 1.1, but supposedly 1.2 will support it), but should support it regardless
-						inventory.setItem(slot, su.newEggItem(entityID, eggs.getAmount() - 1));
+						// Reduce egg
+						eggs.setAmount((eggs.getAmount() - 1));
+						player.setItemInHand(eggs);
 					}
 				}
 				// Normal spawning
