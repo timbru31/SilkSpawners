@@ -19,7 +19,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
 		this.player = player;
 		this.block = block;
-		this.spawner = (CreatureSpawner) block.getState();
+		if (block != null) this.spawner = (CreatureSpawner) block.getState();
 		this.id = id;
 	}
 	
