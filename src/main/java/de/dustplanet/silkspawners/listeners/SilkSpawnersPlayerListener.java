@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -55,6 +56,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
+		if (!event.hasItem() || !event.hasBlock()) return;
 		ItemStack item = event.getItem();
 		Block block = event.getClickedBlock();
 		Player player = event.getPlayer();
@@ -64,6 +66,13 @@ public class SilkSpawnersPlayerListener implements Listener {
 			short entityID = item.getDurability();
 			// Clicked spawner with monster egg to change type
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK &&	block != null && block.getType() == Material.MOB_SPAWNER) {
+				// Call the event and maybe change things!
+				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
+				plugin.getServer().getPluginManager().callEvent(changeEvent);
+				// See if we need to stop
+				if (changeEvent.isCancelled()) return;
+				// Get the new ID (might be changed)
+				entityID = changeEvent.getEntityID();
 				// WorldGuard region protection
 				if (!su.canBuildHere(player, block.getLocation())) return;
 

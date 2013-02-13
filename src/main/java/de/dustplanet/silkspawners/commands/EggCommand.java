@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -56,10 +57,20 @@ public class EggCommand implements CommandExecutor {
 
 			if (sender instanceof Player) {
 				// We know it's safe
-				Player player = (Player)sender;
+				Player player = (Player) sender;
 				ItemStack itemInHand = player.getItemInHand();
 				// If it's a spawn egg change it.
 				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
+					// Call the event and maybe change things!
+					SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
+					plugin.getServer().getPluginManager().callEvent(changeEvent);
+					// See if we need to stop
+					if (changeEvent.isCancelled()) return true;
+					// Get the new ID (might be changed)
+					entityID = changeEvent.getEntityID();
+					creatureString = su.getCreatureName(entityID);
+					// Filter spaces (like Zombie Pigman)
+					mobName = creatureString.toLowerCase().replaceAll(" ", "");
 					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
 						return true;

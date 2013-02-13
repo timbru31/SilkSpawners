@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -114,7 +115,7 @@ public class SpawnerCommand implements CommandExecutor {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
 				return true;
 			}
-			
+
 			// entityID
 			short entityID = su.name2Eid.get(creatureString);
 			creatureString = su.getCreatureName(entityID);
@@ -126,6 +127,16 @@ public class SpawnerCommand implements CommandExecutor {
 
 			// See if the block is a MobSpawner, then change it
 			if (block != null && !isEgg) {
+				// Call the event and maybe change things!
+				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
+				plugin.getServer().getPluginManager().callEvent(changeEvent);
+				// See if we need to stop
+				if (changeEvent.isCancelled()) return true;
+				// Get the new ID (might be changed)
+				entityID = changeEvent.getEntityID();
+				creatureString = su.getCreatureName(entityID);
+				// Filter spaces (like Zombie Pigman)
+				mobName = creatureString.toLowerCase().replaceAll(" ", "");
 				if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
 					return true;
@@ -137,26 +148,37 @@ public class SpawnerCommand implements CommandExecutor {
 			else {
 				// Check the item 
 				ItemStack itemInHand = player.getItemInHand();
-
-				// If it's a spawner change it.
-				if (itemInHand != null && itemInHand.getType() == Material.MOB_SPAWNER) {
-					if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
-						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
+				if (itemInHand != null) {
+					// Call the event and maybe change things!
+					SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
+					plugin.getServer().getPluginManager().callEvent(changeEvent);
+					// See if we need to stop
+					if (changeEvent.isCancelled()) return true;
+					// Get the new ID (might be changed)
+					entityID = changeEvent.getEntityID();
+					creatureString = su.getCreatureName(entityID);
+					// Filter spaces (like Zombie Pigman)
+					mobName = creatureString.toLowerCase().replaceAll(" ", "");
+					// If it's a spawner change it.
+					if (itemInHand.getType() == Material.MOB_SPAWNER) {
+						if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
+							player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
+							return true;
+						}
+						player.setItemInHand(su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName")));
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", creatureString)));
 						return true;
 					}
-					player.setItemInHand(su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName")));
-					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", creatureString)));
-					return true;
-				}
-				// If it's a spawn egg change it.
-				if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
-					if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
-						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
+					// If it's a spawn egg change it.
+					if (itemInHand.getType() == su.SPAWN_EGG) {
+						if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
+							player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
+							return true;
+						}
+						su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
 						return true;
 					}
-					su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
-					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
-					return true;
 				}
 
 				// If empty, add a mob spawner or egg
