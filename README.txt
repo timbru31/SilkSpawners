@@ -103,7 +103,7 @@ verboseConfig: false
 entityMapField: f
 craftCreatureSpawnerField: spawner
 tileEntityMobSpawnerField: mobName
-spawnerUnstackableField: maxStackSize
+spawnersUnstackableField: maxStackSize
 useReflection: true
 useErrorLogger: true
 
