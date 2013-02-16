@@ -41,10 +41,12 @@ public class EggCommand implements CommandExecutor {
 			}
 
 			// Since egg is obsolete, just remove it then
-			if (creatureString.endsWith("egg")) creatureString = creatureString.replaceFirst("egg$", "");
+			if (creatureString.endsWith("egg")) {
+				creatureString = creatureString.replaceFirst("egg$", "");
+			}
 
 			// See if this creature is known
-			if (isUnkown(creatureString)) {
+			if (su.isUnkown(creatureString)) {
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
 				return true;
 			}
@@ -69,7 +71,9 @@ public class EggCommand implements CommandExecutor {
 					SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
 					plugin.getServer().getPluginManager().callEvent(changeEvent);
 					// See if we need to stop
-					if (changeEvent.isCancelled()) return true;
+					if (changeEvent.isCancelled()) {
+						return true;
+					}
 					// Get the new ID (might be changed)
 					entityID = changeEvent.getEntityID();
 					creatureString = su.getCreatureName(entityID);
@@ -116,11 +120,5 @@ public class EggCommand implements CommandExecutor {
 			}
 		}
 		return true;
-	}
-
-	// Check if the given name is on our list
-	private boolean isUnkown(String creatureString) {
-		if (!su.name2Eid.containsKey(creatureString)) return true;
-		return false;
 	}
 }

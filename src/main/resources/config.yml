@@ -92,6 +92,7 @@ verboseConfig: false
 # Internal stuff, do NOT change unless advised - the plugin will break otherwise
 entityMapField: f
 useReflection: true
+useErrorLogger: true
 
 
 # creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html

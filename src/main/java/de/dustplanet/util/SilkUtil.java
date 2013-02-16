@@ -87,7 +87,9 @@ public class SilkUtil {
 
 	// Create a tagged a mob spawner item with it's entity ID so we know what it spawns
 	public ItemStack newSpawnerItem(short entityID, String customName) {
-		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
+		if (customName == null || customName.equalsIgnoreCase("")) {
+			customName = "Monster Spawner";
+		}
 		ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
 		// Check if we need a colored name
 		if (coloredNames) {
@@ -109,11 +111,15 @@ public class SilkUtil {
 		short id = item.getDurability();
 		// Is it stored and working? Great return this!
 		// Should work again after BUKKIT-329
-		if (id != 0) return id;
+		if (id != 0) {
+			return id;
+		}
 
 		// Else use the enchantment
 		id = (short) item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
-		if (id != 0) return id;
+		if (id != 0) {
+			return id;
+		}
 		// Return 0 -> should be default (pig)
 		return 0;
 	}
@@ -148,7 +154,7 @@ public class SilkUtil {
 				String mobID = (String) mobIDField.get(tile);
 				return mobID2Eid.get(mobID);
 			} catch (Exception e) {
-				Bukkit.getServer().getLogger().info("Reflection failed: " + e);
+				Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 				e.printStackTrace();
 			} 
 		}
@@ -174,9 +180,13 @@ public class SilkUtil {
 				String mobID = eid2MobID.get(entityID);
 				// Okay the spawner is not on our list [should NOT happen anymore]
 				// Fallback then!
-				if (mobID == null) mobID = getCreatureName(entityID);
+				if (mobID == null) {
+					mobID = getCreatureName(entityID);
+				}
 				// uh still null, default [PIG]!
-				if (mobID == null) mobID = getCreatureName((short) 90);
+				if (mobID == null) {
+					mobID = getCreatureName((short) 90);
+				}
 				// Refer to the NMS TileEntityMobSpawner and change the name, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
 				TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
@@ -188,7 +198,7 @@ public class SilkUtil {
 			}
 			catch (Exception e) {
 				// Fallback to bukkit;
-				Bukkit.getServer().getLogger().info("Reflection failed: " + e);
+				Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 				e.printStackTrace();
 			}
 		}
@@ -218,7 +228,9 @@ public class SilkUtil {
 
 	public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
 		// Ensure that the name is correct
-		if (customName == null || customName.equalsIgnoreCase("")) customName = "Monster Spawner";
+		if (customName == null || customName.equalsIgnoreCase("")) {
+			customName = "Monster Spawner";
+		}
 		// Please eggs or spawners
 		if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
 			return item;
@@ -256,9 +268,13 @@ public class SilkUtil {
 			// Try to to get it from the EntityType
 			EntityType ct = EntityType.fromId(entityID);
 			// Case 1, found use the name method
-			if (ct != null) displayName = ct.getName();
+			if (ct != null) {
+				displayName = ct.getName();
+			}
 			// Case 2, not found -> use the number...
-			else displayName = String.valueOf(entityID);
+			else {
+				displayName = String.valueOf(entityID);
+			}
 		}
 		return displayName;
 	}
@@ -295,7 +311,7 @@ public class SilkUtil {
 		}
 		// Fail
 		catch (Exception e) {
-			Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e);
+			Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return sortedMap;
@@ -324,6 +340,14 @@ public class SilkUtil {
 		knownEids.clear();
 	}
 
+	public boolean isEgg(String creatureString) {
+		return creatureString.endsWith("egg");
+	}
+
+	public boolean isUnkown(String creatureString) {
+		return !name2Eid.containsKey(creatureString);
+	}
+
 	/*
 	 * WorldGuard stuff
 	 * Allowed to build and enabled check
@@ -332,15 +356,21 @@ public class SilkUtil {
 
 	// Is WourldGuard enabled?
 	private void getWorldGuard(SilkSpawners plugin) {
-		if (!plugin.config.getBoolean("useWorldGuard")) return;
+		if (!plugin.config.getBoolean("useWorldGuard")) {
+			return;
+		}
 		Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-		if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) return;
+		if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
+			return;
+		}
 		wg = (WorldGuardPlugin) worldGuard;
 	}
 
 	// Is the player allowed to build here?
 	public boolean canBuildHere(Player player, Location location) {
-		if (wg == null)	return true;
+		if (wg == null)	{
+			return true;
+		}
 		return wg.canBuild(player, location);
 	}
 }

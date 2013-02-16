@@ -21,8 +21,12 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 			// Use ONLY lowercase
 			String argument = args[0].toLowerCase();
 			// Add list and all
-			if (("list").startsWith(argument)) results.add("list");
-			if (("all").startsWith(argument)) results.add("all");
+			if (("list").startsWith(argument)) {
+				results.add("list");
+			}
+			if (("all").startsWith(argument)) {
+				results.add("all");
+			}
 			// Noting entered, suggest list!
 			if (argument.equalsIgnoreCase("")) {
 				results.add("list");
@@ -32,7 +36,9 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 				// Lowercase, too
 				displayName = displayName.toLowerCase();
 				// Add the string if our name starts with the argument
-				if (displayName.startsWith(argument)) results.add(displayName);
+				if (displayName.startsWith(argument)) {
+					results.add(displayName);
+				}
 			}
 			// Return the list
 			return results;

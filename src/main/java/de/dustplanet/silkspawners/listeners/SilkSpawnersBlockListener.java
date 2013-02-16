@@ -33,7 +33,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-	public void onBlockBreak(final BlockBreakEvent event) {
+	public void onBlockBreak(BlockBreakEvent event) {
 		Block block = event.getBlock();
 		Player player = event.getPlayer();
 		// To prevent silk touch exploit by breaking blocks holding spawner (since abuses Silk Touch enchantment), cancel event
@@ -45,10 +45,14 @@ public class SilkSpawnersBlockListener implements Listener {
 		}
 
 		// We just want the mob spawner events
-		if (block.getType() != Material.MOB_SPAWNER) return;
+		if (block.getType() != Material.MOB_SPAWNER) {
+			return;
+		}
 
 		// We can't build here? Return then
-		if (!su.canBuildHere(player, block.getLocation())) return;
+		if (!su.canBuildHere(player, block.getLocation())) {
+			return;
+		}
 		
 		// Get the entityID from the spawner
 		short entityID = su.getSpawnerEntityID(block);
@@ -57,7 +61,9 @@ public class SilkSpawnersBlockListener implements Listener {
 		// the spawner is broken when it isn't, allowing for duping: http://www.youtube.com/watch?v=GGlyZmph8NM
 		// Ignore these events if configured
 		// NOTE: Researches say it's fixed, just in case
-		if (event.getClass() != BlockBreakEvent.class && plugin.config.getBoolean("ignoreFakeBreakEvents", true)) return;
+		if (event.getClass() != BlockBreakEvent.class && plugin.config.getBoolean("ignoreFakeBreakEvents", true)) {
+			return;
+		}
 
 		// Message the player about the broken spawner
 		plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
@@ -74,7 +80,9 @@ public class SilkSpawnersBlockListener implements Listener {
 		String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
 
 		// No drops in creative
-		if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) return;
+		if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) {
+			return;
+		}
 		
 		// Prevent XP farming/duping
 		event.setExpToDrop(0);
@@ -112,10 +120,14 @@ public class SilkSpawnersBlockListener implements Listener {
 	public void onBlockPlace(final BlockPlaceEvent event) {
 		Block blockPlaced = event.getBlockPlaced();
 		// Just mob spawner events
-		if (blockPlaced.getType() != Material.MOB_SPAWNER) return;
+		if (blockPlaced.getType() != Material.MOB_SPAWNER) {
+			return;
+		}
 		Player player = event.getPlayer();
 		// If the player can't build here, return
-		if (!su.canBuildHere(player, blockPlaced.getLocation())) return;
+		if (!su.canBuildHere(player, blockPlaced.getLocation())) {
+			return;
+		}
 		// Get the item
 		ItemStack item = event.getItemInHand();
 		// Get data from item
@@ -127,7 +139,10 @@ public class SilkSpawnersBlockListener implements Listener {
 			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
 		}
 		// Else message the type
-		else plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
+		else {
+			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
+		}
+		
 		su.setSpawnerEntityID(blockPlaced, entityID);
 		// Bukkit 1.1-R3 regressed from 1.1-R1, ignores block state update on onBlockPlace
 		// TODO: file or find bug about this, get it fixed so can remove this lame workaround
@@ -139,13 +154,19 @@ public class SilkSpawnersBlockListener implements Listener {
 	private boolean hasSilkTouch(ItemStack tool) {
 		int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
 		// Always have it
-		if (minLevel == 0) return true;
+		if (minLevel == 0) {
+			return true;
+		}
 		//  No silk touch fists..
-		if (tool == null) return false;
+		if (tool == null) {
+			return false;
+		}
 
 		// This check isn't actually necessary, since containsEnchantment just checks level>0,
 		// but is kept here for clarity, and in case Bukkit allows level-0 enchantments like vanilla
-		if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) return false;
+		if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
+			return false;
+		}
 		// Return if the level is enough
 		return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
 	}

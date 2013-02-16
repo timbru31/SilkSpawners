@@ -52,11 +52,13 @@ public class SpawnerCommand implements CommandExecutor {
 			}
 
 			// Check if it's an egg or not
-			boolean isEgg = isEgg(creatureString);
-			if (isEgg) creatureString = creatureString.replaceFirst("egg$", "");
+			boolean isEgg = su.isEgg(creatureString);
+			if (isEgg) {
+				creatureString = creatureString.replaceFirst("egg$", "");
+			}
 
 			// See if this is an unknown creature
-			if (isUnkown(creatureString)) {
+			if (su.isUnkown(creatureString)) {
 				sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
 				return true;
 			}
@@ -107,11 +109,13 @@ public class SpawnerCommand implements CommandExecutor {
 			}
 
 			// Check for egg
-			boolean isEgg = isEgg(creatureString);
-			if (isEgg) creatureString = creatureString.replaceFirst("egg$", "");
+			boolean isEgg = su.isEgg(creatureString);
+			if (isEgg) {
+				creatureString = creatureString.replaceFirst("egg$", "");
+			}
 
 			// See if this creature is known
-			if (isUnkown(creatureString)) {
+			if (su.isUnkown(creatureString)) {
 				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
 				return true;
 			}
@@ -135,7 +139,9 @@ public class SpawnerCommand implements CommandExecutor {
 				SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
 				plugin.getServer().getPluginManager().callEvent(changeEvent);
 				// See if we need to stop
-				if (changeEvent.isCancelled()) return true;
+				if (changeEvent.isCancelled()) {
+					return true;
+				}
 				// Get the new ID (might be changed)
 				entityID = changeEvent.getEntityID();
 				creatureString = su.getCreatureName(entityID);
@@ -159,7 +165,9 @@ public class SpawnerCommand implements CommandExecutor {
 						SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
 						plugin.getServer().getPluginManager().callEvent(changeEvent);
 						// See if we need to stop
-						if (changeEvent.isCancelled()) return true;
+						if (changeEvent.isCancelled()) {
+							return true;
+						}
 						// Get the new ID (might be changed)
 						entityID = changeEvent.getEntityID();
 						creatureString = su.getCreatureName(entityID);
@@ -179,7 +187,9 @@ public class SpawnerCommand implements CommandExecutor {
 						SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID);
 						plugin.getServer().getPluginManager().callEvent(changeEvent);
 						// See if we need to stop
-						if (changeEvent.isCancelled()) return true;
+						if (changeEvent.isCancelled()) {
+							return true;
+						}
 						// Get the new ID (might be changed)
 						entityID = changeEvent.getEntityID();
 						creatureString = su.getCreatureName(entityID);
@@ -199,7 +209,9 @@ public class SpawnerCommand implements CommandExecutor {
 						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawnerOrInHand")));
 					}
 					// Not even viewing allowed
-					else player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+					else {
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+					}
 					return true;
 				}
 
@@ -220,22 +232,16 @@ public class SpawnerCommand implements CommandExecutor {
 					return true;
 				}
 				else {
-					if (isEgg) player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
-					else player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeSpawner")));
+					if (isEgg) {
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
+					}
+					else {
+						player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeSpawner")));
+					}
 					return true;
 				}
 			}
 		}
 		return true;
-	}
-
-	private boolean isEgg(String creatureString) {
-		if (creatureString.endsWith("egg")) return true;
-		return false;
-	}
-
-	private boolean isUnkown(String creatureString) {
-		if (!su.name2Eid.containsKey(creatureString)) return true;
-		return false;
 	}
 }

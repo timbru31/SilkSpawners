@@ -19,7 +19,9 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
 		this.player = player;
 		this.block = block;
-		if (block != null) this.spawner = (CreatureSpawner) block.getState();
+		if (block != null) {
+			this.spawner = (CreatureSpawner) block.getState();
+		}
 		this.id = id;
 	}
 	
@@ -79,7 +81,6 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 		this.id = id;
 	}
 
-	@Override
 	public HandlerList getHandlers() {
 		return handlers;
 	}

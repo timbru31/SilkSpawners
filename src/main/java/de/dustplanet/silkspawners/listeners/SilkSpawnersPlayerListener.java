@@ -43,8 +43,11 @@ public class SilkSpawnersPlayerListener implements Listener {
 		if (plugin.config.getBoolean("notifyOnHold") && plugin.hasPermission((Player) event.getPlayer(), "silkspawners.info")
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
+			
 			short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
-			if (entityID == 0) entityID = su.defaultEntityID;
+			if (entityID == 0 || !su.knownEids.contains(entityID)) {
+				entityID = su.defaultEntityID;
+			}
 			// Get the name from the entityID
 			String spawnerName = su.getCreatureName(entityID);
 			Player player = event.getPlayer();
@@ -55,7 +58,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onPlayerInteract(PlayerInteractEvent event) {
-		if (!event.hasItem() || !event.hasBlock()) return;
+		if (!event.hasItem() || !event.hasBlock()) {
+			return;
+		}
 		ItemStack item = event.getItem();
 		Block block = event.getClickedBlock();
 		Player player = event.getPlayer();
@@ -66,7 +71,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 			// Clicked spawner with monster egg to change type
 			if (event.getAction() == Action.LEFT_CLICK_BLOCK &&	block != null && block.getType() == Material.MOB_SPAWNER) {
 				// WorldGuard region protection
-				if (!su.canBuildHere(player, block.getLocation())) return;
+				if (!su.canBuildHere(player, block.getLocation())) {
+					return;
+				}
 
 				// Mob
 				String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
@@ -163,7 +170,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 		if (event.getItem().getItemStack().getType() == Material.MOB_SPAWNER) {
-			if (!su.coloredNames) return;
+			if (!su.coloredNames) {
+				return;
+			}
 			ItemStack item = event.getItem().getItemStack();
 			ItemStack itemNew = su.newSpawnerItem(item.getDurability(), plugin.localization.getString("spawnerName"));
 			event.getItem().setItemStack(itemNew);

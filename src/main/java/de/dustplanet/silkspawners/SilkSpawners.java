@@ -59,15 +59,21 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	public void onEnable() {
-		// Nicer ErrorLogger http://forums.bukkit.org/threads/105321/
-		ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
+		// Load the config
 		loadConfig();
+		
+		// Nicer ErrorLogger (can be disabled) http://forums.bukkit.org/threads/105321/
+		if (config.getBoolean("useErrorLogger", true)) {
+			ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
+		}
+		
 		// Check for spout
 		if (config.getBoolean("useSpout", true)) {
 			if (getServer().getPluginManager().isPluginEnabled("Spout")) {
 				getLogger().info("Spout present. Enabling Spout features.");
 				spoutEnabled = true;
-			} else {
+			}
+			else {
 				getLogger().info("Spout not found. Disabling Spout features.");
 			}
 		}
@@ -78,6 +84,7 @@ public class SilkSpawners extends JavaPlugin {
 			new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, false);
 		}
 
+		// Commands
 		spawnerCommand = new SpawnerCommand(this, su);
 		eggCommand = new EggCommand(this, su);
 		tabCompleter = new SilkSpawnersTabCompleter(su);
@@ -85,11 +92,11 @@ public class SilkSpawners extends JavaPlugin {
 		getCommand("egg").setExecutor(eggCommand);
 		getCommand("silkspawners").setTabCompleter(tabCompleter);
 		getCommand("egg").setTabCompleter(tabCompleter);
+		
+		// Listeners
 		blockListener  = new SilkSpawnersBlockListener(this, su);
 		playerListener  = new SilkSpawnersPlayerListener(this, su);
 		inventoryListener = new SilkSpawnersInventoryListener(this, su);
-
-		// Listeners
 		getServer().getPluginManager().registerEvents(blockListener, this);
 		getServer().getPluginManager().registerEvents(playerListener, this);
 		getServer().getPluginManager().registerEvents(inventoryListener, this);
@@ -118,8 +125,10 @@ public class SilkSpawners extends JavaPlugin {
 			in.close();
 		} catch (FileNotFoundException e) {
 			getLogger().warning("Failed to copy the default config! (FileNotFound)");
+			e.printStackTrace();
 		} catch (IOException e) {
 			getLogger().warning("Failed to copy the default config! (I/O)");
+			e.printStackTrace();
 		}
 	}
 
@@ -147,13 +156,22 @@ public class SilkSpawners extends JavaPlugin {
 			copy(getResource("localization.yml"), localizationFile);
 		}
 		
+		// Load configs
 		config = getConfig();
 		localization = YamlConfiguration.loadConfiguration(localizationFile);
+		
+		// Heart of SilkSpawners is the SilkUtil class which holds all of our important methods
 		su = new SilkUtil(this);
-		if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) su.coloredNames = false;
+		
+		// Check for colored names
+		if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
+			su.coloredNames = false;
+		}
 		else su.coloredNames = true;
+		
 		// Should we display more information
 		boolean verbose = config.getBoolean("verboseConfig", true);
+		
 		// Maybe we need to change it later because reflection field changed, user can adjust it then
 		// Scan the entities
 		SortedMap<Integer, String> sortedMap = su.scanEntityMap(config.getString("entityMapField", "f"));
@@ -175,6 +193,7 @@ public class SilkSpawners extends JavaPlugin {
 				}
 				continue;
 			}
+			
 			// Add the known ID [we omit all disabled entities]
 			su.knownEids.add(entityID);
 			// Put the different value in our lists
@@ -201,6 +220,7 @@ public class SilkSpawners extends JavaPlugin {
 			for (String alias: aliases) {
 				su.name2Eid.put(alias, entityID);
 			}
+			
 			// Detailed message
 			if (verbose) {
 				getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (display name: " + displayName + ", aliases: " + aliases + ")");
@@ -220,17 +240,23 @@ public class SilkSpawners extends JavaPlugin {
 				short defaultEid = su.name2Eid.get(defaultCreatureString);
 				// Change default
 				su.defaultEntityID = defaultEid;
-				if (verbose) getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
+				if (verbose) {
+					getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
+				}
 			}
 			// Unknown, fallback
-			else getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");
+			else {
+				getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");
+			}
 		}
 
 		// See if we should use permissions
 		usePermissions = config.getBoolean("usePermissions", false);
 
 		// Enable craftable spawners?
-		if (config.getBoolean("craftableSpawners", false)) loadRecipes();
+		if (config.getBoolean("craftableSpawners", false)) {
+			loadRecipes();
+		}
 
 		// Are we allowed to use native methods?
 		if (config.getBoolean("useReflection", true)) {
@@ -245,16 +271,18 @@ public class SilkSpawners extends JavaPlugin {
 				su.mobIDField = TileEntityMobSpawner.class.getDeclaredField("mobName");
 				su.mobIDField.setAccessible(true);
 			}
-			catch (Exception e) {
+			catch (NoSuchFieldException e) {
 				getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
 				e.printStackTrace();
 				su.tileField = null;
 				su.mobIDField = null;
 			}
-		}
-		else {
-			su.tileField = null;
-			su.mobIDField = null;
+			catch (SecurityException e) {
+				getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
+				e.printStackTrace();
+				su.tileField = null;
+				su.mobIDField = null;
+			}
 		}
 
 		// Optionally make spawners unstackable in an attempt to be more compatible with CraftBukkit++
@@ -301,7 +329,9 @@ public class SilkSpawners extends JavaPlugin {
 				// At least we have defaults here!
 				recipe.shape(config.getString("recipeTop", "AAA"), config.getString("recipeMiddle", "AXA"), config.getString("recipeBottom", "AAA"));
 				// No list what we should use -> not adding
-				if (!config.contains("ingredients")) return;
+				if (!config.contains("ingredients")) {
+					return;
+				}
 				for (String ingredient : config.getStringList("ingredients")) {
 					// They are added like this A,DIRT
 					// Lets split the "," then
@@ -317,7 +347,9 @@ public class SilkSpawners extends JavaPlugin {
 							int id = Integer.valueOf(ingredients[1]);
 							material = Material.getMaterial(id);
 							// Not all IDs are valid!
-							if (material == null) material = Material.IRON_FENCE;
+							if (material == null) {
+								material = Material.IRON_FENCE;
+							}
 						}
 						// Still no ID, fallback
 						catch (IllegalArgumentException e) {
@@ -325,7 +357,9 @@ public class SilkSpawners extends JavaPlugin {
 						}
 					}
 					// Just in case my logic was wrong...
-					if (material == null) material = Material.IRON_FENCE;
+					if (material == null) {
+						material = Material.IRON_FENCE;
+					}
 					recipe.setIngredient(character, material);
 				}
 				// Use the right egg!
@@ -356,7 +390,9 @@ public class SilkSpawners extends JavaPlugin {
 	// Check for permissions
 	public boolean hasPermission(Player player, String node) {
 		// Normal check if we use permissions
-		if (usePermissions)	return player.hasPermission(node);
+		if (usePermissions)	{
+			return player.hasPermission(node);
+		}
 		// Else check more detailed
 		else {
 			// Any of the nodes, -> yes
@@ -367,8 +403,9 @@ public class SilkSpawners extends JavaPlugin {
 				return true;
 			}
 			// Else ask for Op status
-			else return player.isOp();
-
+			else {
+				return player.isOp();
+			}
 		}
 	}
 }
