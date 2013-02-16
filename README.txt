@@ -101,6 +101,9 @@ verboseConfig: false
 
 # Internal stuff, do NOT change unless advised - the plugin will break otherwise
 entityMapField: f
+craftCreatureSpawnerField: spawner
+tileEntityMobSpawnerField: mobName
+spawnerUnstackableField: maxStackSize
 useReflection: true
 useErrorLogger: true
 

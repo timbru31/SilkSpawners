@@ -263,12 +263,12 @@ public class SilkSpawners extends JavaPlugin {
 			try {
 				// Get the spawner field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L13
-				su.tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+				su.tileField = CraftCreatureSpawner.class.getDeclaredField(config.getString("craftCreatureSpawnerField", "spawner"));
 				su.tileField.setAccessible(true);
 
 				// Get the modID field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L11
-				su.mobIDField = TileEntityMobSpawner.class.getDeclaredField("mobName");
+				su.mobIDField = TileEntityMobSpawner.class.getDeclaredField(config.getString("tileEntityMobSpawnerField", "mobName"));
 				su.mobIDField.setAccessible(true);
 			}
 			catch (NoSuchFieldException e) {
