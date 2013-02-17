@@ -28,7 +28,6 @@ public class CommentedConfiguration extends YamlConfiguration {
 
 	public CommentedConfiguration(File file) {
 		super();
-		//this.load(file);
 		comments = new HashMap<String, String>();
 		this.file = file;
 	}
@@ -37,12 +36,21 @@ public class CommentedConfiguration extends YamlConfiguration {
 		boolean loaded = true;
 		try {
 			this.load(file);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e) {
 			loaded = false;
-		} catch (IOException e) {
+			System.out.println("Exception while loading the file: " + e.getMessage());
+			e.printStackTrace();
+		}
+		catch (IOException e) {
 			loaded = false;
-		} catch (InvalidConfigurationException e) {
+			System.out.println("Exception while loading the file: " + e.getMessage());
+			e.printStackTrace();
+		}
+		catch (InvalidConfigurationException e) {
 			loaded = false;
+			System.out.println("Exception while loading the file: " + e.getMessage());
+			e.printStackTrace();
 		}
 		return loaded;
 	}
@@ -53,8 +61,11 @@ public class CommentedConfiguration extends YamlConfiguration {
 		// Save the config just like normal
 		try {
 			super.save(file);
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			saved = false;
+			System.out.println("Exception while saving the file: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		// if there's comments to add and it saved fine, we need to add comments
@@ -84,13 +95,15 @@ public class CommentedConfiguration extends YamlConfiguration {
 					// If currentPath is empty, store the node name as the currentPath. (this is only on the first iteration, i think)
 					if (currentPath.isEmpty()) {
 						currentPath = line.substring(0, index);
-					} else {
+					}
+					else {
 						// Calculate the whitespace preceding the node name
 						int whiteSpace = 0;
 						for (int n = 0; n < line.length(); n++) {
 							if (line.charAt(n) == ' ') {
 								whiteSpace++;
-							} else {
+							}
+							else {
 								break;
 							}
 						}
@@ -99,7 +112,8 @@ public class CommentedConfiguration extends YamlConfiguration {
 							// Path is deeper.  Add a . and the node name
 							currentPath += "." + line.substring(whiteSpace, index);
 							depth++;
-						} else if (whiteSpace / 2 < depth) {
+						}
+						else if (whiteSpace / 2 < depth) {
 							// Path is shallower, calculate current depth from whitespace (whitespace / 2) and subtract that many levels from the currentPath
 							int newDepth = whiteSpace / 2;
 							for (int i = 0; i < depth - newDepth; i++) {
@@ -119,13 +133,15 @@ public class CommentedConfiguration extends YamlConfiguration {
 							currentPath += line.substring(whiteSpace, index);
 							// Reset the depth
 							depth = newDepth;
-						} else {
+						}
+						else {
 							// Path is same depth, replace the last path node name to the current node name
 							int lastIndex = currentPath.lastIndexOf(".");
 							if (lastIndex < 0) {
 								// if there isn't a final period, set the current path to nothing because we're at root
 								currentPath = "";
-							} else {
+							}
+							else {
 								// If there is a final period, replace everything after it with nothing
 								currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
 								currentPath += ".";
@@ -153,13 +169,10 @@ public class CommentedConfiguration extends YamlConfiguration {
 				newContents += line + System.getProperty("line.separator");
 			}
 			// Write the string to the config file
-			System.out.print("Saving Commented Config...");
 			if (!stringToFile(newContents, file)) {
 				saved = false;
 			}
-			//System.out.print("Failed to save Commented Config!");
-		} else
-			System.out.print("Not updating Config.");
+		}
 		return saved;
 	}
 

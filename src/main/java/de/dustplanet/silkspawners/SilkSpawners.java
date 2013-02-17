@@ -13,6 +13,7 @@ import java.util.SortedMap;
 import net.minecraft.server.v1_4_R1.Item;
 import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -51,20 +52,30 @@ public class SilkSpawners extends JavaPlugin {
 	private SilkSpawnersTabCompleter tabCompleter;
 	private SilkUtil su;
 	public boolean spoutEnabled, usePermissions;
-	public CommentedConfiguration config, localization;
-	private File configFile, localizationFile;
+	public CommentedConfiguration config, localization, mobs;
+	private File configFile, localizationFile, mobsFile;
 
 	public void onDisbale() {
 		su.clearAll();
 	}
 
 	public void onEnable() {
-		// Load the config
-		loadConfig();
+		// Make files and copy defaults
+		initializeConfigs();
+		
+		// Heart of SilkSpawners is the SilkUtil class which holds all of our important methods
+		su = new SilkUtil(this);
+		
+		// Load configs
+		loadConfigs();
 		
 		// Nicer ErrorLogger (can be disabled) http://forums.bukkit.org/threads/105321/
 		if (config.getBoolean("useErrorLogger", true)) {
+			getLogger().info("ErrorLogger enabled");
 			ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
+		}
+		else {
+			getLogger().info("ErrorLogger disabled");
 		}
 		
 		// Check for spout
@@ -132,7 +143,7 @@ public class SilkSpawners extends JavaPlugin {
 		}
 	}
 
-	private void loadConfig() {
+	private void initializeConfigs() {
 		// Config
 		configFile = new File(getDataFolder(), "config.yml");
 		// One file and the folder not existent
@@ -156,6 +167,12 @@ public class SilkSpawners extends JavaPlugin {
 			copy(getResource("localization.yml"), localizationFile);
 		}
 		
+		// Localization
+		mobsFile = new File(getDataFolder(), "mobs.yml");
+		if(!mobsFile.exists()) {
+			copy(getResource("mobs.yml"), mobsFile);
+		}
+		
 		// Load configs
 		config = new CommentedConfiguration(configFile);
 		new Configuration(config, 1);
@@ -164,9 +181,24 @@ public class SilkSpawners extends JavaPlugin {
 		localization = new CommentedConfiguration(localizationFile);
 		new Configuration(config, 2);
 		
-		// Heart of SilkSpawners is the SilkUtil class which holds all of our important methods
-		su = new SilkUtil(this);
+		mobs = new CommentedConfiguration(mobsFile);
+		new Configuration(mobs, 3);
 		
+		// We need to migrate the old mobs from config.yml to mobs.yml
+		if (config.contains("creatures")) {
+			getLogger().info("Found entries of creatures in the config.yml, will migrate them into the mobs.yml!");
+			ConfigurationSection creatures = config.getConfigurationSection("creatures");
+			// Remove from config and save
+			config.set("creatures", null);
+			config.save();
+			// Set updated list
+			mobs.set("creatures", creatures);
+			mobs.save();
+			getLogger().info("Successfully migrated the creatures into the mobs.yml!");
+		}
+	}
+	
+	private void loadConfigs() {		
 		// Check for colored names
 		if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
 			su.coloredNames = false;
@@ -190,7 +222,7 @@ public class SilkSpawners extends JavaPlugin {
 
 			// Lookup creature info
 			boolean enable = config.getBoolean("enableCreatureDefault", true);
-			enable = config.getBoolean("creatures." + mobID + ".enable", enable);
+			enable = mobs.getBoolean("creatures." + mobID + ".enable", enable);
 			if (!enable) {
 				if (verbose) {
 					getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (disabled)");
@@ -205,7 +237,7 @@ public class SilkSpawners extends JavaPlugin {
 			su.mobID2Eid.put(mobID, entityID);
 
 			// In-game name for user display, and other recognized names for user input lookup
-			String displayName = config.getString("creatures." + mobID + ".displayName");
+			String displayName = mobs.getString("creatures." + mobID + ".displayName");
 			if (displayName == null) {
 				displayName = mobID;
 			}
@@ -213,7 +245,7 @@ public class SilkSpawners extends JavaPlugin {
 			su.eid2DisplayName.put(entityID, displayName);
 
 			// Get our lit of aliases
-			List<String> aliases = config.getStringList("creatures." + mobID+ ".aliases");
+			List<String> aliases = mobs.getStringList("creatures." + mobID+ ".aliases");
 			// Get the name, make it lowercase and strip out the spaces
 			aliases.add(displayName.toLowerCase().replace(" ", ""));
 			// Add the internal name
@@ -313,7 +345,7 @@ public class SilkSpawners extends JavaPlugin {
 			// Name
 			String mobID = su.eid2MobID.get(entityID);
 			// If the mob is disabled, skip it
-			if (!config.getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
+			if (!mobs.getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
 				if (config.getBoolean("verboseConfig", true)) {
 					getLogger().info("Skipping crafting recipe for " + mobID + " per config");
 				}

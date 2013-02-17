@@ -7,8 +7,10 @@ public class Configuration {
 
 	public Configuration(CommentedConfiguration config, int configNumber) {
 		if (config != null) {
+			this.config = config;
 			// Load configuration
 			config.load();
+			// Switch between our cases
 			switch (configNumber) {
 			case 1:
 				loadDefaultsConfig();

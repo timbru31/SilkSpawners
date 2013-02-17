@@ -116,7 +116,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 					// Are we allowed to spawn?
 					boolean allowed = plugin.config.getBoolean("spawnEggOverrideSpawnDefault", true);
 					if (mobID != null) {
-						allowed = plugin.config.getBoolean("creatures." + mobID + ".enableSpawnEggOverrideAllowSpawn", allowed);
+						allowed = plugin.mobs.getBoolean("creatures." + mobID + ".enableSpawnEggOverrideAllowSpawn", allowed);
 					}
 					// Deny spawning
 					if (!allowed) {
