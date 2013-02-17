@@ -13,6 +13,8 @@ noPermissionFreeEgg: '&4You do not have permission to spawn free eggs'
 noPermissionFreeSpawner: '&4You do not have the permission to spawn free spawners'
 noPermissionViewType: '&4You do not have the permission to view the type of this spawner!'
 noPermissionChangingWithEggs: '&4You do not have permission to change spawners with spawn eggs'
+noPermissionCraft: '&4You do not have the permission to craft a &e%creature% &4spawner!'
+noPermissionPlace: '&4You do not have the permission to place a &e%creature% &4spawner!'
 
 changedEgg: '&2Successfully changed the spawning egg to a &e%creature% spawn egg'
 changedSpawner: '&2Successfully changed the spawner to a &e%creature% spawner'

@@ -13,8 +13,6 @@ import java.util.SortedMap;
 import net.minecraft.server.v1_4_R1.Item;
 import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -25,9 +23,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
+import de.dustplanet.silkspawners.configs.Configuration;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
+import de.dustplanet.util.CommentedConfiguration;
 // ErrorLogger
 import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.SilkUtil;
@@ -51,7 +51,7 @@ public class SilkSpawners extends JavaPlugin {
 	private SilkSpawnersTabCompleter tabCompleter;
 	private SilkUtil su;
 	public boolean spoutEnabled, usePermissions;
-	public FileConfiguration config, localization;
+	public CommentedConfiguration config, localization;
 	private File configFile, localizationFile;
 
 	public void onDisbale() {
@@ -136,9 +136,9 @@ public class SilkSpawners extends JavaPlugin {
 		// Config
 		configFile = new File(getDataFolder(), "config.yml");
 		// One file and the folder not existent
-		if (!configFile.exists() && !configFile.getParentFile().exists()) {
+		if (!configFile.exists() && !getDataFolder().exists()) {
 			// Break if no folder can be created!
-			if (!configFile.getParentFile().mkdirs()) {
+			if (!getDataFolder().mkdirs()) {
 				getLogger().severe("The config folder could NOT be created, make sure it's writable!");
 				getLogger().severe("Disabling now!");
 				setEnabled(false);
@@ -157,8 +157,12 @@ public class SilkSpawners extends JavaPlugin {
 		}
 		
 		// Load configs
-		config = getConfig();
-		localization = YamlConfiguration.loadConfiguration(localizationFile);
+		config = new CommentedConfiguration(configFile);
+		new Configuration(config, 1);
+		
+		
+		localization = new CommentedConfiguration(localizationFile);
+		new Configuration(config, 2);
 		
 		// Heart of SilkSpawners is the SilkUtil class which holds all of our important methods
 		su = new SilkUtil(this);
