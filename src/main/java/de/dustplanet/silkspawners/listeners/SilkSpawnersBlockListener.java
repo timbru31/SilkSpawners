@@ -136,11 +136,26 @@ public class SilkSpawnersBlockListener implements Listener {
 		if (entityID == 0 || !su.knownEids.contains(entityID)) {
 			// Default
 			entityID = su.defaultEntityID;
+		}
+		
+		// Names
+		String creatureName = su.getCreatureName(entityID).toLowerCase();
+		String spawnerName = creatureName.replaceAll(" ", "");
+		
+		// Check for place permission
+		if (!plugin.hasPermission(player, "silkspawners.place.*") && !plugin.hasPermission(player, "silkspawners.place." + spawnerName)) {
+			event.setCancelled(true);
+			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
+			return;
+		}
+		
+		// Message default
+		if (entityID == su.defaultEntityID) {
 			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
 		}
 		// Else message the type
 		else {
-			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
+			plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", creatureName)));
 		}
 		
 		su.setSpawnerEntityID(blockPlaced, entityID);
