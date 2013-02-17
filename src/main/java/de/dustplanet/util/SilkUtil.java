@@ -294,14 +294,14 @@ public class SilkUtil {
 
 	@SuppressWarnings("unchecked")
 	// Scan through all entities
-	public SortedMap<Integer, String> scanEntityMap(String fieldValue) {
+	public SortedMap<Integer, String> scanEntityMap() {
 		SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
 		// Use reflection to dump native EntityTypes
 		// This bypasses Bukkit's wrappers, so it works with mods
 		try {
 			// https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L21
 			// f.put(s, Integer.valueOf(i)); --> Name of ID
-			Field field = EntityTypes.class.getDeclaredField(fieldValue);
+			Field field = EntityTypes.class.getDeclaredField("f");
 			field.setAccessible(true);
 			Map<String, Integer> map = (Map<String, Integer>) field.get(null);
 			// For each entry in our name -- ID map but it into the sortedMap

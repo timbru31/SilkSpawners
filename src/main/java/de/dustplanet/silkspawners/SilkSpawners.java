@@ -174,7 +174,7 @@ public class SilkSpawners extends JavaPlugin {
 		
 		// Maybe we need to change it later because reflection field changed, user can adjust it then
 		// Scan the entities
-		SortedMap<Integer, String> sortedMap = su.scanEntityMap(config.getString("entityMapField", "f"));
+		SortedMap<Integer, String> sortedMap = su.scanEntityMap();
 		for (Map.Entry<Integer, String> entry: sortedMap.entrySet()) {
 			// entity ID used for spawn eggs
 			short entityID = (short)(int) entry.getKey();
@@ -246,7 +246,7 @@ public class SilkSpawners extends JavaPlugin {
 			}
 			// Unknown, fallback
 			else {
-				getLogger().warning("Invalid creature type: " + defaultCreatureString+", default monster spawner fallback to PIG");
+				getLogger().warning("Invalid creature type: " + defaultCreatureString + ", default monster spawner fallback to PIG");
 			}
 		}
 
@@ -263,12 +263,12 @@ public class SilkSpawners extends JavaPlugin {
 			try {
 				// Get the spawner field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L13
-				su.tileField = CraftCreatureSpawner.class.getDeclaredField(config.getString("craftCreatureSpawnerField", "spawner"));
+				su.tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
 				su.tileField.setAccessible(true);
 
 				// Get the modID field, see
 				// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L11
-				su.mobIDField = TileEntityMobSpawner.class.getDeclaredField(config.getString("tileEntityMobSpawnerField", "mobName"));
+				su.mobIDField = TileEntityMobSpawner.class.getDeclaredField("mobName");
 				su.mobIDField.setAccessible(true);
 			}
 			catch (NoSuchFieldException e) {
@@ -290,7 +290,7 @@ public class SilkSpawners extends JavaPlugin {
 		if (config.getBoolean("spawnersUnstackable", false)) {
 			// http://forums.bukkit.org/threads/setting-max-stack-size.66364/
 			try {
-				Field maxStackSizeField = Item.class.getDeclaredField(config.getString("spawnersUnstackableField", "maxStackSize"));
+				Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
 				// Set the stackable field back to 1
 				maxStackSizeField.setAccessible(true);
 				maxStackSizeField.setInt(Item.byId[Material.MOB_SPAWNER.getId()], 1);
