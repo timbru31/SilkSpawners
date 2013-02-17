@@ -25,6 +25,7 @@ permissions:
             silkspawners.changetypewithegg.*: true
             silkspawners.freeitem.*: true
             silkspawners.freeitemegg.*: true
+            silkspawners.craft.*: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -49,5 +50,8 @@ permissions:
         default: false
     silkspawners.freeitemegg.*:
         description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
+        default: false
+    silkspawners.craft.*:
+        description: Allows you to craft all spawners
         default: false
 softdepend: [WorldGuard, Spout]

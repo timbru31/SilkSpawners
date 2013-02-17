@@ -399,7 +399,8 @@ public class SilkSpawners extends JavaPlugin {
 			if (node.equals("silkspawners.info")
 					|| node.startsWith("silkspawners.silkdrop")
 					|| node.startsWith("silkspawners.destroydrop")
-					|| node.equals("silkspawners.viewtype")) {
+					|| node.equals("silkspawners.viewtype")
+					|| node.startsWith("silkspawners.craft")) {
 				return true;
 			}
 			// Else ask for Op status
