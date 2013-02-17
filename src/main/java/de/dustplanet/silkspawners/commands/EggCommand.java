@@ -77,8 +77,6 @@ public class EggCommand implements CommandExecutor {
 					// Get the new ID (might be changed)
 					entityID = changeEvent.getEntityID();
 					creatureString = su.getCreatureName(entityID);
-					// Filter spaces (like Zombie Pigman)
-					mobName = creatureString.toLowerCase().replaceAll(" ", "");
 					su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
 					player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replace("%creature%", creatureString)));
 					return true;
