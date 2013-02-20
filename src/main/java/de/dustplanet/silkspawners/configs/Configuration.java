@@ -16,16 +16,16 @@ public class Configuration {
 			// Switch between our cases
 			switch (configNumber) {
 			case 1:
-				loadDefaultsConfig();
+				loadDefaultConfig();
 				break;
 			case 2:
-				loadDefaultsLocalization();
+				loadDefaultLocalization();
 				break;
 			case 3:
-				loadDefaultsMobs();
+				loadDefaultMobs();
 				break;
 			default:
-				loadDefaultsConfig();
+				loadDefaultConfig();
 				break;
 			}
 			// Copy defaults and save
@@ -35,7 +35,7 @@ public class Configuration {
 		}
 	}
 
-	private void loadDefaultsMobs() {
+	private void loadDefaultMobs() {
 		config.options().header("creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html");
 		List<String> tempList = new ArrayList<String>();
 		// Creeper
@@ -332,7 +332,7 @@ public class Configuration {
 		config.addDefault("creatures.FireworksRocketEntity.enable", false);
 	}
 
-	private void loadDefaultsLocalization() {
+	private void loadDefaultLocalization() {
 		config.options().header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
 		config.addDefault("spawnerName", "&e%creature% &fSpawner");
 		config.addDefault("addedEgg", "'&2Successfully added a &e%creature% spawn egg &2to your inventory");
@@ -379,7 +379,7 @@ public class Configuration {
 		config.addDefault("lookAtSpawnerOrInHand", "&4You must be looking directly at a spawner or have a spawner in your hand to use this command");
 	}
 
-	private void loadDefaultsConfig() {
+	private void loadDefaultConfig() {
 		config.options().header("See documentation at http://dev.bukkit.org/server-mods/silkspawners/pages/configuration");		
 		config.addDefault("autoUpdater", true);
 		config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
