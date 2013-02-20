@@ -270,8 +270,10 @@ public class SilkSpawners extends JavaPlugin {
 		if (config.contains("defaultCreature")) {
 			// Lowercase is better to search
 			String defaultCreatureString = config.getString("defaultCreature", "90").toLowerCase();
+			// Try IDs first, may fail, use name then!
 			try {
 				short entityID = Short.valueOf(defaultCreatureString);
+				// Known ID and MobName? Yes -> We use it 
 				if (su.isKnownEntityID(entityID) && su.isRecognizedMob(su.getCreatureName(entityID))) {
 					defaultCreatureString = su.getCreatureName(entityID).toLowerCase();
 				}

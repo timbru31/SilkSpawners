@@ -23,7 +23,7 @@ import java.util.HashMap;
  * @author xGhOsTkiLLeRx
  */
 public class CommentedConfiguration extends YamlConfiguration {
-	public HashMap<String, String> comments;
+	private HashMap<String, String> comments;
 	private File file;
 
 	public CommentedConfiguration(File file) {
@@ -277,7 +277,6 @@ public class CommentedConfiguration extends YamlConfiguration {
 	 * @param source String to write.
 	 * @param file File to write to.
 	 * @return True on success.
-	 * @throws IOException
 	 */
 	public boolean stringToFile(String source, File file) {
 		OutputStreamWriter out = null;
