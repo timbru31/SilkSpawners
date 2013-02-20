@@ -23,7 +23,7 @@ import java.util.HashMap;
  * @author xGhOsTkiLLeRx
  */
 public class CommentedConfiguration extends YamlConfiguration {
-	private HashMap<String, String> comments;
+	public HashMap<String, String> comments;
 	private File file;
 
 	public CommentedConfiguration(File file) {
@@ -61,10 +61,9 @@ public class CommentedConfiguration extends YamlConfiguration {
 		// Save the config just like normal
 		try {
 			super.save(file);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			saved = false;
-			System.out.println("Exception while saving the file: " + e.getMessage());
+			System.out.println("Failed to save the file: " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -79,6 +78,8 @@ public class CommentedConfiguration extends YamlConfiguration {
 			String currentPath = "";
 			// This tells if the specified path has already been commented
 			boolean commentedPath = false;
+			// This flags if the line is a node or unknown text.
+			boolean node = false;
 			// The depth of the path. (number of words separated by periods - 1)
 			int depth = 0;
 
@@ -86,6 +87,12 @@ public class CommentedConfiguration extends YamlConfiguration {
 			for (String line : yamlContents) {
 				// If the line is a node (and not something like a list value)
 				if (line.contains(": ") || (line.length() > 1 && line.charAt(line.length() - 1) == ':')) {
+
+					// This is a new node so we need to mark it for commenting (if there are comments)
+					commentedPath = false;
+					// This is a node so flag it as one
+					node = true;
+
 					// Grab the index of the end of the node name
 					int index = 0;
 					index = line.indexOf(": ");
@@ -95,15 +102,13 @@ public class CommentedConfiguration extends YamlConfiguration {
 					// If currentPath is empty, store the node name as the currentPath. (this is only on the first iteration, i think)
 					if (currentPath.isEmpty()) {
 						currentPath = line.substring(0, index);
-					}
-					else {
+					} else {
 						// Calculate the whitespace preceding the node name
 						int whiteSpace = 0;
 						for (int n = 0; n < line.length(); n++) {
 							if (line.charAt(n) == ' ') {
 								whiteSpace++;
-							}
-							else {
+							} else {
 								break;
 							}
 						}
@@ -112,8 +117,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 							// Path is deeper.  Add a . and the node name
 							currentPath += "." + line.substring(whiteSpace, index);
 							depth++;
-						}
-						else if (whiteSpace / 2 < depth) {
+						} else if (whiteSpace / 2 < depth) {
 							// Path is shallower, calculate current depth from whitespace (whitespace / 2) and subtract that many levels from the currentPath
 							int newDepth = whiteSpace / 2;
 							for (int i = 0; i < depth - newDepth; i++) {
@@ -133,15 +137,13 @@ public class CommentedConfiguration extends YamlConfiguration {
 							currentPath += line.substring(whiteSpace, index);
 							// Reset the depth
 							depth = newDepth;
-						}
-						else {
+						} else {
 							// Path is same depth, replace the last path node name to the current node name
 							int lastIndex = currentPath.lastIndexOf(".");
 							if (lastIndex < 0) {
 								// if there isn't a final period, set the current path to nothing because we're at root
 								currentPath = "";
-							}
-							else {
+							} else {
 								// If there is a final period, replace everything after it with nothing
 								currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
 								currentPath += ".";
@@ -150,24 +152,38 @@ public class CommentedConfiguration extends YamlConfiguration {
 							currentPath += line.substring(whiteSpace, index);
 
 						}
-						// This is a new node so we need to mark it for commenting (if there are comments)
-						commentedPath = false;
+					}
+
+				} else
+					node = false;
+
+				if (node) {
+					String comment = null;
+					if (!commentedPath) {
+						// If there's a comment for the current path, retrieve it and flag that path as already commented
+						comment = comments.get(currentPath);
+					}
+					if (comment != null) {
+						// Add the comment to the beginning of the current line
+						line = comment + System.getProperty("line.separator") + line + System.getProperty("line.separator");
+						comment = null;
+						commentedPath = true;
+					} else {
+						// Add a new line as it is a node, but has no comment
+						line += System.getProperty("line.separator");
 					}
 				}
-
-				String comment = "";
-				if (!commentedPath) {
-					// If there's a comment for the current path, retrieve it and flag that path as already commented
-					comment = comments.get(currentPath);
-					commentedPath = true;
-				}
-				if (comment != null) {
-					// Add the comment to the beginning of the current line
-					line = comment + System.getProperty("line.separator") + line;
-				}
 				// Add the (modified) line to the total config String
-				newContents += line + System.getProperty("line.separator");
+				newContents += line + ((!node) ? System.getProperty("line.separator") : "");
+
 			}
+			/*
+			 * Due to a bukkit bug we need to strip any extra new lines from the
+			 * beginning of this file, else they will multiply.
+			 */
+			while (newContents.startsWith(System.getProperty("line.separator")))
+				newContents = newContents.replaceFirst(System.getProperty("line.separator"), "");
+
 			// Write the string to the config file
 			if (!stringToFile(newContents, file)) {
 				saved = false;
@@ -177,19 +193,20 @@ public class CommentedConfiguration extends YamlConfiguration {
 	}
 
 	/**
-	 * Adds a comment just before the specified path.  The comment can be multiple lines.  An empty string will indicate a blank line.
+	 * Adds a comment just before the specified path. The comment can be
+	 * multiple lines. An empty string will indicate a blank line.
+	 * 
 	 * @param path Configuration path to add comment.
-	 * @param commentLines Comments to add.  One String per line.
+	 * @param commentLines Comments to add. One String per line.
 	 */
-	public void addComment(String path, String...commentLines) {
+	public void addComment(String path, String... commentLines) {
 		StringBuilder commentstring = new StringBuilder();
-		StringBuilder leadingSpacesBuffer = new StringBuilder();
+		String leadingSpaces = "";
 		for (int n = 0; n < path.length(); n++) {
 			if (path.charAt(n) == '.') {
-				leadingSpacesBuffer.append("  ");
+				leadingSpaces += "  ";
 			}
 		}
-		String leadingSpaces = leadingSpacesBuffer.toString();
 		for (String line : commentLines) {
 			if (!line.isEmpty()) {
 				line = leadingSpaces + line;
@@ -225,25 +242,25 @@ public class CommentedConfiguration extends YamlConfiguration {
 				}
 			}
 			catch (IOException e) {
-				System.out.println("Exception while converting the file to a string: " + e.getMessage());
+				System.out.println("Failed to convert the file to a string: " + e.getMessage());
 				e.printStackTrace();
 			}
 			finally {
-				// Close if open
 				if (is != null) {
 					try {
 						is.close();
 					}
 					catch (IOException e) {
-						System.out.println("Exception while closing the InputStream: " + e.getMessage());
+						System.out.println("Failed to convert the file to a string: " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
 				if (reader != null) {
 					try {
 						reader.close();
-					} catch (IOException e) {
-						System.out.println("Exception while closing the Reader: " + e.getMessage());
+					}
+					catch (IOException e) {
+						System.out.println("Failed to convert the file to a string: " + e.getMessage());
 						e.printStackTrace();
 					}
 				}
@@ -260,17 +277,31 @@ public class CommentedConfiguration extends YamlConfiguration {
 	 * @param source String to write.
 	 * @param file File to write to.
 	 * @return True on success.
+	 * @throws IOException
 	 */
 	public boolean stringToFile(String source, File file) {
+		OutputStreamWriter out = null;
 		try {
-			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-			out.write(source.replaceAll("\n", System.getProperty("line.separator")));
-			out.close();
+			out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+			source.replaceAll("\n", System.getProperty("line.separator"));
+			out.write(source);
 			return true;
+
 		} catch (IOException e) {
-			System.out.println("Exception while writing the strint to a file: " + e.getMessage());
+			System.out.println("Failed to convert the string to a file: " + e.getMessage());
 			e.printStackTrace();
 			return false;
+		}
+		finally {
+			if (out != null) {
+				try {
+					out.close();
+				}
+				catch (IOException e) {
+					System.out.println("Failed to convert the string to a file: " + e.getMessage());
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

@@ -179,7 +179,7 @@ public class SilkSpawners extends JavaPlugin {
 		
 		
 		localization = new CommentedConfiguration(localizationFile);
-		new Configuration(config, 2);
+		new Configuration(localization, 2);
 		
 		mobs = new CommentedConfiguration(mobsFile);
 		new Configuration(mobs, 3);
@@ -267,9 +267,16 @@ public class SilkSpawners extends JavaPlugin {
 		su.defaultEntityID = 90;
 
 		// Should we use something else as the default?
-		if (config.getString("defaultCreature", null) != null) {
+		if (config.contains("defaultCreature")) {
 			// Lowercase is better to search
-			String defaultCreatureString = config.getString("defaultCreature", null).toLowerCase();
+			String defaultCreatureString = config.getString("defaultCreature", "90").toLowerCase();
+			try {
+				short entityID = Short.valueOf(defaultCreatureString);
+				if (su.isKnownEntityID(entityID) && su.isRecognizedMob(su.getCreatureName(entityID))) {
+					defaultCreatureString = su.getCreatureName(entityID).toLowerCase();
+				}
+			}
+			catch (NumberFormatException e) {}
 			// If we know the internal name
 			if (su.name2Eid.containsKey(defaultCreatureString)) {
 				// Get our entityID
