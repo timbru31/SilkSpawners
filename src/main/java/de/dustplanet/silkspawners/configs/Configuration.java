@@ -286,7 +286,6 @@ public class Configuration {
 		config.addDefault("creatures.WitherBoss.enable", true);
 		config.addDefault("creatures.WitherBoss.enableCraftingSpawner", true);
 		config.addDefault("creatures.WitherBoss.enableSpawnEggOverride", true);
-		tempList = new ArrayList<String>();
 		// Item
 		config.addDefault("creatures.Item.enable", false);
 		config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");

@@ -282,7 +282,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 		OutputStreamWriter out = null;
 		try {
 			out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-			source.replaceAll("\n", System.getProperty("line.separator"));
+			source = source.replaceAll("\n", System.getProperty("line.separator"));
 			out.write(source);
 			return true;
 
