@@ -6,7 +6,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,11 +35,6 @@ public class CommentedConfiguration extends YamlConfiguration {
 		boolean loaded = true;
 		try {
 			this.load(file);
-		}
-		catch (FileNotFoundException e) {
-			loaded = false;
-			System.out.println("Exception while loading the file: " + e.getMessage());
-			e.printStackTrace();
 		}
 		catch (IOException e) {
 			loaded = false;
@@ -181,8 +175,9 @@ public class CommentedConfiguration extends YamlConfiguration {
 			 * Due to a bukkit bug we need to strip any extra new lines from the
 			 * beginning of this file, else they will multiply.
 			 */
-			while (newContents.startsWith(System.getProperty("line.separator")))
+			while (newContents.startsWith(System.getProperty("line.separator"))) {
 				newContents = newContents.replaceFirst(System.getProperty("line.separator"), "");
+			}
 
 			// Write the string to the config file
 			if (!stringToFile(newContents, file)) {

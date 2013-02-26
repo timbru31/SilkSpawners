@@ -13,21 +13,14 @@ public class SilkSpawnersSetCreatureTask implements Runnable {
 	private SilkUtil su;
 	private short entityID;
 	private Block block;
-	private SilkSpawners plugin;
 
-	public SilkSpawnersSetCreatureTask(short entityID, Block block, SilkSpawners plugin, SilkUtil su) {
+	public SilkSpawnersSetCreatureTask(short entityID, Block block, SilkUtil su) {
 		this.entityID = entityID;
 		this.block = block;
-		this.plugin = plugin;
 		this.su = su;
 	}
 
 	public void run() {
-		try {
-			su.setSpawnerEntityID(block, entityID);
-		} catch (Exception e) {
-			plugin.getLogger().warning("Please report this! Failed to set type: " + e.getMessage());
-			e.printStackTrace();
-		}
+		su.setSpawnerEntityID(block, entityID);
 	}
 }

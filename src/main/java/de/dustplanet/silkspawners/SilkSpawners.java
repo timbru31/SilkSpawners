@@ -1,7 +1,6 @@
 package de.dustplanet.silkspawners;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -62,13 +61,13 @@ public class SilkSpawners extends JavaPlugin {
 	public void onEnable() {
 		// Make files and copy defaults
 		initializeConfigs();
-		
+
 		// Heart of SilkSpawners is the SilkUtil class which holds all of our important methods
 		su = new SilkUtil(this);
-		
+
 		// Load configs
 		loadConfigs();
-		
+
 		// Nicer ErrorLogger (can be disabled) http://forums.bukkit.org/threads/105321/
 		if (config.getBoolean("useErrorLogger", true)) {
 			getLogger().info("ErrorLogger enabled");
@@ -77,7 +76,7 @@ public class SilkSpawners extends JavaPlugin {
 		else {
 			getLogger().info("ErrorLogger disabled");
 		}
-		
+
 		// Check for spout
 		if (config.getBoolean("useSpout", true)) {
 			if (getServer().getPluginManager().isPluginEnabled("Spout")) {
@@ -103,7 +102,7 @@ public class SilkSpawners extends JavaPlugin {
 		getCommand("egg").setExecutor(eggCommand);
 		getCommand("silkspawners").setTabCompleter(tabCompleter);
 		getCommand("egg").setTabCompleter(tabCompleter);
-		
+
 		// Listeners
 		blockListener  = new SilkSpawnersBlockListener(this, su);
 		playerListener  = new SilkSpawnersPlayerListener(this, su);
@@ -122,24 +121,37 @@ public class SilkSpawners extends JavaPlugin {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// If no config is found, copy the default one(s)!
 	private void copy(InputStream in, File file) {
+		OutputStream out = null;
 		try {
-			OutputStream out = new FileOutputStream(file);
+			out = new FileOutputStream(file);
 			byte[] buf = new byte[1024];
 			int len;
 			while ((len = in.read(buf)) > 0) {
 				out.write(buf, 0, len);
 			}
-			out.close();
-			in.close();
-		} catch (FileNotFoundException e) {
-			getLogger().warning("Failed to copy the default config! (FileNotFound)");
-			e.printStackTrace();
 		} catch (IOException e) {
 			getLogger().warning("Failed to copy the default config! (I/O)");
 			e.printStackTrace();
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException e) {
+				getLogger().warning("Failed to close the streams! (I/O -> Output)");
+				e.printStackTrace();
+			}
+			try {
+				if (in != null) {
+					in.close();
+				}
+			} catch (IOException e) {
+				getLogger().warning("Failed to close the streams! (I/O -> Input)");
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -160,30 +172,29 @@ public class SilkSpawners extends JavaPlugin {
 		if (!configFile.exists()) {
 			copy(getResource("config.yml"), configFile);
 		}
-		
+
 		// Localization
 		localizationFile = new File(getDataFolder(), "localization.yml");
 		if(!localizationFile.exists()) {
 			copy(getResource("localization.yml"), localizationFile);
 		}
-		
-		// Localization
+
+		// Mobs
 		mobsFile = new File(getDataFolder(), "mobs.yml");
 		if(!mobsFile.exists()) {
 			copy(getResource("mobs.yml"), mobsFile);
 		}
-		
+
 		// Load configs
 		config = new CommentedConfiguration(configFile);
 		new Configuration(config, 1);
-		
-		
+
 		localization = new CommentedConfiguration(localizationFile);
 		new Configuration(localization, 2);
-		
+
 		mobs = new CommentedConfiguration(mobsFile);
 		new Configuration(mobs, 3);
-		
+
 		// We need to migrate the old mobs from config.yml to mobs.yml
 		if (config.contains("creatures")) {
 			getLogger().info("Found entries of creatures in the config.yml, will migrate them into the mobs.yml!");
@@ -197,17 +208,17 @@ public class SilkSpawners extends JavaPlugin {
 			getLogger().info("Successfully migrated the creatures into the mobs.yml!");
 		}
 	}
-	
+
 	private void loadConfigs() {		
 		// Check for colored names
 		if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
 			su.coloredNames = false;
 		}
 		else su.coloredNames = true;
-		
+
 		// Should we display more information
 		boolean verbose = config.getBoolean("verboseConfig", true);
-		
+
 		// Maybe we need to change it later because reflection field changed, user can adjust it then
 		// Scan the entities
 		SortedMap<Integer, String> sortedMap = su.scanEntityMap();
@@ -229,7 +240,7 @@ public class SilkSpawners extends JavaPlugin {
 				}
 				continue;
 			}
-			
+
 			// Add the known ID [we omit all disabled entities]
 			su.knownEids.add(entityID);
 			// Put the different value in our lists
@@ -256,7 +267,7 @@ public class SilkSpawners extends JavaPlugin {
 			for (String alias: aliases) {
 				su.name2Eid.put(alias, entityID);
 			}
-			
+
 			// Detailed message
 			if (verbose) {
 				getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (display name: " + displayName + ", aliases: " + aliases + ")");

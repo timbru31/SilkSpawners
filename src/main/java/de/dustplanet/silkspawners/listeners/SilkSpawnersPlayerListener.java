@@ -44,7 +44,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
 				&& event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
 			
+			// Get ID
 			short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+			// Check for unkown/invalid ID
 			if (entityID == 0 || !su.knownEids.contains(entityID)) {
 				entityID = su.defaultEntityID;
 			}
@@ -148,6 +150,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 					entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
 					// We need to add the entity to the world, reason is of course a spawn egg so that other events can handle this
 					world.addEntity(entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
+					
+					// Make a sound of the specific entity
 					if (entity instanceof EntityLiving) {
 						((EntityLiving) entity).aO();
 					}

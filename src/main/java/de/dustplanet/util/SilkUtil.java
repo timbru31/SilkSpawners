@@ -168,7 +168,8 @@ public class SilkUtil {
 		BlockState blockState = block.getState();
 		// Call it only on CreatureSpawners
 		if (!(blockState instanceof CreatureSpawner)) {
-			throw new IllegalArgumentException("setSpawnerEntityID called on non-spawner block: " + block);
+			System.out.println("setSpawnerEntityID called on non-spawner block: " + block);
+			return;
 		}
 		// Get out spawner;
 		CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
@@ -192,7 +193,7 @@ public class SilkUtil {
 				TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 				tile.a(mobID);
 
-				// Call an update
+				// Call an update (force it)
 				blockState.update(true);
 				return;
 			}
