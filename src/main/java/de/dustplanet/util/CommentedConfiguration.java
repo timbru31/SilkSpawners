@@ -178,6 +178,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 			while (newContents.startsWith(System.getProperty("line.separator"))) {
 				newContents = newContents.replaceFirst(System.getProperty("line.separator"), "");
 			}
+			
 
 			// Write the string to the config file
 			if (!stringToFile(newContents, file)) {
@@ -277,7 +278,6 @@ public class CommentedConfiguration extends YamlConfiguration {
 		OutputStreamWriter out = null;
 		try {
 			out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-			source = source.replaceAll("\n", System.getProperty("line.separator"));
 			out.write(source);
 			return true;
 

@@ -1,11 +1,11 @@
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
-
+ 
 addedEgg: '&2Successfully added a &e%creature% spawn egg &2to your inventory'
 addedEggOtherPlayer: '&2Added a &e%creature% spawn egg &2to &e%player% &2''s inventory'
 addedSpawner: '&2Added a &e%creature% spawner &2to your inventory'
 addedSpawnerOtherPlayer: '&2Added a &e%creature% spawner &2to &e%player% &2''s inventory'
-
+ 
 noPermission: '&4You do not have the permission to use this command'
 noPermissionChangingEgg: '&4You do not have permission to change spawning eggs with /egg'
 noPermissionChangingSpawner: '&4You do not have permission to change spawners with /spawner'
@@ -15,30 +15,30 @@ noPermissionViewType: '&4You do not have the permission to view the type of this
 noPermissionChangingWithEggs: '&4You do not have permission to change spawners with spawn eggs'
 noPermissionCraft: '&4You do not have the permission to craft a &e%creature% &4spawner!'
 noPermissionPlace: '&4You do not have the permission to place a &e%creature% &4spawner!'
-
+ 
 changedEgg: '&2Successfully changed the spawning egg to a &e%creature% spawn egg'
 changedSpawner: '&2Successfully changed the spawner to a &e%creature% spawner'
-
+ 
 playerOffline: '&4Sorry this player is offline!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection'
 getSpawnerType: '&2This is a &e%creature% spawner'
 unknownCreature: '&4Unrecognized creature &e%creature%'
-
+ 
 usageEggCommand: '&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)'
 usageEggCommandCommandLine: '&4To use SilkSpawners from the command line use /egg [creature] [name]'
 usageSpawnerCommand: '&4To use this command, empty your hand (to get a free spawner), point at an existing spawner or have a spawner in your hand (to change the spawner type)'
 usageSpawnerCommandCommandLine: '&4To use SilkSpawners from the command line use /spawner [creature]|[creature]egg [name]'
-
+ 
 spawnerBroken: '&e%creature% spawner broken'
 spawnerPlaced: '&e%creature% spawner placed'
 placingDefault: '&ePlacing default spawner (either this spawner is invalid or disabled)'
-
+ 
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
 informationOfSpawner3: '-- EntityID: %ID% --'
-
+ 
 spawningDenied: '&4Spawning of &e%creature% (ID %ID%) &4denied!'
 spawning: '&2Spawning  &e%creature% (ID %ID%)'
-
+ 
 lookAtSpawner: '&4You must be looking directly at a spawner.'
 lookAtSpawnerOrInHand: '&4You must be looking directly at a spawner or have a spawner in your hand to use this command'

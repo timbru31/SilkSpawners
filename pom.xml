@@ -131,6 +131,7 @@
 					<include>plugin.yml</include>
 					<include>config.yml</include>
 					<include>localization.yml</include>
+					<include>mobs.yml</include>
 					<include>README.txt</include>
 				</includes>
 			</resource>
