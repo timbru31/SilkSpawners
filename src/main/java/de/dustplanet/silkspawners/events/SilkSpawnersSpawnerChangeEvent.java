@@ -35,7 +35,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	
 	/**
 	 * Cancel the event
-	 * @param wheter the event should be cancelled or not
+	 * @param boolean - whether the event should be cancelled or not
 	 */
 	public void setCancelled(boolean cancel) {
 		this.cancelled = cancel;
@@ -75,7 +75,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	
 	/**
 	 * Sets the entityID of the spawner
-	 * @param the new entityID
+	 * @param short - the new entityID
 	 */
 	public void setEntityID(short id) {
 		this.id = id;

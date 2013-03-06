@@ -15,62 +15,66 @@ import de.dustplanet.util.SilkUtil;
 
 /**
  * To show a chat message that a player clicked on an mob spawner
+ * 
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */
 
 public class SilkSpawnersInventoryListener implements Listener {
-	private SilkSpawners plugin;
-	private SilkUtil su;
+    private SilkSpawners plugin;
+    private SilkUtil su;
 
-	public SilkSpawnersInventoryListener(SilkSpawners instance, SilkUtil util) {
-		plugin = instance;
-		su = util;
+    public SilkSpawnersInventoryListener(SilkSpawners instance, SilkUtil util) {
+	plugin = instance;
+	su = util;
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onInventoryClick(InventoryClickEvent event) {
+	// Null checks, somehow errors appeared...
+	if (event == null || event.getCurrentItem() == null
+		|| event.getWhoClicked() == null) {
+	    return;
 	}
 
-	@EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
-	public void onInventoryClick(InventoryClickEvent event) {
-		// Null checks, somehow errors appeared...
-		if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
-			return;
-		}
-
-		// Check for MobSpawner
-		if (event.getCurrentItem().getType() != Material.MOB_SPAWNER) {
-			return;
-		}
-
-		// Player
-		if (!(event.getWhoClicked() instanceof Player)) {
-			return;
-		}
-		Player player = (Player) event.getWhoClicked();
-
-		// Variables
-		short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
-		// Pig here again
-		if (entityID == 0 || !su.knownEids.contains(entityID)) {
-			entityID = su.defaultEntityID;
-		}
-		String creatureName = su.getCreatureName(entityID);
-
-		/*
-		 * Crafting
-		 */
-		if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-			String spawnerName = creatureName.toLowerCase().replaceAll(" ", "");
-			if (!plugin.hasPermission(player, "silkspawners.craft.*") && !plugin.hasPermission(player, "silkspawners.craft." + spawnerName)) {
-				event.setResult(Result.DENY);
-				event.setCancelled(true);
-				player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionCraft").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
-				return;
-			}
-		}
-
-		// If we should notify and the item is a MobSpawner and we have a player here who has the permission
-		if (plugin.config.getBoolean("notifyOnClick") && plugin.hasPermission(player, "silkspawners.info")) {
-			// Player
-			su.notify(player, creatureName, entityID);
-		}
+	// Check for MobSpawner
+	if (event.getCurrentItem().getType() != Material.MOB_SPAWNER) {
+	    return;
 	}
+
+	// Player
+	if (!(event.getWhoClicked() instanceof Player)) {
+	    return;
+	}
+	
+	Player player = (Player) event.getWhoClicked();
+
+	// Variables
+	short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
+	// Pig here again
+	if (entityID == 0 || !su.knownEids.contains(entityID)) {
+	    entityID = su.defaultEntityID;
+	}
+	String creatureName = su.getCreatureName(entityID);
+
+	/*
+	 * Crafting
+	 */
+	if (event.getSlotType() == InventoryType.SlotType.RESULT) {
+	    String spawnerName = creatureName.toLowerCase().replaceAll(" ", "");
+	    if (!plugin.hasPermission(player, "silkspawners.craft.*") && !plugin.hasPermission(player, "silkspawners.craft." + spawnerName)) {
+		event.setResult(Result.DENY);
+		event.setCancelled(true);
+		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionCraft").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
+		return;
+	    }
+	}
+
+	// If we should notify and the item is a MobSpawner and we have a player
+	// here who has the permission
+	if (plugin.config.getBoolean("notifyOnClick") && plugin.hasPermission(player, "silkspawners.info")) {
+	    // Player
+	    su.notify(player, creatureName, entityID);
+	}
+    }
 }
