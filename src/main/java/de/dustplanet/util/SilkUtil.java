@@ -75,7 +75,7 @@ public class SilkUtil {
 	if (plugin != null) {
 	    return new SilkUtil(plugin);
 	}
-	System.out.println("SilkSpawners instance not found, returning SilkUtil without SilkSpawners instance!");
+	Bukkit.getLogger().warning("SilkSpawners instance not found, returning SilkUtil without SilkSpawners instance!");
 	return new SilkUtil();
     }
 
