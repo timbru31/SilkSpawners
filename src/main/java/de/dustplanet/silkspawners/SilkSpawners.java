@@ -175,13 +175,13 @@ public class SilkSpawners extends JavaPlugin {
 
 		// Localization
 		localizationFile = new File(getDataFolder(), "localization.yml");
-		if(!localizationFile.exists()) {
+		if (!localizationFile.exists()) {
 			copy(getResource("localization.yml"), localizationFile);
 		}
 
 		// Mobs
 		mobsFile = new File(getDataFolder(), "mobs.yml");
-		if(!mobsFile.exists()) {
+		if (!mobsFile.exists()) {
 			copy(getResource("mobs.yml"), mobsFile);
 		}
 

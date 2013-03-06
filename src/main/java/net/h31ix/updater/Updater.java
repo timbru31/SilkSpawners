@@ -456,6 +456,26 @@ public class Updater
                     return false;
                 }
             }
+            else if (title.split("v").length == 2)
+            {
+                String remoteVersion = title.split("v")[1].split(" ")[0]; // Get the newest file's version number
+                int remVer = -1,curVer=0;
+                try
+                {
+                    remVer = calVer(remoteVersion);
+                    curVer = calVer(version);
+                }
+                catch(NumberFormatException nfe)
+                {
+                    remVer=-1;
+                }
+                if(hasTag(version)||version.equalsIgnoreCase(remoteVersion)||curVer>=remVer)
+                {
+                    // We already have the latest version, or this build is tagged for no-update
+                    result = Updater.UpdateResult.NO_UPDATE;
+                    return false;
+                }
+            }
             else
             {
                 // The file's name did not contain the string 'vVersion'
