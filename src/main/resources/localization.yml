@@ -21,7 +21,7 @@ changedSpawner: '&2Successfully changed the spawner to a &e%creature% spawner'
  
 playerOffline: '&4Sorry this player is offline!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection'
-getSpawnerType: '&2This is a &e%creature% spawner'
+getSpawnerType: '&2This is a(n) &e%creature% spawner'
 unknownCreature: '&4Unrecognized creature &e%creature%'
  
 usageEggCommand: '&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)'
@@ -29,8 +29,8 @@ usageEggCommandCommandLine: '&4To use SilkSpawners from the command line use /eg
 usageSpawnerCommand: '&4To use this command, empty your hand (to get a free spawner), point at an existing spawner or have a spawner in your hand (to change the spawner type)'
 usageSpawnerCommandCommandLine: '&4To use SilkSpawners from the command line use /spawner [creature]|[creature]egg [name]'
  
-spawnerBroken: '&e%creature% spawner broken'
-spawnerPlaced: '&e%creature% spawner placed'
+spawnerBroken: '&2%creature% &espawner broken'
+spawnerPlaced: '&2%creature% &espawner placed'
 placingDefault: '&ePlacing default spawner (either this spawner is invalid or disabled)'
  
 informationOfSpawner1: '-- Monster Spawner --'

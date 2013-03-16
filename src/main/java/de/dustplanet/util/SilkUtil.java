@@ -51,7 +51,7 @@ public class SilkUtil {
     // To prevent empty string use real ID and not 0 anymore
     public short defaultEntityID = 90;
     // Fields for reflection
-    public Field tileField, mobIDField;
+    public Field tileField;
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
     public Material SPAWN_EGG = Material.MONSTER_EGG;
@@ -152,11 +152,11 @@ public class SilkUtil {
 	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
 	// Get the mob ID ourselves if we can
-	if (tileField != null && mobIDField != null) {
+	if (tileField != null) {
 	    try {
 		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 		// Get the name from the field of our spawner
-		String mobID = (String) mobIDField.get(tile);
+		String mobID = tile.a().getMobName();;
 		return mobID2Eid.get(mobID);
 	    } catch (Exception e) {
 		Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
@@ -180,7 +180,7 @@ public class SilkUtil {
 	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
 	// Try the more powerful native methods first
-	if (tileField != null && mobIDField != null) {
+	if (tileField != null) {
 	    try {
 		// Get the name of the mob
 		String mobID = eid2MobID.get(entityID);

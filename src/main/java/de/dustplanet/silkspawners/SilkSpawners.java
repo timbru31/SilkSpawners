@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import net.minecraft.server.v1_5_R1.Item;
-import net.minecraft.server.v1_5_R1.MobSpawnerAbstract;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_5_R1.block.CraftCreatureSpawner;
@@ -335,21 +334,14 @@ public class SilkSpawners extends JavaPlugin {
 		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L13
 		su.tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
 		su.tileField.setAccessible(true);
-
-		// Get the modID field, see
-		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L11
-		su.mobIDField = MobSpawnerAbstract.class.getDeclaredField("mobName");
-		su.mobIDField.setAccessible(true);
 	    } catch (NoSuchFieldException e) {
 		getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
 		e.printStackTrace();
 		su.tileField = null;
-		su.mobIDField = null;
 	    } catch (SecurityException e) {
 		getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
 		e.printStackTrace();
 		su.tileField = null;
-		su.mobIDField = null;
 	    }
 	}
 

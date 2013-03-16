@@ -72,7 +72,7 @@ public class SilkSpawnersBlockListener implements Listener {
 
 	// Message the player about the broken spawner
 	plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
-		plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID).toLowerCase())));
+		plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID))));
 
 	// If using silk touch, drop spawner itself
 	ItemStack tool = player.getItemInHand();
@@ -166,7 +166,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 	// Else message the type
 	else {
-	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", creatureName)));
+	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID))));
 	}
 
 	su.setSpawnerEntityID(blockPlaced, entityID);
