@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.dustplanet</groupId>
 	<artifactId>SilkSpawners</artifactId>
-	<version>3.1-SNAPSHOT</version>
+	<version>3.2-SNAPSHOT</version>
 	<name>SilkSpawners</name>
 	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
 	<description>Pickup, place and customize Monster Spawners</description>
@@ -38,26 +38,26 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.4.7-R0.2-SNAPSHOT</version>
+			<version>1.5-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.4.7-R0.2-SNAPSHOT</version>
+			<version>1.5-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.getspout</groupId>
 			<artifactId>spoutplugin</artifactId>
-			<version>1.4.7-R0.2-SNAPSHOT</version>
+			<version>1.4.7-R1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
-			<version>5.7.1-SNAPSHOT</version>
+			<version>5.7.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sk89q</groupId>
@@ -71,7 +71,7 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<!-- Compile for 1.6 and clean before -->
 		<defaultGoal>clean compile package</defaultGoal>
@@ -137,7 +137,7 @@
 			</resource>
 		</resources>
 	</build>
-	
+
 	<!-- Github information -->
 	<scm>
 		<url>https://github.com/xGhOsTkiLLeRx/SilkSpawners</url>
@@ -145,7 +145,7 @@
 		<tag>master</tag>
 		<developerConnection>scm:git:git@github.com:xGhOsTkiLLeRx/SilkSpawners.git</developerConnection>
 	</scm>
-	
+
 	<!-- Jenkins information -->
 	<ciManagement>
 		<url>http://ci.dustplanet.de/job/SilkSpawners</url>

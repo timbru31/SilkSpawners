@@ -9,11 +9,11 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import net.minecraft.server.v1_4_R1.Item;
-import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R1.Item;
+import net.minecraft.server.v1_5_R1.MobSpawnerAbstract;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R1.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -29,7 +29,7 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 // ErrorLogger
-import de.dustplanet.util.ErrorLogger;
+//import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.SilkUtil;
 // Metrics
 import org.mcstats.Metrics;
@@ -72,12 +72,15 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Nicer ErrorLogger (can be disabled)
 	// http://forums.bukkit.org/threads/105321/
-	if (config.getBoolean("useErrorLogger", true)) {
-	    getLogger().info("ErrorLogger enabled");
-	    ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
-	} else {
-	    getLogger().info("ErrorLogger disabled");
-	}
+//	if (config.getBoolean("useErrorLogger", true)) {
+//	    getLogger().info("ErrorLogger enabled");
+//	    ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
+//	} else {
+//	    getLogger().info("ErrorLogger disabled");
+//	}
+	// Temp
+	getLogger().info("ErrorLogger is disabled, regardless of your settings to give the author enough time to update it!");
+	getLogger().info("This feature will be available again in the near future!");
 
 	// Check for spout
 	if (config.getBoolean("useSpout", true)) {
@@ -335,7 +338,7 @@ public class SilkSpawners extends JavaPlugin {
 
 		// Get the modID field, see
 		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L11
-		su.mobIDField = TileEntityMobSpawner.class.getDeclaredField("mobName");
+		su.mobIDField = MobSpawnerAbstract.class.getDeclaredField("mobName");
 		su.mobIDField.setAccessible(true);
 	    } catch (NoSuchFieldException e) {
 		getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());

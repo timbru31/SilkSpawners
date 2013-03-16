@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
-import net.minecraft.server.v1_4_R1.EntityTypes;
-import net.minecraft.server.v1_4_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R1.EntityTypes;
+import net.minecraft.server.v1_5_R1.TileEntityMobSpawner;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -16,7 +16,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_4_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R1.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -198,7 +198,7 @@ public class SilkUtil {
 		// see
 		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
 		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-		tile.a(mobID);
+		tile.a().a(mobID);
 
 		// Call an update (force it)
 		blockState.update(true);
