@@ -115,7 +115,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    }
 		}
 		// Normal spawning
-	    } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+	    } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
 		// Disabled by default, since it is dangerous
 		if (plugin.config.getBoolean("spawnEggOverride", false)) {
 		    // Name
