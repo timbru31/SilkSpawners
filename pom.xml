@@ -38,14 +38,14 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.5-R0.1-SNAPSHOT</version>
+			<version>1.5.1-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.5-R0.1-SNAPSHOT</version>
+			<version>1.5.1-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -57,12 +57,12 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
-			<version>5.7.3-SNAPSHOT</version>
+			<version>5.7.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldedit</artifactId>
-			<version>5.5.2-SNAPSHOT</version>
+			<version>5.5.6-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>

@@ -9,10 +9,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import net.minecraft.server.v1_5_R1.Item;
+import net.minecraft.server.v1_5_R2.Item;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_5_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R2.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -92,8 +92,7 @@ public class SilkSpawners extends JavaPlugin {
 	    }
 	}
 
-	// Check if we should enable the auto Updater && have no snapshot (dev
-	// build)
+	// Check if we should enable the auto Updater & have no snapshot (dev build)
 	if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
 	    // Updater http://forums.bukkit.org/threads/96681/
 	    new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, true);
