@@ -53,6 +53,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean spoutEnabled, usePermissions;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
+    public final String compatibleMinecraftVersion = "1.5";
 
     public void onDisbale() {
 	su.clearAll();
@@ -96,6 +97,9 @@ public class SilkSpawners extends JavaPlugin {
 	if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
 	    // Updater http://forums.bukkit.org/threads/96681/
 	    new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, true);
+	    getLogger().info("AutoUpdater enabled");
+	} else {
+	    getLogger().info("AutoUpdater disabled");
 	}
 
 	// Commands
