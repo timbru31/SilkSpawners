@@ -53,7 +53,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean spoutEnabled, usePermissions;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINCERAFT_VERSION = "1.5";
+    public static final String COMPATIBLE_MINCERAFT_VERSION = "1.5.1";
 
     public void onDisbale() {
 	su.clearAll();
