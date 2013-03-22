@@ -406,7 +406,7 @@ public class Configuration {
 	config.addComment("denyBreakHoldingSpawner", "", "# Recommend, since old spawners have got a silk touch enchantment");
 	config.addDefault("craftableSpawners", false);
 	config.addComment("craftableSpawners", "", "# Should the player be able to craft spawners");
-	config.addDefault("recipeTop", "AMA");
+	config.addDefault("recipeTop", "AAA");
 	config.addComment("recipeTop", "", "# Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free", "# X is always the egg");
 	config.addDefault("recipeMiddle", "AXA");
 	config.addDefault("recipeBottom", "AAA");
