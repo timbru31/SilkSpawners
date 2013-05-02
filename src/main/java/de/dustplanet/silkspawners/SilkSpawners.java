@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import net.minecraft.server.v1_5_R3.Item;
+import net.minecraft.server.v1_5_R3.MinecraftServer;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_5_R3.block.CraftCreatureSpawner;
@@ -53,13 +54,13 @@ public class SilkSpawners extends JavaPlugin {
     public boolean spoutEnabled, usePermissions;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINCERAFT_VERSION = "1.5.2";
+    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.5.2";
 
     public void onDisbale() {
 	su.clearAll();
     }
 
-    public void onEnable() {
+    public void onEnable() {	
 	// Make files and copy defaults
 	initializeConfigs();
 
@@ -69,6 +70,19 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Load configs
 	loadConfigs();
+	
+	// Test for right Minecraft version
+	if (config.getBoolean("testMCVersion", true)) {
+	   String serverVersion = MinecraftServer.getServer().getVersion();
+	   if (!COMPATIBLE_MINECRAFT_VERSION.equalsIgnoreCase(serverVersion)) {
+		getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
+		getLogger().info("Please check your versions to make sure they match!");
+		getLogger().info("Disabling now!");
+		getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
+		setEnabled(false);
+		return;
+	   }
+	}
 
 	// Nicer ErrorLogger (can be disabled)
 	// http://forums.bukkit.org/threads/105321/

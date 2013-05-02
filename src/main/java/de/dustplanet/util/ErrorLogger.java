@@ -1,10 +1,12 @@
 //package de.dustplanet.util;
 //
-//import net.minecraft.server.v1_4_R1.CrashReport;
-//import net.minecraft.server.v1_4_R1.MinecraftServer;
+//import net.minecraft.server.v1_5_R3.CrashReport;
+//import net.minecraft.server.v1_5_R3.DedicatedServer;
+//import net.minecraft.server.v1_5_R3.IConsoleLogManager;
+//import net.minecraft.server.v1_5_R3.MinecraftServer;
 //import org.apache.commons.lang.exception.ExceptionUtils;
 //import org.bukkit.Bukkit;
-//import org.bukkit.craftbukkit.v1_4_R1.CraftServer;
+//import org.bukkit.craftbukkit.v1_5_R3.CraftServer;
 //import org.bukkit.plugin.Plugin;
 //import org.bukkit.plugin.PluginLogger;
 //import org.bukkit.plugin.java.JavaPlugin;
@@ -32,6 +34,7 @@
 //public class ErrorLogger extends PluginLogger {
 //
 //    private static Field mcLogger, craftbukkitServer, pluginLogger, prepend;
+//    private static IConsoleLogManager iconsolelogmanager;
 //
 //    private ErrorLogger(Plugin context) {
 //	super(context);
@@ -101,16 +104,16 @@
 //	    try {
 //		File dump = new File(new File(problematicPlugin.getDataFolder(), "errors").getAbsoluteFile(), String.format("%s_%s.error.log",
 //			thorn.getClass().getSimpleName(), // Get first 6 chars of hash
-//				new BigInteger(1, Arrays.copyOfRange(MessageDigest.getInstance("MD5").digest(err.toString().getBytes("UTF-8")), 0, 6)).toString().substring(0, 6)));
-//		report.a(dump);
+//			new BigInteger(1, Arrays.copyOfRange(MessageDigest.getInstance("MD5").digest(err.toString().getBytes("UTF-8")), 0, 6)).toString().substring(0, 6)));
+//		report.a(dump, iconsolelogmanager);
 //		System.err.println("Don't despair! This error has been saved to '.\\"
-//				+ problematicPlugin.getDataFolder().getName()
-//				+ "\\errors\\"
-//				+ dump.getName()
-//				+ "'. You should report it to the developers of "
-//				+ problematicPlugin.getName()
-//				+ ": "
-//				+ problematicPlugin.getDescription().getAuthors() + ".\n");
+//			+ problematicPlugin.getDataFolder().getName()
+//			+ "\\errors\\"
+//			+ dump.getName()
+//			+ "'. You should report it to the developers of "
+//			+ problematicPlugin.getName()
+//			+ ": "
+//			+ problematicPlugin.getDescription().getAuthors() + ".\n");
 //	    } catch (Exception e) {
 //		err.append("\nErrors occured while saving to file. Not saved.");
 //	    }
@@ -134,8 +137,8 @@
 //		    generateErrorLog(throwable);
 //		}
 //	    });
-//
-//	    (mcLogger = MinecraftServer.class.getDeclaredField("log")).setAccessible(true);
+//	    iconsolelogmanager = MinecraftServer.getServer().getLogger();
+//	    (mcLogger = DedicatedServer.class.getDeclaredField("l")).setAccessible(true);
 //	    (craftbukkitServer = CraftServer.class.getDeclaredField("console")).setAccessible(true);
 //	    (pluginLogger = JavaPlugin.class.getDeclaredField("logger")).setAccessible(true);
 //	    (prepend = PluginLogger.class.getDeclaredField("pluginName")).setAccessible(true);

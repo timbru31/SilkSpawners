@@ -491,7 +491,7 @@ public class Updater
 		result = Updater.UpdateResult.FAIL_NOVERSION;
 		return false;
 	    }
-	    if (!title.contains("[MC Version " + SilkSpawners.COMPATIBLE_MINCERAFT_VERSION + "]"))
+	    if (!title.contains("[MC Version " + SilkSpawners.COMPATIBLE_MINECRAFT_VERSION + "]"))
 	    {
 		// The file's name did not match the needed MC version, so we wont update
 		plugin.getLogger().warning("An update was found, but your Minecraft Version is not compatible");
