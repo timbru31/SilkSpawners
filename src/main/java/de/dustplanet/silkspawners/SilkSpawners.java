@@ -9,10 +9,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import net.minecraft.server.v1_5_R2.Item;
+import net.minecraft.server.v1_5_R3.Item;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_5_R2.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R3.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -53,7 +53,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean spoutEnabled, usePermissions;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINCERAFT_VERSION = "1.5.1";
+    public static final String COMPATIBLE_MINCERAFT_VERSION = "1.5.2";
 
     public void onDisbale() {
 	su.clearAll();
