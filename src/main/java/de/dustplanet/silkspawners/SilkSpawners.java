@@ -60,7 +60,7 @@ public class SilkSpawners extends JavaPlugin {
 	su.clearAll();
     }
 
-    public void onEnable() {	
+    public void onEnable() {
 	// Make files and copy defaults
 	initializeConfigs();
 

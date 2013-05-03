@@ -24,9 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.player.SpoutPlayer;
-
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
 import de.dustplanet.silkspawners.SilkSpawners;
 
 /**
@@ -372,7 +370,7 @@ public class SilkUtil {
 
     // Is WourldGuard enabled?
     private void getWorldGuard(SilkSpawners plugin) {
-	if (!plugin.config.getBoolean("useWorldGuard")) {
+	if (!plugin.config.getBoolean("useWorldGuard", true)) {
 	    return;
 	}
 	Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");

@@ -60,11 +60,6 @@
 			<version>5.7.4-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>5.5.6-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
 			<version>R6</version>
