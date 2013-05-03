@@ -53,7 +53,7 @@ craftableSpawners: false
  
 # Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free
 # X is always the egg
-recipeTop: AMA
+recipeTop: AAA
 recipeMiddle: AXA
 recipeBottom: AAA
  
