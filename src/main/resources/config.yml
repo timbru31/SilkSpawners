@@ -92,3 +92,4 @@ verboseConfig: false
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true
 useErrorLogger: true
+testMCVersion: true

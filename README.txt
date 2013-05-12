@@ -102,6 +102,7 @@ verboseConfig: false
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true
 useErrorLogger: true
+testMCVersion: true
 
 Commands & Permissions (if no permissions system is detected, only OPs are able to use the commands!)
 Only bukkit's permissions system is supported!
