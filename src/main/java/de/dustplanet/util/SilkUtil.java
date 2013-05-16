@@ -236,7 +236,8 @@ public class SilkUtil {
 	BlockState blockState = block.getState();
 	if (!(blockState instanceof CreatureSpawner)) {
 	    // Call it only on CreatureSpawners
-	    throw new IllegalArgumentException("getSpawnerEntityID called on non-spawner block: " + block);
+	    Bukkit.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
+	    return 0;
 	}
 	// Get our spawner;
 	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
