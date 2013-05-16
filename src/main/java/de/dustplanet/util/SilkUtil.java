@@ -36,38 +36,93 @@ import de.dustplanet.silkspawners.SilkSpawners;
 
 public class SilkUtil {
     // EntityID to displayName
+    /**
+     * This HashMap is holding the entityID and the display name of each mob
+     */
     public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<Short, String>();
+    
     // EntityID to MobID
+    /**
+     * This HashMap is holding the entityID and the internal Minecraft name of each mob
+     */
     public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<Short, String>();
+    
     // MobID to entityID
+    /**
+     * This HashMap is holding the internal Minecraft name of each mob and the entityID
+     */
     public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<String, Short>();
+   
     // Name to entityID
+    /**
+     * This HashMap is holding the display name of each mob and the entityID
+     */
     public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<String, Short>();
+    
     // Known entityIDs
+    /**
+     * List of enabled (and therefore) known entityIDs
+     */
     public ArrayList<Short> knownEids = new ArrayList<Short>();
+    
     // Default is 90 = PIG
     // To prevent empty string use real ID and not 0 anymore
+    /**
+     * Default (fallback) entityID, standard is 90 the pig
+     */
     public short defaultEntityID = 90;
+    
     // Fields for reflection
+    /**
+     * Field used for reflection
+     */
     public Field tileField;
+    
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
+    /**
+     * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish)
+     */
     public Material SPAWN_EGG = Material.MONSTER_EGG;
+    
     // WorldGuard instance
+    /**
+     * WorldGuard instance, may be null
+     */
     private WorldGuardPlugin wg;
+    
     // Should we use the normal names or a colored one?
+    /**
+     * Boolean value to determine if spawner names should be colored
+     */
     public boolean coloredNames;
+    
     // SilkSpawners instance, not necessary
+    /**
+     * SilkSpawners instance
+     */
     private SilkSpawners plugin;
 
+    /**
+     * Constructor to make your own SilkUtil instance
+     * @param SilkSpawners instance
+     */
     public SilkUtil(SilkSpawners instance) {
 	getWorldGuard(instance);
 	plugin = instance;
     }
 
+    /**
+     * Constructor called without SilkSpawners instance, will
+     * result in a lack of WorldGuard and other features
+     */
     public SilkUtil() {
     }
 
+    /**
+     * This method will return the SilkUtil instance
+     * @return SilkUtil instance
+     */
     public static SilkUtil hookIntoSilkSpanwers() {
 	SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
 	if (plugin != null) {
@@ -78,16 +133,33 @@ public class SilkUtil {
     }
 
     // Give a new SpawnerEgg with the given entityID
+    /**
+     * Returns a new ItemStack of a spawn egg with the specified amount and mob
+     * @param entityID - which mob should be spawned
+     * @param amount - the amount of spawn eggs
+     * @return the ItemStack
+     */
     public ItemStack newEggItem(short entityID, int amount) {
 	return new ItemStack(SPAWN_EGG, 1, entityID);
     }
 
+    /**
+     * Returns a new ItemStack of a spawn egg with the amount one and mob
+     * @param entityID - which mob should be spawned
+     * @return the ItemStack (amount is one)
+     */
     public ItemStack newEggItem(short entityID) {
 	return newEggItem(entityID, 1);
     }
 
     // Create a tagged a mob spawner item with it's entity ID so we know what it
     // spawns
+    /**
+     * This method will make a new MobSpawner with a custom entityID and name
+     * @param entityID - the mob
+     * @param customName - If the MobSpawner should be named different
+     * @return the ItemStack (amount 1) with the configured options
+     */
     public ItemStack newSpawnerItem(short entityID, String customName) {
 	if (customName == null || customName.equalsIgnoreCase("")) {
 	    customName = "Monster Spawner";
@@ -110,6 +182,11 @@ public class SilkUtil {
     }
 
     // Get the entity ID
+    /**
+     * Returns the entity ID of a spawner or spawn egg
+     * @param item - the ItemStack
+     * @return the entityID
+     */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
 	short id = item.getDurability();
 	// Is it stored and working? Great return this!
@@ -128,11 +205,21 @@ public class SilkUtil {
     }
 
     // Return whether mob is recognized by Bukkit's wrappers
+    /**
+     * Lookup if the mob is know,
+     * @param mobID - the name (String) of the mob
+     * @return the result, true or false
+     */
     public boolean isRecognizedMob(String mobID) {
 	return EntityType.fromName(mobID) != null;
     }
 
     // Check if the entityID is known or not
+    /**
+     * Lookup if the mob is known
+     * @param entityID - the ID (short) of the mob
+     * @return the result, true of false
+     */
     public boolean isKnownEntityID(short entityID) {
 	return knownEids.contains(entityID);
     }
@@ -140,6 +227,11 @@ public class SilkUtil {
     // Better methods for setting/getting spawner type
     // These don't rely on CreatureSpawner, if possible, and instead set/get the
     // mobID directly from the tile entity
+    /**
+     * Returns the entity ID of a spawner (block)
+     * @param block - the spawner block
+     * @return the entity ID
+     */
     public short getSpawnerEntityID(Block block) {
 	BlockState blockState = block.getState();
 	if (!(blockState instanceof CreatureSpawner)) {
@@ -167,6 +259,11 @@ public class SilkUtil {
     }
 
     // Sets the creature of a spawner
+    /**
+     * Set the specified MonterSpawner to another entity ID
+     * @param block - MonsterSpawner
+     * @param entityID - the wanted entityID
+     */
     public void setSpawnerEntityID(Block block, short entityID) {
 	BlockState blockState = block.getState();
 	// Call it only on CreatureSpawners
@@ -221,6 +318,14 @@ public class SilkUtil {
     }
 
     // Set spawner type from user
+    /**
+     * Set a spawner (if allowed) to a new mob
+     * @param block - the MonsterSpawner
+     * @param entityID - the new entity ID
+     * @param player - the player
+     * @param messageDenied - the message which is shown, when the player can't build here
+     * see {@link #canBuildHere(Player, Location)}
+     */
     public void setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
 	// Changing denied by WorldGuard?
 	if (!canBuildHere(player, block.getLocation())) {
@@ -231,6 +336,13 @@ public class SilkUtil {
 	setSpawnerEntityID(block, entityID);
     }
 
+    /**
+     * Sets a spawner item or egg to a new ID
+     * @param item - ItemStack (Egg or Spawner)
+     * @param entityID - wanted entity ID
+     * @param customName - if a custom name should be used (null for none)
+     * @return the updated ItemStack
+     */
     public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
 	// Ensure that the name is correct
 	if (customName == null || customName.equalsIgnoreCase("")) {
@@ -255,6 +367,12 @@ public class SilkUtil {
     }
 
     // Return the spawner block the player is looking at, or null if isn't
+    /**
+     * Return the spawner block the player is looking at, or null if isn't
+     * @param player - the player
+     * @param distance - the reach distance
+     * @return the found block or null
+     */
     public Block getSpawnerFacing(Player player, int distance) {
 	Block block = player.getTargetBlock(null, distance);
 	if (block == null || block.getType() != Material.MOB_SPAWNER) {
@@ -266,6 +384,11 @@ public class SilkUtil {
     // Get a creature name suitable for displaying to the user
     // Internal mob names are are like 'LavaSlime', this will return
     // the in-game name like 'Magma Cube'
+    /**
+     * Get the creature name (display name) of an ID
+     * @param entityID - the entity ID
+     * @return the displayname of the mob
+     */
     public String getCreatureName(short entityID) {
 	String displayName = eid2DisplayName.get(entityID);
 	// If the displayName is null go on (not on our list)
@@ -285,6 +408,10 @@ public class SilkUtil {
     }
 
     // Show them all the possible creature names
+    /**
+     * Lists all enabled creatures to a CommandSender
+     * @param sender - CommandSender (player or console)
+     */
     public void showAllCreatures(CommandSender sender) {
 	// For each entry in the list
 	StringBuffer buf = new StringBuffer();
@@ -300,6 +427,10 @@ public class SilkUtil {
 
     @SuppressWarnings("unchecked")
     // Scan through all entities
+    /**
+     * Use reflection to scan through each mob and the IDs/name
+     * @return Map with a result of Integer (ID), String (name)
+     */
     public SortedMap<Integer, String> scanEntityMap() {
 	SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
 	// Use reflection to dump native EntityTypes
@@ -325,6 +456,13 @@ public class SilkUtil {
 
     // Notify player
     // Warning: Don't call the method unless you have the SilkSpawners instance!
+    /**
+     * Notify a player about the spawner
+     * NEEDS A SILKSPAWNERS INSTANCE ACTIVE
+     * @param player - the player
+     * @param spawnerName - the creature name
+     * @param entityID - the ID
+     */
     public void notify(Player player, String spawnerName, short entityID) {
 	// If we use Spout & the player Spoutcraft, send a notification
 	// (achievement like)
@@ -347,6 +485,9 @@ public class SilkUtil {
     }
 
     // Clear RAM
+    /**
+     * This method clears all HashMaps and lists
+     */
     public void clearAll() {
 	eid2DisplayName.clear();
 	eid2MobID.clear();
@@ -355,10 +496,20 @@ public class SilkUtil {
 	knownEids.clear();
     }
 
+    /**
+     * Test a String if it ends with egg
+     * @param creatureString - the name
+     * @return result, true or false
+     */
     public boolean isEgg(String creatureString) {
 	return creatureString.endsWith("egg");
     }
 
+    /**
+     * Check if given name is known or not
+     * @param creatureString - the mob name
+     * @return the result, true of false
+     */
     public boolean isUnkown(String creatureString) {
 	return !name2Eid.containsKey(creatureString);
     }
@@ -369,6 +520,10 @@ public class SilkUtil {
      */
 
     // Is WourldGuard enabled?
+    /**
+     * Prepare for WorldGuard support
+     * @param plugin - SilkSpawners instance
+     */
     private void getWorldGuard(SilkSpawners plugin) {
 	if (!plugin.config.getBoolean("useWorldGuard", true)) {
 	    return;
@@ -381,6 +536,12 @@ public class SilkUtil {
     }
 
     // Is the player allowed to build here?
+    /**
+     * Ask if a player can build here (WorldGuard)
+     * @param player - the player
+     * @param location - the location to check
+     * @return the result, true or false
+     */
     public boolean canBuildHere(Player player, Location location) {
 	if (wg == null) {
 	    return true;
