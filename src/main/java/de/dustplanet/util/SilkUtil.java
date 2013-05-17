@@ -217,7 +217,7 @@ public class SilkUtil {
     // Check if the entityID is known or not
     /**
      * Lookup if the mob is known
-     * @param entityID - the ID (short) of the mob
+     * @param entityID the ID (short) of the mob
      * @return the result, true of false
      */
     public boolean isKnownEntityID(short entityID) {
@@ -538,7 +538,7 @@ public class SilkUtil {
 
     // Is the player allowed to build here?
     /**
-     * Ask if a player can build here (WorldGuard)
+     * Checks if a player can build here (WorldGuard)
      * @param player the player
      * @param location the location to check
      * @return the result, true or false
