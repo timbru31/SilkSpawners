@@ -135,8 +135,8 @@ public class SilkUtil {
     // Give a new SpawnerEgg with the given entityID
     /**
      * Returns a new ItemStack of a spawn egg with the specified amount and mob
-     * @param entityID - which mob should be spawned
-     * @param amount - the amount of spawn eggs
+     * @param entityID which mob should be spawned
+     * @param amount the amount of spawn eggs
      * @return the ItemStack
      */
     public ItemStack newEggItem(short entityID, int amount) {
@@ -156,8 +156,8 @@ public class SilkUtil {
     // spawns
     /**
      * This method will make a new MobSpawner with a custom entityID and name
-     * @param entityID - the mob
-     * @param customName - If the MobSpawner should be named different
+     * @param entityID the mob
+     * @param customName if the MobSpawner should be named different
      * @return the ItemStack (amount 1) with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName) {
@@ -184,7 +184,7 @@ public class SilkUtil {
     // Get the entity ID
     /**
      * Returns the entity ID of a spawner or spawn egg
-     * @param item - the ItemStack
+     * @param item the ItemStack
      * @return the entityID
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
@@ -207,7 +207,7 @@ public class SilkUtil {
     // Return whether mob is recognized by Bukkit's wrappers
     /**
      * Lookup if the mob is know,
-     * @param mobID - the name (String) of the mob
+     * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
     public boolean isRecognizedMob(String mobID) {
@@ -229,7 +229,7 @@ public class SilkUtil {
     // mobID directly from the tile entity
     /**
      * Returns the entity ID of a spawner (block)
-     * @param block - the spawner block
+     * @param block the spawner block
      * @return the entity ID
      */
     public short getSpawnerEntityID(Block block) {
@@ -262,8 +262,8 @@ public class SilkUtil {
     // Sets the creature of a spawner
     /**
      * Set the specified MonterSpawner to another entity ID
-     * @param block - MonsterSpawner
-     * @param entityID - the wanted entityID
+     * @param block MonsterSpawner
+     * @param entityID the wanted entityID
      */
     public void setSpawnerEntityID(Block block, short entityID) {
 	BlockState blockState = block.getState();
@@ -321,10 +321,10 @@ public class SilkUtil {
     // Set spawner type from user
     /**
      * Set a spawner (if allowed) to a new mob
-     * @param block - the MonsterSpawner
-     * @param entityID - the new entity ID
-     * @param player - the player
-     * @param messageDenied - the message which is shown, when the player can't build here
+     * @param block the MonsterSpawner
+     * @param entityID the new entity ID
+     * @param player the player
+     * @param messageDenied the message which is shown, when the player can't build here
      * see {@link #canBuildHere(Player, Location)}
      */
     public void setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
@@ -339,9 +339,9 @@ public class SilkUtil {
 
     /**
      * Sets a spawner item or egg to a new ID
-     * @param item - ItemStack (Egg or Spawner)
-     * @param entityID - wanted entity ID
-     * @param customName - if a custom name should be used (null for none)
+     * @param item ItemStack (Egg or Spawner)
+     * @param entityID wanted entity ID
+     * @param customName if a custom name should be used (null for none)
      * @return the updated ItemStack
      */
     public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
@@ -370,8 +370,8 @@ public class SilkUtil {
     // Return the spawner block the player is looking at, or null if isn't
     /**
      * Return the spawner block the player is looking at, or null if isn't
-     * @param player - the player
-     * @param distance - the reach distance
+     * @param player the player
+     * @param distance the reach distance
      * @return the found block or null
      */
     public Block getSpawnerFacing(Player player, int distance) {
@@ -387,7 +387,7 @@ public class SilkUtil {
     // the in-game name like 'Magma Cube'
     /**
      * Get the creature name (display name) of an ID
-     * @param entityID - the entity ID
+     * @param entityID the entity ID
      * @return the displayname of the mob
      */
     public String getCreatureName(short entityID) {
@@ -411,7 +411,7 @@ public class SilkUtil {
     // Show them all the possible creature names
     /**
      * Lists all enabled creatures to a CommandSender
-     * @param sender - CommandSender (player or console)
+     * @param sender CommandSender (player or console)
      */
     public void showAllCreatures(CommandSender sender) {
 	// For each entry in the list
@@ -426,12 +426,12 @@ public class SilkUtil {
 	sender.sendMessage(message);
     }
 
-    @SuppressWarnings("unchecked")
     // Scan through all entities
     /**
      * Use reflection to scan through each mob and the IDs/name
      * @return Map with a result of Integer (ID), String (name)
      */
+    @SuppressWarnings("unchecked")
     public SortedMap<Integer, String> scanEntityMap() {
 	SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
 	// Use reflection to dump native EntityTypes
@@ -460,9 +460,9 @@ public class SilkUtil {
     /**
      * Notify a player about the spawner
      * NEEDS A SILKSPAWNERS INSTANCE ACTIVE
-     * @param player - the player
-     * @param spawnerName - the creature name
-     * @param entityID - the ID
+     * @param player the player
+     * @param spawnerName the creature name
+     * @param entityID the ID
      */
     public void notify(Player player, String spawnerName, short entityID) {
 	// If we use Spout & the player Spoutcraft, send a notification
@@ -499,7 +499,7 @@ public class SilkUtil {
 
     /**
      * Test a String if it ends with egg
-     * @param creatureString - the name
+     * @param creatureString the name
      * @return result, true or false
      */
     public boolean isEgg(String creatureString) {
@@ -508,7 +508,7 @@ public class SilkUtil {
 
     /**
      * Check if given name is known or not
-     * @param creatureString - the mob name
+     * @param creatureString the mob name
      * @return the result, true of false
      */
     public boolean isUnkown(String creatureString) {
@@ -523,7 +523,7 @@ public class SilkUtil {
     // Is WourldGuard enabled?
     /**
      * Prepare for WorldGuard support
-     * @param plugin - SilkSpawners instance
+     * @param plugin SilkSpawners instance
      */
     private void getWorldGuard(SilkSpawners plugin) {
 	if (!plugin.config.getBoolean("useWorldGuard", true)) {
@@ -539,8 +539,8 @@ public class SilkUtil {
     // Is the player allowed to build here?
     /**
      * Ask if a player can build here (WorldGuard)
-     * @param player - the player
-     * @param location - the location to check
+     * @param player the player
+     * @param location the location to check
      * @return the result, true or false
      */
     public boolean canBuildHere(Player player, Location location) {
