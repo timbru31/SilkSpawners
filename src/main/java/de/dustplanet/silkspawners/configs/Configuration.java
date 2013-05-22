@@ -353,7 +353,7 @@ public class Configuration {
 	config.addComment("changedEgg", "");
 	config.addDefault("changedSpawner", "&2Successfully changed the spawner to a &e%creature% spawner");
 	config.addDefault("playerOffline", "&4Sorry this player is offline!");
-	config.addComment("noPermission", "");
+	config.addComment("playerOffline", "");
 	config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection");
 	config.addDefault("getSpawnerType", "&2This is a &e%creature% spawner");
 	config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%");
