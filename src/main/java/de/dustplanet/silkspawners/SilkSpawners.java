@@ -238,7 +238,7 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// Should we display more information
-	boolean verbose = config.getBoolean("verboseConfig", true);
+	boolean verbose = config.getBoolean("verboseConfig", false);
 
 	// Maybe we need to change it later because reflection field changed,
 	// user can adjust it then
@@ -446,6 +446,7 @@ public class SilkSpawners extends JavaPlugin {
 	    }
 	    // If the custom recipe fails, we have a fallback
 	    catch (IllegalArgumentException e) {
+		getLogger().warning("Could not add the recipe! Please report this!");
 		e.printStackTrace();
 		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
 		recipe.setIngredient('A', Material.IRON_FENCE);
