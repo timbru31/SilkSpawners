@@ -27,10 +27,14 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 	    if (("all").startsWith(argument)) {
 		results.add("all");
 	    }
+	    if (("reload").startsWith(argument)) {
+		results.add("reload");
+	    }
 	    // Noting entered, suggest list!
 	    if (argument.equalsIgnoreCase("")) {
 		results.add("list");
 		results.add("all");
+		results.add("reload");
 	    }
 	    for (String displayName : su.eid2DisplayName.values()) {
 		// Lowercase, too
