@@ -9,11 +9,11 @@ commands:
     silkspawners:
         aliases: [silkspawner, ss, spawner, silk, spawnersilk]
         description: Change or view the monster spawner creature type
-        usage: /<command> [creature]|[creature]egg|all
+        usage: /<command> [creature]|[creature]egg|all|reload
     egg:
         aliases: [eggs, eg]
         description: Change the egg type
-        usage: /<command> [creature]|[creature]egg|all   
+        usage: /<command> [creature]|[creature]egg|all|reload
 permissions:
     silkspawners.*:
         children:
@@ -27,6 +27,7 @@ permissions:
             silkspawners.freeitemegg.*: true
             silkspawners.craft.*: true
             silkspawners.place.*: true
+            silkspawners.reload: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -57,5 +58,8 @@ permissions:
         default: false
     silkspawners.place.*:
         description: Allows you to place all spawners
+        default: false
+    silkspawners.reload:
+        description: Allows you to reload the plugin
         default: false
 softdepend: [WorldGuard, Spout]

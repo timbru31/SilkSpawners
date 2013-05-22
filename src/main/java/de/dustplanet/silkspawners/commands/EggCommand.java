@@ -38,6 +38,14 @@ public class EggCommand implements CommandExecutor {
 	    if (creatureString.equalsIgnoreCase("all") || creatureString.equalsIgnoreCase("list")) {
 		su.showAllCreatures(sender);
 		return true;
+	    } else if (creatureString.equalsIgnoreCase("reload") || creatureString.equalsIgnoreCase("rl")) {
+		if (!(sender instanceof Player) || plugin.hasPermission((Player) sender, "silkspawners.reload")) {
+		    plugin.reloadConfigs();
+		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
+		} else {
+		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+		}
+		return true;
 	    }
 
 	    // Since egg is obsolete, just remove it then

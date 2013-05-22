@@ -358,6 +358,7 @@ public class Configuration {
 	config.addDefault("getSpawnerType", "&2This is a &e%creature% spawner");
 	config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%");
 	config.addDefault("useNumbers", "&4Please use a numeric number between 1 and 64!");
+	config.addDefault("configsReloaded", "&2Successfully reloaded the configs!");
 	config.addDefault("usageEggCommand", "&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)");
 	config.addComment("usageEggCommand", "");
 	config.addDefault("usageEggCommandCommandLine", "&4To use SilkSpawners from the command line use /egg [creature] [amount] [name]");

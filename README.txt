@@ -111,17 +111,18 @@ Only bukkit's permissions system is supported!
 SilkSpawners:
 Aliases: silkspawner, ss, spawner, silk, spawnersilk
 Description: Change or view the monster spawner creature type
-Usage: /silkspawners [creature]|[creature]egg|all
+Usage: /silkspawners [creature]|[creature]egg|all|reload
 
 Egg:
 Aliases: eggs, eg
 Description: Change the egg type
-Usage: /egg [creature]|[creature]egg|all   
+Usage: /egg [creature]|[creature]egg|all|reload
 
 **General**
 silkspawners.* (only used when usePermissions is set to true) - Grants access to all other permission (including other wildcard permissions)
 *silkspawners.info (true) - Allows you to see informative messages about the spawners as you place and break them
 *silkspawners.viewtype (true) - Allows you to view the spawner type using /spawner
+*silkspawners.reload (op) - Allows you to reload the configs on the fly
 
 **Placing spawners**
 silkspawners.place.* or silkspawners.place.<creaturetype> (true) - Allows you to place a spawner

@@ -32,9 +32,18 @@ public class SpawnerCommand implements CommandExecutor {
 	// Case console
 	if (!(sender instanceof Player)) {
 	    // Not enough arguments -> list
-	    if (args.length >= 0 && args.length < 3) {
+	    if (args.length == 0 ) {
 		su.showAllCreatures(sender);
 		return true;
+	    } else {
+		if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
+		    plugin.reloadConfigs();
+		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
+		    return true;
+		} else if  (args.length < 3) {
+		    su.showAllCreatures(sender);
+		    return true;
+		}
 	    }
 	    // We need exactly 3 arguments (creature, amount and player)
 	    if (args.length != 3) {
@@ -48,8 +57,8 @@ public class SpawnerCommand implements CommandExecutor {
 		try {
 		    amount = Integer.valueOf(args[1]);
 		} catch (NumberFormatException e) {
-		   sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
-		   return true;
+		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+		    return true;
 		}
 	    }
 	    String playerName = args[2];
@@ -114,6 +123,14 @@ public class SpawnerCommand implements CommandExecutor {
 	    String creatureString = args[0].toLowerCase();
 	    if (creatureString.equalsIgnoreCase("all") || creatureString.equalsIgnoreCase("list")) {
 		su.showAllCreatures(sender);
+		return true;
+	    } else if (creatureString.equalsIgnoreCase("reload") || creatureString.equalsIgnoreCase("rl")) {
+		if (plugin.hasPermission(player, "silkspawners.reload")) {
+		    plugin.reloadConfigs();
+		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
+		} else {
+		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+		}
 		return true;
 	    }
 
