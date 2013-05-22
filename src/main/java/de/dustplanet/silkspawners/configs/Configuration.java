@@ -357,11 +357,12 @@ public class Configuration {
 	config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection");
 	config.addDefault("getSpawnerType", "&2This is a &e%creature% spawner");
 	config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%");
+	config.addDefault("useNumbers", "&4Please use a numeric number between 1 and 64!");
 	config.addDefault("usageEggCommand", "&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)");
 	config.addComment("usageEggCommand", "");
-	config.addDefault("usageEggCommandCommandLine", "&4To use SilkSpawners from the command line use /egg [creature] [name]");
+	config.addDefault("usageEggCommandCommandLine", "&4To use SilkSpawners from the command line use /egg [creature] [amount] [name]");
 	config.addDefault("usageSpawnerCommand", "&4To use this command, empty your hand (to get a free spawner), point at an existing spawner or have a spawner in your hand (to change the spawner type)");
-	config.addDefault("usageSpawnerCommandCommandLine", "&4To use SilkSpawners from the command line use /spawner [creature]|[creature]egg [name]");
+	config.addDefault("usageSpawnerCommandCommandLine", "&4To use SilkSpawners from the command line use /spawner [creature]|[creature]egg [amount] [name]");
 	config.addDefault("spawnerBroken", "&e%creature% spawner broken");
 	config.addComment("spawnerBroken", "");
 	config.addDefault("spawnerPlaced", "&e%creature% spawner placed");

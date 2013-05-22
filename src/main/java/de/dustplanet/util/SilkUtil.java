@@ -152,19 +152,19 @@ public class SilkUtil {
 	return newEggItem(entityID, 1);
     }
 
-    // Create a tagged a mob spawner item with it's entity ID so we know what it
-    // spawns
+    // Create a tagged a mob spawner item with it's entity ID and custom amount
     /**
      * This method will make a new MobSpawner with a custom entityID and name
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
-     * @return the ItemStack (amount 1) with the configured options
+     * @param amount the wanted amount
+     * @return the ItemStack with the configured options
      */
-    public ItemStack newSpawnerItem(short entityID, String customName) {
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
 	if (customName == null || customName.equalsIgnoreCase("")) {
 	    customName = "Monster Spawner";
 	}
-	ItemStack item = new ItemStack(Material.MOB_SPAWNER, 1, entityID);
+	ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
 	// Check if we need a colored name
 	if (coloredNames) {
 	    ItemMeta meta = item.getItemMeta();
@@ -179,6 +179,17 @@ public class SilkUtil {
 	// and it caused glowing issues
 	// Due to this trading etc. was impossible
 	return item;
+    }
+    
+    // Create a tagged mob spawner item with it's entityID and amount 1
+    /**
+     * 
+     * @param entityID the mob
+     * @param customName if the MobSpawner will be named different
+     * @return the ItemStack (amount 1) with the configured options
+     */
+    public ItemStack newSpawnerItem(short entityID, String customName) {
+	return newSpawnerItem(entityID, customName, 1);
     }
 
     // Get the entity ID

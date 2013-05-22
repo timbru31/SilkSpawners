@@ -32,18 +32,27 @@ public class SpawnerCommand implements CommandExecutor {
 	// Case console
 	if (!(sender instanceof Player)) {
 	    // Not enough arguments -> list
-	    if (args.length == 0 || args.length == 1) {
+	    if (args.length >= 0 && args.length < 3) {
 		su.showAllCreatures(sender);
 		return true;
 	    }
-	    // We need exactly 2 arguments (creature and player)
-	    if (args.length != 2) {
+	    // We need exactly 3 arguments (creature, amount and player)
+	    if (args.length != 3) {
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageSpawnerCommandCommandLine")));
 		return true;
 	    }
 	    // Get strings
 	    String creatureString = args[0].toLowerCase();
-	    String playerName = args[1];
+	    int amount = 1;
+	    if (args.length > 1) {
+		try {
+		    amount = Integer.valueOf(args[1]);
+		} catch (NumberFormatException e) {
+		   sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+		   return true;
+		}
+	    }
+	    String playerName = args[2];
 	    Player player = plugin.getServer().getPlayer(playerName);
 	    // Online check
 	    if (player == null) {
@@ -69,12 +78,12 @@ public class SpawnerCommand implements CommandExecutor {
 
 	    // Add egg
 	    if (isEgg) {
-		player.getInventory().addItem(su.newEggItem(entityID));
+		player.getInventory().addItem(su.newEggItem(entityID, amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replace("%creature%", creatureString)).replaceAll("%player%", player.getName()));
 	    }
 	    // Add spawner
 	    else {
-		player.getInventory().addItem(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
+		player.getInventory().addItem(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName"), amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawnerOtherPlayer").replace("%creature%", creatureString)).replaceAll("%player%", player.getName()));
 	    }
 	    return true;
@@ -220,14 +229,24 @@ public class SpawnerCommand implements CommandExecutor {
 		    return true;
 		}
 
+		int amount = 1;
+		if (args.length > 1) {
+		    try {
+			amount = Integer.valueOf(args[1]);
+		    } catch (NumberFormatException e) {
+			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+			return true;
+		    }
+		}
+
 		// Add egg or spawner
 		if (isEgg && (plugin.hasPermission(player, "silkspawners.freeitemegg." + mobName) || plugin.hasPermission(player, "silkspawners.freeitemegg.*"))) {
-		    player.setItemInHand(su.newEggItem(entityID));
+		    player.setItemInHand(su.newEggItem(entityID, amount));
 		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg").replace("%creature%", creatureString)));
 		    return true;
 		}
 		if (plugin.hasPermission(player, "silkspawners.freeitem." + mobName) || plugin.hasPermission(player, "silkspawners.freeitem.*")) {
-		    player.setItemInHand(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
+		    player.setItemInHand(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName"), amount));
 		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner").replace("%creature%", creatureString)));
 		    return true;
 		} else {

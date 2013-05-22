@@ -93,19 +93,42 @@ public class EggCommand implements CommandExecutor {
 		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageEggCommand")));
 		    return true;
 		}
+		
+		// Amount
+		int amount = 1;
+		if (args.length > 1) {
+		    try {
+			amount = Integer.valueOf(args[1]);
+		    } catch (NumberFormatException e) {
+			 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+			 return true;
+		    }
+		}
 
 		// Add egg
-		player.setItemInHand(su.newEggItem(entityID));
+		player.setItemInHand(su.newEggItem(entityID, amount));
 		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg").replaceAll("%creature%", creatureString)));
 	    }
 	    // Console MUST include a name
 	    else {
 		// /egg creature name
-		if (args.length != 2) {
+		if (args.length != 3) {
 		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageEggCommandCommandLine")));
 		    return true;
 		}
-		String playerName = args[1];
+		
+		// Amount
+		int amount = 1;
+		if (args.length > 1) {
+		    try {
+			amount = Integer.valueOf(args[1]);
+		    } catch (NumberFormatException e) {
+			 sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+			 return true;
+		    }
+		}
+		
+		String playerName = args[2];
 		Player player = plugin.getServer().getPlayer(playerName);
 		// Online check
 		if (player == null) {
@@ -113,7 +136,7 @@ public class EggCommand implements CommandExecutor {
 		    return true;
 		}
 		// Add item
-		player.getInventory().addItem(su.newEggItem(entityID));
+		player.getInventory().addItem(su.newEggItem(entityID, amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replaceAll("%creature%", creatureString)).replaceAll("%player%", player.getName()));
 	    }
 	}
