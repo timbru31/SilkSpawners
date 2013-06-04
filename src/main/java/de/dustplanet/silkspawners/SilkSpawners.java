@@ -231,9 +231,7 @@ public class SilkSpawners extends JavaPlugin {
 
     private void loadConfigs() {
 	// Check for colored names
-	if (localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
-	    su.coloredNames = false;
-	} else {
+	if (!localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
 	    su.coloredNames = true;
 	}
 
