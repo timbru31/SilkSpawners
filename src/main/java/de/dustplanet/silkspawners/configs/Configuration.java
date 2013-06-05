@@ -313,8 +313,6 @@ public class Configuration {
 	config.addDefault("creatures.PrimedTnt.enable", false);
 	// FallingSand
 	config.addDefault("creatures.FallingSand.enable", false);
-	// Minecart
-	config.addDefault("creatures.Minecart.enable", false);
 	// Boat
 	config.addDefault("creatures.Boat.enable", false);
 	// Mob
@@ -329,6 +327,18 @@ public class Configuration {
 	config.addDefault("creatures.WitherSkull.enable", false);
 	// FireworksRocketEntity
 	config.addDefault("creatures.FireworksRocketEntity.enable", false);
+	// MinecartRideable
+	config.addDefault("creatures.MinecartRideable.enable", false);
+	// MinecartChest
+	config.addDefault("creatures.MinecartChest.enable", false);
+	// MinecartFurnace
+	config.addDefault("creatures.MinecartFurnace.enable", false);
+	// MinecartTNT
+	config.addDefault("creatures.MinecartTNT.enable", false);
+	// MinecartHopper
+	config.addDefault("creatures.MinecartHopper.enable", false);
+	// MinecartSpawner
+	config.addDefault("creatures.MinecartSpawner.enable", false);
     }
 
     private void loadDefaultLocalization() {

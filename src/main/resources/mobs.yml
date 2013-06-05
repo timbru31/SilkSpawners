@@ -251,8 +251,6 @@ creatures:
     enable: false
   FallingSand:
     enable: false
-  Minecart:
-    enable: false
   Boat:
     enable: false
   Mob:
@@ -266,4 +264,16 @@ creatures:
   WitherSkull:
     enable: false
   FireworksRocketEntity:
+    enable: false
+  MinecartRideable:
+    enable: false
+  MinecartChest:
+    enable: false
+  MinecartFurnace:
+    enable: false
+  MinecartTNT:
+    enable: false
+  MinecartHopper:
+    enable: false
+  MinecartSpawner:
     enable: false
