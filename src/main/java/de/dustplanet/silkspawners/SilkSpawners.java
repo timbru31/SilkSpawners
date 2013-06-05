@@ -70,28 +70,28 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Load configs
 	loadConfigs();
-	
+
 	// Test for right Minecraft version
 	if (config.getBoolean("testMCVersion", true)) {
-	   String serverVersion = MinecraftServer.getServer().getVersion();
-	   if (!COMPATIBLE_MINECRAFT_VERSION.equalsIgnoreCase(serverVersion)) {
+	    String serverVersion = MinecraftServer.getServer().getVersion();
+	    if (!COMPATIBLE_MINECRAFT_VERSION.equalsIgnoreCase(serverVersion)) {
 		getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
 		getLogger().info("Please check your versions to make sure they match!");
 		getLogger().info("Disabling now!");
 		getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
 		setEnabled(false);
 		return;
-	   }
+	    }
 	}
 
 	// Nicer ErrorLogger (can be disabled)
 	// http://forums.bukkit.org/threads/105321/
-//	if (config.getBoolean("useErrorLogger", true)) {
-//	    getLogger().info("ErrorLogger enabled");
-//	    ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
-//	} else {
-//	    getLogger().info("ErrorLogger disabled");
-//	}
+	//	if (config.getBoolean("useErrorLogger", true)) {
+	//	    getLogger().info("ErrorLogger enabled");
+	//	    ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
+	//	} else {
+	//	    getLogger().info("ErrorLogger disabled");
+	//	}
 	// Temp
 	getLogger().info("ErrorLogger is disabled, regardless of your settings to give the author enough time to update it!");
 	getLogger().info("This feature will be available again in the near future!");
@@ -253,12 +253,19 @@ public class SilkSpawners extends JavaPlugin {
 
 	    // Lookup creature info
 	    boolean enable = config.getBoolean("enableCreatureDefault", true);
-	    enable = mobs.getBoolean("creatures." + mobID + ".enable", enable);
+	    // Check if already known
+	    if (!mobs.contains("creatures." + mobID)) {
+		getLogger().info("Entity " + entityID + "/" + mobID + " is not in the config. Adding...");
+		mobs.addDefault("creatures." + mobID + ".enable", enable);
+		mobs.save();
+	    } else {
+		enable = mobs.getBoolean("creatures." + mobID + ".enable", enable);
+	    }
 	    if (!enable) {
 		if (verbose) {
 		    getLogger().info("Entity " + entityID + " = " + mobID + "/"
-				    + bukkitEntity + "[" + bukkitEntityClass
-				    + "] (disabled)");
+			    + bukkitEntity + "[" + bukkitEntityClass
+			    + "] (disabled)");
 		}
 		continue;
 	    }
@@ -294,9 +301,9 @@ public class SilkSpawners extends JavaPlugin {
 	    // Detailed message
 	    if (verbose) {
 		getLogger().info("Entity " + entityID + " = " + mobID + "/"
-				+ bukkitEntity + "[" + bukkitEntityClass
-				+ "] (display name: " + displayName
-				+ ", aliases: " + aliases + ")");
+			+ bukkitEntity + "[" + bukkitEntityClass
+			+ "] (display name: " + displayName
+			+ ", aliases: " + aliases + ")");
 	    }
 	}
 
