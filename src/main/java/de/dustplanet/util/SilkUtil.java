@@ -3,7 +3,6 @@ package de.dustplanet.util;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,10 +25,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.getspout.spoutapi.player.SpoutPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.registry.EntityRegistry;
 import de.dustplanet.silkspawners.SilkSpawners;
 
 /**
@@ -462,17 +457,6 @@ public class SilkUtil {
 	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
 		sortedMap.put(entry.getValue(), entry.getKey());
 	    }
-	    
-	    // Let's add MCPC+ compatibility
-	    if (Bukkit.getVersion().contains("MCPC-Plus")) { 
-		Field field1 = EntityRegistry.instance().getClass().getDeclaredField("entityNames");
-		field1.setAccessible(true);
-		Map<String, ModContainer> names = (Map<String, ModContainer>) field.get(EntityRegistry.instance());
-		for (Entry<String, ModContainer> set : names.entrySet()) {
-		    System.out.println("name: " + set.getKey() + " ID: " + set.getValue().getModId());
-		    System.out.println(set.getValue().getName());
-		}
-	    }
 	}
 	// Fail
 	catch (Exception e) {
@@ -540,6 +524,19 @@ public class SilkUtil {
      */
     public boolean isUnkown(String creatureString) {
 	return !name2Eid.containsKey(creatureString);
+    }
+    
+    /**
+     * Check if the given string is a number
+     * @param number to check
+     * @return number or not found -1
+     */
+    public short getNumber(String number) {
+	try {
+	    return Short.valueOf(number);
+	} catch(NumberFormatException e) {
+	    return -1;
+	}
     }
 
     /*

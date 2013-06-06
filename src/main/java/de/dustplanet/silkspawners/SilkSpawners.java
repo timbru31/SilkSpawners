@@ -496,9 +496,11 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     public void reloadConfigs() {
+	config.load();
 	config.save();
-	localization.save();
+	mobs.load();
 	mobs.save();
-	loadConfigs();
+	localization.load();
+	localization.save();
     }
 }

@@ -434,6 +434,8 @@ public class Configuration {
 	config.addComment("consumeEgg", "", "# Should the egg be consumed when the spawner is changed with it");
 	config.addDefault("enableCreatureDefault", true);
 	config.addComment("enableCreatureDefault", "", "# Fallback if the creature should be enabled, if not specified for the entity");
+	config.addDefault("ignoreCheckNumbers", false);
+	config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
 	config.addDefault("spawnEggOverride", false);
 	config.addComment("spawnEggOverride", "", "# Should the spawn algorithm be overridden? Allows spawning of non-standard entities");
 	config.addDefault("spawnEggOverrideSpawnDefault", true);

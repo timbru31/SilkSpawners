@@ -31,10 +31,6 @@
 			<id>Plugin Metrics</id>
 			<url>http://repo.mcstats.org/content/repositories/public</url>
 		</repository>
-		<repository>
-			<id>Dustplanet repo</id>
-			<url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
-		</repository>
 	</repositories>
 
 	<!-- Dependencies -->
@@ -62,18 +58,6 @@
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
 			<version>5.7.6-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mcstats.bukkit</groupId>
-			<artifactId>metrics</artifactId>
-			<version>R6</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>mcpc</groupId>
-			<artifactId>mcpc-plus</artifactId>
-			<version>LATEST</version>
-			<optional>true</optional>
 			<exclusions>
 				<exclusion>
 					<groupId>*</groupId>
@@ -81,7 +65,12 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+		<dependency>
+			<groupId>org.mcstats.bukkit</groupId>
+			<artifactId>metrics</artifactId>
+			<version>R6</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

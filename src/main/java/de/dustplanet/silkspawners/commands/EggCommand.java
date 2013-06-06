@@ -54,13 +54,20 @@ public class EggCommand implements CommandExecutor {
 	    }
 
 	    // See if this creature is known
-	    if (su.isUnkown(creatureString)) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replaceAll("%creature%", creatureString)));
+	    if ((su.isUnkown(creatureString) && !plugin.config.getBoolean("ignoreCheckNumbers", false))
+		    || (su.isUnkown(creatureString) && plugin.config.getBoolean("ignoreCheckNumbers", false) && su.getNumber(creatureString) == -1)) {
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
 		return true;
 	    }
 
 	    // entityID
-	    short entityID = su.name2Eid.get(creatureString);
+	    short entityID = 0;
+	    if (su.getNumber(creatureString) == -1) {
+		entityID = su.name2Eid.get(creatureString);
+	    } else {
+		entityID = su.getNumber(creatureString);
+	    }
+
 	    creatureString = su.getCreatureName(entityID);
 	    // Filter spaces (like Zombie Pigman)
 	    String mobName = creatureString.toLowerCase().replaceAll(" ", "");
