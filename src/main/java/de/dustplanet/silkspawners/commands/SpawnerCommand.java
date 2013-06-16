@@ -115,6 +115,7 @@ public class SpawnerCommand implements CommandExecutor {
 		return true;
 	    }
 	    short entityID = su.getSpawnerEntityID(block);
+	    System.out.println("Block looking entityID: " + entityID);
 	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("getSpawnerType").replaceAll("%creature%", su.getCreatureName(entityID))));
 	}
 	// Set or get spawner

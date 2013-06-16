@@ -40,63 +40,63 @@ public class SilkUtil {
      * This HashMap is holding the entityID and the display name of each mob
      */
     public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<Short, String>();
-    
+
     // EntityID to MobID
     /**
      * This HashMap is holding the entityID and the internal Minecraft name of each mob
      */
     public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<Short, String>();
-    
+
     // MobID to entityID
     /**
      * This HashMap is holding the internal Minecraft name of each mob and the entityID
      */
     public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<String, Short>();
-   
+
     // Name to entityID
     /**
      * This HashMap is holding the display name of each mob and the entityID
      */
     public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<String, Short>();
-    
+
     // Known entityIDs
     /**
      * List of enabled (and therefore) known entityIDs
      */
     public ArrayList<Short> knownEids = new ArrayList<Short>();
-    
+
     // Default is 90 = PIG
     // To prevent empty string use real ID and not 0 anymore
     /**
      * Default (fallback) entityID, standard is 90 the pig
      */
     public short defaultEntityID = 90;
-    
+
     // Fields for reflection
     /**
      * Field used for reflection
      */
     public Field tileField;
-    
+
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
     /**
      * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish)
      */
     public Material SPAWN_EGG = Material.MONSTER_EGG;
-    
+
     // WorldGuard instance
     /**
      * WorldGuard instance, may be null
      */
     private WorldGuardPlugin wg;
-    
+
     // Should we use the normal names or a colored one?
     /**
      * Boolean value to determine if spawner names should be colored
      */
     public boolean coloredNames;
-    
+
     // SilkSpawners instance, not necessary
     /**
      * SilkSpawners instance
@@ -161,6 +161,7 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
+	System.out.println("New Spawner with ID: " + entityID);
 	if (customName == null || customName.equalsIgnoreCase("")) {
 	    customName = "Monster Spawner";
 	}
@@ -174,13 +175,15 @@ public class SilkUtil {
 
 	// The way it should be stored (double sure!)
 	item.setDurability(entityID);
+	
+	System.out.println("This short value is stored: " + item.getDurability());
 
 	// Removed the old unsafeEnchantment method since BUKKIT-329 is fixed
 	// and it caused glowing issues
 	// Due to this trading etc. was impossible
 	return item;
     }
-    
+
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
      * 
@@ -200,6 +203,7 @@ public class SilkUtil {
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
 	short id = item.getDurability();
+	System.out.println("StoredID: " + id);
 	// Is it stored and working? Great return this!
 	// Should work again after BUKKIT-329
 	if (id != 0) {
@@ -258,7 +262,8 @@ public class SilkUtil {
 	    try {
 		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 		// Get the name from the field of our spawner
-		String mobID = tile.a().getMobName();;
+		String mobID = tile.a().getMobName();
+		System.out.println("Get ID, mobID: " + mobID);
 		return mobID2Eid.get(mobID);
 	    } catch (Exception e) {
 		Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
@@ -277,6 +282,7 @@ public class SilkUtil {
      * @param entityID the wanted entityID
      */
     public void setSpawnerEntityID(Block block, short entityID) {
+	System.out.println("Changing block to " + entityID);
 	BlockState blockState = block.getState();
 	// Call it only on CreatureSpawners
 	if (!(blockState instanceof CreatureSpawner)) {
@@ -295,12 +301,16 @@ public class SilkUtil {
 		// anymore]
 		// Fallback then!
 		if (mobID == null) {
+		    System.out.println("mobID was null");
 		    mobID = getCreatureName(entityID);
 		}
 		// uh still null, default [PIG]!
 		if (mobID == null) {
+		    System.out.println("mobID still null");
 		    mobID = getCreatureName((short) 90);
 		}
+
+		System.out.println(mobID);
 		// Refer to the NMS TileEntityMobSpawner and change the name,
 		// see
 		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
@@ -457,6 +467,22 @@ public class SilkUtil {
 	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
 		sortedMap.put(entry.getValue(), entry.getKey());
 	    }
+	    // Okay, TEST TODO
+	    for (EntityType type : EntityType.values()) {
+		String name = type.getName();
+		short ID = type.getTypeId();
+		if (name == null) {
+		    System.out.println("Null here: " + ID);
+		    continue;
+		}
+		if (sortedMap.containsKey((int) ID)) {
+		    System.out.println("druff: " + name + " " + ID);
+
+		} else {
+		    System.out.println("Added: " + name + " " + ID);
+		    sortedMap.put((int) ID, name);
+		}
+	    }
 	}
 	// Fail
 	catch (Exception e) {
@@ -525,7 +551,7 @@ public class SilkUtil {
     public boolean isUnkown(String creatureString) {
 	return !name2Eid.containsKey(creatureString);
     }
-    
+
     /**
      * Check if the given string is a number
      * @param number to check
