@@ -33,8 +33,11 @@ public class SilkSpawnersBlockListener implements Listener {
 	su = util;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
+	if (event.isCancelled()) {
+	    return;
+	}
 	Block block = event.getBlock();
 	Player player = event.getPlayer();
 	// To prevent silk touch exploit by breaking blocks holding spawner
@@ -71,8 +74,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 
 	// Message the player about the broken spawner
-	plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
-		plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID))));
+	plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID))));
 
 	// If using silk touch, drop spawner itself
 	ItemStack tool = player.getItemInHand();
@@ -126,8 +128,11 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(final BlockPlaceEvent event) {
+	if (event.isCancelled()) {
+	    return;
+	}
 	Block blockPlaced = event.getBlockPlaced();
 	// Just mob spawner events
 	if (blockPlaced.getType() != Material.MOB_SPAWNER) {
