@@ -154,7 +154,7 @@ public class SilkUtil {
 
     // Create a tagged a mob spawner item with it's entity ID and custom amount
     /**
-     * This method will make a new MobSpawner with a custom entityID and name
+     * This method will make a new MobSpawner with a custom entityID, name and amount
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
@@ -183,7 +183,7 @@ public class SilkUtil {
 
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
-     * 
+     * This method will make a new MobSpawner with a custom entityID and name, amount will be 1
      * @param entityID the mob
      * @param customName if the MobSpawner will be named different
      * @return the ItemStack (amount 1) with the configured options
@@ -443,7 +443,6 @@ public class SilkUtil {
      * Use reflection to scan through each mob and the IDs/name
      * @return Map with a result of Integer (ID), String (name)
      */
-    @SuppressWarnings("unchecked")
     public SortedMap<Integer, String> scanEntityMap() {
 	SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
 	// Use reflection to dump native EntityTypes
@@ -453,6 +452,7 @@ public class SilkUtil {
 	    // f.put(s, Integer.valueOf(i)); --> Name of ID
 	    Field field = EntityTypes.class.getDeclaredField("f");
 	    field.setAccessible(true);
+	    @SuppressWarnings("unchecked")
 	    Map<String, Integer> map = (Map<String, Integer>) field.get(null);
 	    // For each entry in our name -- ID map but it into the sortedMap
 	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
