@@ -73,6 +73,9 @@ enableCreatureDefault: true
 
 # Should numbers be ignored (on eggs) and allow every number value?
 ignoreCheckNumbers: false
+
+# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)
+spawnEggToSpawner: false
  
 # Should the spawn algorithm be overridden? Allows spawning of non-standard entities
 spawnEggOverride: false

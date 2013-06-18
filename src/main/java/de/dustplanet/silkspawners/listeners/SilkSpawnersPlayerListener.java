@@ -118,12 +118,14 @@ public class SilkSpawnersPlayerListener implements Listener {
 			targetBlock.setType(Material.MOB_SPAWNER);
 			su.setSpawnerEntityID(targetBlock, entityID);
 			// Prevent mob spawning
-			event.setCancelled(true);
 			// Should we consume the egg?
 			if (plugin.config.getBoolean("consumeEgg", true)) {
 			    su.reduceEggs(player);
 			}
+		    } else {
+			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSpawnerHere")));
 		    }
+		    event.setCancelled(true);
 		}
 		// Disabled by default, since it is dangerous
 		else if (plugin.config.getBoolean("spawnEggOverride", false)) {
@@ -138,10 +140,10 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // Deny spawning
 		    if (!allowed) {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-					plugin.localization
-						.getString("spawningDenied")
-						.replaceAll("%creature%", su.getCreatureName(entityID))
-						.replaceAll("%ID%", Short.toString(entityID))));
+				plugin.localization
+				.getString("spawningDenied")
+				.replaceAll("%creature%", su.getCreatureName(entityID))
+				.replaceAll("%ID%", Short.toString(entityID))));
 			event.setCancelled(true);
 			return;
 		    }
@@ -151,9 +153,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 		    // Notify
 		    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
-					    plugin.localization.getString("spawning")
-						    .replaceAll("%creature%", su.getCreatureName(entityID))
-						    .replaceAll("%ID%", Short.toString(entityID))));
+			    plugin.localization.getString("spawning")
+			    .replaceAll("%creature%", su.getCreatureName(entityID))
+			    .replaceAll("%ID%", Short.toString(entityID))));
 
 		    // We can spawn using the direct method from EntityTypes
 		    // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
@@ -164,10 +166,11 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    if (entity == null) {
 			org.bukkit.World bukkitWorld = player.getWorld();
 			EntityType entityT = EntityType.fromId(entityID);
+			if (entityT == null) {
+			    plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
+			    return;
+			}
 			bukkitWorld.spawnEntity(block.getLocation(), entityT);
-			
-			plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
-			return;
 		    }
 
 		    // Spawn on top of targeted block

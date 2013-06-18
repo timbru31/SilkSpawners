@@ -41,6 +41,7 @@ informationOfSpawner3: '-- EntityID: %ID% --'
  
 spawningDenied: '&4Spawning of &e%creature% (ID %ID%) &4denied!'
 spawning: '&2Spawning  &e%creature% (ID %ID%)'
+noSpawnerHere: '&4A spawner cant be placed here, because the block above is blocked!'
  
 lookAtSpawner: '&4You must be looking directly at a spawner.'
 lookAtSpawnerOrInHand: '&4You must be looking directly at a spawner or have a spawner in your hand to use this command'

@@ -385,6 +385,7 @@ public class Configuration {
 	config.addDefault("spawningDenied", "&4Spawning of &e%creature% (ID %ID%) &4denied!");
 	config.addComment("spawningDenied", "");
 	config.addDefault("spawning", "&2Spawning  &e%creature% (ID %ID%)");
+	config.addDefault("noSpawnerHere", "&4A spawner cant be placed here, because the block above is blocked!");
 	config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
 	config.addComment("lookAtSpawner", "");
 	config.addDefault("lookAtSpawnerOrInHand", "&4You must be looking directly at a spawner or have a spawner in your hand to use this command");
@@ -436,6 +437,8 @@ public class Configuration {
 	config.addComment("enableCreatureDefault", "", "# Fallback if the creature should be enabled, if not specified for the entity");
 	config.addDefault("ignoreCheckNumbers", false);
 	config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
+	config.addDefault("spawnEggToSpawner", false);
+	config.addComment("spawnEggToSpawner", "", "# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)");
 	config.addDefault("spawnEggOverride", false);
 	config.addComment("spawnEggOverride", "", "# Should the spawn algorithm be overridden? Allows spawning of non-standard entities");
 	config.addDefault("spawnEggOverrideSpawnDefault", true);
