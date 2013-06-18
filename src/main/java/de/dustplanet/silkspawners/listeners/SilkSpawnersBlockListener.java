@@ -147,11 +147,10 @@ public class SilkSpawnersBlockListener implements Listener {
 	ItemStack item = event.getItemInHand();
 	// Get data from item
 	short entityID = su.getStoredSpawnerItemEntityID(item);
-	System.out.println("EntityID place: " + entityID);
 	// 0 or unknown then fallback
 	if (entityID == 0 || !su.knownEids.contains(entityID)) {
 	    // Default
-	    //entityID = su.defaultEntityID;
+	    entityID = su.defaultEntityID;
 	}
 
 	// Names
