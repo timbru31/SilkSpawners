@@ -458,7 +458,7 @@ public class SilkUtil {
 	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
 		sortedMap.put(entry.getValue(), entry.getKey());
 	    }
-	    
+
 	    // Let's scan for added entities by e.g MCPC+
 	    for (EntityType type : EntityType.values()) {
 		String name = type.getName();
@@ -550,6 +550,22 @@ public class SilkUtil {
 	    return Short.valueOf(number);
 	} catch(NumberFormatException e) {
 	    return -1;
+	}
+    }
+    
+    /**
+     * Reduces the egg (item stack) by 1
+     * @param player the player
+     */
+    public void reduceEggs(Player player) {
+	ItemStack eggs = player.getItemInHand();
+	// Make it empty
+	if (eggs.getAmount() == 1) {
+	    player.setItemInHand(null);
+	} else {
+	    // Reduce egg
+	    eggs.setAmount((eggs.getAmount() - 1));
+	    player.setItemInHand(eggs);
 	}
     }
 

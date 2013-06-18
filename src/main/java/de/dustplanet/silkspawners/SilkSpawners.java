@@ -238,8 +238,6 @@ public class SilkSpawners extends JavaPlugin {
 	// Should we display more information
 	boolean verbose = config.getBoolean("verboseConfig", false);
 
-	// Maybe we need to change it later because reflection field changed,
-	// user can adjust it then
 	// Scan the entities
 	SortedMap<Integer, String> sortedMap = su.scanEntityMap();
 	for (Map.Entry<Integer, String> entry : sortedMap.entrySet()) {
@@ -368,7 +366,7 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// Optionally make spawners unstackable in an attempt to be more
-	// compatible with CraftBukkit++
+	// compatible with CraftBukkit forks which may conflict
 	// Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
 	if (config.getBoolean("spawnersUnstackable", false)) {
 	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/

@@ -4,11 +4,14 @@ import net.minecraft.server.v1_5_R3.Entity;
 import net.minecraft.server.v1_5_R3.EntityLiving;
 import net.minecraft.server.v1_5_R3.EntityTypes;
 import net.minecraft.server.v1_5_R3.World;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_5_R3.CraftWorld;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -104,20 +107,26 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 		// Consume egg
 		if (plugin.config.getBoolean("consumeEgg", true)) {
-		    ItemStack eggs = player.getItemInHand();
-		    // Make it empty
-		    if (eggs.getAmount() == 1) {
-			player.setItemInHand(null);
-		    } else {
-			// Reduce egg
-			eggs.setAmount((eggs.getAmount() - 1));
-			player.setItemInHand(eggs);
-		    }
+		    su.reduceEggs(player);
 		}
 		// Normal spawning
 	    } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+		if (plugin.config.getBoolean("spawnEggToSpawner", false)) {
+		    Block targetBlock = block.getRelative(BlockFace.UP);
+		    // Check if block above is air
+		    if (targetBlock.getType() == Material.AIR) {
+			targetBlock.setType(Material.MOB_SPAWNER);
+			su.setSpawnerEntityID(targetBlock, entityID);
+			// Prevent mob spawning
+			event.setCancelled(true);
+			// Should we consume the egg?
+			if (plugin.config.getBoolean("consumeEgg", true)) {
+			    su.reduceEggs(player);
+			}
+		    }
+		}
 		// Disabled by default, since it is dangerous
-		if (plugin.config.getBoolean("spawnEggOverride", false)) {
+		else if (plugin.config.getBoolean("spawnEggOverride", false)) {
 		    // Name
 		    String mobID = su.eid2MobID.get(entityID);
 		    // Are we allowed to spawn?
@@ -153,6 +162,10 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // Should actually never happen since the method above
 		    // contains a null check, too
 		    if (entity == null) {
+			org.bukkit.World bukkitWorld = player.getWorld();
+			EntityType entityT = EntityType.fromId(entityID);
+			bukkitWorld.spawnEntity(block.getLocation(), entityT);
+			
 			plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
 			return;
 		    }
@@ -172,14 +185,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 			((EntityLiving) entity).aR();
 		    }
 
-		    // Remove item from player hand
-		    if (item.getAmount() == 1) {
-			player.setItemInHand(null);
-		    }
-		    else {
-			item.setAmount(item.getAmount() - 1);
-			player.setItemInHand(item);
-		    }
+		    su.reduceEggs(player);
 
 		    // Prevent normal spawning
 		    event.setCancelled(true);
