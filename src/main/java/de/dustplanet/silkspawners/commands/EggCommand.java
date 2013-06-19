@@ -56,7 +56,7 @@ public class EggCommand implements CommandExecutor {
 	    // See if this creature is known
 	    if ((su.isUnkown(creatureString) && !plugin.config.getBoolean("ignoreCheckNumbers", false))
 		    || (su.isUnkown(creatureString) && plugin.config.getBoolean("ignoreCheckNumbers", false) && su.getNumber(creatureString) == -1)) {
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature").replace("%creature%", creatureString)));
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature")).replace("%creature%", creatureString));
 		return true;
 	    }
 
@@ -70,7 +70,7 @@ public class EggCommand implements CommandExecutor {
 
 	    creatureString = su.getCreatureName(entityID);
 	    // Filter spaces (like Zombie Pigman)
-	    String mobName = creatureString.toLowerCase().replaceAll(" ", "");
+	    String mobName = creatureString.toLowerCase().replace(" ", "");
 
 	    if (sender instanceof Player) {
 		// We know it's safe
@@ -93,7 +93,7 @@ public class EggCommand implements CommandExecutor {
 		    entityID = changeEvent.getEntityID();
 		    creatureString = su.getCreatureName(entityID);
 		    su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
-		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg").replaceAll("%creature%", creatureString)));
+		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg")).replace("%creature%", creatureString));
 		    return true;
 		}
 
@@ -122,7 +122,7 @@ public class EggCommand implements CommandExecutor {
 
 		// Add egg
 		player.setItemInHand(su.newEggItem(entityID, amount));
-		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg").replaceAll("%creature%", creatureString)));
+		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg")).replace("%creature%", creatureString));
 	    }
 	    // Console MUST include a name
 	    else {
@@ -152,7 +152,7 @@ public class EggCommand implements CommandExecutor {
 		}
 		// Add item
 		player.getInventory().addItem(su.newEggItem(entityID, amount));
-		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replaceAll("%creature%", creatureString)).replaceAll("%player%", player.getName()));
+		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replace("%player%", player.getName())).replace("%creature%", creatureString));
 	    }
 	}
 	return true;

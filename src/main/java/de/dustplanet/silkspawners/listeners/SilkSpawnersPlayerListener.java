@@ -4,14 +4,12 @@ import net.minecraft.server.v1_5_R3.Entity;
 import net.minecraft.server.v1_5_R3.EntityLiving;
 import net.minecraft.server.v1_5_R3.EntityTypes;
 import net.minecraft.server.v1_5_R3.World;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_5_R3.CraftWorld;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -84,7 +82,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		}
 
 		// Mob
-		String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
+		String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
 
 		if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName)
 			&& !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
@@ -103,7 +101,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		entityID = changeEvent.getEntityID();
 
 		su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
-		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner").replaceAll("%creature%", su.getCreatureName(entityID))));
+		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner")).replace("%creature%", su.getCreatureName(entityID)));
 
 		// Consume egg
 		if (plugin.config.getBoolean("consumeEgg", true)) {
@@ -142,8 +140,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
 				plugin.localization
 				.getString("spawningDenied")
-				.replaceAll("%creature%", su.getCreatureName(entityID))
-				.replaceAll("%ID%", Short.toString(entityID))));
+				.replace("%ID%", Short.toString(entityID)))
+				.replace("%creature%", su.getCreatureName(entityID)));
 			event.setCancelled(true);
 			return;
 		    }
@@ -154,8 +152,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // Notify
 		    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
 			    plugin.localization.getString("spawning")
-			    .replaceAll("%creature%", su.getCreatureName(entityID))
-			    .replaceAll("%ID%", Short.toString(entityID))));
+			    .replace("%ID%", Short.toString(entityID)))
+			    .replace("%creature%", su.getCreatureName(entityID)));
 
 		    // We can spawn using the direct method from EntityTypes
 		    // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
@@ -164,13 +162,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // Should actually never happen since the method above
 		    // contains a null check, too
 		    if (entity == null) {
-			org.bukkit.World bukkitWorld = player.getWorld();
-			EntityType entityT = EntityType.fromId(entityID);
-			if (entityT == null) {
-			    plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
-			    return;
-			}
-			bukkitWorld.spawnEntity(block.getLocation(), entityT);
+			plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
 		    }
 
 		    // Spawn on top of targeted block

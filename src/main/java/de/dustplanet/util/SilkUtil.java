@@ -168,7 +168,7 @@ public class SilkUtil {
 	// Check if we need a colored name
 	if (coloredNames) {
 	    ItemMeta meta = item.getItemMeta();
-	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID))));
+	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
 	    item.setItemMeta(meta);
 	}
 
@@ -370,7 +370,7 @@ public class SilkUtil {
 	    // Check if we should color
 	    if (coloredNames) {
 		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName.replaceAll("%creature%", getCreatureName(entityID))));
+		meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
 		item.setItemMeta(meta);
 	    }
 	}
@@ -429,7 +429,7 @@ public class SilkUtil {
 	// For each entry in the list
 	StringBuffer buf = new StringBuffer();
 	for (String displayName : eid2DisplayName.values()) {
-	    displayName = displayName.replaceAll(" ", "");
+	    displayName = displayName.replace(" ", "");
 	    buf.append(displayName + ", ");
 	}
 	// Strip last comma out
@@ -497,16 +497,13 @@ public class SilkUtil {
 	} else {
 	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
 		    plugin.localization.getString("informationOfSpawner1")
-		    .replaceAll("%creature%", spawnerName)
-		    .replaceAll("%ID%", Short.toString(entityID))));
+		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
 	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
 		    plugin.localization.getString("informationOfSpawner2")
-		    .replaceAll("%creature%", spawnerName)
-		    .replaceAll("%ID%", Short.toString(entityID))));
+		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
 	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
 		    plugin.localization.getString("informationOfSpawner3")
-		    .replaceAll("%creature%", spawnerName)
-		    .replaceAll("%ID%", Short.toString(entityID))));
+		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
 	}
     }
 
@@ -552,7 +549,7 @@ public class SilkUtil {
 	    return -1;
 	}
     }
-    
+
     /**
      * Reduces the egg (item stack) by 1
      * @param player the player

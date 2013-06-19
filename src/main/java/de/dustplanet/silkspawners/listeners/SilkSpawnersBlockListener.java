@@ -74,7 +74,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 
 	// Message the player about the broken spawner
-	plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken").replaceAll("%creature%", su.getCreatureName(entityID))));
+	plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken")).replace("%creature%", su.getCreatureName(entityID)));
 
 	// If using silk touch, drop spawner itself
 	ItemStack tool = player.getItemInHand();
@@ -85,7 +85,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	World world = player.getWorld();
 
 	// Mob
-	String mobName = su.getCreatureName(entityID).toLowerCase().replaceAll(" ", "");
+	String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
 
 	// No drops in creative
 	if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) {
@@ -155,13 +155,13 @@ public class SilkSpawnersBlockListener implements Listener {
 
 	// Names
 	String creatureName = su.getCreatureName(entityID).toLowerCase();
-	String spawnerName = creatureName.replaceAll(" ", "");
+	String spawnerName = creatureName.replace(" ", "");
 
 	// Check for place permission
 	if (!plugin.hasPermission(player, "silkspawners.place.*")
 		&& !plugin.hasPermission(player, "silkspawners.place." + spawnerName)) {
 	    event.setCancelled(true);
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replaceAll("%creature%", spawnerName).replaceAll("%ID%", Short.toString(entityID))));
+	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
 	    return;
 	}
 
@@ -171,7 +171,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 	// Else message the type
 	else {
-	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced").replaceAll("%creature%", su.getCreatureName(entityID))));
+	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced")).replace("%creature%", su.getCreatureName(entityID)));
 	}
 
 	su.setSpawnerEntityID(blockPlaced, entityID);
