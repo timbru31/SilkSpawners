@@ -162,6 +162,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // contains a null check, too
 		    if (entity == null) {
 			plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
+			return;
 		    }
 
 		    // Spawn on top of targeted block
