@@ -1,15 +1,14 @@
 package de.dustplanet.silkspawners.listeners;
 
-import net.minecraft.server.v1_5_R3.Entity;
-import net.minecraft.server.v1_5_R3.EntityLiving;
-import net.minecraft.server.v1_5_R3.EntityTypes;
-import net.minecraft.server.v1_5_R3.World;
+import net.minecraft.server.v1_6_R1.Entity;
+import net.minecraft.server.v1_6_R1.EntityTypes;
+import net.minecraft.server.v1_6_R1.World;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_5_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -174,11 +173,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    // We need to add the entity to the world, reason is of
 		    // course a spawn egg so that other events can handle this
 		    world.addEntity(entity, SpawnReason.SPAWNER_EGG);
-
-		    // Make a sound of the specific entity
-		    if (entity instanceof EntityLiving) {
-			((EntityLiving) entity).aR();
-		    }
 
 		    su.reduceEggs(player);
 

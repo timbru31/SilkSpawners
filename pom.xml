@@ -38,14 +38,14 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.5.2-R0.1-SNAPSHOT</version>
+			<version>1.6.1-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.5.2-R0.1-SNAPSHOT</version>
+			<version>1.6.1-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -58,17 +58,11 @@
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
 			<version>5.7.6-SNAPSHOT</version>
-			<exclusions>
-				<exclusion>
-					<groupId>*</groupId>
-					<artifactId>*</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
-			<version>R6</version>
+			<version>R7</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
