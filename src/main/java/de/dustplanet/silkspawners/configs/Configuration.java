@@ -286,6 +286,19 @@ public class Configuration {
 	config.addDefault("creatures.WitherBoss.enable", true);
 	config.addDefault("creatures.WitherBoss.enableCraftingSpawner", true);
 	config.addDefault("creatures.WitherBoss.enableSpawnEggOverride", true);
+	tempList = new ArrayList<String>();
+	// EntityHorse (Horse)
+	tempList.add("horse");
+	tempList.add("h");
+	tempList.add("bronco");
+	tempList.add("donkey");
+	tempList.add("pony");
+	tempList.add("mule");
+	config.addDefault("creatures.EntityHorse.aliases", tempList);
+	config.addDefault("creatures.EntityHorse.displayName", "Horse");
+	config.addDefault("creatures.EntityHorse.enable", true);
+	config.addDefault("creatures.EntityHorse.enableCraftingSpawner", true);
+	config.addDefault("creatures.EntityHorse.enableSpawnEggOverride", true);
 	// Item
 	config.addDefault("creatures.Item.enable", false);
 	config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
@@ -339,6 +352,8 @@ public class Configuration {
 	config.addDefault("creatures.MinecartHopper.enable", false);
 	// MinecartSpawner
 	config.addDefault("creatures.MinecartSpawner.enable", false);
+	// LeashKnot
+	config.addDefault("creatures.LeashKnot.enable", false);
     }
 
     private void loadDefaultLocalization() {

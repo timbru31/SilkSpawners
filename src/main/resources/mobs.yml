@@ -222,6 +222,18 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
+  EntityHorse:
+    aliases:
+    - horse
+    - h
+    - bronco
+    - donkey
+    - pony
+    - mule
+    displayName: Horse
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
  
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -276,4 +288,6 @@ creatures:
   MinecartHopper:
     enable: false
   MinecartSpawner:
+    enable: false
+  LeashKnot:
     enable: false
