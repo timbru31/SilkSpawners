@@ -127,6 +127,13 @@
 					<include>config.yml</include>
 					<include>localization.yml</include>
 					<include>mobs.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>${basedir}</directory>
+				<includes>
 					<include>README.txt</include>
 				</includes>
 			</resource>
