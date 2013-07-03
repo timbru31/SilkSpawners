@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.dustplanet</groupId>
 	<artifactId>SilkSpawners</artifactId>
-	<version>3.3-SNAPSHOT</version>
+	<version>3.3.1-SNAPSHOT</version>
 	<name>SilkSpawners</name>
 	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
 	<description>Pickup, place and customize Monster Spawners</description>
