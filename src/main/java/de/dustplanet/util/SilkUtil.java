@@ -259,8 +259,10 @@ public class SilkUtil {
 		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 		// Get the name from the field of our spawner
 		String mobID = tile.a().getMobName();
-		// In case the block is not on our list return 0
-		return mobID2Eid.contains(mobID)? mobID2Eid.get(mobID) : 0;
+		// In case the block is not on our list try a fallback
+		if (mobID != null && mobID2Eid.containsKey(mobID)) {
+		    return mobID2Eid.get(mobID);
+		}
 	    } catch (Exception e) {
 		Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 		e.printStackTrace();
