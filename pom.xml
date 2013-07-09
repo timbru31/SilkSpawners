@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.dustplanet</groupId>
 	<artifactId>SilkSpawners</artifactId>
-	<version>3.4-SNAPSHOT</version>
+	<version>3.3.2-SNAPSHOT</version>
 	<name>SilkSpawners</name>
 	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
 	<description>Pickup, place and customize Monster Spawners</description>
@@ -38,14 +38,14 @@
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.6.1-R0.1-SNAPSHOT</version>
+			<version>1.6.2-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.6.1-R0.1-SNAPSHOT</version>
+			<version>1.6.2-R0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
