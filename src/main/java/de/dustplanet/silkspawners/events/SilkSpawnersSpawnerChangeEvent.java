@@ -13,9 +13,18 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     // Our objects
     private Player player;
     private short id;
+    private final short oldID;
     private Block block;
     private CreatureSpawner spawner;
 
+    /**
+     * This constructor should not be used anymore,
+     * because the new one carries information about the
+     * current entityID of the spawner block or item
+     *
+     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short)} instead.  
+     */
+    @Deprecated
     public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
 	this.player = player;
 	this.block = block;
@@ -23,6 +32,17 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	    this.spawner = (CreatureSpawner) block.getState();
 	}
 	this.id = id;
+	this.oldID = 0;
+    }
+    
+    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID) {
+	this.player = player;
+	this.block = block;
+	if (block != null) {
+	    this.spawner = (CreatureSpawner) block.getState();
+	}
+	this.id = id;
+	this.oldID = oldID;
     }
 
     /**
@@ -79,6 +99,14 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      */
     public void setEntityID(short id) {
 	this.id = id;
+    }
+    
+    /**
+     * Gets the old entityID of the spawner (item or block)
+     * May return 0 if the deprecated constructor is used!
+     */
+    public short getOldEntityID() {
+	return this.oldID;
     }
 
     public HandlerList getHandlers() {
