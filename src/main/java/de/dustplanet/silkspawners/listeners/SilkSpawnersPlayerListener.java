@@ -90,7 +90,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		}
 
 		// Call the event and maybe change things!
-		SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID);
+		SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID, su.getSpawnerEntityID(block));
 		plugin.getServer().getPluginManager().callEvent(changeEvent);
 		// See if we need to stop
 		if (changeEvent.isCancelled()) {

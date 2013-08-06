@@ -23,7 +23,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import org.getspout.spoutapi.player.SpoutPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import de.dustplanet.silkspawners.SilkSpawners;
 
@@ -487,27 +486,20 @@ public class SilkUtil {
     // Warning: Don't call the method unless you have the SilkSpawners instance!
     /**
      * Notify a player about the spawner
-     * NEEDS A SILKSPAWNERS INSTANCE ACTIVE
      * @param player the player
      * @param spawnerName the creature name
      * @param entityID the ID
      */
     public void notify(Player player, String spawnerName, short entityID) {
-	// If we use Spout & the player Spoutcraft, send a notification
-	// (achievement like)
-	if (plugin.spoutEnabled && ((SpoutPlayer) player).isSpoutCraftEnabled()) {
-	    ((SpoutPlayer) player).sendNotification("Monster Spawner", spawnerName, Material.MOB_SPAWNER);
-	} else {
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner1")
-		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner2")
-		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner3")
-		    .replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
-	}
+	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		plugin.localization.getString("informationOfSpawner1")
+		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
+	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		plugin.localization.getString("informationOfSpawner2")
+		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
+	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		plugin.localization.getString("informationOfSpawner3")
+		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
     }
 
     // Clear RAM

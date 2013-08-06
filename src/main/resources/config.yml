@@ -83,9 +83,6 @@ spawnEggOverride: false
 # Fallback if the creature should be spawned, if not specified for the entity
 spawnEggOverrideSpawnDefault: true
  
-# If the player uses SpoutCraft and Spout is present, he will receive additional information
-useSpout: true
- 
 # Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
  

@@ -458,8 +458,6 @@ public class Configuration {
 	config.addComment("spawnEggOverride", "", "# Should the spawn algorithm be overridden? Allows spawning of non-standard entities");
 	config.addDefault("spawnEggOverrideSpawnDefault", true);
 	config.addComment("spawnEggOverrideSpawnDefault", "", "# Fallback if the creature should be spawned, if not specified for the entity");
-	config.addDefault("useSpout", true);
-	config.addComment("useSpout", "", "# If the player uses SpoutCraft and Spout is present, he will receive additional information");
 	config.addDefault("notifyOnClick", true);
 	config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
 	config.addDefault("notifyOnHold", true);

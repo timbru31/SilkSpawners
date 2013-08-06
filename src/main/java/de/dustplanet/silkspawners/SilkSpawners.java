@@ -51,7 +51,7 @@ public class SilkSpawners extends JavaPlugin {
     private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    public boolean spoutEnabled, usePermissions;
+    public boolean usePermissions;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
     public static final String COMPATIBLE_MINECRAFT_VERSION = "1.6.2";
@@ -95,16 +95,6 @@ public class SilkSpawners extends JavaPlugin {
 	// Temp
 	getLogger().info("ErrorLogger is disabled, regardless of your settings to give the author enough time to update it!");
 	getLogger().info("This feature will be available again in the near future!");
-
-	// Check for spout
-	if (config.getBoolean("useSpout", true)) {
-	    if (getServer().getPluginManager().isPluginEnabled("Spout")) {
-		getLogger().info("Spout present. Enabling Spout features.");
-		spoutEnabled = true;
-	    } else {
-		getLogger().info("Spout not found. Disabling Spout features.");
-	    }
-	}
 
 	// Check if we should enable the auto Updater & have no snapshot (dev build)
 	if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
