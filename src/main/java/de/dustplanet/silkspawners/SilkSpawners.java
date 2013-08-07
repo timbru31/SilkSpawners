@@ -51,7 +51,7 @@ public class SilkSpawners extends JavaPlugin {
     private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    public boolean usePermissions;
+    public boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
     public static final String COMPATIBLE_MINECRAFT_VERSION = "1.6.2";
@@ -330,7 +330,7 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// See if we should use permissions
-	usePermissions = config.getBoolean("usePermissions", false);
+	usePermissions = config.getBoolean("usePermissions", true);
 
 	// Enable craftable spawners?
 	if (config.getBoolean("craftableSpawners", false)) {

@@ -410,7 +410,7 @@ public class Configuration {
 	config.options().header("See documentation at http://dev.bukkit.org/server-mods/silkspawners/pages/configuration");		
 	config.addDefault("autoUpdater", true);
 	config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
-	config.addDefault("usePermissions", false);
+	config.addDefault("usePermissions", true);
 	config.addComment("usePermissions", "", "# Should permissions be used");
 	config.addDefault("useWorldGuard", true);
 	config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");

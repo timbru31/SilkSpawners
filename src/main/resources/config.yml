@@ -4,7 +4,7 @@
 autoUpdater: true
  
 # Should permissions be used
-usePermissions: false
+usePermissions: true
  
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
