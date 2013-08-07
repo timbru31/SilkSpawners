@@ -414,7 +414,7 @@ public class Configuration {
 	config.addDefault("useWorldGuard", true);
 	config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");
 	config.addDefault("explosionDropChance", 30);
-	config.addComment("explosionDropChance", "", "Percentage of dropping a spawner block when TNT or creepers explode");
+	config.addComment("explosionDropChance", "", "# Percentage of dropping a spawner block when TNT or creepers explode");
 	config.addDefault("defaultCreature", 90);
 	config.addComment("defaultCreature", "", "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)", "# PIG (90) is Minecraft default (put NAMES or IDs here!)");
 	config.addDefault("spawnerCommandReachDistance", 6);
