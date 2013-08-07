@@ -8,6 +8,9 @@ usePermissions: true
  
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
+
+# Percentage of dropping a spawner block when TNT or creepers explode
+explosionDropChance: 30
  
 # When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
 # PIG (90) is Minecraft default (put NAMES or IDs here!)

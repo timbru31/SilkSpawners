@@ -9,8 +9,10 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+
 import net.minecraft.server.v1_6_R2.Item;
 import net.minecraft.server.v1_6_R2.MinecraftServer;
+
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_6_R2.block.CraftCreatureSpawner;
@@ -20,10 +22,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.configs.Configuration;
+import de.dustplanet.silkspawners.listeners.SilkSpawnersEntityListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
@@ -31,8 +35,10 @@ import de.dustplanet.util.CommentedConfiguration;
 // ErrorLogger
 //import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.SilkUtil;
+
 // Metrics
 import org.mcstats.Metrics;
+
 // Updater
 import net.h31ix.updater.Updater;
 
@@ -47,6 +53,7 @@ public class SilkSpawners extends JavaPlugin {
     private SilkSpawnersBlockListener blockListener;
     private SilkSpawnersPlayerListener playerListener;
     private SilkSpawnersInventoryListener inventoryListener;
+    private SilkSpawnersEntityListener entityListener;
     private SpawnerCommand spawnerCommand;
     private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
@@ -118,9 +125,11 @@ public class SilkSpawners extends JavaPlugin {
 	blockListener = new SilkSpawnersBlockListener(this, su);
 	playerListener = new SilkSpawnersPlayerListener(this, su);
 	inventoryListener = new SilkSpawnersInventoryListener(this, su);
+	entityListener = new SilkSpawnersEntityListener(this, su);
 	getServer().getPluginManager().registerEvents(blockListener, this);
 	getServer().getPluginManager().registerEvents(playerListener, this);
 	getServer().getPluginManager().registerEvents(inventoryListener, this);
+	getServer().getPluginManager().registerEvents(entityListener, this);
 
 	// Metrics
 	try {
