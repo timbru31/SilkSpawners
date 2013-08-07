@@ -3,6 +3,7 @@ package de.dustplanet.silkspawners.listeners;
 import net.minecraft.server.v1_6_R2.Entity;
 import net.minecraft.server.v1_6_R2.EntityTypes;
 import net.minecraft.server.v1_6_R2.World;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -19,6 +20,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
+
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;

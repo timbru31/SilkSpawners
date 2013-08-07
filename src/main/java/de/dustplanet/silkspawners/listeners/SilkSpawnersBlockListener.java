@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.util.SilkUtil;
 

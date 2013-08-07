@@ -1,6 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
 import java.util.Random;
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -8,6 +9,7 @@ import org.bukkit.entity.EnderDragon;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+
 import org.bukkit.event.entity.EntityExplodeEvent;
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.util.SilkUtil;

@@ -2,7 +2,6 @@ package de.dustplanet.silkspawners.configs;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import de.dustplanet.util.CommentedConfiguration;
 
 public class Configuration {
