@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.configs;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import de.dustplanet.util.CommentedConfiguration;
 
 public class Configuration {
@@ -398,7 +399,7 @@ public class Configuration {
 	config.addDefault("informationOfSpawner3", "-- EntityID: %ID% --");
 	config.addDefault("spawningDenied", "&4Spawning of &e%creature% (ID %ID%) &4denied!");
 	config.addComment("spawningDenied", "");
-	config.addDefault("spawning", "&2Spawning  &e%creature% (ID %ID%)");
+	config.addDefault("spawning", "&2Spawning &e%creature% (ID %ID%)");
 	config.addDefault("noSpawnerHere", "&4A spawner cant be placed here, because the block above is blocked!");
 	config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
 	config.addComment("lookAtSpawner", "");
