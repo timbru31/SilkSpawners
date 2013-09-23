@@ -20,8 +20,9 @@
 			<url>http://repo.bukkit.org/content/repositories/snapshots</url>
 		</repository>
 		<repository>
-			<id>sk89q-repo</id>
-			<url>http://maven.sk89q.com/repo/</url>
+			<id>Dustplanet</id>
+			<name>Dustplanet-snapshots</name>
+			<url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
 		</repository>
 		<repository>
 			<id>Plugin Metrics</id>
@@ -48,7 +49,7 @@
 		<dependency>
 			<groupId>com.sk89q</groupId>
 			<artifactId>worldguard</artifactId>
-			<version>5.8.1-SNAPSHOT</version>
+			<version>LATEST</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mcstats.bukkit</groupId>
