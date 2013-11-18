@@ -71,7 +71,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 	    // This tells if the specified path has already been commented
 	    boolean commentedPath = false;
 	    // This flags if the line is a node or unknown text.
-	    boolean node = false;
+	    boolean node;
 	    // The depth of the path. (number of words separated by periods - 1)
 	    int depth = 0;
 

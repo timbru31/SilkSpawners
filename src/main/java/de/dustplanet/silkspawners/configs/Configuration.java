@@ -8,31 +8,34 @@ import de.dustplanet.util.CommentedConfiguration;
 public class Configuration {
     private CommentedConfiguration config;
 
-    public Configuration(CommentedConfiguration config, int configNumber) {
-	if (config != null) {
-	    this.config = config;
-	    // Load configuration
-	    config.load();
-	    // Switch between our cases
-	    switch (configNumber) {
-	    case 1:
-		loadDefaultConfig();
-		break;
-	    case 2:
-		loadDefaultLocalization();
-		break;
-	    case 3:
-		loadDefaultMobs();
-		break;
-	    default:
-		loadDefaultConfig();
-		break;
-	    }
-	    // Copy defaults and save
-	    config.options().copyDefaults(true);
-	    config.save();
-	    config.load();
+    public Configuration(CommentedConfiguration config) {
+	if (config == null) {
+	    throw new IllegalArgumentException("Null config.");
 	}
+	this.config = config;
+    }
+
+    public void loadNum(int configNumber) {
+	// Switch between our cases
+	switch (configNumber) {
+	case 1:
+	    loadDefaultConfig();
+	    break;
+	case 2:
+	    loadDefaultLocalization();
+	    break;
+	case 3:
+	    loadDefaultMobs();
+	    break;
+	default:
+	    loadDefaultConfig();
+	    break; 
+	}
+	config.load();
+	// Copy defaults and save
+	config.options().copyDefaults(true);
+	config.save();
+	config.load();
     }
 
     private void loadDefaultMobs() {

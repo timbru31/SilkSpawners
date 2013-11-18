@@ -206,13 +206,13 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Load configs
 	config = new CommentedConfiguration(configFile);
-	new Configuration(config, 1);
+	new Configuration(config).loadNum(1);
 
 	localization = new CommentedConfiguration(localizationFile);
-	new Configuration(localization, 2);
+	new Configuration(localization).loadNum(2);
 
 	mobs = new CommentedConfiguration(mobsFile);
-	new Configuration(mobs, 3);
+	new Configuration(mobs).loadNum(3);
 
 	// We need to migrate the old mobs from config.yml to mobs.yml
 	if (config.contains("creatures")) {
