@@ -35,6 +35,13 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	this.oldID = 0;
     }
     
+    /**
+     * Constructor of the event
+     * @param player who issues the event
+     * @param block is allowed to be null
+     * @param id new ID
+     * @param oldID of the spawner
+     */
     public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID) {
 	this.player = player;
 	this.block = block;
@@ -55,7 +62,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Cancel the event
-     * @param whether the event should be cancelled or not
+     * @param cancel whether the event should be cancelled or not
      */
     public void setCancelled(boolean cancel) {
 	this.cancelled = cancel;
@@ -95,7 +102,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Sets the entityID of the spawner
-     * @param the new entityID
+     * @param id the new entityID
      */
     public void setEntityID(short id) {
 	this.id = id;
