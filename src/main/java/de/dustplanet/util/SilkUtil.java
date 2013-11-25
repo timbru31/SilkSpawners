@@ -108,7 +108,7 @@ public class SilkUtil {
 
     /**
      * Constructor to make your own SilkUtil instance
-     * @param SilkSpawners instance
+     * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
 	getWorldGuard(instance);
