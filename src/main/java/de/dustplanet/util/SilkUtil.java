@@ -148,7 +148,7 @@ public class SilkUtil {
 
     /**
      * Returns a new ItemStack of a spawn egg with the amount one and mob
-     * @param entityID - which mob should be spawned
+     * @param entityID which mob should be spawned
      * @return the ItemStack (amount is one)
      */
     public ItemStack newEggItem(short entityID) {
