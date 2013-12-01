@@ -106,7 +106,7 @@ public class Configuration {
 	tempList.add("pg");
 	tempList.add("zp");
 	config.addDefault("creatures.PigZombie.aliases", tempList);
-	config.addDefault("creatures.PigZombies.displayName", "Zombie Pigman");
+	config.addDefault("creatures.PigZombie.displayName", "Zombie Pigman");
 	config.addDefault("creatures.PigZombie.enable", true);
 	config.addDefault("creatures.PigZombie.enableCraftingSpawner", true);
 	config.addDefault("creatures.PigZombie.enableSpawnEggOverride", true);
@@ -160,11 +160,11 @@ public class Configuration {
 	config.addDefault("creatures.LavaSlime.enableCraftingSpawner", true);
 	config.addDefault("creatures.LavaSlime.enableSpawnEggOverride", true);
 	tempList = new ArrayList<String>();
-	// EnderDragon (Enderdragon)
+	// EnderDragon (Ender Dragon)
 	tempList.add("dragon");
 	tempList.add("raqreqentba");
 	config.addDefault("creatures.EnderDragon.aliases", tempList);
-	config.addDefault("creatures.EnderDragon.displayName", "Enderdragon");
+	config.addDefault("creatures.EnderDragon.displayName", "Ender Dragon");
 	config.addDefault("creatures.EnderDragon.enable", true);
 	config.addDefault("creatures.EnderDragon.enableCraftingSpawner", true);
 	config.addDefault("creatures.EnderDragon.enableSpawnEggOverride", true);
@@ -219,6 +219,7 @@ public class Configuration {
 	tempList.add("mc");
 	tempList.add("mcow");
 	config.addDefault("creatures.MushroomCow.aliases", tempList);
+	config.addDefault("creatures.MushroomCow.displayName", "Mooshroom");
 	config.addDefault("creatures.MushroomCow.enable", true);
 	config.addDefault("creatures.MushroomCow.enableCraftingSpawner", true);
 	config.addDefault("creatures.MushroomCow.enableSpawnEggOverride", true);
@@ -357,6 +358,8 @@ public class Configuration {
 	config.addDefault("creatures.MinecartSpawner.enable", false);
 	// LeashKnot
 	config.addDefault("creatures.LeashKnot.enable", false);
+	// MinecartCommandBlock
+	config.addDefault("creatures.MinecartCommandBlock.enable", false);
     }
 
     private void loadDefaultLocalization() {

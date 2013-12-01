@@ -61,7 +61,6 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
-  PigZombies:
     displayName: Zombie Pigman
   Enderman:
     aliases:
@@ -111,7 +110,7 @@ creatures:
     aliases:
     - dragon
     - raqreqentba
-    displayName: Enderdragon
+    displayName: Ender Dragon
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -162,6 +161,7 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
+    displayName: Mooshroom
   SnowMan:
     aliases:
     - golem
@@ -290,4 +290,6 @@ creatures:
   MinecartSpawner:
     enable: false
   LeashKnot:
+    enable: false
+  MinecartCommandBlock:
     enable: false

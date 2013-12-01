@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
-import net.minecraft.server.v1_6_R3.Item;
-import net.minecraft.server.v1_6_R3.MinecraftServer;
+import net.minecraft.server.v1_7_R1.Item;
+import net.minecraft.server.v1_7_R1.MinecraftServer;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_6_R3.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_7_R1.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -61,7 +61,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.6.4";
+    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.2";
 
     public void onDisbale() {
 	su.clearAll();
@@ -372,8 +372,9 @@ public class SilkSpawners extends JavaPlugin {
 	    try {
 		Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
 		// Set the stackable field back to 1
+		// TODO
 		maxStackSizeField.setAccessible(true);
-		maxStackSizeField.setInt(Item.byId[Material.MOB_SPAWNER.getId()], 1);
+		maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
 	    } catch (Exception e) {
 		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
 		e.printStackTrace();

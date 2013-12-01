@@ -7,8 +7,8 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.minecraft.server.v1_6_R3.EntityTypes;
-import net.minecraft.server.v1_6_R3.TileEntityMobSpawner;
+import net.minecraft.server.v1_7_R1.EntityTypes;
+import net.minecraft.server.v1_7_R1.TileEntityMobSpawner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_6_R3.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_7_R1.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -423,6 +423,7 @@ public class SilkUtil {
 		displayName = String.valueOf(entityID);
 	    }
 	}
+	System.out.println(displayName);
 	return displayName;
     }
 
@@ -433,13 +434,13 @@ public class SilkUtil {
      */
     public void showAllCreatures(CommandSender sender) {
 	// For each entry in the list
-	StringBuffer buf = new StringBuffer();
+	StringBuilder builder = new StringBuilder();
 	for (String displayName : eid2DisplayName.values()) {
 	    displayName = displayName.replace(" ", "");
-	    buf.append(displayName + ", ");
+	    builder.append(displayName + ", ");
 	}
 	// Strip last comma out
-	String message = buf.toString();
+	String message = builder.toString();
 	message = message.substring(0, message.length() - ", ".length());
 	sender.sendMessage(message);
     }
@@ -456,7 +457,7 @@ public class SilkUtil {
 	try {
 	    // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L21
 	    // f.put(s, Integer.valueOf(i)); --> Name of ID
-	    Field field = EntityTypes.class.getDeclaredField("f");
+	    Field field = EntityTypes.class.getDeclaredField("g");
 	    field.setAccessible(true);
 	    @SuppressWarnings("unchecked")
 	    Map<String, Integer> map = (Map<String, Integer>) field.get(null);
