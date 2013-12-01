@@ -40,7 +40,7 @@ import de.dustplanet.util.SilkUtil;
 import org.mcstats.Metrics;
 
 // Updater
-import net.h31ix.updater.Updater;
+import net.gravitydevelopment.updater.Updater;
 
 /**
  * General stuff
@@ -106,7 +106,7 @@ public class SilkSpawners extends JavaPlugin {
 	// Check if we should enable the auto Updater & have no snapshot (dev build)
 	if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
 	    // Updater http://forums.bukkit.org/threads/96681/
-	    new Updater(this, "silkspawners", this.getFile(), Updater.UpdateType.DEFAULT, true);
+	    new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
 	    getLogger().info("AutoUpdater enabled");
 	} else {
 	    getLogger().info("AutoUpdater disabled");
