@@ -368,17 +368,17 @@ public class SilkSpawners extends JavaPlugin {
 	// compatible with CraftBukkit forks which may conflict
 	// Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
 	if (config.getBoolean("spawnersUnstackable", false)) {
-	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
-	    try {
-		Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
-		// Set the stackable field back to 1
-		// TODO
-		maxStackSizeField.setAccessible(true);
-		maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
-	    } catch (Exception e) {
-		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-		e.printStackTrace();
-	    }
+//	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+//	    try {
+//		Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
+//		// Set the stackable field back to 1
+//		// TODO
+//		maxStackSizeField.setAccessible(true);
+//		maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
+//	    } catch (Exception e) {
+//		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+//		e.printStackTrace();
+//	    }
 	}
     }
 
