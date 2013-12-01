@@ -423,7 +423,6 @@ public class SilkUtil {
 		displayName = String.valueOf(entityID);
 	    }
 	}
-	System.out.println(displayName);
 	return displayName;
     }
 
