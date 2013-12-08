@@ -148,7 +148,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    }
 		    // Bukkit doesn't allow us to spawn wither or dragons and so
 		    // on. NMS here we go!
-		    // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java#L23
+		    // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java#L22
 
 		    // Notify
 		    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
@@ -157,7 +157,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 			    .replace("%creature%", su.getCreatureName(entityID)));
 
 		    // We can spawn using the direct method from EntityTypes
-		    // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L67
+		    // https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L96
 		    World world = ((CraftWorld) player.getWorld()).getHandle();
 		    Entity entity = EntityTypes.a(entityID, world);
 		    // Should actually never happen since the method above
