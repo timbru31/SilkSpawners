@@ -363,13 +363,19 @@ public class SilkSpawners extends JavaPlugin {
 	if (config.getBoolean("spawnersUnstackable", false)) {
 	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
 	    try {
-		Field itemRegisteryField = Item.class.getDeclaredField("REGISTRY");
-		itemRegisteryField.setAccessible(true);
-		RegistryMaterials registery = (RegistryMaterials) itemRegisteryField.get(null);
-		Object o = registery.a(52);
+		// Get the new registery HashMp from the Item class
+		Field registryField = Item.class.getDeclaredField("REGISTRY");
+		registryField.setAccessible(true);
+		RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
+		// Get entry of the spawner
+		Object spawnerEntry = registry.a(52);
+		// Set maxStackSize "e(int maxStackSize)"
 		Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
 		maxStackSize.setAccessible(true);
-		maxStackSize.setInt(o, 1);
+		maxStackSize.setInt(spawnerEntry, 1);
+		// Cleanup
+		registryField.setAccessible(false);
+		maxStackSize.setAccessible(false);
 	    } catch (Exception e) {
 		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
 		e.printStackTrace();

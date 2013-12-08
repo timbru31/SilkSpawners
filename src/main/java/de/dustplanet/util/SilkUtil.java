@@ -306,8 +306,6 @@ public class SilkUtil {
 		if (mobID == null) {
 		    mobID = getCreatureName((short) 90);
 		}
-		
-		mobID = "";
 
 		// Refer to the NMS TileEntityMobSpawner and change the name,
 		// see
