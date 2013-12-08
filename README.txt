@@ -1,5 +1,6 @@
 This is the README of SilkSpawners!
-For support the new dev.bukkit.org page: http://bit.ly/dbosilkspawners
+For support visit the dev.bukkit.org page:
+http://dev.bukkit.org/bukkit-plugins/silkspawners/
 Thanks to mushroomhostage for the original plugin!
 Thanks for using!
 
