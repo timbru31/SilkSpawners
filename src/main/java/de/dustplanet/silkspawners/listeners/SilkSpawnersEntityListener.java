@@ -45,16 +45,16 @@ public class SilkSpawnersEntityListener implements Listener {
 	}
 
 	// Check if a spawner block is on the list
-	for (Block block : event.blockList()) {
+	for (Block b : event.blockList()) {
 	    // We have a spawner
-	    if (block.getType() == Material.MOB_SPAWNER) {
+	    if (b.getType() == Material.MOB_SPAWNER) {
 		// Roll the dice
 		int randomNumber = rnd.nextInt(100);
 		// Check if we should drop a block
 		if (randomNumber < plugin.config.getInt("explosionDropChance")) {
-		    World world = block.getWorld();
+		    World world = b.getWorld();
 		    // Drop a spawner (first get the entityID from the block and then make a new spawner item)
-		    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(su.getSpawnerEntityID(block), plugin.localization.getString("spawnerName")));
+		    world.dropItemNaturally(b.getLocation(), su.newSpawnerItem(su.getSpawnerEntityID(b), plugin.localization.getString("spawnerName")));
 		}
 	    }
 	}
