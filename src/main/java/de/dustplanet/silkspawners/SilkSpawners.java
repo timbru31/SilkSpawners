@@ -12,6 +12,7 @@ import java.util.SortedMap;
 
 import net.minecraft.server.v1_7_R1.Item;
 import net.minecraft.server.v1_7_R1.MinecraftServer;
+import net.minecraft.server.v1_7_R1.RegistryMaterials;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -32,12 +33,12 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
-// ErrorLogger
-//import de.dustplanet.util.ErrorLogger;
 import de.dustplanet.util.SilkUtil;
+
 
 // Metrics
 import org.mcstats.Metrics;
+
 
 // Updater
 import net.gravitydevelopment.updater.Updater;
@@ -91,23 +92,15 @@ public class SilkSpawners extends JavaPlugin {
 	    }
 	}
 
-	// Nicer ErrorLogger (can be disabled)
-	// http://forums.bukkit.org/threads/105321/
-	//	if (config.getBoolean("useErrorLogger", true)) {
-	//	    getLogger().info("ErrorLogger enabled");
-	//	    ErrorLogger.register(this, "SilkSpawners", "de.dustplanet.silkspawners", "http://dev.bukkit.org/server-mods/silkspawners/tickets/");
-	//	} else {
-	//	    getLogger().info("ErrorLogger disabled");
-	//	}
-	// Temp
-	getLogger().info("ErrorLogger is disabled, regardless of your settings to give the author enough time to update it!");
-	getLogger().info("This feature will be available again in the near future!");
-
 	// Check if we should enable the auto Updater & have no snapshot (dev build)
-	if (config.getBoolean("autoUpdater", true) && !getDescription().getVersion().contains("SNAPSHOT")) {
-	    // Updater http://forums.bukkit.org/threads/96681/
-	    new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
-	    getLogger().info("AutoUpdater enabled");
+	if (config.getBoolean("autoUpdater", true)) {
+	    if (getDescription().getVersion().contains("SNAPSHOT")) {
+		getLogger().info("AutoUpdater disabled because you are running a dev build");
+	    } else {
+		// Updater http://forums.bukkit.org/threads/96681/
+		new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
+		getLogger().info("AutoUpdater enabled");
+	    }
 	} else {
 	    getLogger().info("AutoUpdater disabled");
 	}
@@ -350,7 +343,7 @@ public class SilkSpawners extends JavaPlugin {
 	if (config.getBoolean("useReflection", true)) {
 	    try {
 		// Get the spawner field, see
-		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L13
+		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
 		su.tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
 		su.tileField.setAccessible(true);
 	    } catch (NoSuchFieldException e) {
@@ -368,17 +361,19 @@ public class SilkSpawners extends JavaPlugin {
 	// compatible with CraftBukkit forks which may conflict
 	// Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
 	if (config.getBoolean("spawnersUnstackable", false)) {
-//	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
-//	    try {
-//		Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
-//		// Set the stackable field back to 1
-//		// TODO
-//		maxStackSizeField.setAccessible(true);
-//		maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
-//	    } catch (Exception e) {
-//		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-//		e.printStackTrace();
-//	    }
+	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+	    try {
+		Field itemRegisteryField = Item.class.getDeclaredField("REGISTRY");
+		itemRegisteryField.setAccessible(true);
+		RegistryMaterials registery = (RegistryMaterials) itemRegisteryField.get(null);
+		Object o = registery.a(52);
+		Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
+		maxStackSize.setAccessible(true);
+		maxStackSize.setInt(o, 1);
+	    } catch (Exception e) {
+		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+		e.printStackTrace();
+	    }
 	}
     }
 

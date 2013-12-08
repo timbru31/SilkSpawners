@@ -297,8 +297,7 @@ public class SilkUtil {
 	    try {
 		// Get the name of the mob
 		String mobID = eid2MobID.get(entityID);
-		// Okay the spawner is not on our list [should NOT happen
-		// anymore]
+		// Okay the spawner is not on our list [should NOT happen anymore]
 		// Fallback then!
 		if (mobID == null) {
 		    mobID = getCreatureName(entityID);
@@ -307,10 +306,12 @@ public class SilkUtil {
 		if (mobID == null) {
 		    mobID = getCreatureName((short) 90);
 		}
+		
+		mobID = "";
 
 		// Refer to the NMS TileEntityMobSpawner and change the name,
 		// see
-		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/TileEntityMobSpawner.java#L32
+		// https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/TileEntityMobSpawner.java#L37
 		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 		tile.a().a(mobID);
 
@@ -454,8 +455,8 @@ public class SilkUtil {
 	// Use reflection to dump native EntityTypes
 	// This bypasses Bukkit's wrappers, so it works with mods
 	try {
-	    // https://github.com/Bukkit/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L21
-	    // f.put(s, Integer.valueOf(i)); --> Name of ID
+	    // https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L32
+	    // g.put(s, Integer.valueOf(i)); --> Name of ID
 	    Field field = EntityTypes.class.getDeclaredField("g");
 	    field.setAccessible(true);
 	    @SuppressWarnings("unchecked")
