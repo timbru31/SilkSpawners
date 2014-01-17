@@ -27,6 +27,10 @@
 			<id>Plugin Metrics</id>
 			<url>http://repo.mcstats.org/content/repositories/public</url>
 		</repository>
+		<repository>
+			<id>Dustplanet repo</id>
+			<url>http://ci.dustplanet.de/plugin/repository/everything</url>
+		</repository>
 	</repositories>
 
 	<!-- Dependencies -->
@@ -54,6 +58,12 @@
 			<groupId>org.mcstats.bukkit</groupId>
 			<artifactId>metrics</artifactId>
 			<version>R7</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.gravitydevelopment.updater</groupId>
+			<artifactId>updater</artifactId>
+			<version>2.1</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
@@ -91,6 +101,7 @@
 							<artifactSet>
 								<includes>
 									<include>org.mcstats.bukkit:metrics</include>
+									<include>net.gravitydevelopment.updater:updater</include>
 								</includes>
 							</artifactSet>
 							<!-- Set the final name -->
