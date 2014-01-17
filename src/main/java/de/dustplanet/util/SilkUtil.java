@@ -161,15 +161,16 @@ public class SilkUtil {
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
+     * @param boolean force value even if coloredNames is disabled to ensure custom name
      * @return the ItemStack with the configured options
      */
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
 	if (customName == null || customName.equalsIgnoreCase("")) {
 	    customName = "Monster Spawner";
 	}
 	ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
 	// Check if we need a colored name
-	if (coloredNames) {
+	if (coloredNames || force) {
 	    ItemMeta meta = item.getItemMeta();
 	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
 	    item.setItemMeta(meta);
@@ -182,6 +183,15 @@ public class SilkUtil {
 	// and it caused glowing issues
 	// Due to this trading etc. was impossible
 	return item;
+    }
+    
+    // Create a new MobSpawner without boolean force 
+    /**
+     * @deprecated use {@link #newSpawnerItem(entityID, customName, amount, force)} instead. 
+     */
+    @Deprecated
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
+	return newSpawnerItem(entityID, customName, amount, false);
     }
 
     // Create a tagged mob spawner item with it's entityID and amount 1
