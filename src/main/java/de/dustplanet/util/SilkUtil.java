@@ -161,7 +161,7 @@ public class SilkUtil {
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
-     * @param boolean force value even if coloredNames is disabled to ensure custom name
+     * @param force value even if coloredNames is disabled to ensure custom name
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
@@ -187,7 +187,7 @@ public class SilkUtil {
     
     // Create a new MobSpawner without boolean force 
     /**
-     * @deprecated use {@link #newSpawnerItem(entityID, customName, amount, force)} instead. 
+     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead. 
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
