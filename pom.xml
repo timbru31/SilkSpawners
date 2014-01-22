@@ -142,6 +142,19 @@
 		</resources>
 	</build>
 
+	<!-- Fix targetJdk for PMD -->
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>5.0.2</version>
+				<configuration>
+					<targetJdk>1.6</targetJdk>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+
 	<!-- Github information -->
 	<scm>
 		<url>https://github.com/xGhOsTkiLLeRx/SilkSpawners</url>
