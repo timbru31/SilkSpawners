@@ -194,7 +194,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 		return;
 	    }
 	    ItemStack item = event.getItem().getItemStack();
-	    ItemStack itemNew = su.newSpawnerItem(item.getDurability(), plugin.localization.getString("spawnerName"));
+	    ItemStack itemNew = su.newSpawnerItem(item.getDurability(), plugin.localization.getString("spawnerName"), 1, false);
 	    event.getItem().setItemStack(itemNew);
 	}
     }

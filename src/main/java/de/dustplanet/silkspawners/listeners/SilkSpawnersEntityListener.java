@@ -54,7 +54,7 @@ public class SilkSpawnersEntityListener implements Listener {
 		if (randomNumber < plugin.config.getInt("explosionDropChance")) {
 		    World world = block.getWorld();
 		    // Drop a spawner (first get the entityID from the block and then make a new spawner item)
-		    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(su.getSpawnerEntityID(block), plugin.localization.getString("spawnerName")));
+		    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(su.getSpawnerEntityID(block), plugin.localization.getString("spawnerName"), 1, false));
 		}
 	    }
 	}

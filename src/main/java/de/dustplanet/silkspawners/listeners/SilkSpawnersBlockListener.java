@@ -109,7 +109,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	if (silkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
 		|| plugin.hasPermission(player, "silkspawners.silkdrop.*"))) {
 	    // Drop spawner
-	    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName")));
+	    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName"), 1, false));
 	    return;
 	}
 

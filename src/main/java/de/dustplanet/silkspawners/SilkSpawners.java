@@ -397,7 +397,7 @@ public class SilkSpawners extends JavaPlugin {
 		continue;
 	    }
 	    // Output is one (1) spawner of this type
-	    ItemStack spawnerItem = su.newSpawnerItem(entityID, localization.getString("spawnerName"));
+	    ItemStack spawnerItem = su.newSpawnerItem(entityID, localization.getString("spawnerName"), 1, false);
 	    ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
 	    /*
 	     * A A A A B A A A A
