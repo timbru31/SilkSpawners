@@ -196,10 +196,6 @@ public class SilkUtil {
 
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
-     * This method will make a new MobSpawner with a custom entityID and name, amount will be 1
-     * @param entityID the mob
-     * @param customName if the MobSpawner will be named different
-     * @return the ItemStack (amount 1) with the configured options
      * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead
      */
     @Deprecated
