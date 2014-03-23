@@ -200,9 +200,11 @@ public class SilkUtil {
      * @param entityID the mob
      * @param customName if the MobSpawner will be named different
      * @return the ItemStack (amount 1) with the configured options
+     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead
      */
+    @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName) {
-	return newSpawnerItem(entityID, customName, 1);
+	return newSpawnerItem(entityID, customName, 1, false);
     }
 
     // Get the entity ID
