@@ -446,6 +446,7 @@ public class Configuration {
 	config.addComment("recipeTop", "", "# Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free", "# X is always the egg");
 	config.addDefault("recipeMiddle", "AXA");
 	config.addDefault("recipeBottom", "AAA");
+	config.addDefault("recipeAmount", 1);
 	ArrayList<String> temp = new ArrayList<String>();
 	temp.add("A,IRON_FENCE");
 	config.addDefault("ingredients", temp);
