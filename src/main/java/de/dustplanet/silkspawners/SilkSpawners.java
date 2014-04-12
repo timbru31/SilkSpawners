@@ -62,7 +62,7 @@ public class SilkSpawners extends JavaPlugin {
     public boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.5";
+    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.8";
 
     public void onDisbale() {
 	su.clearAll();
