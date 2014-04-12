@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
-import net.minecraft.server.v1_7_R2.Item;
-import net.minecraft.server.v1_7_R2.MinecraftServer;
-import net.minecraft.server.v1_7_R2.RegistryMaterials;
+import net.minecraft.server.v1_7_R3.Item;
+import net.minecraft.server.v1_7_R3.MinecraftServer;
+import net.minecraft.server.v1_7_R3.RegistryMaterials;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_7_R2.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_7_R3.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
