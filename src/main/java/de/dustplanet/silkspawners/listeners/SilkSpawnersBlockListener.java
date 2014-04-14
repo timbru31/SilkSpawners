@@ -79,7 +79,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	// If using silk touch, drop spawner itself
 	ItemStack tool = player.getItemInHand();
 	// Check for SilkTocuh level
-	boolean silkTouch = hasSilkTouch(tool);
+	boolean silkTouch = su.hasSilkTouch(tool);
 
 	// Get the world to drop in
 	World world = player.getWorld();
@@ -175,28 +175,5 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 
 	su.setSpawnerEntityID(blockPlaced, entityID);
-    }
-
-    // Checks if the given ItemStack has got the SilkTouch
-    private boolean hasSilkTouch(ItemStack tool) {
-	int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
-	// Always have it
-	if (minLevel == 0) {
-	    return true;
-	}
-	// No silk touch fists..
-	if (tool == null) {
-	    return false;
-	}
-
-	// This check isn't actually necessary, since containsEnchantment just
-	// checks level>0,
-	// but is kept here for clarity, and in case Bukkit allows level-0
-	// enchantments like vanilla
-	if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
-	    return false;
-	}
-	// Return if the level is enough
-	return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
 }
