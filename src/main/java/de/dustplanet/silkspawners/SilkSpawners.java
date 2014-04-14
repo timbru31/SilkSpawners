@@ -385,11 +385,12 @@ public class SilkSpawners extends JavaPlugin {
 
     // Add the recipes
     private void loadRecipes() {
-	int amount = config.getInt("recipeAmount", 1);
 	// For all our entities
 	for (short entityID : su.eid2MobID.keySet()) {
+
 	    // Name
 	    String mobID = su.eid2MobID.get(entityID);
+
 	    // If the mob is disabled, skip it
 	    if (!mobs.getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
 		if (config.getBoolean("verboseConfig", true)) {
@@ -397,50 +398,110 @@ public class SilkSpawners extends JavaPlugin {
 		}
 		continue;
 	    }
-	    // Output is one (1) spawner of this type
+
+	    // Default amount
+	    int amount = 1;
+
+	    // Per mob amount
+	    if (mobs.contains("creatures." + mobID + ".recipe.amount")) {
+		amount = mobs.getInt("creatures." + mobID + ".recipe.amount", 1);
+	    } else {
+		amount = config.getInt("recipeAmount", 1);
+	    }
+
+	    // Debug output
+	    if (config.getBoolean("verboseConfig", true)) {
+		getLogger().info("Amount of " + mobID + ": " + amount);
+	    }
+	    // Output is a spawner of this type with a custom amount
 	    ItemStack spawnerItem = su.newSpawnerItem(entityID, localization.getString("spawnerName"), amount, false);
 	    ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
 	    /*
-	     * A A A A B A A A A
+	     * Default is
+	     * A A A
+	     * A B A
+	     * A A A
+	     * 
+	     * where A is IRON_FENCE
+	     * and B is MONSTER_EGG
 	     */
 
 	    // We try to use the custom recipe, but we don't know if the user
 	    // changed it right ;)
 	    try {
-		// At least we have defaults here!
-		recipe.shape(config.getString("recipeTop", "AAA"),
-			config.getString("recipeMiddle", "AXA"),
-			config.getString("recipeBottom", "AAA"));
-		// No list what we should use -> not adding
-		if (!config.contains("ingredients")) {
-		    return;
+		// Per type recipe?
+		String top, middle, bottom;
+
+		// Top
+		if (mobs.contains("creatures." + mobID + ".recipe.top")) {
+		    top = mobs.getString("creatures." + mobID + ".recipe.top", "AAA");
+		} else {
+		    top = config.getString("recipeTop", "AAA");
 		}
-		for (String ingredient : config.getStringList("ingredients")) {
+
+		// Middle
+		if (mobs.contains("creatures." + mobID + ".recipe.middle")) {
+		    middle = mobs.getString("creatures." + mobID + ".recipe.middle", "AXA");
+		} else {
+		    middle = config.getString("recipeMiddle", "AXA");
+		}
+
+		// Bottom
+		if (mobs.contains("creatures." + mobID + ".recipe.bottom")) {
+		    bottom = mobs.getString("creatures." + mobID + ".recipe.bottom", "AAA");
+		} else {
+		    bottom = config.getString("recipeBottom", "AAA");
+		}
+
+		// Debug output
+		if (config.getBoolean("verboseConfig", true)) {
+		    getLogger().info("Shape of " + mobID + ":");
+		    getLogger().info(top);
+		    getLogger().info(middle);
+		    getLogger().info(bottom);
+		}
+
+		// Set the shape
+		recipe.shape(top, middle, bottom);
+
+		// Per type ingredients?
+		List<String> ingredientsList;
+		if (mobs.contains("creatures." + mobID + ".recipe.ingredients")) {
+		    ingredientsList = mobs.getStringList("creatures." + mobID + "recipe.ingredients");
+		} else {
+		    // No list what we should use -> not adding
+		    if (!config.contains("ingredients")) {
+			continue;
+		    }
+		    else {
+			ingredientsList = config.getStringList("ingredients");
+		    }
+		}
+
+		// Security first
+		if (ingredientsList == null) {
+		    continue;
+		}
+
+		// Debug output
+		if (config.getBoolean("verboseConfig", true)) {
+		    getLogger().info("Ingredients of " + mobID + ":");
+		    getLogger().info(ingredientsList.toString());
+		}
+
+		for (String ingredient : ingredientsList) {
 		    // They are added like this A,DIRT
 		    // Lets split the "," then
 		    String[] ingredients = ingredient.split(",");
-		    // Maybe they put a string in here, so first position and
-		    // uppercase
-		    char character = ingredients[0].toUpperCase().charAt(0);
-		    // We try to get the material
-		    Material material = Material.getMaterial(ingredients[1]);
-		    // Failed!
-		    if (material == null) {
-			// Maybe the put an integer here?
-			try {
-			    int id = Integer.valueOf(ingredients[1]);
-			    material = Material.getMaterial(id);
-			    // Not all IDs are valid!
-			    if (material == null) {
-				material = Material.IRON_FENCE;
-			    }
-			}
-			// Still no ID, fallback
-			catch (IllegalArgumentException e) {
-			    material = Material.IRON_FENCE;
-			}
+		    // if our array is not exactly of the size 2, something is wrong
+		    if (ingredients.length != 2) {
+			continue;
 		    }
-		    // Just in case my logic was wrong...
+		    // Maybe they put a string in here, so first position and uppercase
+		    char character = ingredients[0].toUpperCase().charAt(0);
+		    // We try to get the material (ID or name)
+		    Material material = Material.matchMaterial(ingredients[1]);
+		    // Failed!
 		    if (material == null) {
 			material = Material.IRON_FENCE;
 		    }
@@ -451,7 +512,7 @@ public class SilkSpawners extends JavaPlugin {
 	    }
 	    // If the custom recipe fails, we have a fallback
 	    catch (IllegalArgumentException e) {
-		getLogger().warning("Could not add the recipe! Please report this!");
+		getLogger().warning("Could not add the recipe!");
 		e.printStackTrace();
 		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
 		recipe.setIngredient('A', Material.IRON_FENCE);
