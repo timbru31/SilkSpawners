@@ -33,7 +33,7 @@ public class SilkSpawnersBlockListener implements Listener {
 	su = util;
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
 	if (event.isCancelled()) {
 	    return;
@@ -128,8 +128,8 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onBlockPlace(final BlockPlaceEvent event) {
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onBlockPlace( BlockPlaceEvent event) {
 	if (event.isCancelled()) {
 	    return;
 	}

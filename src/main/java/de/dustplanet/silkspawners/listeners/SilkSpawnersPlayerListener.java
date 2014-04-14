@@ -41,7 +41,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 	su = util;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerHoldItem(PlayerItemHeldEvent event) {
 	// Check if we should notify the player. The second condition is the
 	// permission and that the slot isn't null and the item is a mob spawner
@@ -63,7 +63,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 	}
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
 	if (!event.hasItem() || !event.hasBlock()) {
 	    return;
@@ -187,7 +187,7 @@ public class SilkSpawnersPlayerListener implements Listener {
     }
 
     // Color the pickup spawner
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 	if (event.getItem().getItemStack().getType() == Material.MOB_SPAWNER) {
 	    if (!su.coloredNames) {

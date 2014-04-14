@@ -32,7 +32,7 @@ public class SilkSpawnersEntityListener implements Listener {
 	rnd = new Random();
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntiyExplode(EntityExplodeEvent event) {
 	/* Skip if
 	 * event is cancelled

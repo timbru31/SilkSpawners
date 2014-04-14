@@ -29,7 +29,7 @@ public class SilkSpawnersInventoryListener implements Listener {
 	su = util;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
 	// Null checks, somehow errors appeared...
 	if (event == null || event.getCurrentItem() == null
