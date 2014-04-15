@@ -94,12 +94,6 @@ public class SilkUtil {
      */
     private WorldGuardPlugin wg;
 
-    // Should we use the normal names or a colored one?
-    /**
-     * Boolean value to determine if spawner names should be colored
-     */
-    public boolean coloredNames;
-
     // SilkSpawners instance, not necessary
     /**
      * SilkSpawners instance
@@ -161,16 +155,15 @@ public class SilkUtil {
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
-     * @param force value even if coloredNames is disabled to ensure custom name
      * @return the ItemStack with the configured options
      */
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
 	if (customName == null || customName.equalsIgnoreCase("")) {
 	    customName = "Monster Spawner";
 	}
 	ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
 	// Check if we need a colored name
-	if (coloredNames || force) {
+	if (!customName.equalsIgnoreCase("Monster Spawner")) {
 	    ItemMeta meta = item.getItemMeta();
 	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
 	    item.setItemMeta(meta);
@@ -185,22 +178,22 @@ public class SilkUtil {
 	return item;
     }
     
-    // Create a new MobSpawner without boolean force 
+    // Create a new MobSpawner without and ignore (old) force value
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead. 
+     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead. 
      */
     @Deprecated
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
-	return newSpawnerItem(entityID, customName, amount, false);
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
+	return newSpawnerItem(entityID, customName, amount);
     }
 
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead
+     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName) {
-	return newSpawnerItem(entityID, customName, 1, false);
+	return newSpawnerItem(entityID, customName, 1);
     }
 
     // Get the entity ID
@@ -381,7 +374,7 @@ public class SilkUtil {
 	// Case spawner
 	if (item.getType() == Material.MOB_SPAWNER) {
 	    // Check if we should color
-	    if (coloredNames) {
+	    if (!customName.equalsIgnoreCase("Monster Spawner")) {
 		ItemMeta meta = item.getItemMeta();
 		meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
 		item.setItemMeta(meta);
@@ -599,6 +592,11 @@ public class SilkUtil {
 	}
 	// Return if the level is enough
 	return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
+    }
+    
+    public String getCustomSpawnerName(String mobName) {
+	//plugin.localization.getString("spawnerName")
+	return "Monster Spawner";
     }
 
     /*

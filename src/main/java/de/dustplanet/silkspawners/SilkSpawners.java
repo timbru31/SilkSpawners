@@ -222,11 +222,6 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadConfigs() {
-	// Check for colored names
-	if (!localization.getString("spawnerName", "Monster Spawner").equalsIgnoreCase("Monster Spawner")) {
-	    su.coloredNames = true;
-	}
-
 	// Should we display more information
 	boolean verbose = config.getBoolean("verboseConfig", false);
 
@@ -414,7 +409,7 @@ public class SilkSpawners extends JavaPlugin {
 		getLogger().info("Amount of " + mobID + ": " + amount);
 	    }
 	    // Output is a spawner of this type with a custom amount
-	    ItemStack spawnerItem = su.newSpawnerItem(entityID, localization.getString("spawnerName"), amount, false);
+	    ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), amount);
 	    ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
 	    /*
 	     * Default is

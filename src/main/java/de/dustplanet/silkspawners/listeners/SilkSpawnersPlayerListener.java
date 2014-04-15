@@ -190,11 +190,8 @@ public class SilkSpawnersPlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
 	if (event.getItem().getItemStack().getType() == Material.MOB_SPAWNER) {
-	    if (!su.coloredNames) {
-		return;
-	    }
-	    ItemStack item = event.getItem().getItemStack();
-	    ItemStack itemNew = su.newSpawnerItem(item.getDurability(), plugin.localization.getString("spawnerName"), 1, false);
+	    short entityID = event.getItem().getItemStack().getDurability();
+	    ItemStack itemNew = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1);
 	    event.getItem().setItemStack(itemNew);
 	}
     }

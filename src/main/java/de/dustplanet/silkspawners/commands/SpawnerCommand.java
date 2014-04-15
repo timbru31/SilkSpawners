@@ -92,7 +92,7 @@ public class SpawnerCommand implements CommandExecutor {
 	    }
 	    // Add spawner
 	    else {
-		player.getInventory().addItem(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName"), amount, false));
+		player.getInventory().addItem(su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawnerOtherPlayer").replace("%player%", player.getName())).replace("%creature%", creatureString));
 	    }
 	    return true;
@@ -263,7 +263,7 @@ public class SpawnerCommand implements CommandExecutor {
 		    return true;
 		}
 		if (plugin.hasPermission(player, "silkspawners.freeitem." + mobName) || plugin.hasPermission(player, "silkspawners.freeitem.*")) {
-		    player.setItemInHand(su.newSpawnerItem(entityID, plugin.localization.getString("spawnerName"), amount, false));
+		    player.setItemInHand(su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount));
 		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner")).replace("%creature%", creatureString));
 		    return true;
 		} else {
