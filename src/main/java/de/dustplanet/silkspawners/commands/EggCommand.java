@@ -123,6 +123,7 @@ public class EggCommand implements CommandExecutor {
 		// Add egg
 		player.setItemInHand(su.newEggItem(entityID, amount));
 		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg")).replace("%creature%", creatureString));
+		System.out.println(player.getUniqueId());
 	    }
 	    // Console MUST include a name
 	    else {
@@ -144,7 +145,7 @@ public class EggCommand implements CommandExecutor {
 		}
 		
 		String playerName = args[2];
-		Player player = plugin.getServer().getPlayer(playerName);
+		Player player = su.getPlayer(playerName);
 		// Online check
 		if (player == null) {
 		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("playerOffline")));

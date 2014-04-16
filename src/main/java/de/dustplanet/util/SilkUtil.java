@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.server.v1_7_R3.EntityTypes;
@@ -177,7 +178,7 @@ public class SilkUtil {
 	// Due to this trading etc. was impossible
 	return item;
     }
-    
+
     // Create a new MobSpawner without and ignore (old) force value
     /**
      * @deprecated use {@link #newSpawnerItem(short, String, int)} instead. 
@@ -564,7 +565,7 @@ public class SilkUtil {
 	    player.setItemInHand(eggs);
 	}
     }
-      
+
 
     // Checks if the given ItemStack has got the SilkTouch
     /** 
@@ -593,10 +594,28 @@ public class SilkUtil {
 	// Return if the level is enough
 	return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
-    
+
     public String getCustomSpawnerName(String mobName) {
 	//plugin.localization.getString("spawnerName")
 	return "Monster Spawner";
+    }
+
+
+    public Player getPlayer(String playerUUIDOrName) {
+	try {
+	    // Try if the String could be an UUID
+	    UUID playerUUID = UUID.fromString(playerUUIDOrName);
+	    return plugin.getServer().getPlayer(playerUUID);
+	} catch (IllegalArgumentException e) {
+	    // Circumvent UUID problem. Basically this method is nothing else than the normal getServer().getPlayer(String) method
+	    // See https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/CraftServer.java#L502
+	    for (Player p : plugin.getServer().getOnlinePlayers()) {
+		if (p.getName().equalsIgnoreCase(playerUUIDOrName)) {
+		    return p;
+		}
+	    }
+	}
+	return null;
     }
 
     /*
