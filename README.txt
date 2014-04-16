@@ -57,6 +57,7 @@ craftableSpawners: false
 recipeTop: AAA
 recipeMiddle: AXA
 recipeBottom: AAA
+recipeAmount: 1
  
 # Custom example:
 #recipeTop: 'A A'
