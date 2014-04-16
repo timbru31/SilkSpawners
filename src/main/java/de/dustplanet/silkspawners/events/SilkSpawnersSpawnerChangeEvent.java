@@ -1,5 +1,12 @@
 package de.dustplanet.silkspawners.events;
 
+/**
+ * Event called when a spawner is changed by SilkSpawners
+ *
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
+
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Player;

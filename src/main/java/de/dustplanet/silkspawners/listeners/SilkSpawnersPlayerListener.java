@@ -124,9 +124,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSpawnerHere")));
 		    }
 		    event.setCancelled(true);
-		}
-		// Disabled by default, since it is dangerous
-		else if (plugin.config.getBoolean("spawnEggOverride", false)) {
+		} else if (plugin.config.getBoolean("spawnEggOverride", false)) {
+		    // Disabled by default, since it is dangerous
 		    // Name
 		    String mobID = su.eid2MobID.get(entityID);
 		    // Are we allowed to spawn?

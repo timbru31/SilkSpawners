@@ -418,9 +418,8 @@ public class SilkUtil {
 	    // Case 1, found use the name method
 	    if (ct != null) {
 		displayName = ct.getName();
-	    }
-	    // Case 2, not found -> use the number...
-	    else {
+	    } else {
+		// Case 2, not found -> use the number...
 		displayName = String.valueOf(entityID);
 	    }
 	}
@@ -479,8 +478,8 @@ public class SilkUtil {
 		}
 	    }
 	}
-	// Fail
 	catch (Exception e) {
+	    // Fail
 	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
 	    e.printStackTrace();
 	}
@@ -545,7 +544,7 @@ public class SilkUtil {
     public short getNumber(String number) {
 	try {
 	    return Short.valueOf(number);
-	} catch(NumberFormatException e) {
+	} catch (NumberFormatException e) {
 	    return -1;
 	}
     }

@@ -128,7 +128,7 @@ public class SilkSpawnersBlockListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onBlockPlace( BlockPlaceEvent event) {
+    public void onBlockPlace(BlockPlaceEvent event) {
 	if (event.isCancelled()) {
 	    return;
 	}
@@ -167,9 +167,8 @@ public class SilkSpawnersBlockListener implements Listener {
 	// Message default
 	if (entityID == su.defaultEntityID) {
 	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
-	}
-	// Else message the type
-	else {
+	} else {
+	    // Else message the type
 	    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced")).replace("%creature%", su.getCreatureName(entityID)));
 	}
 

@@ -59,7 +59,7 @@ public class SilkSpawners extends JavaPlugin {
     private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    public boolean usePermissions = true;
+    private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
     public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.8";
@@ -319,9 +319,8 @@ public class SilkSpawners extends JavaPlugin {
 		if (verbose) {
 		    getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
 		}
-	    }
-	    // Unknown, fallback
-	    else {
+	    } else {
+		// Unknown, fallback
 		getLogger().warning("Invalid creature type: " + defaultCreatureString + ", default monster spawner fallback to PIG");
 	    }
 	}
@@ -467,8 +466,7 @@ public class SilkSpawners extends JavaPlugin {
 		    // No list what we should use -> not adding
 		    if (!config.contains("ingredients")) {
 			continue;
-		    }
-		    else {
+		    } else {
 			ingredientsList = config.getStringList("ingredients");
 		    }
 		}
@@ -504,12 +502,11 @@ public class SilkSpawners extends JavaPlugin {
 		}
 		// Use the right egg!
 		recipe.setIngredient('X', Material.MONSTER_EGG, (int) entityID);
-	    }
-	    // If the custom recipe fails, we have a fallback
-	    catch (IllegalArgumentException e) {
+	    } catch (IllegalArgumentException e) {
+		// If the custom recipe fails, we have a fallback
 		getLogger().warning("Could not add the recipe!");
 		e.printStackTrace();
-		recipe.shape(new String[] { "AAA", "ABA", "AAA" });
+		recipe.shape(new String[] {"AAA", "ABA", "AAA"});
 		recipe.setIngredient('A', Material.IRON_FENCE);
 		// Use the right egg!
 		recipe.setIngredient('B', Material.MONSTER_EGG, (int) entityID);
@@ -532,9 +529,8 @@ public class SilkSpawners extends JavaPlugin {
 	// Normal check if we use permissions
 	if (usePermissions) {
 	    return player.hasPermission(node);
-	}
-	// Else check more detailed
-	else {
+	} else {
+	    // Else check more detailed
 	    // Any of the nodes, -> yes
 	    if (node.equals("silkspawners.info")
 		    || node.startsWith("silkspawners.silkdrop")

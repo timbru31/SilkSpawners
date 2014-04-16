@@ -7,6 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import de.dustplanet.util.SilkUtil;
 
+/**
+ * Handle the tab completion list
+ *
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
+
 public class SilkSpawnersTabCompleter implements TabCompleter {
     private SilkUtil su;
 

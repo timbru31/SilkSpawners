@@ -32,7 +32,7 @@ public class SpawnerCommand implements CommandExecutor {
 	// Case console
 	if (!(sender instanceof Player)) {
 	    // Not enough arguments -> list
-	    if (args.length == 0 ) {
+	    if (args.length == 0) {
 		su.showAllCreatures(sender);
 		return true;
 	    } else {
@@ -89,9 +89,8 @@ public class SpawnerCommand implements CommandExecutor {
 	    if (isEgg) {
 		player.getInventory().addItem(su.newEggItem(entityID, amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEggOtherPlayer").replace("%player%", player.getName())).replace("%creature%", creatureString));
-	    }
-	    // Add spawner
-	    else {
+	    } else {
+		// Add spawner
 		player.getInventory().addItem(su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount));
 		sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawnerOtherPlayer").replace("%player%", player.getName())).replace("%creature%", creatureString));
 	    }
@@ -175,9 +174,8 @@ public class SpawnerCommand implements CommandExecutor {
 		mobName = creatureString.toLowerCase().replace(" ", "");
 		su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
 		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner")).replace("%creature%", creatureString));
-	    }
-	    // Get free spawner item in hand
-	    else {
+	    } else {
+		// Get free spawner item in hand
 		// Check the item
 		ItemStack itemInHand = player.getItemInHand();
 		if (itemInHand != null) {
@@ -233,9 +231,8 @@ public class SpawnerCommand implements CommandExecutor {
 		    // Only viewing
 		    if (plugin.hasPermission(player, "silkspawners.viewtype")) {
 			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawnerOrInHand")));
-		    }
-		    // Not even viewing allowed
-		    else {
+		    } else {
+			// Not even viewing allowed
 			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
 		    }
 		    return true;
