@@ -18,7 +18,6 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
@@ -52,7 +51,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
 	    // Get ID
 	    short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
-	    // Check for unkown/invalid ID
+	    // Check for unknown/invalid ID
 	    if (entityID == 0 || !su.knownEids.contains(entityID)) {
 		entityID = su.defaultEntityID;
 	    }
@@ -183,16 +182,6 @@ public class SilkSpawnersPlayerListener implements Listener {
 		    event.setCancelled(true);
 		}
 	    }
-	}
-    }
-
-    // Color the pickup spawner
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerPickupItem(PlayerPickupItemEvent event) {
-	if (event.getItem().getItemStack().getType() == Material.MOB_SPAWNER) {
-	    short entityID = event.getItem().getItemStack().getDurability();
-	    ItemStack itemNew = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1);
-	    event.getItem().setItemStack(itemNew);
 	}
     }
 }

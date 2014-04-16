@@ -166,7 +166,7 @@ public class SilkUtil {
 	// Check if we need a colored name
 	if (!customName.equalsIgnoreCase("Monster Spawner")) {
 	    ItemMeta meta = item.getItemMeta();
-	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
+	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
 	    item.setItemMeta(meta);
 	}
 
@@ -595,12 +595,25 @@ public class SilkUtil {
 	return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
 
+    /**
+     * Get the spawner name, specified for each mob or default
+     * from localization.yml
+     * @param mobName the internal name the spawner name is wanted for
+     * @return the found string
+     */
     public String getCustomSpawnerName(String mobName) {
-	//plugin.localization.getString("spawnerName")
-	return "Monster Spawner";
+	if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
+	    return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
+	} else {
+	    return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
+	}
     }
 
-
+    /**
+     * Get the player regardless of UUID or name supplied
+     * @param playerUUIDOrName a String with a name or UUID
+     * @return the player if found otherwise null
+     */
     public Player getPlayer(String playerUUIDOrName) {
 	try {
 	    // Try if the String could be an UUID

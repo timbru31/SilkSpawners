@@ -123,7 +123,6 @@ public class EggCommand implements CommandExecutor {
 		// Add egg
 		player.setItemInHand(su.newEggItem(entityID, amount));
 		player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg")).replace("%creature%", creatureString));
-		System.out.println(player.getUniqueId());
 	    }
 	    // Console MUST include a name
 	    else {
