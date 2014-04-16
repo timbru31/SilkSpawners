@@ -14,7 +14,7 @@ import de.dustplanet.util.SilkUtil;
 
 /**
  * Handles the command /egg
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */
@@ -108,15 +108,15 @@ public class EggCommand implements CommandExecutor {
 		    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageEggCommand")));
 		    return true;
 		}
-		
+
 		// Amount
 		int amount = 1;
 		if (args.length > 1) {
 		    try {
 			amount = Integer.valueOf(args[1]);
 		    } catch (NumberFormatException e) {
-			 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
-			 return true;
+			player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+			return true;
 		    }
 		}
 
@@ -131,18 +131,18 @@ public class EggCommand implements CommandExecutor {
 		    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("usageEggCommandCommandLine")));
 		    return true;
 		}
-		
+
 		// Amount
 		int amount = 1;
 		if (args.length > 1) {
 		    try {
 			amount = Integer.valueOf(args[1]);
 		    } catch (NumberFormatException e) {
-			 sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
-			 return true;
+			sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+			return true;
 		    }
 		}
-		
+
 		String playerName = args[2];
 		Player player = su.getPlayer(playerName);
 		// Online check

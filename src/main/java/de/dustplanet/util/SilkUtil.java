@@ -181,7 +181,7 @@ public class SilkUtil {
 
     // Create a new MobSpawner without and ignore (old) force value
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead. 
+     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead.
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
@@ -568,7 +568,7 @@ public class SilkUtil {
 
 
     // Checks if the given ItemStack has got the SilkTouch
-    /** 
+    /**
      * Checks if a given ItemStack has a high enough SilkTouch level
      * @param tool ItemStack to check
      * @return the result if the tool hasSilkTouch

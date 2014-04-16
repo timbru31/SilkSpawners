@@ -45,7 +45,7 @@ import net.gravitydevelopment.updater.Updater;
 
 /**
  * General stuff
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */
@@ -416,7 +416,7 @@ public class SilkSpawners extends JavaPlugin {
 	     * A A A
 	     * A B A
 	     * A A A
-	     * 
+	     *
 	     * where A is IRON_FENCE
 	     * and B is MONSTER_EGG
 	     */

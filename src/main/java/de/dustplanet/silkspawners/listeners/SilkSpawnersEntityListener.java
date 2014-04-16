@@ -16,7 +16,7 @@ import de.dustplanet.util.SilkUtil;
 
 /**
  * Handle the explosion of a spawner
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */

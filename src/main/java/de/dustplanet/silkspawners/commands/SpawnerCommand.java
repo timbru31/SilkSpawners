@@ -178,7 +178,7 @@ public class SpawnerCommand implements CommandExecutor {
 	    }
 	    // Get free spawner item in hand
 	    else {
-		// Check the item 
+		// Check the item
 		ItemStack itemInHand = player.getItemInHand();
 		if (itemInHand != null) {
 		    // If it's a spawner change it.

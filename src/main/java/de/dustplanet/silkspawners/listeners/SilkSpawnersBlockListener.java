@@ -18,7 +18,7 @@ import de.dustplanet.util.SilkUtil;
 
 /**
  * Handle the placement and breaking of a spawner
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */

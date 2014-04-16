@@ -26,7 +26,7 @@ import de.dustplanet.util.SilkUtil;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */

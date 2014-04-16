@@ -22,7 +22,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * because the new one carries information about the
      * current entityID of the spawner block or item
      *
-     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short)} instead.  
+     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short)} instead.
      */
     @Deprecated
     public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
@@ -34,7 +34,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 	this.id = id;
 	this.oldID = 0;
     }
-    
+
     /**
      * Constructor of the event
      * @param player who issues the event
@@ -107,7 +107,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     public void setEntityID(short id) {
 	this.id = id;
     }
-    
+
     /**
      * Gets the old entityID of the spawner (item or block)
      * May return 0 if the deprecated constructor is used!
