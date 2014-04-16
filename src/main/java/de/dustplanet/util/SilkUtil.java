@@ -33,7 +33,7 @@ import de.dustplanet.silkspawners.SilkSpawners;
 
 /**
  * This is the util class where all the magic happens!
- * 
+ *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */

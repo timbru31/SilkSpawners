@@ -200,7 +200,7 @@ public class CommentedConfiguration extends YamlConfiguration {
     /**
      * Adds a comment just before the specified path. The comment can be
      * multiple lines. An empty string will indicate a blank line.
-     * 
+     *
      * @param path - Configuration path to add comment.
      * @param commentLines - Comments to add. One String per line.
      */
