@@ -62,4 +62,4 @@ permissions:
     silkspawners.reload:
         description: Allows you to reload the plugin
         default: false
-softdepend: [WorldGuard, Spout]
+softdepend: [WorldGuard, BarAPI]

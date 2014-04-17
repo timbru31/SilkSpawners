@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.dustplanet</groupId>
 	<artifactId>SilkSpawners</artifactId>
-	<version>3.4-SNAPSHOT</version>
+	<version>3.4.1-SNAPSHOT</version>
 	<name>SilkSpawners</name>
 	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
 	<description>Pickup, place and customize Monster Spawners</description>
@@ -30,6 +30,10 @@
 		<repository>
 			<id>Dustplanet repo</id>
 			<url>http://ci.dustplanet.de/plugin/repository/everything</url>
+		</repository>
+		<repository>
+			<id>confuser-repo</id>
+			<url>http://ci.frostcast.net/plugin/repository/everything</url>
 		</repository>
 	</repositories>
 
@@ -65,6 +69,11 @@
 			<artifactId>updater</artifactId>
 			<version>2.1.2</version>
 			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>me.confuser</groupId>
+			<artifactId>BarAPI</artifactId>
+			<version>3.0</version>
 		</dependency>
 	</dependencies>
 

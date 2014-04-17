@@ -22,6 +22,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dustplanet.silkspawners.commands.EggCommand;
@@ -36,8 +37,10 @@ import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
 
 
+
 // Metrics
 import org.mcstats.Metrics;
+
 
 
 // Updater
@@ -95,14 +98,14 @@ public class SilkSpawners extends JavaPlugin {
 	// Check if we should enable the auto Updater & have no snapshot (dev build)
 	if (config.getBoolean("autoUpdater", true)) {
 	    if (getDescription().getVersion().contains("SNAPSHOT")) {
-		getLogger().info("AutoUpdater disabled because you are running a dev build");
+		getLogger().info("AutoUpdater is disabled because you are running a dev build!");
 	    } else {
 		// Updater http://forums.bukkit.org/threads/96681/
 		new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
-		getLogger().info("AutoUpdater enabled");
+		getLogger().info("AutoUpdater is enabled.");
 	    }
 	} else {
-	    getLogger().info("AutoUpdater disabled");
+	    getLogger().info("AutoUpdater is disabled due to config setting.");
 	}
 
 	// Commands
@@ -131,6 +134,21 @@ public class SilkSpawners extends JavaPlugin {
 	} catch (IOException e) {
 	    getLogger().info("Couldn't start Metrics, please report this!");
 	    e.printStackTrace();
+	}
+
+	// BarAPI check
+	Plugin barAPI = getServer().getPluginManager().getPlugin("BarAPI");
+	if (config.getBoolean("barAPI.enable", true)) {
+	    if (barAPI != null) {
+		// If BarAPI is enabled, load the economy
+		getLogger().info("Loaded BarAPI successfully!");
+		su.barAPI = true;
+	    } else {
+		// Else tell the admin about the missing of BarAPI
+		getLogger().info("BarAPI was not found and remains disabled!");
+	    }
+	} else {
+	    getLogger().info("BarAPI is disabled due to config setting.");
 	}
     }
 

@@ -92,6 +92,11 @@ notifyOnClick: true
  
 # Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
+
+# Configure displaying with BarAPI, time is in seconds
+barAPI:
+  enable: true
+  displayTime: 3
  
 # Puts more information out on startup
 verboseConfig: false

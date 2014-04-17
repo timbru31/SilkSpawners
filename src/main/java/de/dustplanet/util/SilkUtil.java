@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import me.confuser.barapi.BarAPI;
 import net.minecraft.server.v1_7_R3.EntityTypes;
 import net.minecraft.server.v1_7_R3.TileEntityMobSpawner;
 
@@ -94,6 +95,11 @@ public class SilkUtil {
      * WorldGuard instance, may be null
      */
     private WorldGuardPlugin wg;
+    
+    /**
+     * BarAPI usage toggle
+     */
+    public boolean barAPI;
 
     // SilkSpawners instance, not necessary
     /**
@@ -495,15 +501,23 @@ public class SilkUtil {
      * @param entityID the ID
      */
     public void notify(Player player, String spawnerName, short entityID) {
-	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		plugin.localization.getString("informationOfSpawner1")
-		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
-	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		plugin.localization.getString("informationOfSpawner2")
-		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
-	player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		plugin.localization.getString("informationOfSpawner3")
-		.replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
+	if (barAPI) {
+	    String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+		    plugin.localization.getString("informationOfSpawnerBar")
+		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
+	    // Old bars will be overridden
+	    BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime"));
+	} else {
+	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		    plugin.localization.getString("informationOfSpawner1")
+		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		    plugin.localization.getString("informationOfSpawner2")
+		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+		    plugin.localization.getString("informationOfSpawner3")
+		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+	}
     }
 
     // Clear RAM

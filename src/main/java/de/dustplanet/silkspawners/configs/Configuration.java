@@ -410,6 +410,7 @@ public class Configuration {
 	config.addComment("informationOfSpawner1", "");
 	config.addDefault("informationOfSpawner2", "-- Type: %creature% --");
 	config.addDefault("informationOfSpawner3", "-- EntityID: %ID% --");
+	config.addDefault("informationOfSpawnerBar", "Monster Spawner, Type: &e%creature%&f, %ID%");
 	config.addDefault("spawningDenied", "&4Spawning of &e%creature% (ID %ID%) &4denied!");
 	config.addComment("spawningDenied", "");
 	config.addDefault("spawning", "&2Spawning &e%creature% (ID %ID%)");
@@ -478,6 +479,9 @@ public class Configuration {
 	config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
 	config.addDefault("notifyOnHold", true);
 	config.addComment("notifyOnHold", "", "# Notify the player about the spawner when he holds the spawner in the hand");
+	config.addDefault("barAPI.enable", true);
+	config.addDefault("barAPI.displayTime", 3);
+	config.addComment("barAPI", "", "# Configure displaying with BarAPI, time is in seconds");
 	config.addDefault("verboseConfig", false);
 	config.addComment("verboseConfig", "", "# Puts more information out on startup");
 	config.addDefault("useReflection", true);
