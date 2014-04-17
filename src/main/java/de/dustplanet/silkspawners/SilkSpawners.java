@@ -36,12 +36,8 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
 
-
-
 // Metrics
 import org.mcstats.Metrics;
-
-
 
 // Updater
 import net.gravitydevelopment.updater.Updater;
