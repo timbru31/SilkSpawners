@@ -43,9 +43,6 @@ destroyDropXP: 0
 # If a spawner is destroyed, should iron bars be dropped
 destroyDropBars: 0
  
-# Should prevent some duping (mcMMO break events for example), recommend to let it true
-ignoreFakeBreakEvents: true
- 
 # Should the player be able to craft spawners
 craftableSpawners: false
  

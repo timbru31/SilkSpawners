@@ -444,8 +444,6 @@ public class Configuration {
 	config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
 	config.addDefault("destroyDropBars", 0);
 	config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
-	config.addDefault("ignoreFakeBreakEvents", true);
-	config.addComment("ignoreFakeBreakEvents", "", "# Should prevent some duping (mcMMO break events for example), recommend to let it true");
 	config.addDefault("craftableSpawners", false);
 	config.addComment("craftableSpawners", "", "# Should the player be able to craft spawners");
 	config.addDefault("recipeTop", "AAA");
