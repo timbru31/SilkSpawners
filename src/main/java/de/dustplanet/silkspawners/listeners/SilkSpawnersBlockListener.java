@@ -39,15 +39,6 @@ public class SilkSpawnersBlockListener implements Listener {
 	}
 	Block block = event.getBlock();
 	Player player = event.getPlayer();
-	// To prevent silk touch exploit by breaking blocks holding spawner
-	// (since abuses Silk Touch enchantment), cancel event
-	// NOTE: No longer necessary, I leave it in here for compatibility with
-	// old spawners
-	ItemStack heldItem = player.getItemInHand();
-	if (heldItem != null && heldItem.getType() == Material.MOB_SPAWNER && plugin.config.getBoolean("denyBreakHoldingSpawner", true)) {
-	    event.setCancelled(true);
-	    return;
-	}
 
 	// We just want the mob spawner events
 	if (block.getType() != Material.MOB_SPAWNER) {

@@ -46,9 +46,6 @@ destroyDropBars: 0
 # Should prevent some duping (mcMMO break events for example), recommend to let it true
 ignoreFakeBreakEvents: true
  
-# Recommend, since old spawners have got a silk touch enchantment
-denyBreakHoldingSpawner: true
- 
 # Should the player be able to craft spawners
 craftableSpawners: false
  
@@ -95,14 +92,16 @@ spawnEggOverride: false
 # Fallback if the creature should be spawned, if not specified for the entity
 spawnEggOverrideSpawnDefault: true
  
-# If the player uses SpoutCraft and Spout is present, he will receive additional information
-useSpout: true
- 
 # Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
  
 # Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
+ 
+# Configure displaying with BarAPI, time is in seconds
+barAPI:
+  enable: true
+  displayTime: 3
  
 # Puts more information out on startup
 verboseConfig: false

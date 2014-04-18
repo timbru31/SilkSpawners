@@ -38,9 +38,6 @@ destroyDropBars: 0
 # Should prevent some duping (mcMMO break events for example), recommend to let it true
 ignoreFakeBreakEvents: true
  
-# Recommend, since old spawners have got a silk touch enchantment
-denyBreakHoldingSpawner: true
- 
 # Should the player be able to craft spawners
 craftableSpawners: false
  
@@ -92,7 +89,7 @@ notifyOnClick: true
  
 # Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
-
+ 
 # Configure displaying with BarAPI, time is in seconds
 barAPI:
   enable: true

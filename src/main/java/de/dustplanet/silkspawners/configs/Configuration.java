@@ -446,8 +446,6 @@ public class Configuration {
 	config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
 	config.addDefault("ignoreFakeBreakEvents", true);
 	config.addComment("ignoreFakeBreakEvents", "", "# Should prevent some duping (mcMMO break events for example), recommend to let it true");
-	config.addDefault("denyBreakHoldingSpawner", true);
-	config.addComment("denyBreakHoldingSpawner", "", "# Recommend, since old spawners have got a silk touch enchantment");
 	config.addDefault("craftableSpawners", false);
 	config.addComment("craftableSpawners", "", "# Should the player be able to craft spawners");
 	config.addDefault("recipeTop", "AAA");
