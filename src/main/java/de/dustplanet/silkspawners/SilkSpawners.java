@@ -9,9 +9,9 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.regex.Pattern;
 
 import net.minecraft.server.v1_7_R3.Item;
-import net.minecraft.server.v1_7_R3.MinecraftServer;
 import net.minecraft.server.v1_7_R3.RegistryMaterials;
 
 import org.bukkit.Material;
@@ -36,8 +36,10 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
 
+
 // Metrics
 import org.mcstats.Metrics;
+
 
 // Updater
 import net.gravitydevelopment.updater.Updater;
@@ -61,7 +63,7 @@ public class SilkSpawners extends JavaPlugin {
     private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.8";
+    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.9";
 
     public void onDisbale() {
 	su.clearAll();
@@ -80,7 +82,12 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Test for right Minecraft version
 	if (config.getBoolean("testMCVersion", true)) {
-	    String serverVersion = MinecraftServer.getServer().getVersion();
+	    // We can't use the MinercraftServer import because it migt be broken. Regex is our friend and helper
+	    // Find MC: 0.0.0, last occurence is optional
+	    Pattern pat = Pattern.compile("MC: \\d{1}.\\d{1}(.\\d{1})?");
+	    String MCVersion = pat.matcher(getServer().getVersion()).group();
+	    // Strip MC: 
+	    String serverVersion = MCVersion.substring(MCVersion.indexOf(' ') + 1);
 	    if (!COMPATIBLE_MINECRAFT_VERSION.equalsIgnoreCase(serverVersion)) {
 		getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
 		getLogger().info("Please check your versions to make sure they match!");
