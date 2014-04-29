@@ -1,21 +1,15 @@
 package de.dustplanet.silkspawners.listeners;
 
-import net.minecraft.server.v1_7_R3.Entity;
-import net.minecraft.server.v1_7_R3.EntityTypes;
-import net.minecraft.server.v1_7_R3.World;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_7_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
@@ -154,26 +148,12 @@ public class SilkSpawnersPlayerListener implements Listener {
 			    .replace("%ID%", Short.toString(entityID)))
 			    .replace("%creature%", su.getCreatureName(entityID)));
 
-		    // We can spawn using the direct method from EntityTypes
-		    // https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L96
-		    World world = ((CraftWorld) player.getWorld()).getHandle();
-		    Entity entity = EntityTypes.a(entityID, world);
-		    // Should actually never happen since the method above
-		    // contains a null check, too
-		    if (entity == null) {
-			plugin.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
-			return;
-		    }
-
 		    // Spawn on top of targeted block
 		    Location location = block.getLocation().add(0, 1, 0);
 		    double x = location.getX(), y = location.getY(), z = location.getZ();
-
-		    // Random facing
-		    entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
-		    // We need to add the entity to the world, reason is of
-		    // course a spawn egg so that other events can handle this
-		    world.addEntity(entity, SpawnReason.SPAWNER_EGG);
+		    
+		    // We can spawn using the direct method from EntityTypes
+		    su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z);
 
 		    su.reduceEggs(player);
 

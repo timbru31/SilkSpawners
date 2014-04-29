@@ -5,18 +5,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import net.minecraft.server.v1_7_R3.Item;
-import net.minecraft.server.v1_7_R3.RegistryMaterials;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_7_R3.block.CraftCreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -63,7 +60,7 @@ public class SilkSpawners extends JavaPlugin {
     private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    public static final String COMPATIBLE_MINECRAFT_VERSION = "1.7.9";
+    public static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"1.7.2", "1.7.5", "1.7.8", "1.7.9"};
 
     public void onDisbale() {
 	su.clearAll();
@@ -82,13 +79,17 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Test for right Minecraft version
 	if (config.getBoolean("testMCVersion", true)) {
-	    // We can't use the MinercraftServer import because it migt be broken. Regex is our friend and helper
+	    // We can't use the MinercraftServer import because it might be broken. Regex is our friend and helper
 	    // Find MC: 0.0.0, last occurence is optional
 	    Pattern pat = Pattern.compile("MC: \\d{1}.\\d{1}(.\\d{1})?");
-	    String MCVersion = pat.matcher(getServer().getVersion()).group();
+	    Matcher matcher = pat.matcher(getServer().getVersion());
+	    String mcVersion = "";
+	    if (matcher.find()) {
+		mcVersion = matcher.group(0);
+	    }
 	    // Strip MC: 
-	    String serverVersion = MCVersion.substring(MCVersion.indexOf(' ') + 1);
-	    if (!COMPATIBLE_MINECRAFT_VERSION.equalsIgnoreCase(serverVersion)) {
+	    String serverVersion = mcVersion.substring(mcVersion.indexOf(' ') + 1);
+	    if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(serverVersion)) {
 		getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
 		getLogger().info("Please check your versions to make sure they match!");
 		getLogger().info("Disabling now!");
@@ -356,45 +357,14 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Are we allowed to use native methods?
 	if (config.getBoolean("useReflection", true)) {
-	    try {
-		// Get the spawner field, see
-		// https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
-		su.tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
-		su.tileField.setAccessible(true);
-	    } catch (NoSuchFieldException e) {
-		getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
-		e.printStackTrace();
-		su.tileField = null;
-	    } catch (SecurityException e) {
-		getLogger().warning("Failed to reflect, falling back to wrapper methods: " + e.getMessage());
-		e.printStackTrace();
-		su.tileField = null;
-	    }
+	    su.useReflection = true;
 	}
 
 	// Optionally make spawners unstackable in an attempt to be more
 	// compatible with CraftBukkit forks which may conflict
 	// Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
 	if (config.getBoolean("spawnersUnstackable", false)) {
-	    // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
-	    try {
-		// Get the new registery HashMp from the Item class
-		Field registryField = Item.class.getDeclaredField("REGISTRY");
-		registryField.setAccessible(true);
-		RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
-		// Get entry of the spawner
-		Object spawnerEntry = registry.a(52);
-		// Set maxStackSize "e(int maxStackSize)"
-		Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-		maxStackSize.setAccessible(true);
-		maxStackSize.setInt(spawnerEntry, 1);
-		// Cleanup
-		registryField.setAccessible(false);
-		maxStackSize.setAccessible(false);
-	    } catch (Exception e) {
-		getLogger().warning("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-		e.printStackTrace();
-	    }
+	    su.nmsProvider.setSpawnersUnstackable();
 	}
     }
 
@@ -576,5 +546,9 @@ public class SilkSpawners extends JavaPlugin {
 	mobs.save();
 	localization.load();
 	localization.save();
+    }
+
+    public void shutdown() {
+	setEnabled(true);
     }
 }

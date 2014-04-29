@@ -1,0 +1,165 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.dustplanet</groupId>
+	<artifactId>SilkSpawners</artifactId>
+	<packaging>jar</packaging>
+	<version>3.4.1-SNAPSHOT</version>
+	<name>SilkSpawners</name>
+	<url>http://dev.bukkit.org/server-mods/silkspawners/</url>
+	<description>Pickup, place and customize Monster Spawners</description>
+
+	<!-- Encode in UTF-8 -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<!-- Repositories -->
+	<repositories>
+		<repository>
+			<id>bukkit-repo</id>
+			<url>http://repo.bukkit.org/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-v1_7_R1</artifactId>
+			<version>v1_7_R1</version>
+			<type>jar</type>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>de.dustplanet</groupId>
+					<artifactId>SilkSpawners-API</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-v1_7_R2</artifactId>
+			<version>v1_7_R2</version>
+			<type>jar</type>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>de.dustplanet</groupId>
+					<artifactId>SilkSpawners-API</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-v1_7_R3</artifactId>
+			<version>v1_7_R3</version>
+			<type>jar</type>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>de.dustplanet</groupId>
+					<artifactId>SilkSpawners-API</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-API</artifactId>
+			<version>API</version>
+			<type>jar</type>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>bukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<sourceDirectory>../../src/main/java</sourceDirectory>
+		<directory>../../target</directory>
+
+		<!-- Include .yml files -->
+		<resources>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>../../src/main/resources</directory>
+				<includes>
+					<include>plugin.yml</include>
+					<include>config.yml</include>
+					<include>localization.yml</include>
+					<include>mobs.yml</include>
+				</includes>
+			</resource>
+			<resource>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+				<directory>../..</directory>
+				<includes>
+					<include>README.txt</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>de.dustplanet:SilkSpawners*</include>
+									<include>org.mcstats.bukkit:metrics</include>
+									<include>net.gravitydevelopment.updater:updater</include>
+								</includes>
+								<excludes>
+									<exclude>de.dustplanet.silkspawners:SilkSpawners-API</exclude>
+								</excludes>
+							</artifactSet>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+	<!-- Github information -->
+	<scm>
+		<url>https://github.com/xGhOsTkiLLeRx/SilkSpawners</url>
+		<connection>scm:git:git://github.com/xGhOsTkiLLeRx/SilkSpawners.git</connection>
+		<tag>master</tag>
+		<developerConnection>scm:git:git@github.com:xGhOsTkiLLeRx/SilkSpawners.git</developerConnection>
+	</scm>
+
+	<!-- Jenkins information -->
+	<ciManagement>
+		<url>http://ci.dustplanet.de/job/SilkSpawners</url>
+		<system>jenkins</system>
+	</ciManagement>
+</project>

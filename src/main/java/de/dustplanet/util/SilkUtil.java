@@ -2,15 +2,12 @@ package de.dustplanet.util;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import me.confuser.barapi.BarAPI;
-import net.minecraft.server.v1_7_R3.EntityTypes;
-import net.minecraft.server.v1_7_R3.TileEntityMobSpawner;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +17,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.v1_7_R3.block.CraftCreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -31,6 +27,7 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
 /**
  * This is the util class where all the magic happens!
@@ -77,12 +74,6 @@ public class SilkUtil {
      */
     public short defaultEntityID = 90;
 
-    // Fields for reflection
-    /**
-     * Field used for reflection
-     */
-    public Field tileField;
-
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
     /**
@@ -90,12 +81,17 @@ public class SilkUtil {
      */
     public Material SPAWN_EGG = Material.MONSTER_EGG;
 
+    /**
+     * Boolean toogle for reflection
+     */
+    public boolean useReflection = true;
+
     // WorldGuard instance
     /**
      * WorldGuard instance, may be null
      */
     private WorldGuardPlugin wg;
-    
+
     /**
      * BarAPI usage toggle
      */
@@ -108,19 +104,18 @@ public class SilkUtil {
     private SilkSpawners plugin;
 
     /**
+     * NMSHandler
+     */
+    public NMSProvider nmsProvider;
+
+    /**
      * Constructor to make your own SilkUtil instance
      * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
 	getWorldGuard(instance);
 	plugin = instance;
-    }
-
-    /**
-     * Constructor called without SilkSpawners instance, will
-     * result in a lack of WorldGuard and other features
-     */
-    public SilkUtil() {
+	setupNMSProvider();
     }
 
     /**
@@ -129,11 +124,36 @@ public class SilkUtil {
      */
     public static SilkUtil hookIntoSilkSpanwers() {
 	SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
-	if (plugin != null) {
-	    return new SilkUtil(plugin);
+	return new SilkUtil(plugin);
+    }
+
+    /**
+     * Define which Minecraft version needs to be loaded
+     */
+    private boolean setupNMSProvider() {
+	// Get full package string of CraftServer
+	String packageName = plugin.getServer().getClass().getPackage().getName();
+	// org.bukkit.craftbukkit.version
+	// Get the last element of the package
+	String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+
+	try {
+	    // Check if we have a NMSHandler class at that location.
+	    final Class<?> clazz = Class.forName("de.dustplanet.silkspawners.compat." + version + ".NMSHandler");
+	    // Get the last element of the package
+	    if (NMSProvider.class.isAssignableFrom(clazz)) {
+		// Set our handler
+		nmsProvider = (NMSProvider) clazz.getConstructor().newInstance();
+		plugin.getLogger().info("Loading support for " + version);
+		return true;
+	    }
+	} catch (final Exception e) {
+	    e.printStackTrace();
+	    plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
+	    plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
+	    plugin.shutdown();
 	}
-	Bukkit.getLogger().warning("SilkSpawners instance not found, returning SilkUtil without SilkSpawners instance!");
-	return new SilkUtil();
+	return false;
     }
 
     // Give a new SpawnerEgg with the given entityID
@@ -179,9 +199,6 @@ public class SilkUtil {
 	// The way it should be stored (double sure!)
 	item.setDurability(entityID);
 
-	// Removed the old unsafeEnchantment method since BUKKIT-329 is fixed
-	// and it caused glowing issues
-	// Due to this trading etc. was impossible
 	return item;
     }
 
@@ -258,30 +275,20 @@ public class SilkUtil {
 	BlockState blockState = block.getState();
 	if (!(blockState instanceof CreatureSpawner)) {
 	    // Call it only on CreatureSpawners
-	    Bukkit.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
+	    plugin.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
 	    return 0;
 	}
-	// Get our spawner;
-	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
-	// Get the mob ID ourselves if we can
-	if (tileField != null) {
-	    try {
-		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-		// Get the name from the field of our spawner
-		String mobID = tile.a().getMobName();
-		// In case the block is not on our list try a fallback
-		if (mobID != null && mobID2Eid.containsKey(mobID)) {
-		    return mobID2Eid.get(mobID);
-		}
-	    } catch (Exception e) {
-		Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-		e.printStackTrace();
+	if (useReflection) {
+	    String mobID = nmsProvider.getMobNameOfSpawner(blockState);
+	    // In case the block is not on our list try a fallback
+	    if (mobID != null && mobID2Eid.containsKey(mobID)) {
+		return mobID2Eid.get(mobID);
 	    }
 	}
 
 	// Fallback to Bukkit
-	return spawner.getSpawnedType().getTypeId();
+	return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
     }
 
     // Sets the creature of a spawner
@@ -294,40 +301,29 @@ public class SilkUtil {
 	BlockState blockState = block.getState();
 	// Call it only on CreatureSpawners
 	if (!(blockState instanceof CreatureSpawner)) {
-	    Bukkit.getLogger().warning("setSpawnerEntityID called on non-spawner block: " + block);
+	    plugin.getLogger().warning("setSpawnerEntityID called on non-spawner block: " + block);
 	    return;
 	}
-	// Get out spawner;
-	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
 	// Try the more powerful native methods first
-	if (tileField != null) {
-	    try {
-		// Get the name of the mob
-		String mobID = eid2MobID.get(entityID);
-		// Okay the spawner is not on our list [should NOT happen anymore]
-		// Fallback then!
-		if (mobID == null) {
-		    mobID = getCreatureName(entityID);
-		}
-		// uh still null, default [PIG]!
-		if (mobID == null) {
-		    mobID = getCreatureName((short) 90);
-		}
+	if (useReflection) {
+	    // Get the name of the mob
+	    String mobID = eid2MobID.get(entityID);
+	    // Okay the spawner is not on our list [should NOT happen anymore]
+	    // Fallback then!
+	    if (mobID == null) {
+		mobID = getCreatureName(entityID);
+	    }
+	    // uh still null, default [PIG]!
+	    if (mobID == null) {
+		mobID = getCreatureName((short) 90);
+	    }
 
-		// Refer to the NMS TileEntityMobSpawner and change the name,
-		// see
-		// https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/TileEntityMobSpawner.java#L37
-		TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-		tile.a().a(mobID);
-
+	    // Successful? Stop here
+	    if (nmsProvider.setMobNameOfSpawner(blockState, mobID)) {
 		// Call an update (force it)
 		blockState.update(true);
 		return;
-	    } catch (Exception e) {
-		// Fallback to bukkit;
-		Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-		e.printStackTrace();
 	    }
 	}
 
@@ -338,7 +334,7 @@ public class SilkUtil {
 	    throw new IllegalArgumentException("Failed to find creature type for " + entityID);
 	}
 	// Set the spawner (less powerful)
-	spawner.setSpawnedType(ct);
+	((CreatureSpawner) blockState).setSpawnedType(ct);
 	// Update the spawner
 	blockState.update(true);
     }
@@ -456,38 +452,18 @@ public class SilkUtil {
      * @return Map with a result of Integer (ID), String (name)
      */
     public SortedMap<Integer, String> scanEntityMap() {
-	SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
-	// Use reflection to dump native EntityTypes
-	// This bypasses Bukkit's wrappers, so it works with mods
-	try {
-	    // https://github.com/SpigotMC/mc-dev/blob/master/net/minecraft/server/EntityTypes.java#L32
-	    // g.put(s, Integer.valueOf(i)); --> Name of ID
-	    Field field = EntityTypes.class.getDeclaredField("g");
-	    field.setAccessible(true);
-	    @SuppressWarnings("unchecked")
-	    Map<String, Integer> map = (Map<String, Integer>) field.get(null);
-	    // For each entry in our name -- ID map but it into the sortedMap
-	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
-		sortedMap.put(entry.getValue(), entry.getKey());
+	SortedMap<Integer, String> sortedMap = nmsProvider.rawEntityMap();
+	// Let's scan for added entities by e.g MCPC+
+	for (EntityType type : EntityType.values()) {
+	    String name = type.getName();
+	    short id = type.getTypeId();
+	    // If name is not defined or ID -1 --> skip this bad entity
+	    if (name == null || id == -1) {
+		continue;
 	    }
-
-	    // Let's scan for added entities by e.g MCPC+
-	    for (EntityType type : EntityType.values()) {
-		String name = type.getName();
-		short id = type.getTypeId();
-		// If name is not defined or ID -1 --> skip this bad entity
-		if (name == null || id == -1) {
-		    continue;
-		}
-		if (!sortedMap.containsKey((int) id)) {
-		    sortedMap.put((int) id, name);
-		}
+	    if (!sortedMap.containsKey((int) id)) {
+		sortedMap.put((int) id, name);
 	    }
-	}
-	catch (Exception e) {
-	    // Fail
-	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
-	    e.printStackTrace();
 	}
 	return sortedMap;
     }
