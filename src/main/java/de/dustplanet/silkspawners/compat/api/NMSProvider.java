@@ -7,9 +7,9 @@ import org.bukkit.block.BlockState;
 
 public interface NMSProvider {
     
-    public void spawnEntity(World world, short entityID, double x, double y, double z);
-    public SortedMap<Integer, String> rawEntityMap();
-    public String getMobNameOfSpawner(BlockState blockState);
-    public boolean setMobNameOfSpawner(BlockState blockState, String mobID);
-    public void setSpawnersUnstackable();
+    void spawnEntity(World world, short entityID, double x, double y, double z);
+    SortedMap<Integer, String> rawEntityMap();
+    String getMobNameOfSpawner(BlockState blockState);
+    boolean setMobNameOfSpawner(BlockState blockState, String mobID);
+    void setSpawnersUnstackable();
 }
