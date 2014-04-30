@@ -5,17 +5,17 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_6_R3.Entity;
-import net.minecraft.server.v1_6_R3.EntityTypes;
-import net.minecraft.server.v1_6_R3.Item;
-import net.minecraft.server.v1_6_R3.TileEntityMobSpawner;
-import net.minecraft.server.v1_6_R3.World;
+import net.minecraft.server.v1_6_R1.Entity;
+import net.minecraft.server.v1_6_R1.EntityTypes;
+import net.minecraft.server.v1_6_R1.Item;
+import net.minecraft.server.v1_6_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_6_R1.World;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_6_R3.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_6_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R1.block.CraftCreatureSpawner;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
