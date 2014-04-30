@@ -9,7 +9,7 @@ import net.minecraft.server.v1_6_R2.Entity;
 import net.minecraft.server.v1_6_R2.EntityTypes;
 import net.minecraft.server.v1_6_R2.Item;
 import net.minecraft.server.v1_6_R2.TileEntityMobSpawner;
-import net.minecraft.server.v1_6_R.World;
+import net.minecraft.server.v1_6_R2.World;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
