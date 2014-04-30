@@ -27,7 +27,7 @@ public class NMSHandler implements NMSProvider {
 	try {
 	    // Get the spawner field
 	    // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
-	    Field tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+	    tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
 	    tileField.setAccessible(true);
 	} catch (SecurityException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
