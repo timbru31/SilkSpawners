@@ -21,6 +21,22 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
 public class NMSHandler implements NMSProvider {
+    private Field tileField;
+
+    public NMSHandler() {
+	try {
+	    // Get the spawner field
+	    // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
+	    Field tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+	    tileField.setAccessible(true);
+	} catch (SecurityException e) {
+	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+	    e.printStackTrace();
+	} catch (NoSuchFieldException e) {
+	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+	    e.printStackTrace();
+	}
+    }
 
     @Override
     public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
@@ -79,20 +95,9 @@ public class NMSHandler implements NMSProvider {
 	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 	// Get the mob ID ourselves if we can
 	try {
-	    // Get the spawner field
-	    //https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
-	    Field tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
-	    tileField.setAccessible(true);
-	    
 	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 	    // Get the name from the field of our spawner
 	    return tile.a().getMobName();
-	} catch (SecurityException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (NoSuchFieldException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
 	} catch (IllegalArgumentException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 	    e.printStackTrace();
@@ -141,22 +146,11 @@ public class NMSHandler implements NMSProvider {
 	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
 
 	try {
-	    // Get the spawner field
-	    //https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
-	    Field tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
-	    tileField.setAccessible(true);
-
 	    // Refer to the NMS TileEntityMobSpawner and change the name, see
 	    // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/TileEntityMobSpawner.java#L37
 	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 	    tile.a().a(mobID);
 	    return true;
-	}  catch (SecurityException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (NoSuchFieldException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
 	} catch (IllegalArgumentException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 	    e.printStackTrace();

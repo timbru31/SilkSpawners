@@ -136,7 +136,7 @@ public class SilkUtil {
 	String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
 	try {
-	    // Check if we have a NMSHandler class at that location.
+	    // Check if we have a NMSHandler class at that location
 	    final Class<?> clazz = Class.forName("de.dustplanet.silkspawners.compat." + version + ".NMSHandler");
 	    // Get the last element of the package
 	    if (NMSProvider.class.isAssignableFrom(clazz)) {

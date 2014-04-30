@@ -1,0 +1,54 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>SilkSpawners-v1_6_R1</artifactId>
+	<packaging>jar</packaging>
+	<name>SilkSpawners for v1_6R_1</name>
+	<version>v1_6_R1</version>
+
+	<parent>
+		<groupId>de.dustplanet</groupId>
+		<artifactId>SilkSpawners-parent</artifactId>
+		<version>parent</version>
+		<relativePath>../../</relativePath>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bukkit</groupId>
+			<artifactId>craftbukkit</artifactId>
+			<version>1.6.1-R0.1</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-API</artifactId>
+			<version>API</version>
+			<type>jar</type>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>bukkit</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- Compile for 1.6 -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<verbose>true</verbose>
+					<fork>true</fork>
+					<compilerVersion>1.6</compilerVersion>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

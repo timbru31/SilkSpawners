@@ -1,21 +1,21 @@
-package de.dustplanet.silkspawners.compat.v1_7_R1;
+package de.dustplanet.silkspawners.compat.v1_6_R2;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_7_R1.Entity;
-import net.minecraft.server.v1_7_R1.EntityTypes;
-import net.minecraft.server.v1_7_R1.Item;
-import net.minecraft.server.v1_7_R1.RegistryMaterials;
-import net.minecraft.server.v1_7_R1.TileEntityMobSpawner;
-import net.minecraft.server.v1_7_R1.World;
+import net.minecraft.server.v1_6_R3.Entity;
+import net.minecraft.server.v1_6_R3.EntityTypes;
+import net.minecraft.server.v1_6_R3.Item;
+import net.minecraft.server.v1_6_R3.TileEntityMobSpawner;
+import net.minecraft.server.v1_6_R3.World;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_6_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_6_R3.block.CraftCreatureSpawner;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
@@ -63,9 +63,9 @@ public class NMSHandler implements NMSProvider {
 	// Use reflection to dump native EntityTypes
 	// This bypasses Bukkit's wrappers, so it works with mods
 	try {
-	    // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/EntityTypes.java#L32
-	    // g.put(s, Integer.valueOf(i)); --> Name of ID
-	    Field field = EntityTypes.class.getDeclaredField("g");
+	    // https://github.com/SpigotMC/mc-dev/blob/80720c97b503fd771185f0e68e061b62f48e48ad/net/minecraft/server/EntityTypes.java#L21
+	    // f.put(s, Integer.valueOf(i)); --> Name of ID
+	    Field field = EntityTypes.class.getDeclaredField("f");
 	    field.setAccessible(true);
 	    @SuppressWarnings("unchecked")
 	    Map<String, Integer> map = (Map<String, Integer>) field.get(null);
@@ -112,19 +112,10 @@ public class NMSHandler implements NMSProvider {
     public void setSpawnersUnstackable() {
 	// http://forums.bukkit.org/threads/setting-max-stack-size.66364/
 	try {
-	    // Get the new registry HashMp from the Item class
-	    Field registryField = Item.class.getDeclaredField("REGISTRY");
-	    registryField.setAccessible(true);
-	    RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
-	    // Get entry of the spawner
-	    Object spawnerEntry = registry.a(52);
-	    // Set maxStackSize "e(int maxStackSize)"
-	    Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-	    maxStackSize.setAccessible(true);
-	    maxStackSize.setInt(spawnerEntry, 1);
-	    // Cleanup
-	    registryField.setAccessible(false);
-	    maxStackSize.setAccessible(false);
+	    Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
+	    // Set the stackable field back to 1
+	    maxStackSizeField.setAccessible(true);
+	    maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
 	} catch (SecurityException e) {
 	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
 	    e.printStackTrace();
