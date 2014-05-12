@@ -149,6 +149,7 @@ public class SilkUtil {
 	    e.printStackTrace();
 	    plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
 	    plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
+	    plugin.getLogger().info("Disabling SilkSpawners now!");
 	    plugin.shutdown();
 	}
 	return false;
