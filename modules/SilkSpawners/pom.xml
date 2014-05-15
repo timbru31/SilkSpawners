@@ -206,8 +206,11 @@
 							</artifactSet>
 							<relocations>
 								<relocation>
-									<pattern>org.mcstats</pattern>
 									<pattern>net.gravitydevelopment</pattern>
+									<shadedPattern>de.dustplanet.util</shadedPattern>
+								</relocation>
+								<relocation>
+									<pattern>org.mcstats</pattern>
 									<shadedPattern>de.dustplanet.util</shadedPattern>
 								</relocation>
 							</relocations>
