@@ -421,7 +421,7 @@ public class Configuration {
     }
 
     private void loadDefaultConfig() {
-	config.options().header("See documentation at http://dev.bukkit.org/server-mods/silkspawners/pages/configuration");
+	config.options().header("See documentation at http://dev.bukkit.org/bukkit-plugins/silkspawners/pages/configuration");
 	config.addDefault("autoUpdater", true);
 	config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
 	config.addDefault("usePermissions", true);
@@ -482,6 +482,5 @@ public class Configuration {
 	config.addComment("verboseConfig", "", "# Puts more information out on startup");
 	config.addDefault("useReflection", true);
 	config.addComment("useReflection", "", "# Internal stuff, do NOT change unless advised - the plugin might break otherwise");
-	config.addDefault("useErrorLogger", true);
     }
 }
