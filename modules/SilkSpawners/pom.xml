@@ -206,7 +206,7 @@
 							</artifactSet>
 							<relocations>
 								<relocation>
-									<pattern>net.gravitydevelopment</pattern>
+									<pattern>net.gravitydevelopment.upater</pattern>
 									<shadedPattern>de.dustplanet.util</shadedPattern>
 								</relocation>
 								<relocation>
