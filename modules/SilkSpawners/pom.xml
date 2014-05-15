@@ -204,6 +204,13 @@
 									<exclude>de.dustplanet.silkspawners:SilkSpawners-API</exclude>
 								</excludes>
 							</artifactSet>
+							<relocations>
+								<relocation>
+									<pattern>org.mcstats</pattern>
+									<pattern>net.gravitydevelopment</pattern>
+									<shadedPattern>de.dustplanet.util</shadedPattern>
+								</relocation>
+							</relocations>
 							<createDependencyReducedPom>false</createDependencyReducedPom>
 						</configuration>
 					</execution>
