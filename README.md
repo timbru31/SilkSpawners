@@ -28,52 +28,52 @@ Please see [LICENSE.md](LICENSE.md) for more information.
 ## Standard config
 ````yaml
 # See documentation at http://dev.bukkit.org/bukkit-plugins/silkspawners/pages/configuration
- 
+
 # Should the plugin automatically update if an update is available?
 autoUpdater: true
- 
+
 # Should permissions be used
 usePermissions: true
- 
+
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
 
 # Percentage of dropping a spawner block when TNT or creepers explode
 explosionDropChance: 30
- 
+
 # When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
 # PIG (90) is Minecraft default (put NAMES or IDs here!)
 defaultCreature: 90
- 
+
 # How far is the spawner reachable with your crosshair
 spawnerCommandReachDistance: 6
- 
+
 # Minimum silk touch level [can be changed via other plugins to a higher value]
 # Set it to 0 to mine it without silk touch
 minSilkTouchLevel: 1
- 
+
 # If a player in creative destroys a spawner nothing is dropped
 noDropsCreative: true
- 
+
 # If a spawner is destroyed, should the egg be dropped
 destroyDropEgg: false
- 
+
 # If a spawner is destroyed, should XP be dropped
 destroyDropXP: 0
- 
+
 # If a spawner is destroyed, should iron bars be dropped
 destroyDropBars: 0
- 
+
 # Should the player be able to craft spawners
 craftableSpawners: false
- 
+
 # Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free
 # X is always the egg
 recipeTop: AAA
 recipeMiddle: AXA
 recipeBottom: AAA
 recipeAmount: 1
- 
+
 # Custom example:
 #recipeTop: 'A A'
 #recipeMiddle: 'BXA'
@@ -83,18 +83,18 @@ recipeAmount: 1
 #  - 'B,DIRT'
 #  - 'C,2'
 #  - 'D,5'
- 
+
 # You can put IDs or the NAME here (please uppercase)
 # Add it for each custom ingredient you add, too!
 ingredients:
 - A,IRON_FENCE
- 
+
 # Should spawners be stackable
 spawnersUnstackable: false
- 
+
 # Should the egg be consumed when the spawner is changed with it
 consumeEgg: true
- 
+
 # Fallback if the creature should be enabled, if not specified for the entity
 enableCreatureDefault: true
 
@@ -103,27 +103,27 @@ ignoreCheckNumbers: false
 
 # Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)
 spawnEggToSpawner: false
- 
+
 # Should the spawn algorithm be overridden? Allows spawning of non-standard entities
 spawnEggOverride: false
- 
+
 # Fallback if the creature should be spawned, if not specified for the entity
 spawnEggOverrideSpawnDefault: true
- 
+
 # Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
- 
+
 # Notify the player about the spawner when he holds the spawner in the hand
 notifyOnHold: true
- 
+
 # Configure displaying with BarAPI, time is in seconds
 barAPI:
   enable: true
   displayTime: 3
- 
+
 # Puts more information out on startup
 verboseConfig: false
- 
+
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true
 testMCVersion: true
@@ -194,6 +194,9 @@ testMCVersion: true
 ## Credits
 * mushroomhostage for the original SilkSpawners plugin
 * Thermo_Core alias Archarin for the logo
+* Kiracastle for the nice review
+* smsunrato for the review and Indonesian translation
+* Jeroendedoem for the Dutch translation
 
 ## Support
 For support visit the dev.bukkit.org page: http://dev.bukkit.org/bukkit-plugins/silkspawners
