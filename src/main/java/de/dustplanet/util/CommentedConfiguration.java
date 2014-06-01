@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
@@ -27,7 +26,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 
     public CommentedConfiguration(File file) {
 	super();
-	comments = new HashMap<String, String>();
+	comments = new HashMap<>();
 	this.file = file;
     }
 
@@ -35,11 +34,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 	boolean loaded = true;
 	try {
 	    this.load(file);
-	} catch (IOException e) {
-	    loaded = false;
-	    System.out.println("Exception while loading the file: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (InvalidConfigurationException e) {
+	} catch (IOException | InvalidConfigurationException e) {
 	    loaded = false;
 	    System.out.println("Exception while loading the file: " + e.getMessage());
 	    e.printStackTrace();
@@ -234,39 +229,20 @@ public class CommentedConfiguration extends YamlConfiguration {
      */
     public String convertFileToString(File file) {
 	if (file != null && file.exists() && file.canRead() && !file.isDirectory()) {
-	    Writer writer = new StringWriter();
-	    InputStream is = null;
-	    Reader reader = null;
 	    char[] buffer = new char[1024];
-	    try {
-		is = new FileInputStream(file);
-		reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+	    String s = "";
+	    try (Writer writer = new StringWriter();
+		    Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));) {
 		int n;
 		while ((n = reader.read(buffer)) != -1) {
 		    writer.write(buffer, 0, n);
 		}
+		s = writer.toString();
 	    } catch (IOException e) {
 		System.out.println("Failed to convert the file to a string: " + e.getMessage());
 		e.printStackTrace();
-	    } finally {
-		if (is != null) {
-		    try {
-			is.close();
-		    } catch (IOException e) {
-			System.out.println("Failed to convert the file to a string: " + e.getMessage());
-			e.printStackTrace();
-		    }
-		}
-		if (reader != null) {
-		    try {
-			reader.close();
-		    } catch (IOException e) {
-			System.out.println("Failed to convert the file to a string: " + e.getMessage());
-			e.printStackTrace();
-		    }
-		}
 	    }
-	    return writer.toString();
+	    return s;
 	} else {
 	    return "";
 	}
@@ -280,24 +256,13 @@ public class CommentedConfiguration extends YamlConfiguration {
      * @return True on success.
      */
     public boolean stringToFile(String source, File file) {
-	OutputStreamWriter out = null;
-	try {
-	    out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+	try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8")) {
 	    out.write(source);
 	    return true;
 	} catch (IOException e) {
 	    System.out.println("Failed to convert the string to a file: " + e.getMessage());
 	    e.printStackTrace();
 	    return false;
-	} finally {
-	    if (out != null) {
-		try {
-		    out.close();
-		} catch (IOException e) {
-		    System.out.println("Failed to convert the string to a file: " + e.getMessage());
-		    e.printStackTrace();
-		}
-	    }
 	}
     }
 }

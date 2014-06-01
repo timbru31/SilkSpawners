@@ -158,9 +158,7 @@ public class SilkSpawners extends JavaPlugin {
 
     // If no config is found, copy the default one(s)!
     private void copy(InputStream in, File file) {
-	OutputStream out = null;
-	try {
-	    out = new FileOutputStream(file);
+	try(OutputStream out = new FileOutputStream(file)) {
 	    byte[] buf = new byte[1024];
 	    int len;
 	    while ((len = in.read(buf)) > 0) {
@@ -169,23 +167,6 @@ public class SilkSpawners extends JavaPlugin {
 	} catch (IOException e) {
 	    getLogger().warning("Failed to copy the default config! (I/O)");
 	    e.printStackTrace();
-	} finally {
-	    try {
-		if (out != null) {
-		    out.close();
-		}
-	    } catch (IOException e) {
-		getLogger().warning("Failed to close the streams! (I/O -> Output)");
-		e.printStackTrace();
-	    }
-	    try {
-		if (in != null) {
-		    in.close();
-		}
-	    } catch (IOException e) {
-		getLogger().warning("Failed to close the streams! (I/O -> Input)");
-		e.printStackTrace();
-	    }
 	}
     }
 

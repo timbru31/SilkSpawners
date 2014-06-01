@@ -29,10 +29,7 @@ public class NMSHandler implements NMSProvider {
 	    // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
 	    tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
 	    tileField.setAccessible(true);
-	} catch (SecurityException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (NoSuchFieldException e) {
+	} catch (SecurityException | NoSuchFieldException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 	    e.printStackTrace();
 	}
@@ -73,16 +70,7 @@ public class NMSHandler implements NMSProvider {
 	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
 		sortedMap.put(entry.getValue(), entry.getKey());
 	    }
-	} catch (SecurityException e) {
-	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (NoSuchFieldException e) {
-	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalArgumentException e) {
-	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalAccessException e) {
+	} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
 	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
 	    e.printStackTrace();
 	}
@@ -98,10 +86,7 @@ public class NMSHandler implements NMSProvider {
 	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 	    // Get the name from the field of our spawner
 	    return tile.a().getMobName();
-	} catch (IllegalArgumentException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalAccessException e) {
+	} catch (IllegalArgumentException | IllegalAccessException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 	    e.printStackTrace();
 	}
@@ -125,16 +110,7 @@ public class NMSHandler implements NMSProvider {
 	    // Cleanup
 	    registryField.setAccessible(false);
 	    maxStackSize.setAccessible(false);
-	} catch (SecurityException e) {
-	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (NoSuchFieldException e) {
-	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalArgumentException e) {
-	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalAccessException e) {
+	} catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
 	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
 	    e.printStackTrace();
 	}
@@ -151,10 +127,7 @@ public class NMSHandler implements NMSProvider {
 	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
 	    tile.a().a(mobID);
 	    return true;
-	} catch (IllegalArgumentException e) {
-	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
-	    e.printStackTrace();
-	} catch (IllegalAccessException e) {
+	} catch (IllegalArgumentException | IllegalAccessException e) {
 	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
 	    e.printStackTrace();
 	}

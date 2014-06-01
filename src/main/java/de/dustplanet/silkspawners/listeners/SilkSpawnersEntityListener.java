@@ -43,7 +43,7 @@ public class SilkSpawnersEntityListener implements Listener {
 	if (event.isCancelled() || event.getEntity() == null || event.getEntity() instanceof EnderDragon || plugin.config.getInt("explosionDropChance") == 0) {
 	    return;
 	}
-
+	
 	// Check if a spawner block is on the list
 	for (Block block : event.blockList()) {
 	    // We have a spawner

@@ -24,7 +24,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
 	// Long enough!
 	if (args.length > 0) {
-	    ArrayList<String> results = new ArrayList<String>();
+	    ArrayList<String> results = new ArrayList<>();
 	    // Use ONLY lowercase
 	    String argument = args[0].toLowerCase();
 	    // Add list and all

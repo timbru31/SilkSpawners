@@ -47,7 +47,7 @@ public class Configuration {
 
     private void loadDefaultMobs() {
 	config.options().header("creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html");
-	List<String> tempList = new ArrayList<String>();
+	ArrayList<String> tempList = new ArrayList<>();
 	// Creeper
 	tempList.add("c");
 	tempList.add("creep");
@@ -57,7 +57,7 @@ public class Configuration {
 	config.addDefault("creatures.Creeper.enable", true);
 	config.addDefault("creatures.Creeper.enableCraftingSpawner", true);
 	config.addDefault("creatures.Creeper.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Skeleton
 	tempList.add("s");
 	tempList.add("sk");
@@ -68,7 +68,7 @@ public class Configuration {
 	config.addDefault("creatures.Skeleton.enableCraftingSpawner", true);
 	config.addDefault("creatures.Skeleton.enableSpawnEggOverride", true);
 	config.options().copyDefaults(true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Spider
 	tempList.add("sp");
 	tempList.add("bug");
@@ -76,14 +76,14 @@ public class Configuration {
 	config.addDefault("creatures.Spider.enable", true);
 	config.addDefault("creatures.Spider.enableCraftingSpawner", true);
 	config.addDefault("creatures.Spider.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Giant
 	tempList.add("giantzombie");
 	config.addDefault("creatures.Giant.aliases", tempList);
 	config.addDefault("creatures.Giant.enable", true);
 	config.addDefault("creatures.Giant.enableCraftingSpawner", true);
 	config.addDefault("creatures.Giant.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Zombie
 	tempList.add("z");
 	tempList.add("zed");
@@ -91,14 +91,14 @@ public class Configuration {
 	config.addDefault("creatures.Zombie.enable", true);
 	config.addDefault("creatures.Zombie.enableCraftingSpawner", true);
 	config.addDefault("creatures.Zombie.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Slime
 	tempList.add("sl");
 	config.addDefault("creatures.Slime.aliases", tempList);
 	config.addDefault("creatures.Slime.enable", true);
 	config.addDefault("creatures.Slime.enableCraftingSpawner", true);
 	config.addDefault("creatures.Slime.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Ghast
 	tempList.add("g");
 	tempList.add("ghost");
@@ -106,7 +106,7 @@ public class Configuration {
 	config.addDefault("creatures.Ghast.enable", true);
 	config.addDefault("creatures.Ghast.enableCraftingSpawner", true);
 	config.addDefault("creatures.Ghast.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// PigZombie (Zombie Pigman)
 	tempList.add("pigman");
 	tempList.add("zombiepigman");
@@ -117,7 +117,7 @@ public class Configuration {
 	config.addDefault("creatures.PigZombie.enable", true);
 	config.addDefault("creatures.PigZombie.enableCraftingSpawner", true);
 	config.addDefault("creatures.PigZombie.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Enderman
 	tempList.add("e");
 	tempList.add("ender");
@@ -128,7 +128,7 @@ public class Configuration {
 	config.addDefault("creatures.Enderman.enable", true);
 	config.addDefault("creatures.Enderman.enableCraftingSpawner", true);
 	config.addDefault("creatures.Enderman.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// CaveSpider (Cave Spider)
 	tempList.add("cspider");
 	tempList.add("cs");
@@ -138,7 +138,7 @@ public class Configuration {
 	config.addDefault("creatures.CaveSpider.enable", true);
 	config.addDefault("creatures.CaveSpider.enableCraftingSpawner", true);
 	config.addDefault("creatures.CaveSpider.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Silverfish
 	tempList.add("sf");
 	tempList.add("sfish");
@@ -146,7 +146,7 @@ public class Configuration {
 	config.addDefault("creatures.Silverfish.enable", true);
 	config.addDefault("creatures.Silverfish.enableCraftingSpawner", true);
 	config.addDefault("creatures.Silverfish.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Blaze
 	tempList.add("bl");
 	tempList.add("b");
@@ -154,7 +154,7 @@ public class Configuration {
 	config.addDefault("creatures.Blaze.enable", true);
 	config.addDefault("creatures.Blaze.enableCraftingSpawner", true);
 	config.addDefault("creatures.Blaze.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// LavaSlime (Magma Cube)
 	tempList.add("magmacube");
 	tempList.add("mcube");
@@ -166,7 +166,7 @@ public class Configuration {
 	config.addDefault("creatures.LavaSlime.enable", true);
 	config.addDefault("creatures.LavaSlime.enableCraftingSpawner", true);
 	config.addDefault("creatures.LavaSlime.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// EnderDragon (Ender Dragon)
 	tempList.add("dragon");
 	tempList.add("raqreqentba");
@@ -175,28 +175,28 @@ public class Configuration {
 	config.addDefault("creatures.EnderDragon.enable", true);
 	config.addDefault("creatures.EnderDragon.enableCraftingSpawner", true);
 	config.addDefault("creatures.EnderDragon.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Pig
 	tempList.add("p");
 	config.addDefault("creatures.Pig.aliases", tempList);
 	config.addDefault("creatures.Pig.enable", true);
 	config.addDefault("creatures.Pig.enableCraftingSpawner", true);
 	config.addDefault("creatures.Pig.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Sheep
 	tempList.add("sh");
 	config.addDefault("creatures.Sheep.aliases", tempList);
 	config.addDefault("creatures.Sheep.enable", true);
 	config.addDefault("creatures.Sheep.enableCraftingSpawner", true);
 	config.addDefault("creatures.Sheep.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Cow
 	tempList.add("bovine");
 	config.addDefault("creatures.Cow.aliases", tempList);
 	config.addDefault("creatures.Cow.enable", true);
 	config.addDefault("creatures.Cow.enableCraftingSpawner", true);
 	config.addDefault("creatures.Cow.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Chicken
 	tempList.add("ch");
 	tempList.add("chick");
@@ -205,7 +205,7 @@ public class Configuration {
 	config.addDefault("creatures.Chicken.enable", true);
 	config.addDefault("creatures.Chicken.enableCraftingSpawner", true);
 	config.addDefault("creatures.Chicken.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Squid
 	tempList.add("sq");
 	tempList.add("octopus");
@@ -213,7 +213,7 @@ public class Configuration {
 	config.addDefault("creatures.Squid.enable", true);
 	config.addDefault("creatures.Squid.enableCraftingSpawner", true);
 	config.addDefault("creatures.Squid.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Wolf
 	tempList.add("w");
 	tempList.add("dog");
@@ -221,7 +221,7 @@ public class Configuration {
 	config.addDefault("creatures.Wolf.enable", true);
 	config.addDefault("creatures.Wolf.enableCraftingSpawner", true);
 	config.addDefault("creatures.Wolf.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// MushroomCow
 	tempList.add("mc");
 	tempList.add("mcow");
@@ -230,7 +230,7 @@ public class Configuration {
 	config.addDefault("creatures.MushroomCow.enable", true);
 	config.addDefault("creatures.MushroomCow.enableCraftingSpawner", true);
 	config.addDefault("creatures.MushroomCow.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// SnowMan (Snow Golem)
 	tempList.add("golem");
 	tempList.add("sgolem");
@@ -242,7 +242,7 @@ public class Configuration {
 	config.addDefault("creatures.SnowMan.enable", true);
 	config.addDefault("creatures.SnowMan.enableCraftingSpawner", true);
 	config.addDefault("creatures.SnowMan.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Ozelot (Ocelot)
 	tempList.add("ocelot");
 	tempList.add("oce");
@@ -254,7 +254,7 @@ public class Configuration {
 	config.addDefault("creatures.Ozelot.enable", true);
 	config.addDefault("creatures.Ozelot.enableCraftingSpawner", true);
 	config.addDefault("creatures.Ozelot.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// VillagerGolem (Iron Golem)
 	tempList.add("igolem");
 	tempList.add("ironman");
@@ -265,7 +265,7 @@ public class Configuration {
 	config.addDefault("creatures.VillagerGolem.enable", true);
 	config.addDefault("creatures.VillagerGolem.enableCraftingSpawner", true);
 	config.addDefault("creatures.VillagerGolem.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Villager
 	tempList.add("v");
 	tempList.add("npc");
@@ -273,7 +273,7 @@ public class Configuration {
 	config.addDefault("creatures.Villager.enable", true);
 	config.addDefault("creatures.Villager.enableCraftingSpawner", true);
 	config.addDefault("creatures.Villager.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Witch
 	tempList.add("hag");
 	tempList.add("sibly");
@@ -282,14 +282,14 @@ public class Configuration {
 	config.addDefault("creatures.Witch.enable", true);
 	config.addDefault("creatures.Witch.enableCraftingSpawner", true);
 	config.addDefault("creatures.Witch.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// Bat
 	tempList.add("batman");
 	config.addDefault("creatures.Bat.aliases", tempList);
 	config.addDefault("creatures.Bat.enable", true);
 	config.addDefault("creatures.Bat.enableCraftingSpawner", true);
 	config.addDefault("creatures.Bat.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// WitherBoss (Wither)
 	tempList.add("wboss");
 	config.addDefault("creatures.WitherBoss.aliases", tempList);
@@ -297,7 +297,7 @@ public class Configuration {
 	config.addDefault("creatures.WitherBoss.enable", true);
 	config.addDefault("creatures.WitherBoss.enableCraftingSpawner", true);
 	config.addDefault("creatures.WitherBoss.enableSpawnEggOverride", true);
-	tempList = new ArrayList<String>();
+	tempList.clear();
 	// EntityHorse (Horse)
 	tempList.add("horse");
 	tempList.add("h");

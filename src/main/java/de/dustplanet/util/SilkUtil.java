@@ -1,5 +1,7 @@
 package de.dustplanet.util;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.SortedMap;
 import java.util.UUID;
@@ -39,31 +41,31 @@ public class SilkUtil {
     /**
      * This HashMap is holding the entityID and the display name of each mob
      */
-    public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<Short, String>();
+    public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<>();
 
     // EntityID to MobID
     /**
      * This HashMap is holding the entityID and the internal Minecraft name of each mob
      */
-    public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<Short, String>();
+    public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<>();
 
     // MobID to entityID
     /**
      * This HashMap is holding the internal Minecraft name of each mob and the entityID
      */
-    public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<String, Short>();
+    public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<>();
 
     // Name to entityID
     /**
      * This HashMap is holding the display name of each mob and the entityID
      */
-    public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<String, Short>();
+    public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<>();
 
     // Known entityIDs
     /**
      * List of enabled (and therefore) known entityIDs
      */
-    public ArrayList<Short> knownEids = new ArrayList<Short>();
+    public ArrayList<Short> knownEids = new ArrayList<>();
 
     // Default is 90 = PIG
     // To prevent empty string use real ID and not 0 anymore
@@ -145,7 +147,7 @@ public class SilkUtil {
 		plugin.getLogger().info("Loading support for " + version);
 		return true;
 	    }
-	} catch (final Exception e) {
+	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
 	    e.printStackTrace();
 	    plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
 	    plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
@@ -226,20 +228,7 @@ public class SilkUtil {
      * @return the entityID
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
-	short id = item.getDurability();
-	// Is it stored and working? Great return this!
-	// Should work again after BUKKIT-329
-	if (id != 0) {
-	    return id;
-	}
-
-	// Else use the enchantment
-	id = (short) item.getEnchantmentLevel(Enchantment.SILK_TOUCH);
-	if (id != 0) {
-	    return id;
-	}
-	// Return 0 -> should be default (pig)
-	return 0;
+	return item.getDurability();
     }
 
     // Return whether mob is recognized by Bukkit's wrappers
