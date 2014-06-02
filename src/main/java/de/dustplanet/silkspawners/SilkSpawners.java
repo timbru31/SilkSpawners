@@ -157,8 +157,9 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     // If no config is found, copy the default one(s)!
-    private void copy(InputStream in, File file) {
-	try(OutputStream out = new FileOutputStream(file)) {
+    private void copy(String yml, File file) {
+	try(OutputStream out = new FileOutputStream(file);
+		InputStream in = getResource(yml)) {
 	    byte[] buf = new byte[1024];
 	    int len;
 	    while ((len = in.read(buf)) > 0) {
@@ -185,19 +186,19 @@ public class SilkSpawners extends JavaPlugin {
 	}
 	// Copy default is necessary
 	if (!configFile.exists()) {
-	    copy(getResource("config.yml"), configFile);
+	    copy("config.yml", configFile);
 	}
 
 	// Localization
 	localizationFile = new File(getDataFolder(), "localization.yml");
 	if (!localizationFile.exists()) {
-	    copy(getResource("localization.yml"), localizationFile);
+	    copy("localization.yml", localizationFile);
 	}
 
 	// Mobs
 	mobsFile = new File(getDataFolder(), "mobs.yml");
 	if (!mobsFile.exists()) {
-	    copy(getResource("mobs.yml"), mobsFile);
+	    copy("mobs.yml", mobsFile);
 	}
 
 	// Load configs
