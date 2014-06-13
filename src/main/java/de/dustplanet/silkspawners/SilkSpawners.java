@@ -158,7 +158,7 @@ public class SilkSpawners extends JavaPlugin {
 
     // If no config is found, copy the default one(s)!
     private void copy(String yml, File file) {
-	try(OutputStream out = new FileOutputStream(file);
+	try (OutputStream out = new FileOutputStream(file);
 		InputStream in = getResource(yml)) {
 	    byte[] buf = new byte[1024];
 	    int len;
