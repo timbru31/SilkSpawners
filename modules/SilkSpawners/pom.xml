@@ -128,6 +128,23 @@
 		</dependency>
 		<dependency>
 			<groupId>de.dustplanet</groupId>
+			<artifactId>SilkSpawners-v1_7_R4</artifactId>
+			<version>v1_7_R4</version>
+			<type>jar</type>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<groupId>org.bukkit</groupId>
+					<artifactId>craftbukkit</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>de.dustplanet</groupId>
+					<artifactId>SilkSpawners-API</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>de.dustplanet</groupId>
 			<artifactId>SilkSpawners-API</artifactId>
 			<version>API</version>
 			<type>jar</type>
