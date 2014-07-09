@@ -79,9 +79,10 @@ public class SilkSpawners extends JavaPlugin {
 
 	// Test for right Minecraft version
 	if (config.getBoolean("testMCVersion", true)) {
-	    // We can't use the MinercraftServer import because it might be broken. Regex is our friend and helper
+	    // We can't use the MinercraftServer import because it might be broken. 
+	    // Regex is our friend and helper
 	    // Find MC: 0.0.0, last occurence is optional
-	    Pattern pat = Pattern.compile("MC: \\d{1}.\\d{1}(.\\d{1})?");
+	    Pattern pat = Pattern.compile("MC: \\d+.\\d+(.\\d+)?");
 	    Matcher matcher = pat.matcher(getServer().getVersion());
 	    String mcVersion = "";
 	    if (matcher.find()) {
@@ -93,6 +94,8 @@ public class SilkSpawners extends JavaPlugin {
 		getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
 		getLogger().info("Please check your versions to make sure they match!");
 		getLogger().info("Disabling now!");
+		getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
+		getLogger().info("Your version is: " + serverVersion);
 		getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
 		setEnabled(false);
 		return;
