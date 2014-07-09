@@ -1,0 +1,138 @@
+package de.dustplanet.silkspawners.compat.v1_7_R4;
+
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import net.minecraft.server.v1_7_R4.Entity;
+import net.minecraft.server.v1_7_R4.EntityTypes;
+import net.minecraft.server.v1_7_R4.Item;
+import net.minecraft.server.v1_7_R4.RegistryMaterials;
+import net.minecraft.server.v1_7_R4.TileEntityMobSpawner;
+import net.minecraft.server.v1_7_R4.World;
+
+import org.bukkit.Bukkit;
+import org.bukkit.block.BlockState;
+import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_7_R4.block.CraftCreatureSpawner;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+
+import de.dustplanet.silkspawners.compat.api.NMSProvider;
+
+public class NMSHandler implements NMSProvider {
+    private Field tileField;
+
+    public NMSHandler() {
+	try {
+	    // Get the spawner field
+	    // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
+	    tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
+	    tileField.setAccessible(true);
+	} catch (SecurityException | NoSuchFieldException e) {
+	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+	    e.printStackTrace();
+	}
+    }
+
+    @Override
+    public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
+	// https://github.com/SpigotMC/mc-dev/blob/5a9a0ae2b3e408a9e8bf4a3dc3247d95e61bd3a1/net/minecraft/server/EntityTypes.java#L96
+	World world = ((CraftWorld) w).getHandle();
+	Entity entity = EntityTypes.a(entityID, world);
+	// Should actually never happen since the method above
+	// contains a null check, too
+	if (entity == null) {
+	    Bukkit.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
+	    return;
+	}
+
+	// Random facing
+	entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
+	// We need to add the entity to the world, reason is of
+	// course a spawn egg so that other events can handle this
+	world.addEntity(entity, SpawnReason.SPAWNER_EGG);
+    }
+
+    @Override
+    public SortedMap<Integer, String> rawEntityMap() {
+	SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
+	// Use reflection to dump native EntityTypes
+	// This bypasses Bukkit's wrappers, so it works with mods
+	try {
+	    // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/EntityTypes.java#L32
+	    // g.put(s, Integer.valueOf(i)); --> Name of ID
+	    Field field = EntityTypes.class.getDeclaredField("g");
+	    field.setAccessible(true);
+	    @SuppressWarnings("unchecked")
+	    Map<String, Integer> map = (Map<String, Integer>) field.get(null);
+	    // For each entry in our name -- ID map but it into the sortedMap
+	    for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
+		sortedMap.put(entry.getValue(), entry.getKey());
+	    }
+	} catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+	    Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
+	    e.printStackTrace();
+	}
+	return sortedMap;
+    }
+
+    @Override
+    public String getMobNameOfSpawner(BlockState blockState) {
+	// Get our spawner;
+	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
+	// Get the mob ID ourselves if we can
+	try {
+	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
+	    // Get the name from the field of our spawner
+	    return tile.getSpawner().getMobName();
+	} catch (IllegalArgumentException | IllegalAccessException e) {
+	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+	    e.printStackTrace();
+	}
+	return "";
+    }
+
+    @Override
+    public void setSpawnersUnstackable() {
+	// http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+	try {
+	    // Get the new registry HashMp from the Item class
+	    Field registryField = Item.class.getDeclaredField("REGISTRY");
+	    registryField.setAccessible(true);
+	    RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
+	    // Get entry of the spawner
+	    Object spawnerEntry = registry.a(52);
+	    // Set maxStackSize "e(int maxStackSize)"
+	    Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
+	    maxStackSize.setAccessible(true);
+	    maxStackSize.setInt(spawnerEntry, 1);
+	    // Cleanup
+	    registryField.setAccessible(false);
+	    maxStackSize.setAccessible(false);
+	} catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
+	    Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+	    e.printStackTrace();
+	}
+    }
+
+    @Override
+    public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
+	// Get out spawner;
+	CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
+
+	try {
+	    // Refer to the NMS TileEntityMobSpawner and change the name, see
+	    // https://github.com/Bukkit/mc-dev/blob/c1627dc9cc7505581993eb0fa15597cb36e94244/net/minecraft/server/TileEntityMobSpawner.java#L36
+	    TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
+	    // Changes as of 1.7.10
+	    // https://github.com/Bukkit/mc-dev/blob/c1627dc9cc7505581993eb0fa15597cb36e94244/net/minecraft/server/MobSpawnerAbstract.java#L38
+	    tile.getSpawner().setMobName(mobID);
+	    return true;
+	} catch (IllegalArgumentException | IllegalAccessException e) {
+	    Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+	    e.printStackTrace();
+	}
+	return false;
+    }
+}
