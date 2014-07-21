@@ -341,8 +341,8 @@ public class SilkSpawners extends JavaPlugin {
 	}
 
 	// Are we allowed to use native methods?
-	if (config.getBoolean("useReflection", true)) {
-	    su.useReflection = true;
+	if (!config.getBoolean("useReflection", true)) {
+	    su.useReflection = false;
 	}
 
 	// Optionally make spawners unstackable in an attempt to be more
