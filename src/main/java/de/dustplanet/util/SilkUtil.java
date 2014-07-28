@@ -113,9 +113,9 @@ public class SilkUtil {
      * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
-	getWorldGuard(instance);
-	plugin = instance;
-	setupNMSProvider();
+        getWorldGuard(instance);
+        plugin = instance;
+        setupNMSProvider();
     }
 
     /**
@@ -123,38 +123,38 @@ public class SilkUtil {
      * @return SilkUtil instance
      */
     public static SilkUtil hookIntoSilkSpanwers() {
-	SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
-	return new SilkUtil(plugin);
+        SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
+        return new SilkUtil(plugin);
     }
 
     /**
      * Define which Minecraft version needs to be loaded
      */
     private boolean setupNMSProvider() {
-	// Get full package string of CraftServer
-	String packageName = plugin.getServer().getClass().getPackage().getName();
-	// org.bukkit.craftbukkit.version
-	// Get the last element of the package
-	String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+        // Get full package string of CraftServer
+        String packageName = plugin.getServer().getClass().getPackage().getName();
+        // org.bukkit.craftbukkit.version
+        // Get the last element of the package
+        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
 
-	try {
-	    // Check if we have a NMSHandler class at that location
-	    final Class<?> clazz = Class.forName("de.dustplanet.silkspawners.compat." + version + ".NMSHandler");
-	    // Get the last element of the package
-	    if (NMSProvider.class.isAssignableFrom(clazz)) {
-		// Set our handler
-		nmsProvider = (NMSProvider) clazz.getConstructor().newInstance();
-		plugin.getLogger().info("Loading support for " + version);
-		return true;
-	    }
-	} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-	    e.printStackTrace();
-	    plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
-	    plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
-	    plugin.getLogger().info("Disabling SilkSpawners now!");
-	    plugin.shutdown();
-	}
-	return false;
+        try {
+            // Check if we have a NMSHandler class at that location
+            final Class<?> clazz = Class.forName("de.dustplanet.silkspawners.compat." + version + ".NMSHandler");
+            // Get the last element of the package
+            if (NMSProvider.class.isAssignableFrom(clazz)) {
+                // Set our handler
+                nmsProvider = (NMSProvider) clazz.getConstructor().newInstance();
+                plugin.getLogger().info("Loading support for " + version);
+                return true;
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+            e.printStackTrace();
+            plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
+            plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
+            plugin.getLogger().info("Disabling SilkSpawners now!");
+            plugin.shutdown();
+        }
+        return false;
     }
 
     // Give a new SpawnerEgg with the given entityID
@@ -165,7 +165,7 @@ public class SilkUtil {
      * @return the ItemStack
      */
     public ItemStack newEggItem(short entityID, int amount) {
-	return new ItemStack(SPAWN_EGG, amount, entityID);
+        return new ItemStack(SPAWN_EGG, amount, entityID);
     }
 
     /**
@@ -174,7 +174,7 @@ public class SilkUtil {
      * @return the ItemStack (amount is one)
      */
     public ItemStack newEggItem(short entityID) {
-	return newEggItem(entityID, 1);
+        return newEggItem(entityID, 1);
     }
 
     // Create a tagged a mob spawner item with it's entity ID and custom amount
@@ -186,21 +186,21 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
-	if (customName == null || customName.equalsIgnoreCase("")) {
-	    customName = "Monster Spawner";
-	}
-	ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
-	// Check if we need a colored name
-	if (!customName.equalsIgnoreCase("Monster Spawner")) {
-	    ItemMeta meta = item.getItemMeta();
-	    meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
-	    item.setItemMeta(meta);
-	}
+        if (customName == null || customName.equalsIgnoreCase("")) {
+            customName = "Monster Spawner";
+        }
+        ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
+        // Check if we need a colored name
+        if (!customName.equalsIgnoreCase("Monster Spawner")) {
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
+            item.setItemMeta(meta);
+        }
 
-	// The way it should be stored (double sure!)
-	item.setDurability(entityID);
+        // The way it should be stored (double sure!)
+        item.setDurability(entityID);
 
-	return item;
+        return item;
     }
 
     // Create a new MobSpawner without and ignore (old) force value
@@ -209,7 +209,7 @@ public class SilkUtil {
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
-	return newSpawnerItem(entityID, customName, amount);
+        return newSpawnerItem(entityID, customName, amount);
     }
 
     // Create a tagged mob spawner item with it's entityID and amount 1
@@ -218,7 +218,7 @@ public class SilkUtil {
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName) {
-	return newSpawnerItem(entityID, customName, 1);
+        return newSpawnerItem(entityID, customName, 1);
     }
 
     // Get the entity ID
@@ -228,7 +228,7 @@ public class SilkUtil {
      * @return the entityID
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
-	return item.getDurability();
+        return item.getDurability();
     }
 
     // Return whether mob is recognized by Bukkit's wrappers
@@ -238,7 +238,7 @@ public class SilkUtil {
      * @return the result, true or false
      */
     public boolean isRecognizedMob(String mobID) {
-	return EntityType.fromName(mobID) != null;
+        return EntityType.fromName(mobID) != null;
     }
 
     // Check if the entityID is known or not
@@ -248,7 +248,7 @@ public class SilkUtil {
      * @return the result, true of false
      */
     public boolean isKnownEntityID(short entityID) {
-	return knownEids.contains(entityID);
+        return knownEids.contains(entityID);
     }
 
     // Better methods for setting/getting spawner type
@@ -260,23 +260,23 @@ public class SilkUtil {
      * @return the entity ID
      */
     public short getSpawnerEntityID(Block block) {
-	BlockState blockState = block.getState();
-	if (!(blockState instanceof CreatureSpawner)) {
-	    // Call it only on CreatureSpawners
-	    plugin.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
-	    return 0;
-	}
+        BlockState blockState = block.getState();
+        if (!(blockState instanceof CreatureSpawner)) {
+            // Call it only on CreatureSpawners
+            plugin.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
+            return 0;
+        }
 
-	if (useReflection) {
-	    String mobID = nmsProvider.getMobNameOfSpawner(blockState);
-	    // In case the block is not on our list try a fallback
-	    if (mobID != null && mobID2Eid.containsKey(mobID)) {
-		return mobID2Eid.get(mobID);
-	    }
-	}
+        if (useReflection) {
+            String mobID = nmsProvider.getMobNameOfSpawner(blockState);
+            // In case the block is not on our list try a fallback
+            if (mobID != null && mobID2Eid.containsKey(mobID)) {
+                return mobID2Eid.get(mobID);
+            }
+        }
 
-	// Fallback to Bukkit
-	return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
+        // Fallback to Bukkit
+        return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
     }
 
     // Sets the creature of a spawner
@@ -286,45 +286,45 @@ public class SilkUtil {
      * @param entityID the wanted entityID
      */
     public void setSpawnerEntityID(Block block, short entityID) {
-	BlockState blockState = block.getState();
-	// Call it only on CreatureSpawners
-	if (!(blockState instanceof CreatureSpawner)) {
-	    plugin.getLogger().warning("setSpawnerEntityID called on non-spawner block: " + block);
-	    return;
-	}
+        BlockState blockState = block.getState();
+        // Call it only on CreatureSpawners
+        if (!(blockState instanceof CreatureSpawner)) {
+            plugin.getLogger().warning("setSpawnerEntityID called on non-spawner block: " + block);
+            return;
+        }
 
-	// Try the more powerful native methods first
-	if (useReflection) {
-	    // Get the name of the mob
-	    String mobID = eid2MobID.get(entityID);
-	    // Okay the spawner is not on our list [should NOT happen anymore]
-	    // Fallback then!
-	    if (mobID == null) {
-		mobID = getCreatureName(entityID);
-	    }
-	    // uh still null, default [PIG]!
-	    if (mobID == null) {
-		mobID = getCreatureName((short) 90);
-	    }
+        // Try the more powerful native methods first
+        if (useReflection) {
+            // Get the name of the mob
+            String mobID = eid2MobID.get(entityID);
+            // Okay the spawner is not on our list [should NOT happen anymore]
+            // Fallback then!
+            if (mobID == null) {
+                mobID = getCreatureName(entityID);
+            }
+            // uh still null, default [PIG]!
+            if (mobID == null) {
+                mobID = getCreatureName((short) 90);
+            }
 
-	    // Successful? Stop here
-	    if (nmsProvider.setMobNameOfSpawner(blockState, mobID)) {
-		// Call an update (force it)
-		blockState.update(true);
-		return;
-	    }
-	}
+            // Successful? Stop here
+            if (nmsProvider.setMobNameOfSpawner(blockState, mobID)) {
+                // Call an update (force it)
+                blockState.update(true);
+                return;
+            }
+        }
 
-	// Fallback to wrapper
-	// Get the entityType from the ID
-	EntityType ct = EntityType.fromId(entityID);
-	if (ct == null) {
-	    throw new IllegalArgumentException("Failed to find creature type for " + entityID);
-	}
-	// Set the spawner (less powerful)
-	((CreatureSpawner) blockState).setSpawnedType(ct);
-	// Update the spawner
-	blockState.update(true);
+        // Fallback to wrapper
+        // Get the entityType from the ID
+        EntityType ct = EntityType.fromId(entityID);
+        if (ct == null) {
+            throw new IllegalArgumentException("Failed to find creature type for " + entityID);
+        }
+        // Set the spawner (less powerful)
+        ((CreatureSpawner) blockState).setSpawnedType(ct);
+        // Update the spawner
+        blockState.update(true);
     }
 
     // Set spawner type from user
@@ -337,13 +337,13 @@ public class SilkUtil {
      * see {@link #canBuildHere(Player, Location)}
      */
     public void setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
-	// Changing denied by WorldGuard?
-	if (!canBuildHere(player, block.getLocation())) {
-	    player.sendMessage(messageDenied);
-	    return;
-	}
-	// Set the spawner and message the player
-	setSpawnerEntityID(block, entityID);
+        // Changing denied by WorldGuard?
+        if (!canBuildHere(player, block.getLocation())) {
+            player.sendMessage(messageDenied);
+            return;
+        }
+        // Set the spawner and message the player
+        setSpawnerEntityID(block, entityID);
     }
 
     /**
@@ -354,26 +354,26 @@ public class SilkUtil {
      * @return the updated ItemStack
      */
     public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
-	// Ensure that the name is correct
-	if (customName == null || customName.equalsIgnoreCase("")) {
-	    customName = "Monster Spawner";
-	}
-	// Please eggs or spawners
-	if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
-	    return item;
-	}
-	// Case spawner
-	if (item.getType() == Material.MOB_SPAWNER) {
-	    // Check if we should color
-	    if (!customName.equalsIgnoreCase("Monster Spawner")) {
-		ItemMeta meta = item.getItemMeta();
-		meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
-		item.setItemMeta(meta);
-	    }
-	}
-	// Case egg -> call normal method
-	item.setDurability(entityID);
-	return item;
+        // Ensure that the name is correct
+        if (customName == null || customName.equalsIgnoreCase("")) {
+            customName = "Monster Spawner";
+        }
+        // Please eggs or spawners
+        if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
+            return item;
+        }
+        // Case spawner
+        if (item.getType() == Material.MOB_SPAWNER) {
+            // Check if we should color
+            if (!customName.equalsIgnoreCase("Monster Spawner")) {
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
+                item.setItemMeta(meta);
+            }
+        }
+        // Case egg -> call normal method
+        item.setDurability(entityID);
+        return item;
     }
 
     // Return the spawner block the player is looking at, or null if isn't
@@ -384,11 +384,11 @@ public class SilkUtil {
      * @return the found block or null
      */
     public Block getSpawnerFacing(Player player, int distance) {
-	Block block = player.getTargetBlock(null, distance);
-	if (block == null || block.getType() != Material.MOB_SPAWNER) {
-	    return null;
-	}
-	return block;
+        Block block = player.getTargetBlock(null, distance);
+        if (block == null || block.getType() != Material.MOB_SPAWNER) {
+            return null;
+        }
+        return block;
     }
 
     // Get a creature name suitable for displaying to the user
@@ -400,20 +400,20 @@ public class SilkUtil {
      * @return the displayname of the mob
      */
     public String getCreatureName(short entityID) {
-	String displayName = eid2DisplayName.get(entityID);
-	// If the displayName is null go on (not on our list)
-	if (displayName == null) {
-	    // Try to to get it from the EntityType
-	    EntityType ct = EntityType.fromId(entityID);
-	    // Case 1, found use the name method
-	    if (ct != null) {
-		displayName = ct.getName();
-	    } else {
-		// Case 2, not found -> use the number...
-		displayName = String.valueOf(entityID);
-	    }
-	}
-	return displayName;
+        String displayName = eid2DisplayName.get(entityID);
+        // If the displayName is null go on (not on our list)
+        if (displayName == null) {
+            // Try to to get it from the EntityType
+            EntityType ct = EntityType.fromId(entityID);
+            // Case 1, found use the name method
+            if (ct != null) {
+                displayName = ct.getName();
+            } else {
+                // Case 2, not found -> use the number...
+                displayName = String.valueOf(entityID);
+            }
+        }
+        return displayName;
     }
 
     // Show them all the possible creature names
@@ -422,16 +422,16 @@ public class SilkUtil {
      * @param sender CommandSender (player or console)
      */
     public void showAllCreatures(CommandSender sender) {
-	// For each entry in the list
-	StringBuilder builder = new StringBuilder();
-	for (String displayName : eid2DisplayName.values()) {
-	    displayName = displayName.replace(" ", "");
-	    builder.append(displayName + ", ");
-	}
-	// Strip last comma out
-	String message = builder.toString();
-	message = message.substring(0, message.length() - ", ".length());
-	sender.sendMessage(message);
+        // For each entry in the list
+        StringBuilder builder = new StringBuilder();
+        for (String displayName : eid2DisplayName.values()) {
+            displayName = displayName.replace(" ", "");
+            builder.append(displayName + ", ");
+        }
+        // Strip last comma out
+        String message = builder.toString();
+        message = message.substring(0, message.length() - ", ".length());
+        sender.sendMessage(message);
     }
 
     // Scan through all entities
@@ -440,20 +440,20 @@ public class SilkUtil {
      * @return Map with a result of Integer (ID), String (name)
      */
     public SortedMap<Integer, String> scanEntityMap() {
-	SortedMap<Integer, String> sortedMap = nmsProvider.rawEntityMap();
-	// Let's scan for added entities by e.g MCPC+
-	for (EntityType type : EntityType.values()) {
-	    String name = type.getName();
-	    short id = type.getTypeId();
-	    // If name is not defined or ID -1 --> skip this bad entity
-	    if (name == null || id == -1) {
-		continue;
-	    }
-	    if (!sortedMap.containsKey((int) id)) {
-		sortedMap.put((int) id, name);
-	    }
-	}
-	return sortedMap;
+        SortedMap<Integer, String> sortedMap = nmsProvider.rawEntityMap();
+        // Let's scan for added entities by e.g MCPC+
+        for (EntityType type : EntityType.values()) {
+            String name = type.getName();
+            short id = type.getTypeId();
+            // If name is not defined or ID -1 --> skip this bad entity
+            if (name == null || id == -1) {
+                continue;
+            }
+            if (!sortedMap.containsKey((int) id)) {
+                sortedMap.put((int) id, name);
+            }
+        }
+        return sortedMap;
     }
 
     // Notify player
@@ -465,23 +465,23 @@ public class SilkUtil {
      * @param entityID the ID
      */
     public void notify(Player player, String spawnerName, short entityID) {
-	if (barAPI) {
-	    String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawnerBar")
-		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
-	    // Old bars will be overridden
-	    BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime"));
-	} else {
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner1")
-		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner2")
-		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-	    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-		    plugin.localization.getString("informationOfSpawner3")
-		    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-	}
+        if (barAPI) {
+            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("informationOfSpawnerBar")
+                    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
+            // Old bars will be overridden
+            BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime"));
+        } else {
+            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("informationOfSpawner1")
+                    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("informationOfSpawner2")
+                    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("informationOfSpawner3")
+                    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
+        }
     }
 
     // Clear RAM
@@ -489,11 +489,11 @@ public class SilkUtil {
      * This method clears all HashMaps and lists
      */
     public void clearAll() {
-	eid2DisplayName.clear();
-	eid2MobID.clear();
-	mobID2Eid.clear();
-	name2Eid.clear();
-	knownEids.clear();
+        eid2DisplayName.clear();
+        eid2MobID.clear();
+        mobID2Eid.clear();
+        name2Eid.clear();
+        knownEids.clear();
     }
 
     /**
@@ -502,7 +502,7 @@ public class SilkUtil {
      * @return result, true or false
      */
     public boolean isEgg(String creatureString) {
-	return creatureString.endsWith("egg");
+        return creatureString.endsWith("egg");
     }
 
     /**
@@ -511,7 +511,7 @@ public class SilkUtil {
      * @return the result, true of false
      */
     public boolean isUnkown(String creatureString) {
-	return !name2Eid.containsKey(creatureString);
+        return !name2Eid.containsKey(creatureString);
     }
 
     /**
@@ -520,11 +520,11 @@ public class SilkUtil {
      * @return number or not found -1
      */
     public short getNumber(String number) {
-	try {
-	    return Short.valueOf(number);
-	} catch (NumberFormatException e) {
-	    return -1;
-	}
+        try {
+            return Short.valueOf(number);
+        } catch (NumberFormatException e) {
+            return -1;
+        }
     }
 
     /**
@@ -532,15 +532,15 @@ public class SilkUtil {
      * @param player the player
      */
     public void reduceEggs(Player player) {
-	ItemStack eggs = player.getItemInHand();
-	// Make it empty
-	if (eggs.getAmount() == 1) {
-	    player.setItemInHand(null);
-	} else {
-	    // Reduce egg
-	    eggs.setAmount((eggs.getAmount() - 1));
-	    player.setItemInHand(eggs);
-	}
+        ItemStack eggs = player.getItemInHand();
+        // Make it empty
+        if (eggs.getAmount() == 1) {
+            player.setItemInHand(null);
+        } else {
+            // Reduce egg
+            eggs.setAmount((eggs.getAmount() - 1));
+            player.setItemInHand(eggs);
+        }
     }
 
 
@@ -551,25 +551,25 @@ public class SilkUtil {
      * @return the result if the tool hasSilkTouch
      */
     public boolean hasSilkTouch(ItemStack tool) {
-	int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
-	// Always have it
-	if (minLevel == 0) {
-	    return true;
-	}
-	// No silk touch fists..
-	if (tool == null) {
-	    return false;
-	}
+        int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
+        // Always have it
+        if (minLevel == 0) {
+            return true;
+        }
+        // No silk touch fists..
+        if (tool == null) {
+            return false;
+        }
 
-	// This check isn't actually necessary, since containsEnchantment just
-	// checks level>0,
-	// but is kept here for clarity, and in case Bukkit allows level-0
-	// enchantments like vanilla
-	if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
-	    return false;
-	}
-	// Return if the level is enough
-	return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
+        // This check isn't actually necessary, since containsEnchantment just
+        // checks level>0,
+        // but is kept here for clarity, and in case Bukkit allows level-0
+        // enchantments like vanilla
+        if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            return false;
+        }
+        // Return if the level is enough
+        return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
     }
 
     /**
@@ -579,11 +579,11 @@ public class SilkUtil {
      * @return the found string
      */
     public String getCustomSpawnerName(String mobName) {
-	if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
-	    return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
-	} else {
-	    return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
-	}
+        if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
+            return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
+        } else {
+            return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
+        }
     }
 
     /**
@@ -592,20 +592,20 @@ public class SilkUtil {
      * @return the player if found otherwise null
      */
     public Player getPlayer(String playerUUIDOrName) {
-	try {
-	    // Try if the String could be an UUID
-	    UUID playerUUID = UUID.fromString(playerUUIDOrName);
-	    return plugin.getServer().getPlayer(playerUUID);
-	} catch (IllegalArgumentException e) {
-	    // Circumvent UUID problem. Basically this method is nothing else than the normal getServer().getPlayer(String) method
-	    // See https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/CraftServer.java#L502
-	    for (Player p : plugin.getServer().getOnlinePlayers()) {
-		if (p.getName().equalsIgnoreCase(playerUUIDOrName)) {
-		    return p;
-		}
-	    }
-	}
-	return null;
+        try {
+            // Try if the String could be an UUID
+            UUID playerUUID = UUID.fromString(playerUUIDOrName);
+            return plugin.getServer().getPlayer(playerUUID);
+        } catch (IllegalArgumentException e) {
+            // Circumvent UUID problem. Basically this method is nothing else than the normal getServer().getPlayer(String) method
+            // See https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/CraftServer.java#L502
+            for (Player p : plugin.getServer().getOnlinePlayers()) {
+                if (p.getName().equalsIgnoreCase(playerUUIDOrName)) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 
     /*
@@ -619,14 +619,14 @@ public class SilkUtil {
      * @param plugin SilkSpawners instance
      */
     private void getWorldGuard(SilkSpawners plugin) {
-	if (!plugin.config.getBoolean("useWorldGuard", true)) {
-	    return;
-	}
-	Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
-	if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
-	    return;
-	}
-	wg = (WorldGuardPlugin) worldGuard;
+        if (!plugin.config.getBoolean("useWorldGuard", true)) {
+            return;
+        }
+        Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
+            return;
+        }
+        wg = (WorldGuardPlugin) worldGuard;
     }
 
     // Is the player allowed to build here?
@@ -637,9 +637,9 @@ public class SilkUtil {
      * @return the result, true or false
      */
     public boolean canBuildHere(Player player, Location location) {
-	if (wg == null) {
-	    return true;
-	}
-	return wg.canBuild(player, location);
+        if (wg == null) {
+            return true;
+        }
+        return wg.canBuild(player, location);
     }
 }

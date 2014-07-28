@@ -1,52 +1,52 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<artifactId>SilkSpawners-v1_6_R2</artifactId>
-	<packaging>jar</packaging>
-	<name>SilkSpawners for v1_6R_2</name>
-	<version>v1_6_R2</version>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>SilkSpawners-v1_6_R2</artifactId>
+  <packaging>jar</packaging>
+  <name>SilkSpawners for v1_6R_2</name>
+  <version>v1_6_R2</version>
 
-	<parent>
-		<groupId>de.dustplanet</groupId>
-		<artifactId>SilkSpawners-parent</artifactId>
-		<version>parent</version>
-		<relativePath>../../</relativePath>
-	</parent>
+  <parent>
+    <groupId>de.dustplanet</groupId>
+    <artifactId>SilkSpawners-parent</artifactId>
+    <version>parent</version>
+    <relativePath>../../</relativePath>
+  </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.bukkit</groupId>
-			<artifactId>craftbukkit</artifactId>
-			<version>1.6.2-R1.0</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>de.dustplanet</groupId>
-			<artifactId>SilkSpawners-API</artifactId>
-			<version>API</version>
-			<type>jar</type>
-			<exclusions>
-				<exclusion>
-					<groupId>org.bukkit</groupId>
-					<artifactId>bukkit</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>org.bukkit</groupId>
+      <artifactId>craftbukkit</artifactId>
+      <version>1.6.2-R1.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
+      <artifactId>SilkSpawners-API</artifactId>
+      <version>API</version>
+      <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.bukkit</groupId>
+          <artifactId>bukkit</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<!-- Compile for 1.7 -->
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<verbose>true</verbose>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+    <!-- Compile for 1.7 -->
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <verbose>true</verbose>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

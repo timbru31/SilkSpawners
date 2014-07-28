@@ -27,44 +27,44 @@ public class SilkSpawnersEntityListener implements Listener {
     private Random rnd;
 
     public SilkSpawnersEntityListener(SilkSpawners instance, SilkUtil util) {
-	plugin = instance;
-	su = util;
-	rnd = new Random();
+        plugin = instance;
+        su = util;
+        rnd = new Random();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntiyExplode(EntityExplodeEvent event) {
-	/* Skip if
-	 * event is cancelled
-	 * entity is not known or null
-	 * EnderDragon calls this event
-	 * explosionChance is 0
-	 */
-	if (event.isCancelled() || event.getEntity() == null || event.getEntity() instanceof EnderDragon || plugin.config.getInt("explosionDropChance") == 0) {
-	    return;
-	}
+        /* Skip if
+         * event is cancelled
+         * entity is not known or null
+         * EnderDragon calls this event
+         * explosionChance is 0
+         */
+        if (event.isCancelled() || event.getEntity() == null || event.getEntity() instanceof EnderDragon || plugin.config.getInt("explosionDropChance") == 0) {
+            return;
+        }
 
-	// Check if a spawner block is on the list
-	for (Block block : event.blockList()) {
-	    // We have a spawner
-	    if (block.getType() == Material.MOB_SPAWNER) {
-		// Roll the dice
-		int randomNumber = rnd.nextInt(100);
-		short entityID = su.getSpawnerEntityID(block);
-		String mobID = su.eid2MobID.get(entityID);
-		// Check if we should drop a block
-		int dropChance = 0;
-		if (plugin.mobs.contains("creatures." + mobID + ".explosionDropChance")) {
-		    dropChance = plugin.mobs.getInt("creatures." + mobID + ".explosionDropChance", 100);
-		} else {
-		    dropChance = plugin.config.getInt("explosionDropChance", 100);
-		}
-		if (randomNumber < dropChance) {
-		    World world = block.getWorld();
-		    // Drop a spawner (first get the entityID from the block and then make a new spawner item)
-		    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
-		}
-	    }
-	}
+        // Check if a spawner block is on the list
+        for (Block block : event.blockList()) {
+            // We have a spawner
+            if (block.getType() == Material.MOB_SPAWNER) {
+                // Roll the dice
+                int randomNumber = rnd.nextInt(100);
+                short entityID = su.getSpawnerEntityID(block);
+                String mobID = su.eid2MobID.get(entityID);
+                // Check if we should drop a block
+                int dropChance = 0;
+                if (plugin.mobs.contains("creatures." + mobID + ".explosionDropChance")) {
+                    dropChance = plugin.mobs.getInt("creatures." + mobID + ".explosionDropChance", 100);
+                } else {
+                    dropChance = plugin.config.getInt("explosionDropChance", 100);
+                }
+                if (randomNumber < dropChance) {
+                    World world = block.getWorld();
+                    // Drop a spawner (first get the entityID from the block and then make a new spawner item)
+                    world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
+                }
+            }
+        }
     }
 }
