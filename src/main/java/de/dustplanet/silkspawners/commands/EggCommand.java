@@ -113,7 +113,7 @@ public class EggCommand implements CommandExecutor {
                 int amount = 1;
                 if (args.length > 1) {
                     try {
-                        amount = Integer.valueOf(args[1]);
+                        amount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
                         return true;
@@ -135,7 +135,7 @@ public class EggCommand implements CommandExecutor {
                 int amount = 1;
                 if (args.length > 1) {
                     try {
-                        amount = Integer.valueOf(args[1]);
+                        amount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
                         return true;

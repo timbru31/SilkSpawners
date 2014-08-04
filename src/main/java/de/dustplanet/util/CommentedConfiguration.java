@@ -113,10 +113,10 @@ public class CommentedConfiguration extends YamlConfiguration {
                             // many levels from the currentPath
                             int newDepth = whiteSpace / 2;
                             for (int i = 0; i < depth - newDepth; i++) {
-                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
+                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf('.')), "");
                             }
                             // Grab the index of the final period
-                            int lastIndex = currentPath.lastIndexOf(".");
+                            int lastIndex = currentPath.lastIndexOf('.');
                             if (lastIndex < 0) {
                                 // if there isn't a final period, set the
                                 // current path to nothing because we're at root
@@ -124,7 +124,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                             } else {
                                 // If there is a final period, replace
                                 // everything after it with nothing
-                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
+                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf('.')), "");
                                 currentPath += ".";
                             }
                             // Add the new node name to the path
@@ -134,7 +134,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                         } else {
                             // Path is same depth, replace the last path node
                             // name to the current node name
-                            int lastIndex = currentPath.lastIndexOf(".");
+                            int lastIndex = currentPath.lastIndexOf('.');
                             if (lastIndex < 0) {
                                 // if there isn't a final period, set the
                                 // current path to nothing because we're at root
@@ -142,7 +142,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                             } else {
                                 // If there is a final period, replace
                                 // everything after it with nothing
-                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
+                                currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf('.')), "");
                                 currentPath += ".";
                             }
                             // currentPath =

@@ -55,7 +55,7 @@ public class SpawnerCommand implements CommandExecutor {
             int amount = 1;
             if (args.length > 1) {
                 try {
-                    amount = Integer.valueOf(args[1]);
+                    amount = Integer.parseInt(args[1]);
                 } catch (NumberFormatException e) {
                     sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
                     return true;
@@ -149,7 +149,7 @@ public class SpawnerCommand implements CommandExecutor {
             short entityID = su.name2Eid.get(creatureString);
             creatureString = su.getCreatureName(entityID);
             // Filter spaces (like Zombie Pigman)
-            String mobName = creatureString.replace(" ", "");
+            String mobName = creatureString.toLowerCase().replace(" ", "");
 
             // Get the block
             Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));
@@ -170,8 +170,6 @@ public class SpawnerCommand implements CommandExecutor {
                 // Get the new ID (might be changed)
                 entityID = changeEvent.getEntityID();
                 creatureString = su.getCreatureName(entityID);
-                // Filter spaces (like Zombie Pigman)
-                mobName = creatureString.toLowerCase().replace(" ", "");
                 su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
                 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner")).replace("%creature%", creatureString));
             } else {
@@ -195,8 +193,6 @@ public class SpawnerCommand implements CommandExecutor {
                         // Get the new ID (might be changed)
                         entityID = changeEvent.getEntityID();
                         creatureString = su.getCreatureName(entityID);
-                        // Filter spaces (like Zombie Pigman)
-                        mobName = creatureString.toLowerCase().replace(" ", "");
                         player.setItemInHand(su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName")));
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner")).replace("%creature%", creatureString));
                         return true;
@@ -217,8 +213,6 @@ public class SpawnerCommand implements CommandExecutor {
                         // Get the new ID (might be changed)
                         entityID = changeEvent.getEntityID();
                         creatureString = su.getCreatureName(entityID);
-                        // Filter spaces (like Zombie Pigman)
-                        mobName = creatureString.toLowerCase().replace(" ", "");
                         su.setSpawnerType(itemInHand, entityID, plugin.localization.getString("spawnerName"));
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedEgg")).replace("%creature%", creatureString));
                         return true;
@@ -246,7 +240,7 @@ public class SpawnerCommand implements CommandExecutor {
                 int amount = 1;
                 if (args.length > 1) {
                     try {
-                        amount = Integer.valueOf(args[1]);
+                        amount = Integer.parseInt(args[1]);
                     } catch (NumberFormatException e) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
                         return true;
