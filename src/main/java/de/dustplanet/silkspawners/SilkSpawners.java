@@ -70,13 +70,6 @@ public class SilkSpawners extends JavaPlugin {
         // Make files and copy defaults
         initializeConfigs();
 
-        // Heart of SilkSpawners is the SilkUtil class which holds all of our
-        // important methods
-        su = new SilkUtil(this);
-
-        // Load configs
-        loadConfigs();
-
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
             // We can't use the MinercraftServer import because it might be broken. 
@@ -97,10 +90,17 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
                 getLogger().info("Your version is: " + serverVersion);
                 getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
-                setEnabled(false);
+                shutdown();
                 return;
             }
         }
+        
+        // Heart of SilkSpawners is the SilkUtil class which holds all of our
+        // important methods
+        su = new SilkUtil(this);
+
+        // Load configs
+        loadConfigs();
 
         // Check if we should enable the auto Updater & have no snapshot (dev build)
         if (config.getBoolean("autoUpdater", true)) {
@@ -206,13 +206,13 @@ public class SilkSpawners extends JavaPlugin {
 
         // Load configs
         config = new CommentedConfiguration(configFile);
-        new Configuration(config).loadNum(1);
+        new Configuration(config).loadConfig("config");
 
         localization = new CommentedConfiguration(localizationFile);
-        new Configuration(localization).loadNum(2);
+        new Configuration(localization).loadConfig("localization");
 
         mobs = new CommentedConfiguration(mobsFile);
-        new Configuration(mobs).loadNum(3);
+        new Configuration(mobs).loadConfig("mobs");
 
         // We need to migrate the old mobs from config.yml to mobs.yml
         if (config.contains("creatures")) {
@@ -534,6 +534,6 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     public void shutdown() {
-        setEnabled(true);
+        setEnabled(false);
     }
 }

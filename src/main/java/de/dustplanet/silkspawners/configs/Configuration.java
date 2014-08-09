@@ -8,8 +8,6 @@ package de.dustplanet.silkspawners.configs;
  */
 
 import java.util.ArrayList;
-import java.util.List;
-
 import de.dustplanet.util.CommentedConfiguration;
 
 public class Configuration {
@@ -17,21 +15,21 @@ public class Configuration {
 
     public Configuration(CommentedConfiguration config) {
         if (config == null) {
-            throw new IllegalArgumentException("Null config.");
+            throw new IllegalArgumentException("given config is null");
         }
         this.config = config;
     }
 
-    public void loadNum(int configNumber) {
+    public void loadConfig(String configString) {
         // Switch between our cases
-        switch (configNumber) {
-        case 1:
+        switch (configString) {
+        case "config":
             loadDefaultConfig();
             break;
-        case 2:
+        case "localization":
             loadDefaultLocalization();
             break;
-        case 3:
+        case "mobs":
             loadDefaultMobs();
             break;
         default:
