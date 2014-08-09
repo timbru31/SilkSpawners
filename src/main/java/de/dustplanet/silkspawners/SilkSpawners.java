@@ -178,14 +178,11 @@ public class SilkSpawners extends JavaPlugin {
         // Config
         configFile = new File(getDataFolder(), "config.yml");
         // One file and the folder not existent
-        if (!configFile.exists() && !getDataFolder().exists()) {
-            // Break if no folder can be created!
-            if (!getDataFolder().mkdirs()) {
-                getLogger().severe("The config folder could NOT be created, make sure it's writable!");
-                getLogger().severe("Disabling now!");
-                setEnabled(false);
-                return;
-            }
+        if (!configFile.exists() && !getDataFolder().exists() && !getDataFolder().mkdirs()) {
+            getLogger().severe("The config folder could NOT be created, make sure it's writable!");
+            getLogger().severe("Disabling now!");
+            shutdown();
+            return;
         }
         // Copy default is necessary
         if (!configFile.exists()) {

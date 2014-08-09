@@ -361,14 +361,11 @@ public class SilkUtil {
         if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
             return item;
         }
-        // Case spawner
-        if (item.getType() == Material.MOB_SPAWNER) {
-            // Check if we should color
-            if (!customName.equalsIgnoreCase("Monster Spawner")) {
-                ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
-                item.setItemMeta(meta);
-            }
+        // Case spawner and check if we should color
+        if (item.getType() == Material.MOB_SPAWNER && !customName.equalsIgnoreCase("Monster Spawner")) {
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
+            item.setItemMeta(meta);
         }
         // Case egg -> call normal method
         item.setDurability(entityID);
@@ -537,7 +534,7 @@ public class SilkUtil {
             player.setItemInHand(null);
         } else {
             // Reduce egg
-            eggs.setAmount((eggs.getAmount() - 1));
+            eggs.setAmount(eggs.getAmount() - 1);
             player.setItemInHand(eggs);
         }
     }

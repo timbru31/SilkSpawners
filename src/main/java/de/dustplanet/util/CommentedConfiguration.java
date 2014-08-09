@@ -73,7 +73,7 @@ public class CommentedConfiguration extends YamlConfiguration {
             // Loop through the config lines
             for (String line : yamlContents) {
                 // If the line is a node (and not something like a list value)
-                if (line.contains(": ") || (line.length() > 1 && line.charAt(line.length() - 1) == ':')) {
+                if (line.contains(": ") || line.length() > 1 && line.charAt(line.length() - 1) == ':') {
 
                     // This is a new node so we need to mark it for commenting
                     // (if there are comments)
@@ -173,7 +173,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                     }
                 }
                 // Add the (modified) line to the total config String
-                newContents += line + ((!node) ? System.getProperty("line.separator") : "");
+                newContents += line + (!node ? System.getProperty("line.separator") : "");
 
             }
             /*
