@@ -1,5 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
+import java.util.Random;
+
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -27,10 +29,12 @@ import de.dustplanet.util.SilkUtil;
 public class SilkSpawnersBlockListener implements Listener {
     private SilkSpawners plugin;
     private SilkUtil su;
+    private Random rnd;
 
     public SilkSpawnersBlockListener(SilkSpawners instance, SilkUtil util) {
         plugin = instance;
         su = util;
+        rnd = new Random();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -95,26 +99,57 @@ public class SilkSpawnersBlockListener implements Listener {
                 }
             }
         }
-
-        // Case 1 -> silk touch
+        
+        // random drop chance
+        String mobID = su.eid2MobID.get(entityID);
+        int randomNumber = rnd.nextInt(100);
+        int dropChance = 0;
+        
+        // silk touch
         if (silkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.silkdrop.*"))) {
-            // Drop spawner
-            world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
+            // Calculate drop chance
+            if (plugin.mobs.contains("creatures." + mobID + ".silkDropChance")) {
+                dropChance = plugin.mobs.getInt("creatures." + mobID + ".silkDropChance", 100);
+            } else {
+                dropChance = plugin.config.getInt("silkDropChance", 100);
+            }
+            if (randomNumber < dropChance) {
+                // Drop spawner
+                world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
+            }
             return;
         }
 
-        // Case 2 -> no silk touch
+        // no silk touch
         if (plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
-            if (plugin.config.getBoolean("destroyDropEgg")) {
-                // Drop egg
-                world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID));
+            if (plugin.config.getBoolean("destroyDropEgg", false)) {
+                // Calculate drop chance
+                randomNumber = rnd.nextInt(100);
+                if (plugin.mobs.contains("creatures." + mobID + ".eggDropChance")) {
+                    dropChance = plugin.mobs.getInt("creatures." + mobID + ".eggDropChance", 100);
+                } else {
+                    dropChance = plugin.config.getInt("eggDropChance", 100);
+                }
+                if (randomNumber < dropChance) {
+                    // Drop egg
+                    world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID));
+                }
             }
             // Drop iron bars (or not)
-            int dropBars = plugin.config.getInt("destroyDropBars");
+            int dropBars = plugin.config.getInt("destroyDropBars", 0);
             if (dropBars != 0) {
-                world.dropItem(block.getLocation(), new ItemStack(Material.IRON_FENCE, dropBars));
+                // Calculate drop chance
+                randomNumber = rnd.nextInt(100);
+                if (plugin.mobs.contains("creatures." + mobID + ".destroyDropChance")) {
+                    dropChance = plugin.mobs.getInt("creatures." + mobID + ".destroyDropChance", 100);
+                } else {
+                    dropChance = plugin.config.getInt("destroyDropChance", 100);
+                }
+                if (randomNumber < dropChance) {
+                    world.dropItem(block.getLocation(), new ItemStack(Material.IRON_FENCE, dropBars));
+                }
             }
         }
     }

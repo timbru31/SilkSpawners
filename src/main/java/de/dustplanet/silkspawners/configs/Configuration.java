@@ -428,6 +428,12 @@ public class Configuration {
         config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");
         config.addDefault("explosionDropChance", 30);
         config.addComment("explosionDropChance", "", "# Percentage of dropping a spawner block when TNT or creepers explode");
+        config.addDefault("destroyDropChance", 100);
+        config.addComment("destroyDropChance", "", "# Percentage of dropping a iron bars when a spawner is mined");
+        config.addDefault("eggDropChance", 100);
+        config.addComment("eggDropChance", "", "# Percentage of dropping an egg when a spawner is mined");
+        config.addDefault("silkDropChance", 100);
+        config.addComment("silkDropChance", "", "# Percentage of dropping the spawner when mined");
         config.addDefault("defaultCreature", 90);
         config.addComment("defaultCreature", "", "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)", "# PIG (90) is Minecraft default (put NAMES or IDs here!)");
         config.addDefault("spawnerCommandReachDistance", 6);

@@ -40,7 +40,7 @@ public class SilkSpawnersEntityListener implements Listener {
          * EnderDragon calls this event
          * explosionChance is 0
          */
-        if (event.isCancelled() || event.getEntity() == null || event.getEntity() instanceof EnderDragon || plugin.config.getInt("explosionDropChance") == 0) {
+        if (event.isCancelled() || event.getEntity() == null || event.getEntity() instanceof EnderDragon || plugin.config.getInt("explosionDropChance", 30) == 0) {
             return;
         }
 

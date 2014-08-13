@@ -41,6 +41,15 @@ useWorldGuard: true
 # Percentage of dropping a spawner block when TNT or creepers explode
 explosionDropChance: 30
 
+# Percentage of dropping a iron bars when a spawner is mined
+destroyDropChance: 100
+
+# Percentage of dropping an egg when a spawner is mined
+eggDropChance: 100
+
+# Percentage of dropping the spawner when mined
+silkDropChance: 100
+
 # When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
 # PIG (90) is Minecraft default (put NAMES or IDs here!)
 defaultCreature: 90
@@ -57,6 +66,9 @@ noDropsCreative: true
 
 # If a spawner is destroyed, should the egg be dropped
 destroyDropEgg: false
+
+# Flag a spawner as already mined to prevent XP duping
+preventXPFarming: true
 
 # If a spawner is destroyed, should XP be dropped
 destroyDropXP: 0
