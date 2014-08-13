@@ -74,7 +74,7 @@ public class SilkSpawners extends JavaPlugin {
         if (config.getBoolean("testMCVersion", true)) {
             // We can't use the MinercraftServer import because it might be broken. 
             // Regex is our friend and helper
-            // Find MC: 0.0.0, last occurence is optional
+            // Find MC: 0.0.0, last occurrence is optional
             Pattern pat = Pattern.compile("MC: \\d+.\\d+(.\\d+)?");
             Matcher matcher = pat.matcher(getServer().getVersion());
             String mcVersion = "";
@@ -231,6 +231,9 @@ public class SilkSpawners extends JavaPlugin {
 
         // Scan the entities
         SortedMap<Integer, String> sortedMap = su.scanEntityMap();
+        if (verbose) {
+            getLogger().info("Scanning the mobs");
+        }
         for (Map.Entry<Integer, String> entry : sortedMap.entrySet()) {
             // entity ID used for spawn eggs
             short entityID = (short) (int) entry.getKey();
@@ -331,6 +334,9 @@ public class SilkSpawners extends JavaPlugin {
 
         // See if we should use permissions
         usePermissions = config.getBoolean("usePermissions", true);
+        if (verbose) {
+            getLogger().info("Permissions are " +  usePermissions);
+        }
 
         // Enable craftable spawners?
         if (config.getBoolean("craftableSpawners", false)) {
@@ -340,6 +346,10 @@ public class SilkSpawners extends JavaPlugin {
         // Are we allowed to use native methods?
         if (!config.getBoolean("useReflection", true)) {
             su.useReflection = false;
+        }
+        
+        if (verbose) {
+            getLogger().info("Reflection is " + su.useReflection);
         }
 
         // Optionally make spawners unstackable in an attempt to be more
@@ -352,6 +362,12 @@ public class SilkSpawners extends JavaPlugin {
 
     // Add the recipes
     private void loadRecipes() {
+        boolean verbose = config.getBoolean("verboseConfig", false);
+        
+        if (verbose) {
+            getLogger().info("Loading custom recipes");
+        }
+        
         // For all our entities
         for (short entityID : su.eid2MobID.keySet()) {
 
@@ -360,7 +376,7 @@ public class SilkSpawners extends JavaPlugin {
 
             // If the mob is disabled, skip it
             if (!mobs.getBoolean("creatures." + mobID + ".enableCraftingSpawner", true)) {
-                if (config.getBoolean("verboseConfig", true)) {
+                if (verbose) {
                     getLogger().info("Skipping crafting recipe for " + mobID + " per config");
                 }
                 continue;
@@ -377,7 +393,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             // Debug output
-            if (config.getBoolean("verboseConfig", true)) {
+            if (verbose) {
                 getLogger().info("Amount of " + mobID + ": " + amount);
             }
             // Output is a spawner of this type with a custom amount
@@ -421,7 +437,7 @@ public class SilkSpawners extends JavaPlugin {
                 }
 
                 // Debug output
-                if (config.getBoolean("verboseConfig", true)) {
+                if (verbose) {
                     getLogger().info("Shape of " + mobID + ":");
                     getLogger().info(top);
                     getLogger().info(middle);
@@ -450,7 +466,7 @@ public class SilkSpawners extends JavaPlugin {
                 }
 
                 // Debug output
-                if (config.getBoolean("verboseConfig", true)) {
+                if (verbose) {
                     getLogger().info("Ingredients of " + mobID + ":");
                     getLogger().info(ingredientsList.toString());
                 }
