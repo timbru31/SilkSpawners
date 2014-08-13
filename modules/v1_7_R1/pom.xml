@@ -25,17 +25,10 @@
       <artifactId>SilkSpawners-API</artifactId>
       <version>API</version>
       <type>jar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>bukkit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
   <build>
-    <!-- Compile for 1.7 -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

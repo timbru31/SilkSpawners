@@ -453,7 +453,6 @@ public class SilkUtil {
     }
 
     // Notify player
-    // Warning: Don't call the method unless you have the SilkSpawners instance!
     /**
      * Notify a player about the spawner
      * @param player the player
@@ -466,7 +465,7 @@ public class SilkUtil {
                     plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
             // Old bars will be overridden
-            BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime"));
+            BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime", 3));
         } else {
             player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawner1")

@@ -32,6 +32,9 @@ destroyDropEgg: false
 # If a spawner is destroyed, should XP be dropped
 destroyDropXP: 0
  
+# Flag a spawner as already mined to prevent XP duping
+preventXPFarming: true
+ 
 # If a spawner is destroyed, should iron bars be dropped
 destroyDropBars: 0
  

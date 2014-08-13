@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>SilkSpawners-v1_6_R2</artifactId>
   <packaging>jar</packaging>
-  <name>SilkSpawners for v1_6R_2</name>
+  <name>SilkSpawners for v1_6_R2</name>
   <version>v1_6_R2</version>
 
   <parent>
@@ -25,17 +25,10 @@
       <artifactId>SilkSpawners-API</artifactId>
       <version>API</version>
       <type>jar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>bukkit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
   <build>
-    <!-- Compile for 1.7 -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

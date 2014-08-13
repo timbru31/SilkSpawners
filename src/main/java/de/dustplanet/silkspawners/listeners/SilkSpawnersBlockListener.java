@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.util.SilkUtil;
@@ -74,14 +75,24 @@ public class SilkSpawnersBlockListener implements Listener {
 
         // Prevent XP farming/duping
         event.setExpToDrop(0);
+        boolean mined = false;
+        
+        if (plugin.config.getBoolean("preventXPFarming", true) && block.hasMetadata("mined")) {
+            mined = block.getMetadata("mined").get(0).asBoolean();
+        }
+
         if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.silkdrop.*")
                 || plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
             // If we have more than 0 XP, drop them
             int addXP = plugin.config.getInt("destroyDropXP");
-            if (addXP != 0) {
+            if (!mined && addXP != 0) {
                 event.setExpToDrop(addXP);
+                // check if we should flag spawners
+                if (plugin.config.getBoolean("preventXPFarming", true)) {
+                    block.setMetadata("mined", new FixedMetadataValue(plugin, true));
+                }
             }
         }
 

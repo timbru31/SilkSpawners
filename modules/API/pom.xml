@@ -14,8 +14,6 @@
   </parent>
 
   <build>
-    <sourceDirectory>../../src/main/java</sourceDirectory>
-    <!-- Compile for 1.7 -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -25,9 +23,6 @@
           <verbose>true</verbose>
           <source>1.7</source>
           <target>1.7</target>
-          <includes>
-            <include>de/dustplanet/silkspawners/compat/api/**</include>
-          </includes>
         </configuration>
       </plugin>
     </plugins>

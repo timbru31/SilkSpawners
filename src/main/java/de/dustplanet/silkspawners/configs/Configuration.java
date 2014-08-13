@@ -440,6 +440,8 @@ public class Configuration {
         config.addComment("destroyDropEgg", "", "# If a spawner is destroyed, should the egg be dropped");
         config.addDefault("destroyDropXP", 0);
         config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
+        config.addDefault("preventXPFarming", true);
+        config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
         config.addDefault("destroyDropBars", 0);
         config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
         config.addDefault("craftableSpawners", false);
