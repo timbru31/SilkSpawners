@@ -80,7 +80,7 @@ public class SilkSpawnersBlockListener implements Listener {
         // Prevent XP farming/duping
         event.setExpToDrop(0);
         boolean mined = false;
-        
+
         if (plugin.config.getBoolean("preventXPFarming", true) && block.hasMetadata("mined")) {
             mined = block.getMetadata("mined").get(0).asBoolean();
         }
@@ -99,12 +99,12 @@ public class SilkSpawnersBlockListener implements Listener {
                 }
             }
         }
-        
+
         // random drop chance
         String mobID = su.eid2MobID.get(entityID);
         int randomNumber = rnd.nextInt(100);
         int dropChance = 0;
-        
+
         // silk touch
         if (silkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.silkdrop.*"))) {

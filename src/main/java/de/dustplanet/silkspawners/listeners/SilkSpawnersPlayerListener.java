@@ -39,7 +39,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         // Check if we should notify the player. The second condition is the
         // permission and that the slot isn't null and the item is a mob spawner
         if (plugin.config.getBoolean("notifyOnHold")
-                && plugin.hasPermission((Player) event.getPlayer(), "silkspawners.info")
+                && plugin.hasPermission(event.getPlayer(), "silkspawners.info")
                 && event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
                 && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
 
@@ -65,7 +65,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
         // If we use a spawn egg
-        if (item != null && item.getType() == su.SPAWN_EGG) {
+        if (item != null && item.getType() == su.spawn_egg) {
             // Get the entityID
             short entityID = item.getDurability();
             // Clicked spawner with monster egg to change type

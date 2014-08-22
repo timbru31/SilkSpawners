@@ -28,6 +28,7 @@ public class EggCommand implements CommandExecutor {
         plugin = instance;
     }
 
+    @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         // No arguments
         if (args.length == 0) {
@@ -54,8 +55,8 @@ public class EggCommand implements CommandExecutor {
             }
 
             // See if this creature is known
-            if ((su.isUnkown(creatureString) && !plugin.config.getBoolean("ignoreCheckNumbers", false))
-                    || (su.isUnkown(creatureString) && plugin.config.getBoolean("ignoreCheckNumbers", false) && su.getNumber(creatureString) == -1)) {
+            if (su.isUnkown(creatureString) && !plugin.config.getBoolean("ignoreCheckNumbers", false)
+                    || su.isUnkown(creatureString) && plugin.config.getBoolean("ignoreCheckNumbers", false) && su.getNumber(creatureString) == -1) {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature")).replace("%creature%", creatureString));
                 return true;
             }
@@ -77,7 +78,7 @@ public class EggCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 ItemStack itemInHand = player.getItemInHand();
                 // If it's a spawn egg change it.
-                if (itemInHand != null && itemInHand.getType() == su.SPAWN_EGG) {
+                if (itemInHand != null && itemInHand.getType() == su.spawn_egg) {
                     if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
                         return true;

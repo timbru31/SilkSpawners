@@ -26,7 +26,6 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import de.dustplanet.silkspawners.SilkSpawners;
-import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
 /**
  * This is the util class where all the magic happens!
@@ -78,7 +77,7 @@ public class SilkUtil {
     /**
      * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish)
      */
-    public Material SPAWN_EGG = Material.MONSTER_EGG;
+    public final Material spawn_egg = Material.MONSTER_EGG;
 
     /**
      * Boolean toogle for reflection
@@ -165,7 +164,7 @@ public class SilkUtil {
      * @return the ItemStack
      */
     public ItemStack newEggItem(short entityID, int amount) {
-        return new ItemStack(SPAWN_EGG, amount, entityID);
+        return new ItemStack(spawn_egg, amount, entityID);
     }
 
     /**
@@ -359,7 +358,7 @@ public class SilkUtil {
             customName = "Monster Spawner";
         }
         // Please eggs or spawners
-        if (item == null || (item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG)) {
+        if (item == null || item.getType() != Material.MOB_SPAWNER && item.getType() != spawn_egg) {
             return item;
         }
         // Case spawner and check if we should color

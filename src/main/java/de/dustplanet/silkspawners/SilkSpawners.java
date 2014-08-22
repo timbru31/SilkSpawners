@@ -1,16 +1,19 @@
 package de.dustplanet.silkspawners;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+// Updater
+import net.gravitydevelopment.updater.Updater;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -21,25 +24,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+// Metrics
+import org.mcstats.Metrics;
 
 import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.configs.Configuration;
-import de.dustplanet.silkspawners.listeners.SilkSpawnersEntityListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
+import de.dustplanet.silkspawners.listeners.SilkSpawnersEntityListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
-
-
-// Metrics
-import org.mcstats.Metrics;
-
-
-// Updater
-import net.gravitydevelopment.updater.Updater;
 
 /**
  * General stuff
@@ -66,13 +63,14 @@ public class SilkSpawners extends JavaPlugin {
         su.clearAll();
     }
 
+    @Override
     public void onEnable() {
         // Make files and copy defaults
         initializeConfigs();
 
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
-            // We can't use the MinercraftServer import because it might be broken. 
+            // We can't use the MinercraftServer import because it might be broken.
             // Regex is our friend and helper
             // Find MC: 0.0.0, last occurrence is optional
             Pattern pat = Pattern.compile("MC: \\d+.\\d+(.\\d+)?");
@@ -81,7 +79,7 @@ public class SilkSpawners extends JavaPlugin {
             if (matcher.find()) {
                 mcVersion = matcher.group(0);
             }
-            // Strip MC: 
+            // Strip MC:
             String serverVersion = mcVersion.substring(mcVersion.indexOf(' ') + 1);
             if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(serverVersion)) {
                 getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
@@ -94,7 +92,7 @@ public class SilkSpawners extends JavaPlugin {
                 return;
             }
         }
-        
+
         // Heart of SilkSpawners is the SilkUtil class which holds all of our
         // important methods
         su = new SilkUtil(this);
@@ -347,7 +345,7 @@ public class SilkSpawners extends JavaPlugin {
         if (!config.getBoolean("useReflection", true)) {
             su.useReflection = false;
         }
-        
+
         if (verbose) {
             getLogger().info("Reflection is " + su.useReflection);
         }
@@ -363,11 +361,11 @@ public class SilkSpawners extends JavaPlugin {
     // Add the recipes
     private void loadRecipes() {
         boolean verbose = config.getBoolean("verboseConfig", false);
-        
+
         if (verbose) {
             getLogger().info("Loading custom recipes");
         }
-        
+
         // For all our entities
         for (short entityID : su.eid2MobID.keySet()) {
 
@@ -490,7 +488,7 @@ public class SilkSpawners extends JavaPlugin {
                     recipe.setIngredient(character, material);
                 }
                 // Use the right egg!
-                recipe.setIngredient('X', Material.MONSTER_EGG, (int) entityID);
+                recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
             } catch (IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
                 getLogger().warning("Could not add the recipe!");
@@ -498,7 +496,7 @@ public class SilkSpawners extends JavaPlugin {
                 recipe.shape(new String[] {"AAA", "ABA", "AAA"});
                 recipe.setIngredient('A', Material.IRON_FENCE);
                 // Use the right egg!
-                recipe.setIngredient('B', Material.MONSTER_EGG, (int) entityID);
+                recipe.setIngredient('B', Material.MONSTER_EGG, entityID);
             } finally {
                 // Add it
                 getServer().addRecipe(recipe);
@@ -528,9 +526,8 @@ public class SilkSpawners extends JavaPlugin {
                     || node.startsWith("silkspawners.place")
                     || node.startsWith("silkspawners.craft")) {
                 return true;
-            }
-            // Else ask for Op status
-            else {
+            } else {
+                // Else ask for Op status
                 return player.isOp();
             }
         }
