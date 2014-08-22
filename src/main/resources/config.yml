@@ -6,6 +6,9 @@ autoUpdater: true
 # Should permissions be used
 usePermissions: true
  
+# Should a permission be required when a spawner explodes by TNT to achieve a drop
+permissionExplode: false
+ 
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
 

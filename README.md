@@ -35,6 +35,9 @@ autoUpdater: true
 # Should permissions be used
 usePermissions: true
 
+# Should a permission be required when a spawner explodes by TNT to achieve a drop
+permissionExplode: false
+
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
 
@@ -169,6 +172,7 @@ testMCVersion: true
 | silkspawners.info | true | See informative messages about the spawners as you place and break them |
 | silkspawners.viewtype | true | View the spawner type using /spawner |
 | silkspawners.reload | op | Reload the configs on the fly |
+| silkspawners.explodedrop | true | Receive a drop when Spawner explodes via TNT (off by default, see permissionExplode) |
 
 #### Placing spawners
 | Permission node | Default | Description |

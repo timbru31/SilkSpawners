@@ -425,6 +425,8 @@ public class Configuration {
         config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
         config.addDefault("usePermissions", true);
         config.addComment("usePermissions", "", "# Should permissions be used");
+        config.addDefault("permissionExplode", false);
+        config.addComment("permissionExplode", "", "# Should a permission be required when a spawner explodes by TNT to achieve a drop");
         config.addDefault("useWorldGuard", true);
         config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");
         config.addDefault("explosionDropChance", 30);
