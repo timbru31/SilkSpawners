@@ -26,6 +26,7 @@ import org.bukkit.plugin.Plugin;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
 /**
  * This is the util class where all the magic happens!
