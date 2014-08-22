@@ -70,6 +70,9 @@ destroyDropEgg: false
 # Flag a spawner as already mined to prevent XP duping
 preventXPFarming: true
 
+# Drops XP only when a spawner is destroyed and not mined via SilkTouch
+dropXPOnlyOnDestroy: false
+
 # If a spawner is destroyed, should XP be dropped
 destroyDropXP: 0
 

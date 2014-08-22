@@ -79,19 +79,24 @@ public class SilkSpawnersBlockListener implements Listener {
 
         // Prevent XP farming/duping
         event.setExpToDrop(0);
+        // assume not mined
         boolean mined = false;
+        // drop XP only when destroyed and not silk picked
+        boolean dropXPOnlyOnDestroy = plugin.config.getBoolean("dropXPOnlyOnDestroy", false);
 
         if (plugin.config.getBoolean("preventXPFarming", true) && block.hasMetadata("mined")) {
             mined = block.getMetadata("mined").get(0).asBoolean();
         }
 
+        // Drop maybe some XP
         if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.silkdrop.*")
                 || plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
-            // If we have more than 0 XP, drop them
             int addXP = plugin.config.getInt("destroyDropXP");
-            if (!mined && addXP != 0) {
+            // If we have more than 0 XP, drop them
+            // either we drop XP for destroy and silktouch or only when destroyed and we have no silktouch
+            if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !silkTouch && dropXPOnlyOnDestroy)) {
                 event.setExpToDrop(addXP);
                 // check if we should flag spawners
                 if (plugin.config.getBoolean("preventXPFarming", true)) {

@@ -8,6 +8,7 @@ package de.dustplanet.silkspawners.configs;
  */
 
 import java.util.ArrayList;
+
 import de.dustplanet.util.CommentedConfiguration;
 
 public class Configuration {
@@ -448,6 +449,8 @@ public class Configuration {
         config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
         config.addDefault("preventXPFarming", true);
         config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
+        config.addDefault("dropXPOnlyOnDestroy", false);
+        config.addComment("dropXPOnlyOnDestroy", "", "#Drops XP only when a spawner is destroyed and not mined via SilkTouch");
         config.addDefault("destroyDropBars", 0);
         config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
         config.addDefault("craftableSpawners", false);
