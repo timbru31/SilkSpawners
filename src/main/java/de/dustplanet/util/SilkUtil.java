@@ -37,77 +37,76 @@ import de.dustplanet.silkspawners.SilkSpawners;
 public class SilkUtil {
     // EntityID to displayName
     /**
-     * This HashMap is holding the entityID and the display name of each mob
+     * This HashMap is holding the entityID and the display name of each mob.
      */
     public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<>();
 
     // EntityID to MobID
     /**
-     * This HashMap is holding the entityID and the internal Minecraft name of each mob
+     * This HashMap is holding the entityID and the internal Minecraft name of each mob.
      */
     public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<>();
 
     // MobID to entityID
     /**
-     * This HashMap is holding the internal Minecraft name of each mob and the entityID
+     * This HashMap is holding the internal Minecraft name of each mob and the entityID.
      */
     public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<>();
 
     // Name to entityID
     /**
-     * This HashMap is holding the display name of each mob and the entityID
+     * This HashMap is holding the display name of each mob and the entityID.
      */
     public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<>();
 
     // Known entityIDs
     /**
-     * List of enabled (and therefore) known entityIDs
+     * List of enabled (and therefore) known entityIDs.
      */
     public ArrayList<Short> knownEids = new ArrayList<>();
 
     // Default is 90 = PIG
     // To prevent empty string use real ID and not 0 anymore
     /**
-     * Default (fallback) entityID, standard is 90 the pig
+     * Default (fallback) entityID, standard is 90 the pig.
      */
     public short defaultEntityID = 90;
 
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
     /**
-     * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish)
+     * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish).
      */
     public final Material spawn_egg = Material.MONSTER_EGG;
 
     /**
-     * Boolean toogle for reflection
+     * Boolean toogle for reflection.
      */
     public boolean useReflection = true;
 
     // WorldGuard instance
     /**
-     * WorldGuard instance, may be null
+     * WorldGuard instance, may be null.
      */
     private WorldGuardPlugin wg;
 
     /**
-     * BarAPI usage toggle
+     * BarAPI usage toggle.
      */
     public boolean barAPI;
 
-    // SilkSpawners instance, not necessary
     /**
-     * SilkSpawners instance
+     * SilkSpawners instance.
      */
     private SilkSpawners plugin;
 
     /**
-     * NMSHandler
+     * NMSHandler instance.
      */
     public NMSProvider nmsProvider;
 
     /**
-     * Constructor to make your own SilkUtil instance
+     * Constructor to make your own SilkUtil instance.
      * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
@@ -117,7 +116,7 @@ public class SilkUtil {
     }
 
     /**
-     * This method will return the SilkUtil instance
+     * This method will return the SilkUtil instance.
      * @return SilkUtil instance
      */
     public static SilkUtil hookIntoSilkSpanwers() {
@@ -126,7 +125,7 @@ public class SilkUtil {
     }
 
     /**
-     * Define which Minecraft version needs to be loaded
+     * Define which Minecraft version needs to be loaded.
      */
     private boolean setupNMSProvider() {
         // Get full package string of CraftServer
@@ -158,7 +157,7 @@ public class SilkUtil {
 
     // Give a new SpawnerEgg with the given entityID
     /**
-     * Returns a new ItemStack of a spawn egg with the specified amount and mob
+     * Returns a new ItemStack of a spawn egg with the specified amount and mob.
      * @param entityID which mob should be spawned
      * @param amount the amount of spawn eggs
      * @return the ItemStack
@@ -168,7 +167,7 @@ public class SilkUtil {
     }
 
     /**
-     * Returns a new ItemStack of a spawn egg with the amount one and mob
+     * Returns a new ItemStack of a spawn egg with the amount one and mob.
      * @param entityID which mob should be spawned
      * @return the ItemStack (amount is one)
      */
@@ -178,7 +177,7 @@ public class SilkUtil {
 
     // Create a tagged a mob spawner item with it's entity ID and custom amount
     /**
-     * This method will make a new MobSpawner with a custom entityID, name and amount
+     * This method will make a new MobSpawner with a custom entityID, name and amount.
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
@@ -213,7 +212,7 @@ public class SilkUtil {
 
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead
+     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead.
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName) {
@@ -222,7 +221,7 @@ public class SilkUtil {
 
     // Get the entity ID
     /**
-     * Returns the entity ID of a spawner or spawn egg
+     * Returns the entity ID of a spawner or spawn egg.
      * @param item the ItemStack
      * @return the entityID
      */
@@ -232,7 +231,7 @@ public class SilkUtil {
 
     // Return whether mob is recognized by Bukkit's wrappers
     /**
-     * Lookup if the mob is know,
+     * Lookup if the mob is known.
      * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
@@ -242,7 +241,7 @@ public class SilkUtil {
 
     // Check if the entityID is known or not
     /**
-     * Lookup if the mob is known
+     * Lookup if the mob is known.
      * @param entityID the ID (short) of the mob
      * @return the result, true of false
      */
@@ -254,7 +253,7 @@ public class SilkUtil {
     // These don't rely on CreatureSpawner, if possible, and instead set/get the
     // mobID directly from the tile entity
     /**
-     * Returns the entity ID of a spawner (block)
+     * Returns the entity ID of a spawner (block).
      * @param block the spawner block
      * @return the entity ID
      */
@@ -280,7 +279,7 @@ public class SilkUtil {
 
     // Sets the creature of a spawner
     /**
-     * Set the specified MonterSpawner to another entity ID
+     * Set the specified MonterSpawner to another entity ID.
      * @param block MonsterSpawner
      * @param entityID the wanted entityID
      */
@@ -328,7 +327,7 @@ public class SilkUtil {
 
     // Set spawner type from user
     /**
-     * Set a spawner (if allowed) to a new mob
+     * Set a spawner (if allowed) to a new mob.
      * @param block the MonsterSpawner
      * @param entityID the new entity ID
      * @param player the player
@@ -346,7 +345,7 @@ public class SilkUtil {
     }
 
     /**
-     * Sets a spawner item or egg to a new ID
+     * Sets a spawner item or egg to a new ID.
      * @param item ItemStack (Egg or Spawner)
      * @param entityID wanted entity ID
      * @param customName if a custom name should be used (null for none)
@@ -374,7 +373,7 @@ public class SilkUtil {
 
     // Return the spawner block the player is looking at, or null if isn't
     /**
-     * Return the spawner block the player is looking at, or null if isn't
+     * Return the spawner block the player is looking at, or null if isn't.
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
@@ -391,7 +390,7 @@ public class SilkUtil {
     // Internal mob names are are like 'LavaSlime', this will return
     // the in-game name like 'Magma Cube'
     /**
-     * Get the creature name (display name) of an ID
+     * Get the creature name (display name) of an ID.
      * @param entityID the entity ID
      * @return the displayname of the mob
      */
@@ -414,7 +413,7 @@ public class SilkUtil {
 
     // Show them all the possible creature names
     /**
-     * Lists all enabled creatures to a CommandSender
+     * Lists all enabled creatures to a CommandSender.
      * @param sender CommandSender (player or console)
      */
     public void showAllCreatures(CommandSender sender) {
@@ -432,7 +431,7 @@ public class SilkUtil {
 
     // Scan through all entities
     /**
-     * Use reflection to scan through each mob and the IDs/name
+     * Use reflection to scan through each mob and the IDs/name.
      * @return Map with a result of Integer (ID), String (name)
      */
     public SortedMap<Integer, String> scanEntityMap() {
@@ -454,7 +453,7 @@ public class SilkUtil {
 
     // Notify player
     /**
-     * Notify a player about the spawner
+     * Notify a player about the spawner.
      * @param player the player
      * @param spawnerName the creature name
      * @param entityID the ID
@@ -481,7 +480,7 @@ public class SilkUtil {
 
     // Clear RAM
     /**
-     * This method clears all HashMaps and lists
+     * This method clears all HashMaps and lists.
      */
     public void clearAll() {
         eid2DisplayName.clear();
@@ -492,7 +491,7 @@ public class SilkUtil {
     }
 
     /**
-     * Test a String if it ends with egg
+     * Test a String if it ends with egg.
      * @param creatureString the name
      * @return result, true or false
      */
@@ -501,7 +500,7 @@ public class SilkUtil {
     }
 
     /**
-     * Check if given name is known or not
+     * Check if given name is known or not.
      * @param creatureString the mob name
      * @return the result, true of false
      */
@@ -510,7 +509,7 @@ public class SilkUtil {
     }
 
     /**
-     * Check if the given string is a number
+     * Check if the given string is a number.
      * @param number to check
      * @return number or not found -1
      */
@@ -523,7 +522,7 @@ public class SilkUtil {
     }
 
     /**
-     * Reduces the egg (item stack) by 1
+     * Reduces the egg (item stack) by 1.
      * @param player the player
      */
     public void reduceEggs(Player player) {
@@ -541,7 +540,7 @@ public class SilkUtil {
 
     // Checks if the given ItemStack has got the SilkTouch
     /**
-     * Checks if a given ItemStack has a high enough SilkTouch level
+     * Checks if a given ItemStack has a high enough SilkTouch level.
      * @param tool ItemStack to check
      * @return the result if the tool hasSilkTouch
      */
@@ -568,7 +567,7 @@ public class SilkUtil {
     }
 
     /**
-     * Get the spawner name, specified for each mob or default
+     * Get the spawner name, specified for each mob or default.
      * from localization.yml
      * @param mobName the internal name the spawner name is wanted for
      * @return the found string
@@ -582,7 +581,7 @@ public class SilkUtil {
     }
 
     /**
-     * Get the player regardless of UUID or name supplied
+     * Get the player regardless of UUID or name supplied.
      * @param playerUUIDOrName a String with a name or UUID
      * @return the player if found otherwise null
      */
@@ -610,7 +609,7 @@ public class SilkUtil {
 
     // Is WourldGuard enabled?
     /**
-     * Prepare for WorldGuard support
+     * Prepare for WorldGuard support.
      * @param plugin SilkSpawners instance
      */
     private void getWorldGuard(SilkSpawners plugin) {
@@ -626,7 +625,7 @@ public class SilkUtil {
 
     // Is the player allowed to build here?
     /**
-     * Checks if a player can build here (WorldGuard)
+     * Checks if a player can build here (WorldGuard).
      * @param player the player
      * @param location the location to check
      * @return the result, true or false

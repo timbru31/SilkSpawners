@@ -15,19 +15,40 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable {
+    /**
+     * Handlers list.
+     */
     private static final HandlerList handlers = new HandlerList();
+    /**
+     * Boolean state if the event is cancelled.
+     */
     private boolean cancelled;
     // Our objects
+    /**
+     * Player who triggered the event.
+     */
     private Player player;
+    /**
+     * new EntityID.
+     */
     private short id;
+    /**
+     * current (old) EntityID of the spawner.
+     */
     private final short oldID;
+    /**
+     * Block involved.
+     */
     private Block block;
+    /**
+     * Spawner involved.
+     */
     private CreatureSpawner spawner;
 
     /**
      * This constructor should not be used anymore,
      * because the new one carries information about the
-     * current entityID of the spawner block or item
+     * current entityID of the spawner block or item.
      *
      * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short)} instead.
      */
@@ -43,7 +64,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Constructor of the event
+     * Constructor of the event.
      * @param player who issues the event
      * @param block is allowed to be null
      * @param id new ID
@@ -60,23 +81,25 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Determine if the event is cancelled or not
+     * Determine if the event is cancelled or not.
      * @return yes or no
      */
+    @Override
     public boolean isCancelled() {
         return this.cancelled;
     }
 
     /**
-     * Cancel the event
+     * Cancels the event.
      * @param cancel whether the event should be cancelled or not
      */
+    @Override
     public void setCancelled(boolean cancel) {
         this.cancelled = cancel;
     }
 
     /**
-     * Get the player from this event
+     * Get the player from this event.
      * @return the player object
      */
     public Player getPlayer() {
@@ -84,7 +107,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Get the block of this event
+     * Get the block of this event.
      * @return the block - in this case a spawner; returns null when an egg is used
      */
     public Block getBlock() {
@@ -92,7 +115,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Get the creature spawner of this event
+     * Get the creature spawner of this event.
      * @return the creature spawner; returns null when an egg is used
      */
     public CreatureSpawner getSpawner() {
@@ -100,7 +123,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Get the entity ID (mob to spawn) from this event
+     * Get the entity ID (mob to spawn) from this event.
      * @return the entity ID
      */
     public short getEntityID() {
@@ -108,7 +131,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Sets the entityID of the spawner
+     * Sets the entityID of the spawner.
      * @param id the new entityID
      */
     public void setEntityID(short id) {
@@ -116,18 +139,19 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     }
 
     /**
-     * Gets the old entityID of the spawner (item or block)
+     * Gets the old entityID of the spawner (item or block).
      * May return 0 if the deprecated constructor is used!
      */
     public short getOldEntityID() {
         return this.oldID;
     }
 
+    /**
+     * Returns the HandlerList.
+     * @return the HandlerList
+     */
+    @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }
