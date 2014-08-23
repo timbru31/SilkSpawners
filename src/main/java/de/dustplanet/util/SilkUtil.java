@@ -591,16 +591,13 @@ public class SilkUtil {
             // Try if the String could be an UUID
             UUID playerUUID = UUID.fromString(playerUUIDOrName);
             return plugin.getServer().getPlayer(playerUUID);
-        } catch (IllegalArgumentException e) {
-            // Circumvent UUID problem. Basically this method is nothing else than the normal getServer().getPlayer(String) method
-            // See https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/org/bukkit/craftbukkit/CraftServer.java#L502
-            for (Player p : plugin.getServer().getOnlinePlayers()) {
-                if (p.getName().equalsIgnoreCase(playerUUIDOrName)) {
-                    return p;
-                }
-            }
+        } catch (NoSuchMethodError | IllegalArgumentException e) {
+            // Use deprecated method as a fallback.
+            // Potential candidate to be used in NMS interface.
+            // Old (1.6 e.g.) versions do not support UUID and return an Array, not a Collection
+            // That's why plugin.getServer().getOnlinePlayers() doesn't work.
+            return plugin.getServer().getPlayerExact(playerUUIDOrName);
         }
-        return null;
     }
 
     /*
