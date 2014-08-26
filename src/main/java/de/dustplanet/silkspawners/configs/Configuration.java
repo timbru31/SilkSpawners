@@ -462,7 +462,7 @@ public class Configuration {
         config.addDefault("recipeMiddle", "AXA");
         config.addDefault("recipeBottom", "AAA");
         config.addDefault("recipeAmount", 1);
-        ArrayList<String> temp = new ArrayList<String>();
+        ArrayList<String> temp = new ArrayList<>();
         temp.add("A,IRON_FENCE");
         config.addDefault("ingredients", temp);
         config.addComment("ingredients", "", "# Custom example:", "#recipeTop: 'A A'", "#recipeMiddle: 'BXA'", "#recipeBottom: 'C D'",

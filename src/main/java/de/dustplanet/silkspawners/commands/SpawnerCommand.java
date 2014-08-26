@@ -36,15 +36,14 @@ public class SpawnerCommand implements CommandExecutor {
             if (args.length == 0) {
                 su.showAllCreatures(sender);
                 return true;
-            } else {
-                if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
-                    plugin.reloadConfigs();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
-                    return true;
-                } else if  (args.length < 3) {
-                    su.showAllCreatures(sender);
-                    return true;
-                }
+            }
+            if (args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("rl")) {
+                plugin.reloadConfigs();
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
+                return true;
+            } else if  (args.length < 3) {
+                su.showAllCreatures(sender);
+                return true;
             }
             // We need exactly 3 arguments (creature, amount and player)
             if (args.length != 3) {
@@ -257,14 +256,13 @@ public class SpawnerCommand implements CommandExecutor {
                     player.setItemInHand(su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount));
                     player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner")).replace("%creature%", creatureString));
                     return true;
-                } else {
-                    if (isEgg) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
-                    } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeSpawner")));
-                    }
-                    return true;
                 }
+                if (isEgg) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
+                } else {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeSpawner")));
+                }
+                return true;
             }
         }
         return true;

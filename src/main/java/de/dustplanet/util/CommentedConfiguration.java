@@ -243,9 +243,8 @@ public class CommentedConfiguration extends YamlConfiguration {
                 e.printStackTrace();
             }
             return s;
-        } else {
-            return "";
         }
+        return "";
     }
 
     /**

@@ -57,7 +57,7 @@ public class SilkSpawners extends JavaPlugin {
     private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"1.6.1", "1.6.2", "1.6.4", "1.7.2", "1.7.5", "1.7.8", "1.7.9", "1.7.10"};
+    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"1.5", "1.5.1", "1.5.2", "1.6.1", "1.6.2", "1.6.4", "1.7.2", "1.7.5", "1.7.8", "1.7.9", "1.7.10"};
 
     public void onDisbale() {
         su.clearAll();
@@ -453,9 +453,8 @@ public class SilkSpawners extends JavaPlugin {
                     // No list what we should use -> not adding
                     if (!config.contains("ingredients")) {
                         continue;
-                    } else {
-                        ingredientsList = config.getStringList("ingredients");
                     }
+                    ingredientsList = config.getStringList("ingredients");
                 }
 
                 // Security first
@@ -516,22 +515,20 @@ public class SilkSpawners extends JavaPlugin {
         // Normal check if we use permissions
         if (usePermissions) {
             return player.hasPermission(node);
-        } else {
-            // Else check more detailed
-            // Any of the nodes, -> yes
-            if (node.equals("silkspawners.info")
-                    || node.startsWith("silkspawners.silkdrop")
-                    || node.startsWith("silkspawners.destroydrop")
-                    || node.equals("silkspawners.viewtype")
-                    || node.equals("silkspawners.explodedrop")
-                    || node.startsWith("silkspawners.place")
-                    || node.startsWith("silkspawners.craft")) {
-                return true;
-            } else {
-                // Else ask for Op status
-                return player.isOp();
-            }
         }
+        // Else check more detailed
+        // Any of the nodes, -> yes
+        if (node.equals("silkspawners.info")
+                || node.startsWith("silkspawners.silkdrop")
+                || node.startsWith("silkspawners.destroydrop")
+                || node.equals("silkspawners.viewtype")
+                || node.equals("silkspawners.explodedrop")
+                || node.startsWith("silkspawners.place")
+                || node.startsWith("silkspawners.craft")) {
+            return true;
+        }
+        // Else ask for Op status
+        return player.isOp();
     }
 
     public void reloadConfigs() {

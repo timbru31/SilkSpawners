@@ -576,9 +576,8 @@ public class SilkUtil {
     public String getCustomSpawnerName(String mobName) {
         if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
             return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
-        } else {
-            return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
         }
+        return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
     }
 
     /**

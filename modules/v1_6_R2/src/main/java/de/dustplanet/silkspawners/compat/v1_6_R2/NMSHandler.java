@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.v1_6_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_6_R2.block.CraftCreatureSpawner;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
@@ -56,7 +57,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public SortedMap<Integer, String> rawEntityMap() {
-        SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
+        SortedMap<Integer, String> sortedMap = new TreeMap<>();
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
@@ -67,7 +68,7 @@ public class NMSHandler implements NMSProvider {
             @SuppressWarnings("unchecked")
             Map<String, Integer> map = (Map<String, Integer>) field.get(null);
             // For each entry in our name -- ID map but it into the sortedMap
-            for (Map.Entry<String, Integer> entry : ((Map<String, Integer>) map).entrySet()) {
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 sortedMap.put(entry.getValue(), entry.getKey());
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
@@ -80,7 +81,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public String getMobNameOfSpawner(BlockState blockState) {
         // Get our spawner;
-        CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
+        CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
         // Get the mob ID ourselves if we can
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
@@ -110,7 +111,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
         // Get out spawner;
-        CraftCreatureSpawner spawner = ((CraftCreatureSpawner) blockState);
+        CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {
             // Refer to the NMS TileEntityMobSpawner and change the name, see
@@ -123,5 +124,10 @@ public class NMSHandler implements NMSProvider {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
+        return tnt.getSource();
     }
 }

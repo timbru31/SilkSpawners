@@ -1,21 +1,23 @@
-package de.dustplanet.silkspawners.compat.v1_7_R4;
+package de.dustplanet.silkspawners.compat.v1_5_R1;
 
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityTypes;
-import net.minecraft.server.v1_7_R4.Item;
-import net.minecraft.server.v1_7_R4.RegistryMaterials;
-import net.minecraft.server.v1_7_R4.TileEntityMobSpawner;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_5_R1.Entity;
+import net.minecraft.server.v1_5_R1.EntityLiving;
+import net.minecraft.server.v1_5_R1.EntityTypes;
+import net.minecraft.server.v1_5_R1.Item;
+import net.minecraft.server.v1_5_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R1.World;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_5_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_5_R1.entity.CraftTNTPrimed;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
@@ -38,7 +40,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
-        // https://github.com/SpigotMC/mc-dev/blob/5a9a0ae2b3e408a9e8bf4a3dc3247d95e61bd3a1/net/minecraft/server/EntityTypes.java#L96
+        // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/EntityTypes.java#L84
         World world = ((CraftWorld) w).getHandle();
         Entity entity = EntityTypes.a(entityID, world);
         // Should actually never happen since the method above
@@ -61,9 +63,9 @@ public class NMSHandler implements NMSProvider {
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
-            // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/EntityTypes.java#L32
-            // g.put(s, Integer.valueOf(i)); --> Name of ID
-            Field field = EntityTypes.class.getDeclaredField("g");
+            // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/EntityTypes.java#L21
+            // f.put(s, Integer.valueOf(i)); --> Name of ID
+            Field field = EntityTypes.class.getDeclaredField("f");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
             Map<String, Integer> map = (Map<String, Integer>) field.get(null);
@@ -86,7 +88,7 @@ public class NMSHandler implements NMSProvider {
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Get the name from the field of our spawner
-            return tile.getSpawner().getMobName();
+            return tile.a().getMobName();
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -98,19 +100,10 @@ public class NMSHandler implements NMSProvider {
     public void setSpawnersUnstackable() {
         // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
         try {
-            // Get the new registry HashMp from the Item class
-            Field registryField = Item.class.getDeclaredField("REGISTRY");
-            registryField.setAccessible(true);
-            RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
-            // Get entry of the spawner
-            Object spawnerEntry = registry.a(52);
-            // Set maxStackSize "e(int maxStackSize)"
-            Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.setInt(spawnerEntry, 1);
-            // Cleanup
-            registryField.setAccessible(false);
-            maxStackSize.setAccessible(false);
+            Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
+            // Set the stackable field back to 1
+            maxStackSizeField.setAccessible(true);
+            maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
             Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
             e.printStackTrace();
@@ -124,11 +117,9 @@ public class NMSHandler implements NMSProvider {
 
         try {
             // Refer to the NMS TileEntityMobSpawner and change the name, see
-            // https://github.com/Bukkit/mc-dev/blob/c1627dc9cc7505581993eb0fa15597cb36e94244/net/minecraft/server/TileEntityMobSpawner.java#L36
+            // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/TileEntityMobSpawner.java#L37
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-            // Changes as of 1.7.10
-            // https://github.com/Bukkit/mc-dev/blob/c1627dc9cc7505581993eb0fa15597cb36e94244/net/minecraft/server/MobSpawnerAbstract.java#L38
-            tile.getSpawner().setMobName(mobID);
+            tile.a().a(mobID);
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
@@ -139,6 +130,18 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
-        return tnt.getSource();
+        // Backport https://github.com/Bukkit/CraftBukkit/commit/84a45ed7d68b613ee6438fb8f4fa44e671700073#diff-7553562b73bf0037f9ef2ffa0da0f8f6
+        // Regular method was added in v1_5_R2
+        EntityLiving source = ((CraftTNTPrimed) tnt).getHandle().getSource();
+
+        if (source != null) {
+            org.bukkit.entity.Entity bukkitEntity = source.getBukkitEntity();
+
+            if (bukkitEntity.isValid()) {
+                return bukkitEntity;
+            }
+        }
+
+        return null;
     }
 }
