@@ -154,4 +154,12 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     public HandlerList getHandlers() {
         return handlers;
     }
+
+    /**
+     * Returns the HanderList in a static way
+     * @return the HanderList
+     */
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }
