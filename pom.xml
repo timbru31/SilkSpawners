@@ -73,7 +73,7 @@
     <dependency>
       <groupId>net.gravitydevelopment.updater</groupId>
       <artifactId>updater</artifactId>
-      <version>2.2</version>
+      <version>2.3</version>
     </dependency>
     <dependency>
       <groupId>me.confuser</groupId>
