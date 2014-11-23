@@ -109,6 +109,7 @@ public class SilkSpawners extends JavaPlugin {
                 // Updater http://forums.bukkit.org/threads/96681/
                 updater = new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
                 getLogger().info("AutoUpdater is enabled.");
+                getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
             }
         } else {
             getLogger().info("AutoUpdater is disabled due to config setting.");
