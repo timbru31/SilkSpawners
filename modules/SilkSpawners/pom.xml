@@ -292,10 +292,10 @@
 
   <!-- Github information -->
   <scm>
-    <url>https://github.com/xGhOsTkiLLeRx/SilkSpawners</url>
-    <connection>scm:git:git://github.com/xGhOsTkiLLeRx/SilkSpawners.git</connection>
+    <url>https://github.com/timbru31/SilkSpawners</url>
+    <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
     <tag>master</tag>
-    <developerConnection>scm:git:git@github.com:xGhOsTkiLLeRx/SilkSpawners.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
   </scm>
 
   <!-- Jenkins information -->
