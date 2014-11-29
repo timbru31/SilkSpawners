@@ -56,7 +56,7 @@
     <repository>
       <id>Dustplanet</id>
       <name>Dustplanet-snapshots</name>
-      <url>https://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
     </repository>
   </repositories>
 
