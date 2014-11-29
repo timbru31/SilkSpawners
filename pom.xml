@@ -23,6 +23,7 @@
     <module>modules/v1_7_R2</module>
     <module>modules/v1_7_R3</module>
     <module>modules/v1_7_R4</module>
+    <module>modules/v1_8_R1</module>
     <module>modules/SilkSpawners</module>
   </modules>
 
@@ -52,13 +53,18 @@
       <id>spigot-repo</id>
       <url>http://repo.md-5.net/content/groups/public</url>
     </repository>
+    <repository>
+      <id>Dustplanet</id>
+      <name>Dustplanet-snapshots</name>
+      <url>https://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+    </repository>
   </repositories>
 
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.7.10-R0.1-SNAPSHOT</version>
+      <version>1.8-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
@@ -78,7 +84,7 @@
     <dependency>
       <groupId>me.confuser</groupId>
       <artifactId>BarAPI</artifactId>
-      <version>3.1</version>
+      <version>3.2</version>
     </dependency>
   </dependencies>
 

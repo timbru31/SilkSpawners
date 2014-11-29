@@ -609,11 +609,11 @@ public class SilkUtil {
      * Prepare for WorldGuard support.
      * @param plugin SilkSpawners instance
      */
-    private void getWorldGuard(SilkSpawners plugin) {
-        if (!plugin.config.getBoolean("useWorldGuard", true)) {
+    private void getWorldGuard(SilkSpawners silSkspawnerPlugin) {
+        if (!silSkspawnerPlugin.config.getBoolean("useWorldGuard", true)) {
             return;
         }
-        Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        Plugin worldGuard = silSkspawnerPlugin.getServer().getPluginManager().getPlugin("WorldGuard");
         if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
             return;
         }
