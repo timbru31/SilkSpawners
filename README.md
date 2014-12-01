@@ -145,6 +145,7 @@ verboseConfig: false
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true
 testMCVersion: true
+useMetadata: true
 ````
 
 ## Commands
