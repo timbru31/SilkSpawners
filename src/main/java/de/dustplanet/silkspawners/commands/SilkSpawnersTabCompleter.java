@@ -40,12 +40,6 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
             if ("reload".startsWith(argument)) {
                 results.add("reload");
             }
-            // Noting entered, suggest list!
-            if (argument.equalsIgnoreCase("")) {
-                results.add("list");
-                results.add("all");
-                results.add("reload");
-            }
             for (String displayName : su.name2Eid.keySet()) {
                 // Lowercase, too and strip spaces
                 displayName = displayName.toLowerCase().replace(" ", "");
