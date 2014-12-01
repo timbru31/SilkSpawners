@@ -493,5 +493,7 @@ public class Configuration {
         config.addComment("verboseConfig", "", "# Puts more information out on startup");
         config.addDefault("useReflection", true);
         config.addComment("useReflection", "", "# Internal stuff, do NOT change unless advised - the plugin might break otherwise");
+        config.addDefault("testMCVersion", true);
+        config.addDefault("useMetadata", true);
     }
 }

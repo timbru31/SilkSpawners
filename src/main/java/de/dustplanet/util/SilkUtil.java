@@ -21,6 +21,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -189,15 +190,22 @@ public class SilkUtil {
             customName = "Monster Spawner";
         }
         ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
+        ItemMeta meta = item.getItemMeta();
         // Check if we need a colored name
         if (!customName.equalsIgnoreCase("Monster Spawner")) {
-            ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
-            item.setItemMeta(meta);
         }
 
         // The way it should be stored (double sure!)
         item.setDurability(entityID);
+
+        // 1.8 broke durability, workaround is the lore
+        if (plugin.config.getBoolean("useMetdata", true)) {
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("entityID: " + entityID);
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
 
         return item;
     }
@@ -227,7 +235,24 @@ public class SilkUtil {
      * @return the entityID
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
-        return item.getDurability();
+        short durability = item.getDurability();
+        if (durability != 0) {
+            return durability;
+        } else if (plugin.config.getBoolean("useMetdata", true) && item.hasItemMeta()) {
+            ItemMeta meta = item.getItemMeta();
+            if (meta.hasLore() && !meta.getLore().isEmpty()) {
+                String entityIDString = meta.getLore().get(0);
+                String[] entityIDArray = entityIDString.split(": ");
+                if (entityIDArray.length == 2) {
+                    try {
+                        return Short.valueOf(entityIDArray[1]);
+                    } catch (NumberFormatException e) {
+                        return 0;
+                    }
+                }
+            }
+        }
+        return 0; // :(
     }
 
     // Return whether mob is recognized by Bukkit's wrappers
@@ -274,8 +299,12 @@ public class SilkUtil {
             }
         }
 
-        // Fallback to Bukkit
-        return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
+        // Fallback to Bukkit and ItemMeta
+        short entityID = ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
+        if (plugin.config.getBoolean("useMetdata", true) && block.hasMetadata("entityID")) {
+            entityID = block.getMetadata("entityID").get(0).asShort();
+        }
+        return entityID;
     }
 
     // Sets the creature of a spawner
@@ -312,6 +341,11 @@ public class SilkUtil {
                 blockState.update(true);
                 return;
             }
+        }
+
+        // 1.8 introduced issues that's why we use MetaData, too
+        if (plugin.config.getBoolean("useMetdata", true)) {
+            block.setMetadata("entityID", new FixedMetadataValue(plugin, entityID));
         }
 
         // Fallback to wrapper
@@ -361,12 +395,20 @@ public class SilkUtil {
         if (item == null || item.getType() != Material.MOB_SPAWNER && item.getType() != spawn_egg) {
             return item;
         }
+        ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
         if (item.getType() == Material.MOB_SPAWNER && !customName.equalsIgnoreCase("Monster Spawner")) {
-            ItemMeta meta = item.getItemMeta();
             meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
-            item.setItemMeta(meta);
         }
+
+        // 1.8 broke durability, workaround is the lore
+        if (plugin.config.getBoolean("useMetdata", true)) {
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("entityID: " + entityID);
+            meta.setLore(lore);
+        }
+        item.setItemMeta(meta);
+
         // Case egg -> call normal method
         item.setDurability(entityID);
         return item;
