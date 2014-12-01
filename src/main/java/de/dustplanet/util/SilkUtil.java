@@ -21,7 +21,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -200,14 +199,14 @@ public class SilkUtil {
         item.setDurability(entityID);
 
         // 1.8 broke durability, workaround is the lore
-        if (plugin.config.getBoolean("useMetdata", true)) {
+        if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID: " + entityID);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
 
-        return item;
+        return nmsProvider.setNBTEntityID(item, entityID);
     }
 
     // Create a new MobSpawner without and ignore (old) force value
@@ -238,7 +237,10 @@ public class SilkUtil {
         short durability = item.getDurability();
         if (durability != 0) {
             return durability;
-        } else if (plugin.config.getBoolean("useMetdata", true) && item.hasItemMeta()) {
+        } else if (useReflection) {
+            return nmsProvider.getNBTEntityID(item);
+        } else if (plugin.config.getBoolean("useMetadata", true)
+                && item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
             if (meta.hasLore() && !meta.getLore().isEmpty()) {
                 String entityIDString = meta.getLore().get(0);
@@ -299,12 +301,8 @@ public class SilkUtil {
             }
         }
 
-        // Fallback to Bukkit and ItemMeta
-        short entityID = ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
-        if (plugin.config.getBoolean("useMetdata", true) && block.hasMetadata("entityID")) {
-            entityID = block.getMetadata("entityID").get(0).asShort();
-        }
-        return entityID;
+        // Fallback to Bukkit
+        return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
     }
 
     // Sets the creature of a spawner
@@ -341,11 +339,6 @@ public class SilkUtil {
                 blockState.update(true);
                 return;
             }
-        }
-
-        // 1.8 introduced issues that's why we use MetaData, too
-        if (plugin.config.getBoolean("useMetdata", true)) {
-            block.setMetadata("entityID", new FixedMetadataValue(plugin, entityID));
         }
 
         // Fallback to wrapper
@@ -402,7 +395,7 @@ public class SilkUtil {
         }
 
         // 1.8 broke durability, workaround is the lore
-        if (plugin.config.getBoolean("useMetdata", true)) {
+        if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID: " + entityID);
             meta.setLore(lore);
@@ -411,7 +404,8 @@ public class SilkUtil {
 
         // Case egg -> call normal method
         item.setDurability(entityID);
-        return item;
+
+        return nmsProvider.setNBTEntityID(item, entityID);
     }
 
     // Return the spawner block the player is looking at, or null if isn't

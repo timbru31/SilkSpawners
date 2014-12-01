@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import net.minecraft.server.v1_7_R4.Entity;
 import net.minecraft.server.v1_7_R4.EntityTypes;
 import net.minecraft.server.v1_7_R4.Item;
+import net.minecraft.server.v1_7_R4.NBTTagCompound;
 import net.minecraft.server.v1_7_R4.RegistryMaterials;
 import net.minecraft.server.v1_7_R4.TileEntityMobSpawner;
 import net.minecraft.server.v1_7_R4.World;
@@ -16,8 +17,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R4.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
+import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
@@ -140,5 +143,41 @@ public class NMSHandler implements NMSProvider {
     @Override
     public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
         return tnt.getSource();
+    }
+
+    @Override
+    public ItemStack setNBTEntityID(ItemStack item, short entityID) {
+        net.minecraft.server.v1_7_R4.ItemStack itemStack = null;
+        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        NBTTagCompound tag = itemStack.getTag();
+
+        // Create tag if necessary
+        if (tag == null) {
+            tag = new NBTTagCompound();
+            itemStack.setTag(tag);
+        }
+
+        // Check for SilkSpawners key
+        if (!tag.hasKey("SilkSpawners")) {
+            tag.set("SilkSpawners", new NBTTagCompound());
+        }
+        tag = tag.getCompound("SilkSpawners");
+        tag.setShort("entityID", entityID);
+
+        return CraftItemStack.asCraftMirror(itemStack);
+    }
+
+    @Override
+    public short getNBTEntityID(ItemStack item) {
+        net.minecraft.server.v1_7_R4.ItemStack itemStack = null;
+        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        NBTTagCompound tag = itemStack.getTag();
+
+        if (tag == null || !tag.hasKey("SilkSpawners")) {
+            return 0;
+        }
+        return tag.getCompound("SilkSpawners").getShort("entityID");
     }
 }
