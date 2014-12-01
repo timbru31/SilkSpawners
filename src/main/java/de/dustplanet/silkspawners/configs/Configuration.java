@@ -309,6 +309,38 @@ public class Configuration {
         config.addDefault("creatures.EntityHorse.enable", true);
         config.addDefault("creatures.EntityHorse.enableCraftingSpawner", true);
         config.addDefault("creatures.EntityHorse.enableSpawnEggOverride", true);
+        tempList.clear();
+        // Rabbit
+        tempList.add("r");
+        tempList.add("rab");
+        tempList.add("bunny");
+        tempList.add("hare");
+        tempList.add("cony");
+        tempList.add("coney");
+        config.addDefault("creatures.Rabbit.aliases", tempList);
+        config.addDefault("creatures.Rabbit.enable", true);
+        config.addDefault("creatures.Rabbit.enableCraftingSpawner", true);
+        config.addDefault("creatures.Rabbit.enableSpawnEggOverride", true);
+        tempList.clear();
+        // Endermite
+        tempList.add("mite");
+        tempList.add("acarid");
+        tempList.add("acarian");
+        tempList.add("acarine");
+        config.addDefault("creatures.Endermite.aliases", tempList);
+        config.addDefault("creatures.Endermite.enable", true);
+        config.addDefault("creatures.Endermite.enableCraftingSpawner", true);
+        config.addDefault("creatures.Endermite.enableSpawnEggOverride", true);
+        tempList.clear();
+        // Guardian
+        tempList.add("keeper");
+        tempList.add("guard");
+        tempList.add("watcher");
+        config.addDefault("creatures.Guardian.aliases", tempList);
+        config.addDefault("creatures.Guardian.enable", true);
+        config.addDefault("creatures.Guardian.enableCraftingSpawner", true);
+        config.addDefault("creatures.Guardian.enableSpawnEggOverride", true);
+        tempList.clear();
         // Item
         config.addDefault("creatures.Item.enable", false);
         config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
@@ -366,6 +398,8 @@ public class Configuration {
         config.addDefault("creatures.LeashKnot.enable", false);
         // MinecartCommandBlock
         config.addDefault("creatures.MinecartCommandBlock.enable", false);
+        // ArmorStand
+        config.addDefault("creatures.ArmorStand.enable", false);
     }
 
     private void loadDefaultLocalization() {

@@ -234,6 +234,34 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
+  Rabbit:
+    aliases:
+    - r
+    - rab
+    - bunny
+    - hare
+    - cony
+    - coney
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+  Endermite:
+    aliases:
+    - mite
+    - acarid
+    - acarian
+    - acarine
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+  Guardian:
+    aliases:
+    - keeper
+    - guard
+    - watcher
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
  
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -292,4 +320,6 @@ creatures:
   LeashKnot:
     enable: false
   MinecartCommandBlock:
+    enable: false
+  ArmorStand:
     enable: false
