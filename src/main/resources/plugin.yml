@@ -28,6 +28,7 @@ permissions:
             silkspawners.craft.*: true
             silkspawners.place.*: true
             silkspawners.reload: true
+            silkspawners.explodedrop: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
@@ -61,5 +62,8 @@ permissions:
         default: false
     silkspawners.reload:
         description: Allows you to reload the plugin
+        default: false
+    silkspawners.explodedrop:
+        description: Allows you to receive drops on explosion
         default: false
 softdepend: [WorldGuard, BarAPI]
