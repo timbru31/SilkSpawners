@@ -21,9 +21,8 @@
       <type>jar</type>
       <exclusions>
         <exclusion>
-            
-            <groupId>org.spigotmc</groupId>
-            <artifactId>minecraft-server</artifactId>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>minecraft-server</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
