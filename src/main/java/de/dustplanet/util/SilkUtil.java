@@ -201,7 +201,7 @@ public class SilkUtil {
         // 1.8 broke durability, workaround is the lore
         if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
-            lore.add("entityID: " + entityID);
+            lore.add("entityID:" + entityID);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
@@ -235,16 +235,25 @@ public class SilkUtil {
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
         short durability = item.getDurability();
+        // Try durability first, works until 1.8
         if (durability != 0) {
             return durability;
-        } else if (useReflection) {
-            return nmsProvider.getNBTEntityID(item);
-        } else if (plugin.config.getBoolean("useMetadata", true)
+        }
+        short entityID = 0;
+        if (useReflection) {
+            // Now try reflection for NBT tag
+            entityID = nmsProvider.getNBTEntityID(item);
+            if (entityID != 0) {
+                return entityID;
+            }
+        }
+        // If we still haven't found our entityID, then check for item lore
+        if (plugin.config.getBoolean("useMetadata", true)
                 && item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
             if (meta.hasLore() && !meta.getLore().isEmpty()) {
                 String entityIDString = meta.getLore().get(0);
-                String[] entityIDArray = entityIDString.split(": ");
+                String[] entityIDArray = entityIDString.split(":");
                 if (entityIDArray.length == 2) {
                     try {
                         return Short.valueOf(entityIDArray[1]);
@@ -397,7 +406,7 @@ public class SilkUtil {
         // 1.8 broke durability, workaround is the lore
         if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
-            lore.add("entityID: " + entityID);
+            lore.add("entityID:" + entityID);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
