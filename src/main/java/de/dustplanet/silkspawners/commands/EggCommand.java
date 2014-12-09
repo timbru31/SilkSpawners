@@ -13,7 +13,7 @@ import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
- * Handles the command /egg
+ * Handles the command /egg.
  *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
@@ -78,7 +78,7 @@ public class EggCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 ItemStack itemInHand = player.getItemInHand();
                 // If it's a spawn egg change it.
-                if (itemInHand != null && itemInHand.getType() == su.spawn_egg) {
+                if (itemInHand != null && itemInHand.getType() == SilkUtil.SPAWN_EGG) {
                     if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName) && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
                         return true;

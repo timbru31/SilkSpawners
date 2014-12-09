@@ -31,7 +31,7 @@ import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 
 /**
- * This is the util class where all the magic happens!
+ * This is the util class where all the magic happens.
  *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
@@ -80,7 +80,7 @@ public class SilkUtil {
     /**
      * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish).
      */
-    public final Material spawn_egg = Material.MONSTER_EGG;
+    public static final Material SPAWN_EGG = Material.MONSTER_EGG;
 
     /**
      * Boolean toogle for reflection.
@@ -166,7 +166,7 @@ public class SilkUtil {
      * @return the ItemStack
      */
     public ItemStack newEggItem(short entityID, int amount) {
-        return new ItemStack(spawn_egg, amount, entityID);
+        return new ItemStack(SPAWN_EGG, amount, entityID);
     }
 
     /**
@@ -397,7 +397,7 @@ public class SilkUtil {
             customName = "Monster Spawner";
         }
         // Please eggs or spawners
-        if (item == null || item.getType() != Material.MOB_SPAWNER && item.getType() != spawn_egg) {
+        if (item == null || item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();

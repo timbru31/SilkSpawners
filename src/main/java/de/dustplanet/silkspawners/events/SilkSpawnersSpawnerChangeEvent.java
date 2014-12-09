@@ -1,12 +1,5 @@
 package de.dustplanet.silkspawners.events;
 
-/**
- * Event called when a spawner is changed by SilkSpawners
- *
- * @author (former) mushroomhostage
- * @author xGhOsTkiLLeRx
- */
-
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Player;
@@ -14,11 +7,17 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
+/**
+ * Event called when a spawner is changed by SilkSpawners.
+ *
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
 public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable {
     /**
      * Handlers list.
      */
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList HANDLERS = new HandlerList();
     /**
      * Boolean state if the event is cancelled.
      */
@@ -152,7 +151,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      */
     @Override
     public HandlerList getHandlers() {
-        return handlers;
+        return HANDLERS;
     }
 
     /**
@@ -160,6 +159,6 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * @return the HanderList
      */
     public static HandlerList getHandlerList() {
-        return handlers;
+        return HANDLERS;
     }
 }

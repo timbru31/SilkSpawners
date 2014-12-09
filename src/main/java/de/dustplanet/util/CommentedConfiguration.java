@@ -16,6 +16,8 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
+ * Custom configuration with the ability to add comments.
+ *
  * @author dumptruckman
  * @author ElgarL (updated version used by Towny)
  * @author xGhOsTkiLLeRx

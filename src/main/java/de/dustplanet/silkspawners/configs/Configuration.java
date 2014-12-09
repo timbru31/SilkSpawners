@@ -1,16 +1,15 @@
 package de.dustplanet.silkspawners.configs;
 
-/**
- * Default configs
- *
- * @author (former) mushroomhostage
- * @author xGhOsTkiLLeRx
- */
-
 import java.util.ArrayList;
 
 import de.dustplanet.util.CommentedConfiguration;
 
+/**
+ * Default configs.
+ *
+ * @author (former) mushroomhostage
+ * @author xGhOsTkiLLeRx
+ */
 public class Configuration {
     private CommentedConfiguration config;
 

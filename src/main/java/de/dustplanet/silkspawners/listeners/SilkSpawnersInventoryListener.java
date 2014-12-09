@@ -14,7 +14,7 @@ import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.util.SilkUtil;
 
 /**
- * To show a chat message that a player clicked on an mob spawner
+ * To show a chat message that a player clicked on an mob spawner.
  *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx

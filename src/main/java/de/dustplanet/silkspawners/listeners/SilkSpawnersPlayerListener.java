@@ -19,7 +19,7 @@ import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
- * To show a chat message that a player is holding a mob spawner and it's type
+ * To show a chat message that a player is holding a mob spawner and it's type.
  *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
@@ -65,7 +65,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         Block block = event.getClickedBlock();
         Player player = event.getPlayer();
         // If we use a spawn egg
-        if (item != null && item.getType() == su.spawn_egg) {
+        if (item != null && item.getType() == SilkUtil.SPAWN_EGG) {
             // Get the entityID
             short entityID = item.getDurability();
             // Clicked spawner with monster egg to change type

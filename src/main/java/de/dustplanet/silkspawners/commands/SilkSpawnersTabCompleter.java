@@ -10,7 +10,7 @@ import org.bukkit.command.TabCompleter;
 import de.dustplanet.util.SilkUtil;
 
 /**
- * Handle the tab completion list
+ * Handle the tab completion list.
  *
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
