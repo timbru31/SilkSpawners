@@ -77,7 +77,7 @@ public class SilkSpawnersEntityListener implements Listener {
                     if (randomNumber < dropChance) {
                         World world = block.getWorld();
                         // Drop a spawner (first get the entityID from the block and then make a new spawner item)
-                        world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
+                        world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
                     }
                 }
             }

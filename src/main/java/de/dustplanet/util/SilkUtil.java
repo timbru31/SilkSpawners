@@ -2,6 +2,8 @@ package de.dustplanet.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.SortedMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -182,9 +184,10 @@ public class SilkUtil {
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
+     * @param forceLore whether the lore tag should be forces
      * @return the ItemStack with the configured options
      */
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean forceLore) {
         if (customName == null || customName.equalsIgnoreCase("")) {
             customName = "Monster Spawner";
         }
@@ -199,7 +202,7 @@ public class SilkUtil {
         item.setDurability(entityID);
 
         // 1.8 broke durability, workaround is the lore
-        if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
+        if ((forceLore || !useReflection) && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
@@ -211,20 +214,20 @@ public class SilkUtil {
 
     // Create a new MobSpawner without and ignore (old) force value
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead.
+     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead.
      */
     @Deprecated
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean force) {
-        return newSpawnerItem(entityID, customName, amount);
+    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
+        return newSpawnerItem(entityID, customName, amount, false);
     }
 
     // Create a tagged mob spawner item with it's entityID and amount 1
     /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int)} instead.
+     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead.
      */
     @Deprecated
     public ItemStack newSpawnerItem(short entityID, String customName) {
-        return newSpawnerItem(entityID, customName, 1);
+        return newSpawnerItem(entityID, customName, 1, false);
     }
 
     // Get the entity ID
@@ -407,6 +410,18 @@ public class SilkUtil {
         if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
+            meta.setLore(lore);
+        }
+
+        // Does the item (e.g. crafted) as a lore and we set the NBT tag? Remove it
+        if (useReflection && meta.hasLore()) {
+            List<String> lore = meta.getLore();
+            Iterator<String> it = lore.iterator();
+            while(it.hasNext()) {
+                if (it.next().contains("entityID")) {
+                    it.remove();
+                }
+            }
             meta.setLore(lore);
         }
         item.setItemMeta(meta);

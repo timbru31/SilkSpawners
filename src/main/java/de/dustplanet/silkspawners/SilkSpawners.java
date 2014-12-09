@@ -397,7 +397,7 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("Amount of " + mobID + ": " + amount);
             }
             // Output is a spawner of this type with a custom amount
-            ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), amount);
+            ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), amount, true);
             ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
             /*
              * Default is

@@ -121,7 +121,7 @@ public class SilkSpawnersBlockListener implements Listener {
             }
             if (randomNumber < dropChance) {
                 // Drop spawner
-                world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1));
+                world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
             }
             return;
         }
