@@ -507,6 +507,10 @@ public class SilkSpawners extends JavaPlugin {
 
     // If the user has the permission, message
     public void informPlayer(Player player, String message) {
+    	// Ignore empty messages
+    	if (message == null || message.equalsIgnoreCase("")) {
+    		return;
+    	}
         if (hasPermission(player, "silkspawners.info")) {
             player.sendMessage(message);
         }
