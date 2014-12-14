@@ -528,5 +528,6 @@ public class Configuration {
         config.addComment("useReflection", "", "# Internal stuff, do NOT change unless advised - the plugin might break otherwise");
         config.addDefault("testMCVersion", true);
         config.addDefault("useMetadata", true);
+        config.addDefault("useLegacyName", false);
     }
 }

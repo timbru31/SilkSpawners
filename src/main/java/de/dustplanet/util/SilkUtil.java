@@ -73,7 +73,7 @@ public class SilkUtil {
     /**
      * Default (fallback) entityID, standard is 90 the pig.
      */
-    public short defaultEntityID = 90;
+    private short defaultEntityID = 90;
 
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
@@ -85,7 +85,7 @@ public class SilkUtil {
     /**
      * Boolean toogle for reflection.
      */
-    public boolean useReflection = true;
+    private boolean useReflection = true;
 
     // WorldGuard instance
     /**
@@ -96,7 +96,7 @@ public class SilkUtil {
     /**
      * BarAPI usage toggle.
      */
-    public boolean barAPI;
+    private boolean barAPI;
 
     /**
      * SilkSpawners instance.
@@ -158,6 +158,54 @@ public class SilkUtil {
         return false;
     }
 
+    /**
+     * Receives the default entityID.
+     * @return the default entityID defined by SilkSpawners.
+     */
+    public short getDefaultEntityID() {
+        return defaultEntityID;
+    }
+
+    /**
+     * Sets the default entityID.
+     * @param defaultEntityID short value of the default mob
+     */
+    public void setDefaultEntityID(short defaultEntityID) {
+        this.defaultEntityID = defaultEntityID;
+    }
+
+    /**
+     * Returns if SilkUtil is using reflection.
+     * @return true for reflection, false for not
+     */
+    public boolean isUsingReflection() {
+        return useReflection;
+    }
+
+    /**
+     * Set if SilkUtil should use reflection.
+     * @param useReflection true or false
+     */
+    public void setUseReflection(boolean useReflection) {
+        this.useReflection = useReflection;
+    }
+
+    /**
+     * Returns if BarAPI is used.
+     * @return whether BarAPI is used or not
+     */
+    public boolean isBarAPI() {
+        return barAPI;
+    }
+
+    /**
+     * Sets if BarAPI should be used or not.
+     * @param barAPI true or false
+     */
+    public void setBarAPI(boolean barAPI) {
+        this.barAPI = barAPI;
+    }
+
     // Give a new SpawnerEgg with the given entityID
     /**
      * Returns a new ItemStack of a spawn egg with the specified amount and mob.
@@ -188,7 +236,7 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean forceLore) {
-        if (customName == null || customName.equalsIgnoreCase("")) {
+        if (customName == null || customName.isEmpty()) {
             customName = "Monster Spawner";
         }
         ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
@@ -202,7 +250,7 @@ public class SilkUtil {
         item.setDurability(entityID);
 
         // 1.8 broke durability, workaround is the lore
-        if ((forceLore || !useReflection) && plugin.config.getBoolean("useMetadata", true)) {
+        if ((forceLore || !isUsingReflection()) && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
@@ -243,25 +291,43 @@ public class SilkUtil {
             return durability;
         }
         short entityID = 0;
-        if (useReflection) {
+        if (isUsingReflection()) {
             // Now try reflection for NBT tag
             entityID = nmsProvider.getNBTEntityID(item);
             if (entityID != 0) {
                 return entityID;
             }
         }
-        // If we still haven't found our entityID, then check for item lore
-        if (plugin.config.getBoolean("useMetadata", true)
-                && item.hasItemMeta()) {
+        // If we still haven't found our entityID, then check for item lore or name
+        if (item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
-            if (meta.hasLore() && !meta.getLore().isEmpty()) {
+            if (plugin.config.getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
                 String entityIDString = meta.getLore().get(0);
                 String[] entityIDArray = entityIDString.split(":");
                 if (entityIDArray.length == 2) {
                     try {
-                        return Short.valueOf(entityIDArray[1]);
+                        durability = Short.valueOf(entityIDArray[1]);
+                        if (durability != 0) {
+                            return 0;
+                        }
                     } catch (NumberFormatException e) {
                         return 0;
+                    }
+                }
+            }
+            // Last call - legacy mapping of the name. // TODO remove when applicable
+            if (plugin.config.getBoolean("useLegacyName", false) && meta.hasDisplayName()) {
+                String displayName = meta.getDisplayName();
+                if (displayName != null && !displayName.isEmpty()) {
+                    String[] nameParts = ChatColor.stripColor(displayName.toLowerCase()).split(" ");
+                    for (String part : nameParts) {
+                        // Continue if 'spawner' is matched
+                        if (part.equalsIgnoreCase("spawner")) {
+                            continue;
+                        }
+                        if (isKnown(part)) {
+                            return name2Eid.get(part);
+                        }
                     }
                 }
             }
@@ -305,7 +371,7 @@ public class SilkUtil {
             return 0;
         }
 
-        if (useReflection) {
+        if (isUsingReflection()) {
             String mobID = nmsProvider.getMobNameOfSpawner(blockState);
             // In case the block is not on our list try a fallback
             if (mobID != null && mobID2Eid.containsKey(mobID)) {
@@ -332,7 +398,7 @@ public class SilkUtil {
         }
 
         // Try the more powerful native methods first
-        if (useReflection) {
+        if (isUsingReflection()) {
             // Get the name of the mob
             String mobID = eid2MobID.get(entityID);
             // Okay the spawner is not on our list [should NOT happen anymore]
@@ -393,7 +459,7 @@ public class SilkUtil {
      */
     public ItemStack setSpawnerType(ItemStack item, short entityID, String customName) {
         // Ensure that the name is correct
-        if (customName == null || customName.equalsIgnoreCase("")) {
+        if (customName == null || customName.isEmpty()) {
             customName = "Monster Spawner";
         }
         // Please eggs or spawners
@@ -407,14 +473,14 @@ public class SilkUtil {
         }
 
         // 1.8 broke durability, workaround is the lore
-        if (!useReflection && plugin.config.getBoolean("useMetadata", true)) {
+        if (!isUsingReflection() && plugin.config.getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
         }
 
         // Does the item (e.g. crafted) as a lore and we set the NBT tag? Remove it
-        if (useReflection && meta.hasLore()) {
+        if (isUsingReflection() && meta.hasLore()) {
             List<String> lore = meta.getLore();
             Iterator<String> it = lore.iterator();
             while (it.hasNext()) {
@@ -520,7 +586,7 @@ public class SilkUtil {
      * @param entityID the ID
      */
     public void notify(Player player, String spawnerName, short entityID) {
-        if (barAPI) {
+        if (isBarAPI()) {
             String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
@@ -561,12 +627,21 @@ public class SilkUtil {
     }
 
     /**
-     * Check if given name is known or not.
+     * Check if given creature name is known or not. Aliases are supported, too
      * @param creatureString the mob name
      * @return the result, true of false
      */
     public boolean isUnkown(String creatureString) {
         return !name2Eid.containsKey(creatureString);
+    }
+
+    /**
+     * Check if given creature name is known or not. Aliases are supported, too
+     * @param creatureString the mob name
+     * @return the result, true of false
+     */
+    public boolean isKnown(String creatureString) {
+        return name2Eid.containsKey(creatureString);
     }
 
     /**

@@ -149,7 +149,7 @@ public class SilkSpawners extends JavaPlugin {
             if (barAPI != null) {
                 // If BarAPI is enabled, load the economy
                 getLogger().info("Loaded BarAPI successfully!");
-                su.barAPI = true;
+                su.setBarAPI(true);
             } else {
                 // Else tell the admin about the missing of BarAPI
                 getLogger().info("BarAPI was not found and remains disabled!");
@@ -301,7 +301,7 @@ public class SilkSpawners extends JavaPlugin {
 
         // Set the defaultID for spawners (-> memo, on some spawners it seems 0
         // -> pig is 90)
-        su.defaultEntityID = 90;
+        su.setDefaultEntityID((short) 90);
 
         // Should we use something else as the default?
         if (config.contains("defaultCreature")) {
@@ -322,7 +322,7 @@ public class SilkSpawners extends JavaPlugin {
                 // Get our entityID
                 short defaultEid = su.name2Eid.get(defaultCreatureString);
                 // Change default
-                su.defaultEntityID = defaultEid;
+                su.setDefaultEntityID(defaultEid);
                 if (verbose) {
                     getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
                 }
@@ -345,11 +345,11 @@ public class SilkSpawners extends JavaPlugin {
 
         // Are we allowed to use native methods?
         if (!config.getBoolean("useReflection", true)) {
-            su.useReflection = false;
+            su.setUseReflection(false);
         }
 
         if (verbose) {
-            getLogger().info("Reflection is " + su.useReflection);
+            getLogger().info("Reflection is " + su.isUsingReflection());
         }
 
         // Optionally make spawners unstackable in an attempt to be more
@@ -508,7 +508,7 @@ public class SilkSpawners extends JavaPlugin {
     // If the user has the permission, message
     public void informPlayer(Player player, String message) {
         // Ignore empty messages
-        if (message == null || message.equalsIgnoreCase("")) {
+        if (message == null || message.isEmpty()) {
             return;
         }
         if (hasPermission(player, "silkspawners.info")) {

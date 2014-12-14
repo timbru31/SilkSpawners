@@ -47,7 +47,7 @@ public class SilkSpawnersPlayerListener implements Listener {
             short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
             // Check for unknown/invalid ID
             if (entityID == 0 || !su.knownEids.contains(entityID)) {
-                entityID = su.defaultEntityID;
+                entityID = su.getDefaultEntityID();
             }
             // Get the name from the entityID
             String spawnerName = su.getCreatureName(entityID);

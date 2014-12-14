@@ -181,7 +181,7 @@ public class SilkSpawnersBlockListener implements Listener {
         // 0 or unknown then fallback
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
             // Default
-            entityID = su.defaultEntityID;
+            entityID = su.getDefaultEntityID();
         }
 
         // Names
@@ -197,7 +197,7 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // Message default
-        if (entityID == su.defaultEntityID) {
+        if (entityID == su.getDefaultEntityID()) {
             plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
         } else {
             // Else message the type

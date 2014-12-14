@@ -53,7 +53,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
         // Pig here again
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
-            entityID = su.defaultEntityID;
+            entityID = su.getDefaultEntityID();
         }
         String creatureName = su.getCreatureName(entityID);
 
