@@ -417,7 +417,7 @@ public class SilkUtil {
         if (useReflection && meta.hasLore()) {
             List<String> lore = meta.getLore();
             Iterator<String> it = lore.iterator();
-            while(it.hasNext()) {
+            while (it.hasNext()) {
                 if (it.next().contains("entityID")) {
                     it.remove();
                 }
