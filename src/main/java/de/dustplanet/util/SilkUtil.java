@@ -636,7 +636,7 @@ public class SilkUtil {
     }
 
     /**
-     * Check if given creature name is known or not. Aliases are supported, too
+     * Check if given creature name is known or not. Aliases are supported, too.
      * @param creatureString the mob name
      * @return the result, true of false
      */
