@@ -473,7 +473,9 @@ public class SilkSpawners extends JavaPlugin {
                 List<String> shape = Arrays.asList(recipe.getShape());
                 // We have an ingredient that is not in our shape. Ignore it then
                 if (shapeContainsIngredient(shape, 'X')) {
-                    getLogger().info("shape contains X");
+                    if (verbose) {
+                        getLogger().info("shape contains X");
+                    }
                     // Use the right egg!
                     recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
                 }
@@ -483,7 +485,7 @@ public class SilkSpawners extends JavaPlugin {
                     String[] ingredients = ingredient.split(",");
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
-                        getLogger().info("ingredient length invalid");
+                        getLogger().info("ingredient length invalid: " + ingredients.length);
                         continue;
                     }
                     // Maybe they put a string in here, so first position and uppercase
