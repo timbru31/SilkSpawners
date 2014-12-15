@@ -474,7 +474,7 @@ public class SilkSpawners extends JavaPlugin {
                 // We have an ingredient that is not in our shape. Ignore it then
                 if (shapeContainsIngredient(shape, 'X')) {
                     if (verbose) {
-                        getLogger().info("shape contains X");
+                        getLogger().info("shape of " +  mobID + " contains X");
                     }
                     // Use the right egg!
                     recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
@@ -485,28 +485,28 @@ public class SilkSpawners extends JavaPlugin {
                     String[] ingredients = ingredient.split(",");
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
-                        getLogger().info("ingredient length invalid: " + ingredients.length);
+                        getLogger().info("ingredient length of " + mobID + " invalid: " + ingredients.length);
                         continue;
                     }
                     // Maybe they put a string in here, so first position and uppercase
                     char character = ingredients[0].toUpperCase().charAt(0);
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(shape, character)) {
-                        getLogger().info("shape does not contain " + character);
+                        getLogger().info("shape of " +  mobID + " does not contain " + character);
                         continue;
                     }
                     // We try to get the material (ID or name)
                     Material material = Material.matchMaterial(ingredients[1]);
                     // Failed!
                     if (material == null) {
-                        getLogger().info("shape material " + ingredients[1] + " matched null");
+                        getLogger().info("shape material " + ingredients[1] + " of " + mobID + " matched null");
                         material = Material.IRON_FENCE;
                     }
                     recipe.setIngredient(character, material);
                 }
             } catch (IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
-                getLogger().warning("Could not add the recipe!");
+                getLogger().warning("Could not add the recipe of " + mobID + "!");
                 e.printStackTrace();
                 recipe.shape(new String[] {"AAA", "ABA", "AAA"});
                 recipe.setIngredient('A', Material.IRON_FENCE);
