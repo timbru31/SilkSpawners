@@ -146,6 +146,7 @@ verboseConfig: false
 useReflection: true
 testMCVersion: true
 useMetadata: true
+useLegacyName: true
 ````
 
 ## Commands

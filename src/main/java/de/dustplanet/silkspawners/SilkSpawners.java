@@ -450,7 +450,7 @@ public class SilkSpawners extends JavaPlugin {
                 // Per type ingredients?
                 List<String> ingredientsList;
                 if (mobs.contains("creatures." + mobID + ".recipe.ingredients")) {
-                    ingredientsList = mobs.getStringList("creatures." + mobID + "recipe.ingredients");
+                    ingredientsList = mobs.getStringList("creatures." + mobID + ".recipe.ingredients");
                 } else {
                     // No list what we should use -> not adding
                     if (!config.contains("ingredients")) {
@@ -460,7 +460,7 @@ public class SilkSpawners extends JavaPlugin {
                 }
 
                 // Security first
-                if (ingredientsList == null) {
+                if (ingredientsList == null || ingredientsList.isEmpty()) {
                     continue;
                 }
 
@@ -470,26 +470,38 @@ public class SilkSpawners extends JavaPlugin {
                     getLogger().info(ingredientsList.toString());
                 }
 
+                List<String> shape = Arrays.asList(recipe.getShape());
+                // We have an ingredient that is not in our shape. Ignore it then
+                if (shapeContainsIngredient(shape, 'X')) {
+                    getLogger().info("shape contains X");
+                    // Use the right egg!
+                    recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
+                }
                 for (String ingredient : ingredientsList) {
                     // They are added like this A,DIRT
                     // Lets split the "," then
                     String[] ingredients = ingredient.split(",");
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
+                        getLogger().info("ingredient length invalid");
                         continue;
                     }
                     // Maybe they put a string in here, so first position and uppercase
                     char character = ingredients[0].toUpperCase().charAt(0);
+                    // We have an ingredient that is not in our shape. Ignore it then
+                    if (!shapeContainsIngredient(shape, character)) {
+                        getLogger().info("shape does not contain " + character);
+                        continue;
+                    }
                     // We try to get the material (ID or name)
                     Material material = Material.matchMaterial(ingredients[1]);
                     // Failed!
                     if (material == null) {
+                        getLogger().info("shape material " + ingredients[1] + " matched null");
                         material = Material.IRON_FENCE;
                     }
                     recipe.setIngredient(character, material);
                 }
-                // Use the right egg!
-                recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
             } catch (IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
                 getLogger().warning("Could not add the recipe!");
@@ -503,6 +515,22 @@ public class SilkSpawners extends JavaPlugin {
                 getServer().addRecipe(recipe);
             }
         }
+    }
+
+    private boolean shapeContainsIngredient(List<String> shape, char c) {
+        boolean match = false;
+        for (String recipePart : shape) {
+            for (char recipeIngredient : recipePart.toCharArray()) {
+                if (recipeIngredient == c) {
+                    match = true;
+                    break;
+                }
+            }
+            if (match) {
+                break;
+            }
+        }
+        return match;
     }
 
     // If the user has the permission, message

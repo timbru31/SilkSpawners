@@ -308,7 +308,7 @@ public class SilkUtil {
                     try {
                         durability = Short.valueOf(entityIDArray[1]);
                         if (durability != 0) {
-                            return 0;
+                            return durability;
                         }
                     } catch (NumberFormatException e) {
                         return 0;
