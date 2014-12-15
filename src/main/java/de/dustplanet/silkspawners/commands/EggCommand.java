@@ -84,7 +84,7 @@ public class EggCommand implements CommandExecutor {
                         return true;
                     }
                     // Call the event and maybe change things!
-                    SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID, su.getStoredSpawnerItemEntityID(itemInHand));
+                    SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, null, entityID, su.getStoredSpawnerItemEntityID(itemInHand), itemInHand.getAmount());
                     plugin.getServer().getPluginManager().callEvent(changeEvent);
                     // See if we need to stop
                     if (changeEvent.isCancelled()) {
