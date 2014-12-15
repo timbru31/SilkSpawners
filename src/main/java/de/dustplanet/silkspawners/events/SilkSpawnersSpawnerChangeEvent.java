@@ -65,7 +65,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
         }
         this.id = id;
         this.oldID = 0;
-        this.amount = 1;
+        this.setAmount(1);
     }
 
     /**
@@ -81,7 +81,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
         }
         this.id = id;
         this.oldID = oldID;
-        this.amount = 1;
+        this.setAmount(1);
     }
 
     /**
@@ -99,7 +99,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
         }
         this.id = id;
         this.oldID = oldID;
-        this.amount = amount;
+        this.setAmount(amount);
     }
 
     /**
@@ -166,6 +166,22 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      */
     public short getOldEntityID() {
         return this.oldID;
+    }
+
+    /**
+     * Gets the amount of the ItemStack.
+     * @return the amount
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * Sets the amount of the ItemStack.
+     * @param amount of the ItemStack
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     /**
