@@ -15,6 +15,7 @@ public interface NMSProvider {
     boolean setMobNameOfSpawner(BlockState blockState, String mobID);
     void setSpawnersUnstackable();
     Entity getTNTSource(TNTPrimed tnt);
-    ItemStack setNBTEntityID(ItemStack item, short entityID);
-    short getNBTEntityID(ItemStack item);
+    ItemStack setNBTEntityID(ItemStack item, short entityID, String entity);
+    short getSilkSpawnersNBTEntityID(ItemStack item);
+    String getVanillaNBTEntityID(ItemStack item);
 }

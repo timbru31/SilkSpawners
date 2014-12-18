@@ -135,7 +135,7 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack setNBTEntityID(ItemStack item, short entityID) {
+    public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
         net.minecraft.server.v1_6_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
@@ -151,14 +151,22 @@ public class NMSHandler implements NMSProvider {
         if (!tag.hasKey("SilkSpawners")) {
             tag.set("SilkSpawners", new NBTTagCompound());
         }
+
+        // Check for Vanilla key
+        if (!tag.hasKey("BlockEntityTag")) {
+            tag.set("BlockEntityTag", new NBTTagCompound());
+        }
         tag = tag.getCompound("SilkSpawners");
         tag.setShort("entityID", entityID);
+
+        tag = itemStack.getTag().getCompound("BlockEntityTag");
+        tag.setString("EntityId", entity);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
     @Override
-    public short getNBTEntityID(ItemStack item) {
+    public short getSilkSpawnersNBTEntityID(ItemStack item) {
         net.minecraft.server.v1_6_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
@@ -168,5 +176,18 @@ public class NMSHandler implements NMSProvider {
             return 0;
         }
         return tag.getCompound("SilkSpawners").getShort("entityID");
+    }
+
+    @Override
+    public String getVanillaNBTEntityID(ItemStack item) {
+        net.minecraft.server.v1_6_R2.ItemStack itemStack = null;
+        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        NBTTagCompound tag = itemStack.getTag();
+
+        if (tag == null || !tag.hasKey("BlockEntityTag")) {
+            return null;
+        }
+        return tag.getCompound("BlockEntityTag").getString("EntityId");
     }
 }

@@ -257,7 +257,7 @@ public class SilkUtil {
         }
         item.setItemMeta(meta);
 
-        return nmsProvider.setNBTEntityID(item, entityID);
+        return nmsProvider.setNBTEntityID(item, entityID, eid2MobID.get(entityID));
     }
 
     // Create a new MobSpawner without and ignore (old) force value
@@ -293,9 +293,17 @@ public class SilkUtil {
         short entityID = 0;
         if (isUsingReflection()) {
             // Now try reflection for NBT tag
-            entityID = nmsProvider.getNBTEntityID(item);
+            entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
             if (entityID != 0) {
                 return entityID;
+            }
+            String entity = nmsProvider.getVanillaNBTEntityID(item);
+            System.out.println(entity == null);
+            if (entity != null) {
+                System.out.println(entity);
+            }
+            if (entity != null &&  mobID2Eid.containsKey(entity)) {
+                return mobID2Eid.get(entity);
             }
         }
         // If we still haven't found our entityID, then check for item lore or name
@@ -495,7 +503,7 @@ public class SilkUtil {
         // Case egg -> call normal method
         item.setDurability(entityID);
 
-        return nmsProvider.setNBTEntityID(item, entityID);
+        return nmsProvider.setNBTEntityID(item, entityID, eid2MobID.get(entityID));
     }
 
     // Return the spawner block the player is looking at, or null if isn't
