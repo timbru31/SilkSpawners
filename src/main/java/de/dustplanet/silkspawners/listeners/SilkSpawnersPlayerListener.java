@@ -72,11 +72,13 @@ public class SilkSpawnersPlayerListener implements Listener {
             if (block != null && block.getType() == Material.MOB_SPAWNER) {
                 Action action = event.getAction();
                 if (action != Action.LEFT_CLICK_BLOCK && action != Action.RIGHT_CLICK_BLOCK) {
+                    event.setCancelled(true);
                     return;
                 }
 
                 // WorldGuard region protection
                 if (!su.canBuildHere(player, block.getLocation())) {
+                    event.setCancelled(true);
                     return;
                 }
 
@@ -86,11 +88,12 @@ public class SilkSpawnersPlayerListener implements Listener {
                 if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName)
                         && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization .getString("noPermissionChangingWithEggs")));
+                    event.setCancelled(true);
                     return;
                 }
 
                 // Call the event and maybe change things!
-                SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID, su.getSpawnerEntityID(block));
+                SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID, su.getSpawnerEntityID(block), 1);
                 plugin.getServer().getPluginManager().callEvent(changeEvent);
                 // See if we need to stop
                 if (changeEvent.isCancelled()) {
