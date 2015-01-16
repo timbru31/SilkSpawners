@@ -298,10 +298,6 @@ public class SilkUtil {
                 return entityID;
             }
             String entity = nmsProvider.getVanillaNBTEntityID(item);
-            System.out.println(entity == null);
-            if (entity != null) {
-                System.out.println(entity);
-            }
             if (entity != null &&  mobID2Eid.containsKey(entity)) {
                 return mobID2Eid.get(entity);
             }
