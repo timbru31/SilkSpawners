@@ -306,16 +306,21 @@ public class SilkUtil {
         if (item.hasItemMeta()) {
             ItemMeta meta = item.getItemMeta();
             if (plugin.config.getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
-                String entityIDString = meta.getLore().get(0);
-                String[] entityIDArray = entityIDString.split(":");
-                if (entityIDArray.length == 2) {
-                    try {
-                        durability = Short.valueOf(entityIDArray[1]);
-                        if (durability != 0) {
-                            return durability;
+                for (String entityIDString : meta.getLore()) {
+                    if (!entityIDString.contains("entityID")) {
+                        // Continue if the lore does not contain entityID
+                        continue;
+                    }
+                    String[] entityIDArray = entityIDString.split(":");
+                    if (entityIDArray.length == 2) {
+                        try {
+                            durability = Short.valueOf(entityIDArray[1]);
+                            if (durability != 0) {
+                                return durability;
+                            }
+                        } catch (NumberFormatException e) {
+                            return 0;
                         }
-                    } catch (NumberFormatException e) {
-                        return 0;
                     }
                 }
             }
