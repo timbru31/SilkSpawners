@@ -108,8 +108,13 @@ public class SpawnerCommand implements CommandExecutor {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionViewType")));
                 return true;
             }
+            // If the distance is -1, return
+            int distance = plugin.config.getInt("spawnerCommandReachDistance", 6);
+            if (distance == -1) {
+                return true;
+            }
             // Get the block, returns null for non spawner blocks
-            Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));
+            Block block = su.getSpawnerFacing(player, distance);
             if (block == null) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawner")));
                 return true;
@@ -151,8 +156,14 @@ public class SpawnerCommand implements CommandExecutor {
             // Filter spaces (like Zombie Pigman)
             String mobName = creatureString.toLowerCase().replace(" ", "");
 
+            // If the distance is -1, return
+            int distance = plugin.config.getInt("spawnerCommandReachDistance", 6);
+            if (distance == -1) {
+                return true;
+            }
+
             // Get the block
-            Block block = su.getSpawnerFacing(player, plugin.config.getInt("spawnerCommandReachDistance", 6));
+            Block block = su.getSpawnerFacing(player, distance);
 
             // See if the block is a MobSpawner, then change it
             if (block != null && !isEgg) {
