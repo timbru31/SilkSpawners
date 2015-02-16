@@ -7,8 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,8 +15,6 @@ import net.gravitydevelopment.updater.Updater;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -98,8 +94,7 @@ public class SilkSpawners extends JavaPlugin {
         // important methods
         su = new SilkUtil(this);
 
-        // Load configs
-        loadConfigs();
+        loadConfig();
 
         // Check if we should enable the auto Updater & have no snapshot (dev build)
         if (config.getBoolean("autoUpdater", true)) {
@@ -225,138 +220,16 @@ public class SilkSpawners extends JavaPlugin {
         }
     }
 
-    private void loadConfigs() {
-        // Should we display more information
-        boolean verbose = config.getBoolean("verboseConfig", false);
-
-        // Scan the entities
-        SortedMap<Integer, String> sortedMap = su.scanEntityMap();
-        if (verbose) {
-            getLogger().info("Scanning the mobs");
-        }
-        for (Map.Entry<Integer, String> entry : sortedMap.entrySet()) {
-            // entity ID used for spawn eggs
-            short entityID = (short) (int) entry.getKey();
-            // internal mod ID used for spawner type
-            String mobID = entry.getValue();
-            // bukkit's wrapper enum
-            EntityType bukkitEntity = EntityType.fromId(entityID);
-            Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
-
-            // Lookup creature info
-            boolean enable = config.getBoolean("enableCreatureDefault", true);
-            // Check if already known
-            if (!mobs.contains("creatures." + mobID)) {
-                getLogger().info("Entity " + entityID + "/" + mobID + " is not in the config. Adding...");
-                mobs.addDefault("creatures." + mobID + ".enable", enable);
-                mobs.save();
-            } else {
-                enable = mobs.getBoolean("creatures." + mobID + ".enable", enable);
-            }
-            if (!enable) {
-                if (verbose) {
-                    getLogger().info("Entity " + entityID + " = " + mobID + "/"
-                            + bukkitEntity + "[" + bukkitEntityClass
-                            + "] (disabled)");
-                }
-                continue;
-            }
-
-            // Add the known ID [we omit all disabled entities]
-            su.knownEids.add(entityID);
-            // Put the different value in our lists
-            su.eid2MobID.put(entityID, mobID);
-            su.mobID2Eid.put(mobID, entityID);
-
-            // In-game name for user display, and other recognized names for
-            // user input lookup
-            String displayName = mobs.getString("creatures." + mobID + ".displayName");
-            if (displayName == null) {
-                displayName = mobID;
-            }
-            // Add it the the list
-            su.eid2DisplayName.put(entityID, displayName);
-
-            // Get our lit of aliases
-            List<String> aliases = mobs.getStringList("creatures." + mobID + ".aliases");
-            // Get the name, make it lowercase and strip out the spaces
-            aliases.add(displayName.toLowerCase().replace(" ", ""));
-            // Add the internal name
-            aliases.add(mobID.toLowerCase().replace(" ", ""));
-            // Add the ID
-            aliases.add(Short.toString(entityID));
-            // Add it to our names and ID list
-            for (String alias : aliases) {
-                su.name2Eid.put(alias, entityID);
-            }
-
-            // Detailed message
-            if (verbose) {
-                getLogger().info("Entity " + entityID + " = " + mobID + "/"
-                        + bukkitEntity + "[" + bukkitEntityClass
-                        + "] (display name: " + displayName
-                        + ", aliases: " + aliases + ")");
-            }
-        }
-
-        // Set the defaultID for spawners (-> memo, on some spawners it seems 0
-        // -> pig is 90)
-        su.setDefaultEntityID((short) 90);
-
-        // Should we use something else as the default?
-        if (config.contains("defaultCreature")) {
-            // Lowercase is better to search
-            String defaultCreatureString = config.getString("defaultCreature", "90").toLowerCase();
-            // Try IDs first, may fail, use name then!
-            try {
-                short entityID = Short.valueOf(defaultCreatureString);
-                // Known ID and MobName? Yes -> We use it
-                if (su.isKnownEntityID(entityID) && su.isRecognizedMob(su.getCreatureName(entityID))) {
-                    defaultCreatureString = su.getCreatureName(entityID).toLowerCase();
-                }
-            } catch (NumberFormatException e) {
-                // Name then
-            }
-            // If we know the internal name
-            if (su.name2Eid.containsKey(defaultCreatureString)) {
-                // Get our entityID
-                short defaultEid = su.name2Eid.get(defaultCreatureString);
-                // Change default
-                su.setDefaultEntityID(defaultEid);
-                if (verbose) {
-                    getLogger().info("Default monster spawner set to " + su.eid2DisplayName.get(defaultEid));
-                }
-            } else {
-                // Unknown, fallback
-                getLogger().warning("Invalid creature type: " + defaultCreatureString + ", default monster spawner fallback to PIG");
-            }
-        }
-
-        // See if we should use permissions
-        usePermissions = config.getBoolean("usePermissions", true);
-        if (verbose) {
-            getLogger().info("Permissions are " +  usePermissions);
-        }
-
+    private void loadConfig() {
         // Enable craftable spawners?
         if (config.getBoolean("craftableSpawners", false)) {
             loadRecipes();
         }
 
-        // Are we allowed to use native methods?
-        if (!config.getBoolean("useReflection", true)) {
-            su.setUseReflection(false);
-        }
-
-        if (verbose) {
-            getLogger().info("Reflection is " + su.isUsingReflection());
-        }
-
-        // Optionally make spawners unstackable in an attempt to be more
-        // compatible with CraftBukkit forks which may conflict
-        // Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
-        if (config.getBoolean("spawnersUnstackable", false)) {
-            su.nmsProvider.setSpawnersUnstackable();
+        // See if we should use permissions
+        usePermissions = config.getBoolean("usePermissions", true);
+        if (config.getBoolean("verboseConfig", false)) {
+            getLogger().info("Permissions are " +  usePermissions);
         }
     }
 
@@ -570,7 +443,8 @@ public class SilkSpawners extends JavaPlugin {
     public void reloadConfigs() {
         config.load();
         config.save();
-        loadConfigs();
+        loadConfig();
+        su.load();
         mobs.load();
         mobs.save();
         localization.load();
@@ -579,5 +453,9 @@ public class SilkSpawners extends JavaPlugin {
 
     public void shutdown() {
         setEnabled(false);
+    }
+
+    public CommentedConfiguration getMobs() {
+        return mobs;
     }
 }

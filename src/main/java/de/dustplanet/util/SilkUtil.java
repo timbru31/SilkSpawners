@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,6 +20,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -116,6 +118,7 @@ public class SilkUtil {
         getWorldGuard(instance);
         plugin = instance;
         setupNMSProvider();
+        load();
     }
 
     /**
@@ -156,6 +159,133 @@ public class SilkUtil {
             plugin.shutdown();
         }
         return false;
+    }
+
+    /**
+     * Loads the defaults
+     */
+    public void load() {
+        // Should we display more information
+        boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
+
+        // Scan the entities
+        SortedMap<Integer, String> sortedMap = scanEntityMap();
+        if (verbose) {
+            plugin.getLogger().info("Scanning the mobs");
+        }
+        for (Map.Entry<Integer, String> entry : sortedMap.entrySet()) {
+            // entity ID used for spawn eggs
+            short entityID = (short) (int) entry.getKey();
+            // internal mod ID used for spawner type
+            String mobID = entry.getValue();
+            // bukkit's wrapper enum
+            EntityType bukkitEntity = EntityType.fromId(entityID);
+            Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
+
+            // Lookup creature info
+            boolean enable = plugin.getConfig().getBoolean("enableCreatureDefault", true);
+            // Check if already known
+            if (!plugin.getMobs().contains("creatures." + mobID)) {
+                plugin.getLogger().info("Entity " + entityID + "/" + mobID + " is not in the config. Adding...");
+                plugin.getMobs().addDefault("creatures." + mobID + ".enable", enable);
+                plugin.getMobs().save();
+            } else {
+                enable = plugin.getMobs().getBoolean("creatures." + mobID + ".enable", enable);
+            }
+            if (!enable) {
+                if (verbose) {
+                    plugin.getLogger().info("Entity " + entityID + " = " + mobID + "/"
+                            + bukkitEntity + "[" + bukkitEntityClass
+                            + "] (disabled)");
+                }
+                continue;
+            }
+
+            // Add the known ID [we omit all disabled entities]
+            knownEids.add(entityID);
+            // Put the different value in our lists
+            eid2MobID.put(entityID, mobID);
+            mobID2Eid.put(mobID, entityID);
+
+            // In-game name for user display, and other recognized names for
+            // user input lookup
+            String displayName = plugin.getMobs().getString("creatures." + mobID + ".displayName");
+            if (displayName == null) {
+                displayName = mobID;
+            }
+            // Add it the the list
+            eid2DisplayName.put(entityID, displayName);
+
+            // Get our lit of aliases
+            List<String> aliases = plugin.getMobs().getStringList("creatures." + mobID + ".aliases");
+            // Get the name, make it lowercase and strip out the spaces
+            aliases.add(displayName.toLowerCase().replace(" ", ""));
+            // Add the internal name
+            aliases.add(mobID.toLowerCase().replace(" ", ""));
+            // Add the ID
+            aliases.add(Short.toString(entityID));
+            // Add it to our names and ID list
+            for (String alias : aliases) {
+                name2Eid.put(alias, entityID);
+            }
+
+            // Detailed message
+            if (verbose) {
+                plugin.getLogger().info("Entity " + entityID + " = " + mobID + "/"
+                        + bukkitEntity + "[" + bukkitEntityClass
+                        + "] (display name: " + displayName
+                        + ", aliases: " + aliases + ")");
+            }
+        }
+
+        // Set the defaultID for spawners (-> memo, on some spawners it seems 0
+        // -> pig is 90)
+        setDefaultEntityID((short) 90);
+
+        // Should we use something else as the default?
+        if (plugin.getConfig().contains("defaultCreature")) {
+            // Lowercase is better to search
+            String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "90").toLowerCase();
+            // Try IDs first, may fail, use name then!
+            try {
+                short entityID = Short.valueOf(defaultCreatureString);
+                // Known ID and MobName? Yes -> We use it
+                if (isKnownEntityID(entityID) && isRecognizedMob(getCreatureName(entityID))) {
+                    defaultCreatureString = getCreatureName(entityID).toLowerCase();
+                }
+            } catch (NumberFormatException e) {
+                // Name then
+            }
+            // If we know the internal name
+            if (name2Eid.containsKey(defaultCreatureString)) {
+                // Get our entityID
+                short defaultEid = name2Eid.get(defaultCreatureString);
+                // Change default
+                setDefaultEntityID(defaultEid);
+                if (verbose) {
+                    plugin.getLogger().info("Default monster spawner set to " + eid2DisplayName.get(defaultEid));
+                }
+            } else {
+                // Unknown, fallback
+                plugin.getLogger().warning("Invalid creature type: " + defaultCreatureString + ", default monster spawner fallback to PIG");
+            }
+        }
+
+        // Are we allowed to use native methods?
+        if (!plugin.getConfig().getBoolean("useReflection", true)) {
+            setUseReflection(false);
+        }
+
+        if (verbose) {
+            plugin.getLogger().info("Reflection is " + isUsingReflection());
+        }
+
+        // Optionally make spawners unstackable in an attempt to be more
+        // compatible with CraftBukkit forks which may conflict
+        // Requested on http://dev.bukkit.org/server-mods/silkspawners/#c25
+        if (plugin.getConfig().getBoolean("spawnersUnstackable", false)) {
+            nmsProvider.setSpawnersUnstackable();
+        }
     }
 
     /**
