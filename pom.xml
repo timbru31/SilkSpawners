@@ -84,7 +84,7 @@
     <dependency>
       <groupId>me.confuser</groupId>
       <artifactId>BarAPI</artifactId>
-      <version>3.2</version>
+      <version>3.3</version>
     </dependency>
   </dependencies>
 
