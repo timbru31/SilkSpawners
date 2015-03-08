@@ -1,24 +1,26 @@
-package de.dustplanet.silkspawners.compat.v1_5_R2;
+package de.dustplanet.silkspawners.compat.v1_8_R1;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_5_R2.Entity;
-import net.minecraft.server.v1_5_R2.EntityTypes;
-import net.minecraft.server.v1_5_R2.Item;
-import net.minecraft.server.v1_5_R2.NBTTagCompound;
-import net.minecraft.server.v1_5_R2.TileEntityMobSpawner;
-import net.minecraft.server.v1_5_R2.World;
+import net.minecraft.server.v1_8_R2.Entity;
+import net.minecraft.server.v1_8_R2.EntityTypes;
+import net.minecraft.server.v1_8_R2.Item;
+import net.minecraft.server.v1_8_R2.NBTTagCompound;
+import net.minecraft.server.v1_8_R2.RegistryMaterials;
+import net.minecraft.server.v1_8_R2.TileEntityMobSpawner;
+import net.minecraft.server.v1_8_R2.World;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_5_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_5_R2.block.CraftCreatureSpawner;
-import org.bukkit.craftbukkit.v1_5_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R2.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -32,7 +34,7 @@ public class NMSHandler implements NMSProvider {
     public NMSHandler() {
         try {
             // Get the spawner field
-            // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
+            // TODO Needs 1.8 source
             tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
@@ -43,7 +45,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
-        // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/EntityTypes.java#L84
+        // TODO Needs 1.8 source
         World world = ((CraftWorld) w).getHandle();
         Entity entity = EntityTypes.a(entityID, world);
         // Should actually never happen since the method above
@@ -66,9 +68,9 @@ public class NMSHandler implements NMSProvider {
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
-            // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/EntityTypes.java#L21
-            // f.put(s, Integer.valueOf(i)); --> Name of ID
-            Field field = EntityTypes.class.getDeclaredField("f");
+            // TODO Needs 1.8 source
+            // g.put(s, Integer.valueOf(i)); --> Name of ID
+            Field field = EntityTypes.class.getDeclaredField("g");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
             Map<String, Integer> map = (Map<String, Integer>) field.get(null);
@@ -91,7 +93,7 @@ public class NMSHandler implements NMSProvider {
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Get the name from the field of our spawner
-            return tile.a().getMobName();
+            return tile.getSpawner().getMobName();
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -103,10 +105,19 @@ public class NMSHandler implements NMSProvider {
     public void setSpawnersUnstackable() {
         // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
         try {
-            Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
-            // Set the stackable field back to 1
-            maxStackSizeField.setAccessible(true);
-            maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
+            // Get the new registry HashMp from the Item class
+            Field registryField = Item.class.getDeclaredField("REGISTRY");
+            registryField.setAccessible(true);
+            RegistryMaterials<?, ?> registry = (RegistryMaterials<?, ?>) registryField.get(null);
+            // Get entry of the spawner
+            Object spawnerEntry = registry.a(52);
+            // Set maxStackSize "e(int maxStackSize)"
+            Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
+            maxStackSize.setAccessible(true);
+            maxStackSize.setInt(spawnerEntry, 1);
+            // Cleanup
+            registryField.setAccessible(false);
+            maxStackSize.setAccessible(false);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
             Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
             e.printStackTrace();
@@ -120,9 +131,11 @@ public class NMSHandler implements NMSProvider {
 
         try {
             // Refer to the NMS TileEntityMobSpawner and change the name, see
-            // https://github.com/SpigotMC/mc-dev/blob/8d2955c81667edd99fac10cbaec531d80ec53e6f/net/minecraft/server/TileEntityMobSpawner.java#L37
+            // TODO Needs 1.8 source
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-            tile.a().a(mobID);
+            // Changes as of 1.7.10
+            // TODO Needs 1.8 source
+            tile.getSpawner().setMobName(mobID);
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
@@ -138,7 +151,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
-        net.minecraft.server.v1_5_R2.ItemStack itemStack = null;
+        net.minecraft.server.v1_8_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
@@ -169,7 +182,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public short getSilkSpawnersNBTEntityID(ItemStack item) {
-        net.minecraft.server.v1_5_R2.ItemStack itemStack = null;
+        net.minecraft.server.v1_8_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
@@ -182,7 +195,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public String getVanillaNBTEntityID(ItemStack item) {
-        net.minecraft.server.v1_5_R2.ItemStack itemStack = null;
+        net.minecraft.server.v1_8_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
@@ -201,7 +214,7 @@ public class NMSHandler implements NMSProvider {
      */
     @Override
     public Block getSpawnerFacing(Player player, int distance) {
-        Block block = player.getTargetBlock(null, distance);
+        Block block = player.getTargetBlock((Set<Material>) null, distance);
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             return null;
         }

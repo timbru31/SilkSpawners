@@ -3,8 +3,10 @@ package de.dustplanet.silkspawners.compat.api;
 import java.util.SortedMap;
 
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,4 +20,5 @@ public interface NMSProvider {
     ItemStack setNBTEntityID(ItemStack item, short entityID, String entity);
     short getSilkSpawnersNBTEntityID(ItemStack item);
     String getVanillaNBTEntityID(ItemStack item);
+    Block getSpawnerFacing(Player player, int distance);
 }

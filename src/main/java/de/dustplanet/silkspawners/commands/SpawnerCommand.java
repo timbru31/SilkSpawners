@@ -114,7 +114,7 @@ public class SpawnerCommand implements CommandExecutor {
                 return true;
             }
             // Get the block, returns null for non spawner blocks
-            Block block = su.getSpawnerFacing(player, distance);
+            Block block = su.nmsProvider.getSpawnerFacing(player, distance);
             if (block == null) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawner")));
                 return true;
@@ -163,7 +163,7 @@ public class SpawnerCommand implements CommandExecutor {
             }
 
             // Get the block
-            Block block = su.getSpawnerFacing(player, distance);
+            Block block = su.nmsProvider.getSpawnerFacing(player, distance);
 
             // See if the block is a MobSpawner, then change it
             if (block != null && !isEgg) {

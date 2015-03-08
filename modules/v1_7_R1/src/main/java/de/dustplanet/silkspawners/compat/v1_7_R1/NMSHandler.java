@@ -14,10 +14,13 @@ import net.minecraft.server.v1_7_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_7_R1.World;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.v1_7_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_7_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_7_R1.inventory.CraftItemStack;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
@@ -198,5 +201,20 @@ public class NMSHandler implements NMSProvider {
             return null;
         }
         return tag.getCompound("BlockEntityTag").getString("EntityId");
+    }
+
+    /**
+     * Return the spawner block the player is looking at, or null if isn't.
+     * @param player the player
+     * @param distance the reach distance
+     * @return the found block or null
+     */
+    @Override
+    public Block getSpawnerFacing(Player player, int distance) {
+        Block block = player.getTargetBlock(null, distance);
+        if (block == null || block.getType() != Material.MOB_SPAWNER) {
+            return null;
+        }
+        return block;
     }
 }
