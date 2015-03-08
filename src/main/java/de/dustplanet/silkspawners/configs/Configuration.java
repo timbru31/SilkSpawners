@@ -399,6 +399,8 @@ public class Configuration {
         config.addDefault("creatures.MinecartCommandBlock.enable", false);
         // ArmorStand
         config.addDefault("creatures.ArmorStand.enable", false);
+        // ThrownEgg
+        config.addDefault("creatures.ThrownEgg.enable", false);
     }
 
     private void loadDefaultLocalization() {

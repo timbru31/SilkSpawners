@@ -7,11 +7,11 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Changing spawners with spawn eggs
 * Permissions support or OP fallback
 * Support for
-	* **Custom mobs** added by client/server mods
-	* Spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
+  * **Custom mobs** added by client/server mods
+  * Spawning any entity with spawn eggs (dragons, non-creature entities, etc.)
 * Compatible with
-	* CraftBukkit++ and Spigot (see spawnersUnstackable)
-	* MCPC(+) and ported mods (auto-detects IDs)
+  * CraftBukkit++ and Spigot (see spawnersUnstackable)
+  * MCPC(+) and ported mods (auto-detects IDs)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Localization
 * Economy addon [SilkSpawnersEcoAddon](http://dev.bukkit.org/bukkit-plugins/silkspawnersecoaddon)
@@ -21,8 +21,8 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Auto Updater (connecting to http://dev.bukkit.org for updating checking)
 
 ## License
-This plugin is released under the  
-*Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)* license.  
+This plugin is released under the
+*Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)* license.
 Please see [LICENSE.md](LICENSE.md) for more information.
 
 ## Standard config
@@ -223,7 +223,7 @@ useLegacyName: true
 For support visit the dev.bukkit.org page: http://dev.bukkit.org/bukkit-plugins/silkspawners
 
 ## Pull Requests
-Feel free to submit any PRs here. :)  
+Feel free to submit any PRs here. :)
 Please follow the Sun Coding Guidelines, thanks!
 
 ## Usage statistics
@@ -251,5 +251,5 @@ The file ../plugins/Plugin Metrics/config.yml contains an option to *opt-out*
 ## Donation
 [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donation via PayPal")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T9TEV7Q88B9M2)
 
-![BitCoin](https://dl.dropboxusercontent.com/u/26476995/bitcoin_logo.png "Donation via BitCoins")  
+![BitCoin](https://dl.dropboxusercontent.com/u/26476995/bitcoin_logo.png "Donation via BitCoins")
 Address: 1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C

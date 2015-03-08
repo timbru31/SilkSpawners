@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners.compat.v1_8_R1;
+package de.dustplanet.silkspawners.compat.v1_8_R2;
 
 import java.lang.reflect.Field;
 import java.util.Map;
