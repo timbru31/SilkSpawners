@@ -323,5 +323,5 @@ creatures:
     enable: false
   ArmorStand:
     enable: false
-   ThrownEgg:
+  ThrownEgg:
     enable: false
