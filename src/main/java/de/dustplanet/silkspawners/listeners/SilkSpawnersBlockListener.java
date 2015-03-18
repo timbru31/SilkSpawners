@@ -164,7 +164,7 @@ public class SilkSpawnersBlockListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
-        Block blockPlaced = event.getBlockPlaced();
+        final Block blockPlaced = event.getBlockPlaced();
         // Just mob spawner events
         if (blockPlaced.getType() != Material.MOB_SPAWNER) {
             return;
@@ -178,11 +178,13 @@ public class SilkSpawnersBlockListener implements Listener {
         ItemStack item = event.getItemInHand();
         // Get data from item
         short entityID = su.getStoredSpawnerItemEntityID(item);
+        System.out.println("Got id from itemstack: " + entityID);
         // 0 or unknown then fallback
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
             // Default
             entityID = su.getDefaultEntityID();
         }
+        final short finalID = entityID;
 
         // Names
         String creatureName = su.getCreatureName(entityID).toLowerCase();
@@ -205,5 +207,12 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         su.setSpawnerEntityID(blockPlaced, entityID);
+
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                su.setSpawnerEntityID(blockPlaced, finalID);
+            }
+        }, 1L);
     }
 }
