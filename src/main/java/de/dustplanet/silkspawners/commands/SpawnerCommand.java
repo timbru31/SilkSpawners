@@ -156,17 +156,18 @@ public class SpawnerCommand implements CommandExecutor {
             // Filter spaces (like Zombie Pigman)
             String mobName = creatureString.toLowerCase().replace(" ", "");
 
-            // If the distance is -1, return
             int distance = plugin.config.getInt("spawnerCommandReachDistance", 6);
-            if (distance == -1) {
-                return true;
-            }
 
             // Get the block
             Block block = su.nmsProvider.getSpawnerFacing(player, distance);
 
             // See if the block is a MobSpawner, then change it
             if (block != null && !isEgg) {
+                // If the distance is -1, return
+                if (distance == -1) {
+                    return true;
+                }
+
                 if (!plugin.hasPermission(player, "silkspawners.changetype." + mobName) && !plugin.hasPermission(player, "silkspawners.changetype.*")) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
                     return true;

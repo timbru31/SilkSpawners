@@ -475,7 +475,7 @@ public class Configuration {
         config.addDefault("defaultCreature", 90);
         config.addComment("defaultCreature", "", "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)", "# PIG (90) is Minecraft default (put NAMES or IDs here!)");
         config.addDefault("spawnerCommandReachDistance", 6);
-        config.addComment("spawnerCommandReachDistance", "", "# How far is the spawner reachable with your crosshair");
+        config.addComment("spawnerCommandReachDistance", "", "# How far is the spawner reachable with your crosshair (disable with -1)");
         config.addDefault("minSilkTouchLevel", 1);
         config.addComment("minSilkTouchLevel", "", "# Minimum silk touch level [can be changed via other plugins to a higher value]", "# Set it to 0 to mine it without silk touch");
         config.addDefault("noDropsCreative", true);

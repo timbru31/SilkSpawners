@@ -57,7 +57,7 @@ silkDropChance: 100
 # PIG (90) is Minecraft default (put NAMES or IDs here!)
 defaultCreature: 90
 
-# How far is the spawner reachable with your crosshair
+# How far is the spawner reachable with your crosshair (disable with -1)
 spawnerCommandReachDistance: 6
 
 # Minimum silk touch level [can be changed via other plugins to a higher value]
