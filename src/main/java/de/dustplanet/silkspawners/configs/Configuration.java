@@ -531,5 +531,6 @@ public class Configuration {
         config.addDefault("testMCVersion", true);
         config.addDefault("useMetadata", true);
         config.addDefault("useLegacyName", false);
+        config.addDefault("spawnerDelay", 1L);
     }
 }
