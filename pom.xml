@@ -31,8 +31,14 @@
   <!-- Define the repo here since multiple modules will be using it -->
   <repositories>
     <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/groups/public</url>
+      <id>Dustplanet Snapshots</id>
+      <name>Dustplanet-snapshots</name>
+      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+    </repository>
+    <repository>
+      <id>Dustplanet Releases</id>
+      <name>Dustplanet-releases</name>
+      <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
     <repository>
       <id>sk89q-repo</id>
@@ -53,11 +59,6 @@
     <repository>
       <id>spigot-repo</id>
       <url>http://repo.md-5.net/content/groups/public</url>
-    </repository>
-    <repository>
-      <id>Dustplanet</id>
-      <name>Dustplanet-snapshots</name>
-      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
     </repository>
   </repositories>
 
