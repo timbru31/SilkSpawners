@@ -178,7 +178,7 @@ public class SilkSpawnersBlockListener implements Listener {
         ItemStack item = event.getItemInHand();
         // Get data from item
         short entityID = su.getStoredSpawnerItemEntityID(item);
-
+        System.out.println("Got id from itemstack: " + entityID);
         // 0 or unknown then fallback
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
             // Default
@@ -213,6 +213,6 @@ public class SilkSpawnersBlockListener implements Listener {
             public void run() {
                 su.setSpawnerEntityID(blockPlaced, finalID);
             }
-        }, plugin.config.getLong("spawnerDelay", 1L));
+        }, 1L);
     }
 }

@@ -118,4 +118,3 @@ useReflection: true
 testMCVersion: true
 useMetadata: true
 useLegacyName: false
-spawnerDelay: 1L

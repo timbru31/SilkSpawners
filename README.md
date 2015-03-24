@@ -146,8 +146,7 @@ verboseConfig: false
 useReflection: true
 testMCVersion: true
 useMetadata: true
-useLegacyName: false
-spawnerDelay: 1L
+useLegacyName: true
 ````
 
 ## Commands
