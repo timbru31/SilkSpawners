@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.compat.v1_8_R1;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -213,7 +214,7 @@ public class NMSHandler implements NMSProvider {
      */
     @Override
     public Block getSpawnerFacing(Player player, int distance) {
-        Block block = player.getTargetBlock(null, distance);
+        Block block = player.getTargetBlock((Set<Material>) null, distance);
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             return null;
         }
