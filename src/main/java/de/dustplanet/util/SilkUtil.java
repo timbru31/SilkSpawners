@@ -44,31 +44,31 @@ public class SilkUtil {
     /**
      * This HashMap is holding the entityID and the display name of each mob.
      */
-    public ConcurrentHashMap<Short, String> eid2DisplayName = new ConcurrentHashMap<>();
+    public Map<Short, String> eid2DisplayName = new ConcurrentHashMap<>();
 
     // EntityID to MobID
     /**
      * This HashMap is holding the entityID and the internal Minecraft name of each mob.
      */
-    public ConcurrentHashMap<Short, String> eid2MobID = new ConcurrentHashMap<>();
+    public Map<Short, String> eid2MobID = new ConcurrentHashMap<>();
 
     // MobID to entityID
     /**
      * This HashMap is holding the internal Minecraft name of each mob and the entityID.
      */
-    public ConcurrentHashMap<String, Short> mobID2Eid = new ConcurrentHashMap<>();
+    public Map<String, Short> mobID2Eid = new ConcurrentHashMap<>();
 
     // Name to entityID
     /**
      * This HashMap is holding the display name of each mob and the entityID.
      */
-    public ConcurrentHashMap<String, Short> name2Eid = new ConcurrentHashMap<>();
+    public Map<String, Short> name2Eid = new ConcurrentHashMap<>();
 
     // Known entityIDs
     /**
      * List of enabled (and therefore) known entityIDs.
      */
-    public ArrayList<Short> knownEids = new ArrayList<>();
+    public List<Short> knownEids = new ArrayList<>();
 
     // Default is 90 = PIG
     // To prevent empty string use real ID and not 0 anymore
