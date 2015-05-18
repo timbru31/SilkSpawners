@@ -134,13 +134,11 @@ public class EggCommand implements CommandExecutor {
 
                 // Amount
                 int amount = 1;
-                if (args.length > 1) {
-                    try {
-                        amount = Integer.parseInt(args[1]);
-                    } catch (NumberFormatException e) {
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
-                        return true;
-                    }
+                try {
+                    amount = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+                    return true;
                 }
 
                 String playerName = args[2];

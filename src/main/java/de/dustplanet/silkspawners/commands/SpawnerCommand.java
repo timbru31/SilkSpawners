@@ -54,14 +54,13 @@ public class SpawnerCommand implements CommandExecutor {
             // Get strings
             String creatureString = args[0].toLowerCase();
             int amount = 1;
-            if (args.length > 1) {
-                try {
-                    amount = Integer.parseInt(args[1]);
-                } catch (NumberFormatException e) {
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
-                    return true;
-                }
+            try {
+                amount = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+                return true;
             }
+
             String playerName = args[2];
             Player player = su.getPlayer(playerName);
             // Online check
