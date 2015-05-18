@@ -58,7 +58,9 @@ public class SilkSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        su.clearAll();
+        if (su != null) {
+            su.clearAll();
+        }
     }
 
     @Override
