@@ -1,6 +1,7 @@
 package de.dustplanet.silkspawners.compat.v1_8_R1;
 
 import java.lang.reflect.Field;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -214,7 +215,14 @@ public class NMSHandler implements NMSProvider {
      */
     @Override
     public Block getSpawnerFacing(Player player, int distance) {
-        Block block = player.getTargetBlock((Set<Material>) null, distance);
+        // in 1.8 Spigot they have added a second method without deprecation, however there are older builds without it
+        // https://hub.spigotmc.org/stash/projects/SPIGOT/repos/bukkit/commits/e1f54099c8d6ba708c2895803464a0b89cacd3b9
+        Block block = null;
+        try {
+            block = player.getTargetBlock((Set<Material>) null, distance);
+        } catch (NoSuchMethodError e) {
+            block = player.getTargetBlock((HashSet<Byte>) null, distance);
+        }
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             return null;
         }
