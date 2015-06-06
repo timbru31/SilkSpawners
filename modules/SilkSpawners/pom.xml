@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.5-SNAPSHOT</version>
+  <version>3.6.6-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -17,8 +17,14 @@
   <!-- Repositories -->
   <repositories>
     <repository>
-      <id>bukkit-repo</id>
-      <url>http://repo.bukkit.org/content/groups/public</url>
+      <id>Dustplanet Snapshots</id>
+      <name>Dustplanet-snapshots</name>
+      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+    </repository>
+    <repository>
+      <id>Dustplanet Releases</id>
+      <name>Dustplanet-releases</name>
+      <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
   </repositories>
 
@@ -294,7 +300,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.2</version>
+        <version>3.3</version>
         <configuration>
           <verbose>true</verbose>
           <source>1.7</source>
