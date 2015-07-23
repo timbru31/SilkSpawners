@@ -55,6 +55,7 @@ public class SilkSpawners extends JavaPlugin {
     private File configFile, localizationFile, mobsFile;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"1.5", "1.5.1", "1.5.2", "1.6.1", "1.6.2", "1.6.4", "1.7.2", "1.7.5", "1.7.8", "1.7.9", "1.7.10", "1.8", "1.8.3", "1.8.4", "1.8.5", "1.8.6", "1.8.7"};
     private Updater updater;
+    private static final int pluginID = 35890;
 
     @Override
     public void onDisable() {
@@ -105,7 +106,7 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("AutoUpdater is disabled because you are running a dev build!");
             } else {
                 // Updater http://forums.bukkit.org/threads/96681/
-                updater = new Updater(this, 35890, getFile(), Updater.UpdateType.DEFAULT, true);
+                updater = new Updater(this, pluginID, getFile(), Updater.UpdateType.DEFAULT, true);
                 getLogger().info("AutoUpdater is enabled.");
                 getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
             }

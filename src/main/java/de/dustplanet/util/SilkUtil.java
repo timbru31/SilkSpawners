@@ -75,7 +75,7 @@ public class SilkUtil {
     /**
      * Default (fallback) entityID, standard is 90 the pig.
      */
-    private short defaultEntityID = 90;
+    private short defaultEntityID = EntityType.PIG.getTypeId();
 
     // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
     // material
@@ -240,7 +240,7 @@ public class SilkUtil {
 
         // Set the defaultID for spawners (-> memo, on some spawners it seems 0
         // -> pig is 90)
-        setDefaultEntityID((short) 90);
+        setDefaultEntityID(EntityType.PIG.getTypeId());
 
         // Should we use something else as the default?
         if (plugin.getConfig().contains("defaultCreature")) {
@@ -547,7 +547,7 @@ public class SilkUtil {
             }
             // uh still null, default [PIG]!
             if (mobID == null) {
-                mobID = getCreatureName((short) 90);
+                mobID = getCreatureName(defaultEntityID);
             }
 
             // Successful? Stop here
