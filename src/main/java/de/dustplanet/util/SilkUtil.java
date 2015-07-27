@@ -859,11 +859,12 @@ public class SilkUtil {
     }
 
     /*
-     * WorldGuard stuff Allowed to build and enabled check
+     * WorldGuard stuff
+     * Enabled check and build permission check
      * http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
      */
 
-    // Is WourldGuard enabled?
+    // Is WorldGuard enabled?
     /**
      * Prepare for WorldGuard support.
      * @param plugin SilkSpawners instance
