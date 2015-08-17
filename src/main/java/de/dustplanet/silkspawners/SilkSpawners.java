@@ -7,11 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-// Updater
-import net.gravitydevelopment.updater.Updater;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -20,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-// Metrics
 import org.mcstats.Metrics;
 
 import de.dustplanet.silkspawners.commands.EggCommand;
@@ -33,6 +27,7 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
+import net.gravitydevelopment.updater.Updater;
 
 /**
  * General stuff.
@@ -53,9 +48,10 @@ public class SilkSpawners extends JavaPlugin {
     private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"1.5", "1.5.1", "1.5.2", "1.6.1", "1.6.2", "1.6.4", "1.7.2", "1.7.5", "1.7.8", "1.7.9", "1.7.10", "1.8", "1.8.3", "1.8.4", "1.8.5", "1.8.6", "1.8.7", "1.8.8"};
-    private Updater updater;
     private static final int pluginID = 35890;
+    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3"};
+    private Updater updater;
+    private String nmsVersion;
 
     @Override
     public void onDisable() {
@@ -69,25 +65,20 @@ public class SilkSpawners extends JavaPlugin {
         // Make files and copy defaults
         initializeConfigs();
 
+        // Get full package string of CraftServer
+        String packageName = getServer().getClass().getPackage().getName();
+        // org.bukkit.craftbukkit.version
+        // Get the last element of the package
+        setNMSVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
+
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
-            // We can't use the MinercraftServer import because it might be broken.
-            // Regex is our friend and helper
-            // Find MC: 0.0.0, last occurrence is optional
-            Pattern pat = Pattern.compile("MC: \\d+.\\d+(.\\d+)?");
-            Matcher matcher = pat.matcher(getServer().getVersion());
-            String mcVersion = "";
-            if (matcher.find()) {
-                mcVersion = matcher.group(0);
-            }
-            // Strip MC:
-            String serverVersion = mcVersion.substring(mcVersion.indexOf(' ') + 1);
-            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(serverVersion)) {
+            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(getNMSVersion())) {
                 getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
                 getLogger().info("Please check your versions to make sure they match!");
                 getLogger().info("Disabling now!");
                 getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
-                getLogger().info("Your version is: " + serverVersion);
+                getLogger().info("Your version is: " + getNMSVersion());
                 getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
                 shutdown();
                 return;
@@ -461,5 +452,13 @@ public class SilkSpawners extends JavaPlugin {
 
     public CommentedConfiguration getMobs() {
         return mobs;
+    }
+
+    public String getNMSVersion() {
+        return nmsVersion;
+    }
+
+    public void setNMSVersion(String nmsVersion) {
+        this.nmsVersion = nmsVersion;
     }
 }

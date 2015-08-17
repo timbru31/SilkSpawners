@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.7-SNAPSHOT</version>
+  <version>3.6.8-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -22,247 +22,133 @@
       <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
     </repository>
     <repository>
-      <id>Dustplanet Releases</id>
-      <name>Dustplanet-releases</name>
-      <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
+      <id>sk89q-repo</id>
+      <url>http://maven.sk89q.com/repo/</url>
+    </repository>
+    <repository>
+      <id>Plugin Metrics</id>
+      <url>http://repo.mcstats.org/content/repositories/public</url>
+    </repository>
+    <repository>
+      <id>gravity-repo</id>
+      <url>http://repo.gravitydevelopment.net</url>
+    </repository>
+    <repository>
+      <id>confuser-repo</id>
+      <url>http://ci.frostcast.net/plugin/repository/everything</url>
     </repository>
   </repositories>
 
   <!-- Dependencies -->
   <dependencies>
     <dependency>
+      <groupId>org.bukkit</groupId>
+      <artifactId>bukkit</artifactId>
+      <version>1.8.8-R0.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sk89q</groupId>
+      <artifactId>worldguard</artifactId>
+      <version>6.1.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mcstats.bukkit</groupId>
+      <artifactId>metrics</artifactId>
+      <version>R7</version>
+    </dependency>
+    <dependency>
+      <groupId>net.gravitydevelopment.updater</groupId>
+      <artifactId>updater</artifactId>
+      <version>2.3</version>
+    </dependency>
+    <dependency>
+      <groupId>me.confuser</groupId>
+      <artifactId>BarAPI</artifactId>
+      <version>3.3</version>
+    </dependency>
+    <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_5_R1</artifactId>
       <version>v1_5_R1</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_5_R2</artifactId>
       <version>v1_5_R2</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_5_R3</artifactId>
       <version>v1_5_R3</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_6_R1</artifactId>
       <version>v1_6_R1</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_6_R2</artifactId>
       <version>v1_6_R2</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_6_R3</artifactId>
       <version>v1_6_R3</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_7_R1</artifactId>
       <version>v1_7_R1</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_7_R2</artifactId>
       <version>v1_7_R2</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_7_R3</artifactId>
       <version>v1_7_R3</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_7_R4</artifactId>
       <version>v1_7_R4</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R1</artifactId>
       <version>v1_8_R1</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R2</artifactId>
       <version>v1_8_R2</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R3</artifactId>
       <version>v1_8_R3</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>craftbukkit</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.dustplanet</groupId>
-          <artifactId>SilkSpawners-API</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-API</artifactId>
       <version>API</version>
       <type>jar</type>
-      <optional>true</optional>
-      <exclusions>
-        <exclusion>
-          <groupId>org.bukkit</groupId>
-          <artifactId>bukkit</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
