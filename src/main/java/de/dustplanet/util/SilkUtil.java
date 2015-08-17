@@ -9,8 +9,6 @@ import java.util.SortedMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import me.confuser.barapi.BarAPI;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -31,6 +29,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
+import me.confuser.barapi.BarAPI;
 
 /**
  * This is the util class where all the magic happens.
@@ -134,11 +133,7 @@ public class SilkUtil {
      * Define which Minecraft version needs to be loaded.
      */
     private boolean setupNMSProvider() {
-        // Get full package string of CraftServer
-        String packageName = plugin.getServer().getClass().getPackage().getName();
-        // org.bukkit.craftbukkit.version
-        // Get the last element of the package
-        String version = packageName.substring(packageName.lastIndexOf('.') + 1);
+        String version = plugin.getVersion();
 
         try {
             // Check if we have a NMSHandler class at that location
