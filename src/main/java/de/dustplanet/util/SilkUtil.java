@@ -133,7 +133,7 @@ public class SilkUtil {
      * Define which Minecraft version needs to be loaded.
      */
     private boolean setupNMSProvider() {
-        String version = plugin.getVersion();
+        String version = plugin.getNMSVersion();
 
         try {
             // Check if we have a NMSHandler class at that location

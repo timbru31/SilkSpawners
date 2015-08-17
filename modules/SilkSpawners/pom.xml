@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.7-SNAPSHOT</version>
+  <version>3.6.8-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -154,8 +154,8 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <sourceDirectory>src/main/java</sourceDirectory>
-    <directory>target</directory>
+    <sourceDirectory>../../src/main/java</sourceDirectory>
+    <directory>../../target</directory>
 
     <!-- Include .yml files -->
     <resources>

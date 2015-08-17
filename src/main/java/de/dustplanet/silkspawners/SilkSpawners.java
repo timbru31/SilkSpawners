@@ -51,7 +51,7 @@ public class SilkSpawners extends JavaPlugin {
     private static final int pluginID = 35890;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3"};
     private Updater updater;
-    private String version;
+    private String nmsVersion;
 
     @Override
     public void onDisable() {
@@ -65,19 +65,20 @@ public class SilkSpawners extends JavaPlugin {
         // Make files and copy defaults
         initializeConfigs();
 
+        // Get full package string of CraftServer
+        String packageName = getServer().getClass().getPackage().getName();
+        // org.bukkit.craftbukkit.version
+        // Get the last element of the package
+        setNMSVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
+
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
-            // Get full package string of CraftServer
-            String packageName = getServer().getClass().getPackage().getName();
-            // org.bukkit.craftbukkit.version
-            // Get the last element of the package
-            setVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
-            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(getVersion())) {
+            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(getNMSVersion())) {
                 getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
                 getLogger().info("Please check your versions to make sure they match!");
                 getLogger().info("Disabling now!");
                 getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
-                getLogger().info("Your version is: " + getVersion());
+                getLogger().info("Your version is: " + getNMSVersion());
                 getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
                 shutdown();
                 return;
@@ -453,11 +454,11 @@ public class SilkSpawners extends JavaPlugin {
         return mobs;
     }
 
-    public String getVersion() {
-        return version;
+    public String getNMSVersion() {
+        return nmsVersion;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setNMSVersion(String nmsVersion) {
+        this.nmsVersion = nmsVersion;
     }
 }
