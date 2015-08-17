@@ -13,6 +13,15 @@
     <relativePath>../../</relativePath>
   </parent>
 
+  <!-- Repositories -->
+  <repositories>
+    <repository>
+      <id>Dustplanet Snapshots</id>
+      <name>Dustplanet-snapshots</name>
+      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>
