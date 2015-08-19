@@ -64,7 +64,7 @@ public class SilkSpawnersBlockListener implements Listener {
         // If using silk touch, drop spawner itself
         ItemStack tool = player.getItemInHand();
         // Check for SilkTocuh level
-        boolean silkTouch = su.hasSilkTouch(tool);
+        boolean validToolAndSilkTouch = su.isValidItemAndHasSilkTouch(tool);
 
         // Get the world to drop in
         World world = player.getWorld();
@@ -96,7 +96,7 @@ public class SilkSpawnersBlockListener implements Listener {
             int addXP = plugin.config.getInt("destroyDropXP");
             // If we have more than 0 XP, drop them
             // either we drop XP for destroy and silktouch or only when destroyed and we have no silktouch
-            if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !silkTouch && dropXPOnlyOnDestroy)) {
+            if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !validToolAndSilkTouch && dropXPOnlyOnDestroy)) {
                 event.setExpToDrop(addXP);
                 // check if we should flag spawners
                 if (plugin.config.getBoolean("preventXPFarming", true)) {
@@ -111,7 +111,7 @@ public class SilkSpawnersBlockListener implements Listener {
         int dropChance = 0;
 
         // silk touch
-        if (silkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
+        if (validToolAndSilkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
                 || plugin.hasPermission(player, "silkspawners.silkdrop.*"))) {
             // Calculate drop chance
             if (plugin.mobs.contains("creatures." + mobID + ".silkDropChance")) {

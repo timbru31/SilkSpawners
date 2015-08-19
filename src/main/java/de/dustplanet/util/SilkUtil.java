@@ -793,21 +793,43 @@ public class SilkUtil {
     }
 
 
+    /**
+     * @deprecated use {@link #isValidItemAndHasSilkTouch(ItemStack)} instead.
+     */
+    @Deprecated
+    public boolean hasSilkTouch(ItemStack tool) {
+        return isValidItemAndHasSilkTouch(tool);
+    }
+
     // Checks if the given ItemStack has got the SilkTouch
     /**
-     * Checks if a given ItemStack has a high enough SilkTouch level.
+     * Checks if a given ItemStack is in the list of allowed tools and if the SilkTouch level is high enough.
      * @param tool ItemStack to check
      * @return the result if the tool hasSilkTouch
      */
-    public boolean hasSilkTouch(ItemStack tool) {
+    public boolean isValidItemAndHasSilkTouch(ItemStack tool) {
+        // No silk touch fists..
+        if (tool == null) {
+            return false;
+        }
+
+        boolean toolAllowed = false;
+        Material toolType = tool.getType();
+        List<String> allowedTools = plugin.config.getStringList("allowedTools");
+        for (String allowedTool : allowedTools) {
+            if (toolType == Material.matchMaterial(allowedTool)) {
+                toolAllowed = true;
+                break;
+            }
+        }
+        if (!toolAllowed) {
+            return false;
+        }
+
         int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
         // Always have it
         if (minLevel == 0) {
             return true;
-        }
-        // No silk touch fists..
-        if (tool == null) {
-            return false;
         }
 
         // This check isn't actually necessary, since containsEnchantment just

@@ -2,6 +2,8 @@ package de.dustplanet.silkspawners.configs;
 
 import java.util.ArrayList;
 
+import org.bukkit.Material;
+
 import de.dustplanet.util.CommentedConfiguration;
 
 /**
@@ -517,6 +519,14 @@ public class Configuration {
         config.addComment("spawnEggOverride", "", "# Should the spawn algorithm be overridden? Allows spawning of non-standard entities");
         config.addDefault("spawnEggOverrideSpawnDefault", true);
         config.addComment("spawnEggOverrideSpawnDefault", "", "# Fallback if the creature should be spawned, if not specified for the entity");
+        temp.clear();
+        temp.add(Material.WOOD_PICKAXE.toString());
+        temp.add(Material.STONE_PICKAXE.toString());
+        temp.add(Material.IRON_PICKAXE.toString());
+        temp.add(Material.GOLD_PICKAXE.toString());
+        temp.add(Material.DIAMOND_PICKAXE.toString());
+        config.addDefault("allowedTools", temp);
+        config.addComment("allowedTools", "", "# Allowed set of tools which can mine a spawner. IDs are supported, too");
         config.addDefault("notifyOnClick", true);
         config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
         config.addDefault("notifyOnHold", true);

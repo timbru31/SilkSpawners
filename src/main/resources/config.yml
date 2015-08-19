@@ -99,6 +99,14 @@ spawnEggOverride: false
 # Fallback if the creature should be spawned, if not specified for the entity
 spawnEggOverrideSpawnDefault: true
  
+# Allowed set of tools which can mine a spawner. IDs are supported, too
+allowedTools:
+- WOOD_PICKAXE
+- STONE_PICKAXE
+- IRON_PICKAXE
+- GOLD_PICKAXE
+- DIAMOND_PICKAXE
+ 
 # Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
  
