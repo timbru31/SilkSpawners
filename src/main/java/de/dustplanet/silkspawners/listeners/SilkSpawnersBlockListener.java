@@ -59,7 +59,9 @@ public class SilkSpawnersBlockListener implements Listener {
         short entityID = su.getSpawnerEntityID(block);
 
         // Message the player about the broken spawner
-        plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken")).replace("%creature%", su.getCreatureName(entityID)));
+        plugin.informPlayer(player,
+                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken"))
+                .replace("%creature%", su.getCreatureName(entityID)));
 
         // If using silk touch, drop spawner itself
         ItemStack tool = player.getItemInHand();
@@ -89,13 +91,11 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // Drop maybe some XP
-        if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
-                || plugin.hasPermission(player, "silkspawners.silkdrop.*")
-                || plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)
-                || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
+        if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName) || plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)) {
             int addXP = plugin.config.getInt("destroyDropXP");
             // If we have more than 0 XP, drop them
-            // either we drop XP for destroy and silktouch or only when destroyed and we have no silktouch
+            // either we drop XP for destroy and silktouch or only when
+            // destroyed and we have no silktouch
             if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !validToolAndSilkTouch && dropXPOnlyOnDestroy)) {
                 event.setExpToDrop(addXP);
                 // check if we should flag spawners
@@ -111,8 +111,7 @@ public class SilkSpawnersBlockListener implements Listener {
         int dropChance = 0;
 
         // silk touch
-        if (validToolAndSilkTouch && (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)
-                || plugin.hasPermission(player, "silkspawners.silkdrop.*"))) {
+        if (validToolAndSilkTouch && plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)) {
             // Calculate drop chance
             if (plugin.mobs.contains("creatures." + mobID + ".silkDropChance")) {
                 dropChance = plugin.mobs.getInt("creatures." + mobID + ".silkDropChance", 100);
@@ -121,14 +120,14 @@ public class SilkSpawnersBlockListener implements Listener {
             }
             if (randomNumber < dropChance) {
                 // Drop spawner
-                world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
+                world.dropItemNaturally(block.getLocation(),
+                        su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
             }
             return;
         }
 
         // no silk touch
-        if (plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)
-                || plugin.hasPermission(player, "silkspawners.destroydrop.*")) {
+        if (plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)) {
             if (plugin.config.getBoolean("destroyDropEgg", false)) {
                 // Calculate drop chance
                 randomNumber = rnd.nextInt(100);
@@ -185,23 +184,27 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // Names
-        String creatureName = su.getCreatureName(entityID).toLowerCase();
-        String spawnerName = creatureName.replace(" ", "");
+        String creatureName = su.getCreatureName(entityID);
+        String spawnerName = creatureName.toLowerCase().replace(" ", "");
 
         // Check for place permission
-        if (!plugin.hasPermission(player, "silkspawners.place.*")
-                && !plugin.hasPermission(player, "silkspawners.place." + spawnerName)) {
+        if (!plugin.hasPermission(player, "silkspawners.place." + spawnerName)) {
             event.setCancelled(true);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
+            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID)))
+                    .replace("%creature%", creatureName));
             return;
         }
 
         // Message default
         if (entityID == su.getDefaultEntityID()) {
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
+            plugin.informPlayer(player,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
         } else {
             // Else message the type
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced")).replace("%creature%", su.getCreatureName(entityID)));
+            plugin.informPlayer(player,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced"))
+                    .replace("%creature%", su.getCreatureName(entityID)));
         }
 
         su.setSpawnerEntityID(blockPlaced, entityID);

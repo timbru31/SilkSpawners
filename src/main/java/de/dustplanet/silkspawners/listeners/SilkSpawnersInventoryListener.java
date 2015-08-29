@@ -62,7 +62,7 @@ public class SilkSpawnersInventoryListener implements Listener {
          */
         if (event.getSlotType() == InventoryType.SlotType.RESULT) {
             String spawnerName = creatureName.toLowerCase().replace(" ", "");
-            if (!plugin.hasPermission(player, "silkspawners.craft.*") && !plugin.hasPermission(player, "silkspawners.craft." + spawnerName)) {
+            if (!plugin.hasPermission(player, "silkspawners.craft." + spawnerName)) {
                 event.setResult(Result.DENY);
                 event.setCancelled(true);
                 player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));

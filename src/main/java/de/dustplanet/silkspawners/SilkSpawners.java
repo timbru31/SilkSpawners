@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Material;
@@ -13,6 +14,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
@@ -89,6 +92,8 @@ public class SilkSpawners extends JavaPlugin {
         // important methods
         su = new SilkUtil(this);
 
+        loadPermissions();
+
         loadConfig();
 
         // Check if we should enable the auto Updater & have no snapshot (dev build)
@@ -162,6 +167,27 @@ public class SilkSpawners extends JavaPlugin {
             getLogger().warning("Failed to copy the default config! (I/O)");
             e.printStackTrace();
         }
+    }
+
+    private void loadPermissions() {
+        loadPermissions("craft", "Allows you to craft the specific spawner");
+        loadPermissions("place", "Allows you to place the specific spawner");
+        loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items");
+        loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)");
+        loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]");
+        loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg");
+        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]");
+        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg");
+    }
+
+    private void loadPermissions(String permissionPart, String description) {
+        HashMap<String, Boolean> childPermissions = new HashMap<>();
+        for (String mobAlias : su.eid2DisplayName.values()) {
+            mobAlias = mobAlias.toLowerCase().replace(" ", "");
+            childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, false);
+        }
+        Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, PermissionDefault.FALSE, childPermissions);
+        getServer().getPluginManager().addPermission(perm);
     }
 
     private void initializeConfigs() {

@@ -18,47 +18,23 @@ permissions:
     silkspawners.*:
         children:
             silkspawners.info: true
+            silkspawners.viewtype: true
+            silkspawners.reload: true
+            silkspawners.explodedrop: true
             silkspawners.silkdrop.*: true
             silkspawners.destroydrop.*: true
-            silkspawners.viewtype: true
             silkspawners.changetype.*: true
             silkspawners.changetypewithegg.*: true
             silkspawners.freeitem.*: true
             silkspawners.freeitemegg.*: true
             silkspawners.craft.*: true
             silkspawners.place.*: true
-            silkspawners.reload: true
-            silkspawners.explodedrop: true
         default: false
     silkspawners.info:
         description: Allows you to see informative messages about the spawners as you place and break them
         default: false
-    silkspawners.silkdrop.*:
-        description: Allows you to use silk touch to acquire mob spawner items
-        default: false
-    silkspawners.destroydrop.*:
-        description: Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)
-        default: false
     silkspawners.viewtype:
         description: Allows you to view the spawner type using /spawner
-        default: false
-    silkspawners.changetype.*:
-        description: Allows you to change the spawner type using /spawner [creature]
-        default: false
-    silkspawners.changetypewithegg.*:
-        description: Allows you to change the spawner type by left-clicking with a spawn egg
-        default: false
-    silkspawners.freeitem.*:
-        description: Allows you to get spawner items in your hand for free using /spawner [creature]
-        default: false
-    silkspawners.freeitemegg.*:
-        description: Allows you to get spawn eggs in your hand for free using /spawner [creature]egg
-        default: false
-    silkspawners.craft.*:
-        description: Allows you to craft all spawners
-        default: false
-    silkspawners.place.*:
-        description: Allows you to place all spawners
         default: false
     silkspawners.reload:
         description: Allows you to reload the plugin

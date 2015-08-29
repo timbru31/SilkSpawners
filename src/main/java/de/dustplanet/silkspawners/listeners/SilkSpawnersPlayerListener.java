@@ -38,13 +38,14 @@ public class SilkSpawnersPlayerListener implements Listener {
     public void onPlayerHoldItem(PlayerItemHeldEvent event) {
         // Check if we should notify the player. The second condition is the
         // permission and that the slot isn't null and the item is a mob spawner
-        if (plugin.config.getBoolean("notifyOnHold")
-                && plugin.hasPermission(event.getPlayer(), "silkspawners.info")
-                && event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
-                && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)) {
+        if (event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
+                && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)
+                && plugin.config.getBoolean("notifyOnHold")
+                && plugin.hasPermission(event.getPlayer(), "silkspawners.info")) {
 
             // Get ID
-            short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+            short entityID = su
+                    .getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
             // Check for unknown/invalid ID
             if (entityID == 0 || !su.knownEids.contains(entityID)) {
                 entityID = su.getDefaultEntityID();
@@ -83,15 +84,16 @@ public class SilkSpawnersPlayerListener implements Listener {
                 // Mob
                 String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
 
-                if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName)
-                        && !plugin.hasPermission(player, "silkspawners.changetypewithegg.*")) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization .getString("noPermissionChangingWithEggs")));
+                if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName)) {
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                            plugin.localization.getString("noPermissionChangingWithEggs")));
                     event.setCancelled(true);
                     return;
                 }
 
                 // Call the event and maybe change things!
-                SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID, su.getSpawnerEntityID(block), 1);
+                SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
+                        su.getSpawnerEntityID(block), 1);
                 plugin.getServer().getPluginManager().callEvent(changeEvent);
                 // See if we need to stop
                 if (changeEvent.isCancelled()) {
@@ -100,8 +102,11 @@ public class SilkSpawnersPlayerListener implements Listener {
                 // Get the new ID (might be changed)
                 entityID = changeEvent.getEntityID();
 
-                su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
-                player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner")).replace("%creature%", su.getCreatureName(entityID)));
+                su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026',
+                        plugin.localization.getString("changingDeniedWorldGuard")));
+                player.sendMessage(ChatColor
+                        .translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
+                        .replace("%creature%", su.getCreatureName(entityID)));
 
                 // Consume egg
                 if (plugin.config.getBoolean("consumeEgg", true)) {
@@ -121,7 +126,8 @@ public class SilkSpawnersPlayerListener implements Listener {
                             su.reduceEggs(player);
                         }
                     } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSpawnerHere")));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                                plugin.localization.getString("noSpawnerHere")));
                     }
                     event.setCancelled(true);
                 } else if (plugin.config.getBoolean("spawnEggOverride", false)) {
@@ -131,15 +137,15 @@ public class SilkSpawnersPlayerListener implements Listener {
                     // Are we allowed to spawn?
                     boolean allowed = plugin.config.getBoolean("spawnEggOverrideSpawnDefault", true);
                     if (mobID != null) {
-                        allowed = plugin.mobs.getBoolean("creatures." + mobID
-                                + ".enableSpawnEggOverrideAllowSpawn", allowed);
+                        allowed = plugin.mobs.getBoolean("creatures." + mobID + ".enableSpawnEggOverrideAllowSpawn",
+                                allowed);
                     }
                     // Deny spawning
                     if (!allowed) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
-                                plugin.localization
-                                .getString("spawningDenied")
-                                .replace("%ID%", Short.toString(entityID)))
+                        player.sendMessage(ChatColor
+                                .translateAlternateColorCodes('\u0026',
+                                        plugin.localization.getString("spawningDenied").replace("%ID%",
+                                                Short.toString(entityID)))
                                 .replace("%creature%", su.getCreatureName(entityID)));
                         event.setCancelled(true);
                         return;
@@ -149,9 +155,11 @@ public class SilkSpawnersPlayerListener implements Listener {
                     // https://github.com/Bukkit/CraftBukkit/blob/master/src/main/java/net/minecraft/server/ItemMonsterEgg.java#L22
 
                     // Notify
-                    plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026',
-                            plugin.localization.getString("spawning")
-                            .replace("%ID%", Short.toString(entityID)))
+                    plugin.informPlayer(player,
+                            ChatColor
+                            .translateAlternateColorCodes('\u0026',
+                                    plugin.localization.getString("spawning").replace("%ID%",
+                                            Short.toString(entityID)))
                             .replace("%creature%", su.getCreatureName(entityID)));
 
                     // Spawn on top of targeted block
