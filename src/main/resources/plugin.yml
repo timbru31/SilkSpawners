@@ -21,6 +21,9 @@ permissions:
             silkspawners.viewtype: true
             silkspawners.reload: true
             silkspawners.explodedrop: true
+            silkspawners.free: true
+            silkspawners.createshop: true
+            silkspawners.destroyshop: true
             silkspawners.silkdrop.*: true
             silkspawners.destroydrop.*: true
             silkspawners.changetype.*: true
