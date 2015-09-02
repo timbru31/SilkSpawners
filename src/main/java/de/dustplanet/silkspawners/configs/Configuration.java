@@ -490,7 +490,7 @@ public class Configuration {
         config.addDefault("preventXPFarming", true);
         config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
         config.addDefault("dropXPOnlyOnDestroy", false);
-        config.addComment("dropXPOnlyOnDestroy", "", "#Drops XP only when a spawner is destroyed and not mined via SilkTouch");
+        config.addComment("dropXPOnlyOnDestroy", "", "# Drops XP only when a spawner is destroyed and not mined via SilkTouch");
         config.addDefault("destroyDropBars", 0);
         config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
         config.addDefault("craftableSpawners", false);
