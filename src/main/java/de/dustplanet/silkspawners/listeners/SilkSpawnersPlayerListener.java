@@ -14,6 +14,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.massivecraft.factions.entity.BoardColl;
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.MPlayer;
+import com.massivecraft.massivecore.ps.PS;
+
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
@@ -91,12 +96,24 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
+                if (plugin.config.getBoolean("factionsSupport", false)) {
+                    MPlayer mp = MPlayer.get(player);
+                    Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
+                    if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
+                        event.setCancelled(true);
+                        player.sendMessage(ChatColor
+                                .translateAlternateColorCodes('\u0026', plugin.localization.getString("changeDeniedByFactions")));
+                        return;
+                    }
+                }
+
                 // Call the event and maybe change things!
                 SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
                         su.getSpawnerEntityID(block), 1);
                 plugin.getServer().getPluginManager().callEvent(changeEvent);
                 // See if we need to stop
                 if (changeEvent.isCancelled()) {
+                    event.setCancelled(true);
                     return;
                 }
                 // Get the new ID (might be changed)

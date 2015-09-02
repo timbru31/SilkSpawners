@@ -426,6 +426,7 @@ public class Configuration {
         config.addDefault("changedEgg", "&2Successfully changed the spawning egg to a &e%creature% spawn egg");
         config.addComment("changedEgg", "");
         config.addDefault("changedSpawner", "&2Successfully changed the spawner to a &e%creature% spawner");
+        config.addDefault("changeDeniedByFactions", "&4You are not allowed to change spawners in other peoples territory!");
         config.addDefault("playerOffline", "&4Sorry this player is offline!");
         config.addComment("playerOffline", "");
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection");
@@ -531,9 +532,11 @@ public class Configuration {
         config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
         config.addDefault("notifyOnHold", true);
         config.addComment("notifyOnHold", "", "# Notify the player about the spawner when he holds the spawner in the hand");
-        config.addDefault("barAPI.enable", true);
+        config.addDefault("barAPI.enable", false);
         config.addDefault("barAPI.displayTime", 3);
         config.addComment("barAPI", "", "# Configure displaying with BarAPI, time is in seconds");
+        config.addDefault("factionsSupport", false);
+        config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
         config.addDefault("verboseConfig", false);
         config.addComment("verboseConfig", "", "# Puts more information out on startup");
         config.addDefault("useReflection", true);

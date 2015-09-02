@@ -18,6 +18,7 @@ noPermissionPlace: '&4You do not have the permission to place a &e%creature% &4s
  
 changedEgg: '&2Successfully changed the spawning egg to a &e%creature% spawn egg'
 changedSpawner: '&2Successfully changed the spawner to a &e%creature% spawner'
+changeDeniedByFactions: '&4You are not allowed to change spawners in other peoples territory!'
  
 playerOffline: '&4Sorry this player is offline!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection'

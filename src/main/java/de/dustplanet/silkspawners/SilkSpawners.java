@@ -139,8 +139,8 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         // BarAPI check
-        Plugin barAPI = getServer().getPluginManager().getPlugin("BarAPI");
-        if (config.getBoolean("barAPI.enable", true)) {
+        if (config.getBoolean("barAPI.enable", false)) {
+            Plugin barAPI = getServer().getPluginManager().getPlugin("BarAPI");
             if (barAPI != null) {
                 // If BarAPI is enabled, load the economy
                 getLogger().info("Loaded BarAPI successfully!");
@@ -151,6 +151,17 @@ public class SilkSpawners extends JavaPlugin {
             }
         } else {
             getLogger().info("BarAPI is disabled due to config setting.");
+        }
+
+        // Check if Factions support is enabled
+        if (config.getBoolean("factionsSupport", false)) {
+            Plugin factionsPlugin = getServer().getPluginManager().getPlugin("Factions");
+            if (factionsPlugin == null) {
+                getLogger().warning("Factions support was enabled, but Factions was not found.");
+                getLogger().warning("Disabling Factions support in config.yml again");
+                config.set("factionsSupport", false);
+                saveConfig();
+            }
         }
     }
 

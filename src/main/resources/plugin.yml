@@ -45,4 +45,4 @@ permissions:
     silkspawners.explodedrop:
         description: Allows you to receive drops on explosion
         default: false
-softdepend: [WorldGuard, BarAPI]
+softdepend: [WorldGuard, BarAPI, Factions]

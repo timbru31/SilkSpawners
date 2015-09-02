@@ -144,8 +144,11 @@ notifyOnHold: true
 
 # Configure displaying with BarAPI, time is in seconds
 barAPI:
-  enable: true
+  enable: false
   displayTime: 3
+
+# Prevent that a spawner is changed via eggs in other territories
+factionsSupport: false
 
 # Puts more information out on startup
 verboseConfig: false
