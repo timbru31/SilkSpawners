@@ -177,9 +177,11 @@ public class SilkSpawnersBlockListener implements Listener {
         ItemStack item = event.getItemInHand();
         // Get data from item
         short entityID = su.getStoredSpawnerItemEntityID(item);
+        boolean defaultID = false;
         // 0 or unknown then fallback
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
             // Default
+            defaultID = true;
             entityID = su.getDefaultEntityID();
         }
 
@@ -197,7 +199,7 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // Message default
-        if (entityID == su.getDefaultEntityID()) {
+        if (defaultID) {
             plugin.informPlayer(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
         } else {
