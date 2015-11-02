@@ -52,7 +52,7 @@ public class SilkSpawnersEntityListener implements Listener {
             Entity igniter = su.nmsProvider.getTNTSource((TNTPrimed) entity);
             if (igniter != null && igniter instanceof Player) {
                 Player sourcePlayer = (Player) igniter;
-                drop = plugin.hasPermission(sourcePlayer, "silkspawners.explodedrop");
+                drop = sourcePlayer.hasPermission("silkspawners.explodedrop");
             }
         }
 

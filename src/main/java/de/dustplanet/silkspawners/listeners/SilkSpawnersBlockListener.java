@@ -91,7 +91,7 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // Drop maybe some XP
-        if (plugin.hasPermission(player, "silkspawners.silkdrop." + mobName) || plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)) {
+        if (player.hasPermission("silkspawners.silkdrop." + mobName) || player.hasPermission("silkspawners.destroydrop." + mobName)) {
             int addXP = plugin.config.getInt("destroyDropXP");
             // If we have more than 0 XP, drop them
             // either we drop XP for destroy and silktouch or only when
@@ -111,7 +111,7 @@ public class SilkSpawnersBlockListener implements Listener {
         int dropChance = 0;
 
         // silk touch
-        if (validToolAndSilkTouch && plugin.hasPermission(player, "silkspawners.silkdrop." + mobName)) {
+        if (validToolAndSilkTouch && player.hasPermission("silkspawners.silkdrop." + mobName)) {
             // Calculate drop chance
             if (plugin.mobs.contains("creatures." + mobID + ".silkDropChance")) {
                 dropChance = plugin.mobs.getInt("creatures." + mobID + ".silkDropChance", 100);
@@ -127,7 +127,7 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         // no silk touch
-        if (plugin.hasPermission(player, "silkspawners.destroydrop." + mobName)) {
+        if (player.hasPermission("silkspawners.destroydrop." + mobName)) {
             if (plugin.config.getBoolean("destroyDropEgg", false)) {
                 // Calculate drop chance
                 randomNumber = rnd.nextInt(100);
@@ -190,7 +190,7 @@ public class SilkSpawnersBlockListener implements Listener {
         String spawnerName = creatureName.toLowerCase().replace(" ", "");
 
         // Check for place permission
-        if (!plugin.hasPermission(player, "silkspawners.place." + spawnerName)) {
+        if (!player.hasPermission("silkspawners.place." + spawnerName)) {
             event.setCancelled(true);
             player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID)))

@@ -48,7 +48,6 @@ public class SilkSpawners extends JavaPlugin {
     private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    private boolean usePermissions = true;
     public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
     private static final int pluginID = 35890;
@@ -119,6 +118,7 @@ public class SilkSpawners extends JavaPlugin {
         getCommand("silkspawners").setTabCompleter(tabCompleter);
         getCommand("egg").setTabCompleter(tabCompleter);
 
+
         // Listeners
         blockListener = new SilkSpawnersBlockListener(this, su);
         playerListener = new SilkSpawnersPlayerListener(this, su);
@@ -185,19 +185,23 @@ public class SilkSpawners extends JavaPlugin {
         loadPermissions("place", "Allows you to place the specific spawner");
         loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items");
         loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)");
-        loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]");
+        loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]", PermissionDefault.OP);
         loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg");
-        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]");
-        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg");
+        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]", PermissionDefault.OP);
+        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg", PermissionDefault.OP);
     }
 
     private void loadPermissions(String permissionPart, String description) {
+        loadPermissions(permissionPart, description, PermissionDefault.TRUE);
+    }
+
+    private void loadPermissions(String permissionPart, String description, PermissionDefault permDefault) {
         HashMap<String, Boolean> childPermissions = new HashMap<>();
         for (String mobAlias : su.eid2DisplayName.values()) {
             mobAlias = mobAlias.toLowerCase().replace(" ", "");
             childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, false);
         }
-        Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, PermissionDefault.FALSE, childPermissions);
+        Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, permDefault, childPermissions);
         getServer().getPluginManager().addPermission(perm);
     }
 
@@ -256,12 +260,6 @@ public class SilkSpawners extends JavaPlugin {
         // Enable craftable spawners?
         if (config.getBoolean("craftableSpawners", false)) {
             loadRecipes();
-        }
-
-        // See if we should use permissions
-        usePermissions = config.getBoolean("usePermissions", true);
-        if (config.getBoolean("verboseConfig", false)) {
-            getLogger().info("Permissions are " +  usePermissions);
         }
     }
 
@@ -446,30 +444,9 @@ public class SilkSpawners extends JavaPlugin {
         if (message == null || message.isEmpty()) {
             return;
         }
-        if (hasPermission(player, "silkspawners.info")) {
+        if (player.hasPermission("silkspawners.info")) {
             player.sendMessage(message);
         }
-    }
-
-    // Check for permissions
-    public boolean hasPermission(Player player, String node) {
-        // Normal check if we use permissions
-        if (usePermissions) {
-            return player.hasPermission(node);
-        }
-        // Else check more detailed
-        // Any of the nodes, -> yes
-        if (node.equals("silkspawners.info")
-                || node.startsWith("silkspawners.silkdrop")
-                || node.startsWith("silkspawners.destroydrop")
-                || node.equals("silkspawners.viewtype")
-                || node.equals("silkspawners.explodedrop")
-                || node.startsWith("silkspawners.place")
-                || node.startsWith("silkspawners.craft")) {
-            return true;
-        }
-        // Else ask for Op status
-        return player.isOp();
     }
 
     public void reloadConfigs() {

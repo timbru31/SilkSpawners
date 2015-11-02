@@ -32,9 +32,6 @@ Please see [LICENSE.md](LICENSE.md) for more information.
 # Should the plugin automatically update if an update is available?
 autoUpdater: true
 
-# Should permissions be used
-usePermissions: true
-
 # Should a permission be required when a spawner explodes by TNT to achieve a drop
 permissionExplode: false
 

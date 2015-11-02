@@ -6,45 +6,41 @@ version: ${project.version}-b${BUILD_NUMBER}
 url: http://dev.bukkit.org/server-mods/silkspawners/
 description: pick up and move monster spawners using silk touch
 commands:
-    silkspawners:
-        aliases: [silkspawner, ss, spawner, silk, spawnersilk]
-        description: Change or view the monster spawner creature type
-        usage: /<command> [creature]|[creature]egg|all|reload
-    egg:
-        aliases: [eggs, eg]
-        description: Change the egg type
-        usage: /<command> [creature]|[creature]egg|all|reload
+  silkspawners:
+    aliases: [silkspawner, ss, spawner, silk, spawnersilk, egg, eg, eggs]
+    description: Command for changing and getting spawners or spawn eggs
+    usage: /<command> help
 permissions:
     silkspawners.*:
-        children:
-            silkspawners.info: true
-            silkspawners.viewtype: true
-            silkspawners.reload: true
-            silkspawners.explodedrop: true
-            silkspawners.free: true
-            silkspawners.createshop: true
-            silkspawners.destroyshop: true
-            silkspawners.editshop: true
-            silkspawners.use.*: true
-            silkspawners.silkdrop.*: true
-            silkspawners.destroydrop.*: true
-            silkspawners.changetype.*: true
-            silkspawners.changetypewithegg.*: true
-            silkspawners.freeitem.*: true
-            silkspawners.freeitemegg.*: true
-            silkspawners.craft.*: true
-            silkspawners.place.*: true
-        default: false
-    silkspawners.info:
-        description: Allows you to see informative messages about the spawners as you place and break them
-        default: false
-    silkspawners.viewtype:
-        description: Allows you to view the spawner type using /spawner
-        default: false
-    silkspawners.reload:
-        description: Allows you to reload the plugin
-        default: false
-    silkspawners.explodedrop:
-        description: Allows you to receive drops on explosion
-        default: false
+      children:
+        silkspawners.info: true
+        silkspawners.viewtype: true
+        silkspawners.reload: true
+        silkspawners.explodedrop: true
+        silkspawners.free: true
+        silkspawners.createshop: true
+        silkspawners.destroyshop: true
+        silkspawners.editshop: true
+        silkspawners.use.*: true
+        silkspawners.silkdrop.*: true
+        silkspawners.destroydrop.*: true
+        silkspawners.changetype.*: true
+        silkspawners.changetypewithegg.*: true
+        silkspawners.freeitem.*: true
+        silkspawners.freeitemegg.*: true
+        silkspawners.craft.*: true
+        silkspawners.place.*: true
+      default: op
+  silkspawners.info:
+    description: Allows you to see informative messages about the spawners as you place and break them
+    default: true
+  silkspawners.viewtype:
+    description: Allows you to view the spawner type using /spawner
+    default: true
+  silkspawners.reload:
+    description: Allows you to reload the plugin
+    default: op
+  silkspawners.explodedrop:
+    description: Allows you to receive drops on explosion
+    default: true
 softdepend: [WorldGuard, BarAPI, Factions]

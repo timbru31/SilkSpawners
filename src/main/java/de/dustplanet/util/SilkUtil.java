@@ -574,14 +574,15 @@ public class SilkUtil {
      * @param messageDenied the message which is shown, when the player can't build here
      * see {@link #canBuildHere(Player, Location)}
      */
-    public void setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
+    public boolean setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
         // Changing denied by WorldGuard?
         if (!canBuildHere(player, block.getLocation())) {
             player.sendMessage(messageDenied);
-            return;
+            return false;
         }
         // Set the spawner and message the player
         setSpawnerEntityID(block, entityID);
+        return true;
     }
 
     /**

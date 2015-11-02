@@ -46,7 +46,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         if (event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
                 && event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.MOB_SPAWNER)
                 && plugin.config.getBoolean("notifyOnHold")
-                && plugin.hasPermission(event.getPlayer(), "silkspawners.info")) {
+                && event.getPlayer().hasPermission("silkspawners.info")) {
 
             // Get ID
             short entityID = su
@@ -89,7 +89,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 // Mob
                 String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
 
-                if (!plugin.hasPermission(player, "silkspawners.changetypewithegg." + mobName)) {
+                if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
                             plugin.localization.getString("noPermissionChangingWithEggs")));
                     event.setCancelled(true);
