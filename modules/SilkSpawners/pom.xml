@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.8-SNAPSHOT</version>
+  <version>3.7-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -27,10 +27,6 @@
     <repository>
       <id>Plugin Metrics</id>
       <url>http://repo.mcstats.org/content/repositories/public</url>
-    </repository>
-    <repository>
-      <id>gravity-repo</id>
-      <url>http://repo.gravitydevelopment.net</url>
     </repository>
     <repository>
       <id>confuser-repo</id>
