@@ -1,4 +1,8 @@
-# SilkSpawners [![Build Status](http://ci.dustplanet.de/job/SilkSpawners/badge/icon)](http://ci.dustplanet.de/job/SilkSpawners/)
+# SilkSpawners
+[![Build Status](https://ci.dustplanet.de/job/SilkSpawners/badge/icon)](https://ci.dustplanet.de/job/SilkSpawners/)
+[![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
+[![Circle CI](https://img.shields.io/circleci/project/timbru31/SilkSpawners.svg)](https://circleci.com/gh/timbru31/SilkSpawners)
+[![Build status](https://ci.appveyor.com/api/projects/status/3uvrma09rul7myk5?svg=true)](https://ci.appveyor.com/project/timbru31/silkspawners)
 
 ## Info
 This CraftBukkit plugin adds a way to obtain the spawner with the corresponding mob when mined with SilkTouch and offers a various range of changing spawners.
@@ -15,6 +19,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Localization
 * Economy addon [SilkSpawnersEcoAddon](http://dev.bukkit.org/bukkit-plugins/silkspawnersecoaddon)
+* Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 
 *Third party features, all of them can be disabled*
 * Metrics for usage statistics
