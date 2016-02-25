@@ -42,6 +42,11 @@ public class SilkSpawnersInventoryListener implements Listener {
             return;
         }
 
+        // Check for Workbench
+        if (event.getInventory().getType() != InventoryType.WORKBENCH) {
+            return;
+        }
+
         // Player
         if (!(event.getWhoClicked() instanceof Player)) {
             return;
