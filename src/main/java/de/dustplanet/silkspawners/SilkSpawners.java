@@ -20,7 +20,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
-import de.dustplanet.silkspawners.commands.EggCommand;
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
 import de.dustplanet.silkspawners.configs.Configuration;
@@ -45,7 +44,6 @@ public class SilkSpawners extends JavaPlugin {
     private SilkSpawnersInventoryListener inventoryListener;
     private SilkSpawnersEntityListener entityListener;
     private SpawnerCommand spawnerCommand;
-    private EggCommand eggCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
     public CommentedConfiguration config, localization, mobs;
@@ -111,12 +109,9 @@ public class SilkSpawners extends JavaPlugin {
 
         // Commands
         spawnerCommand = new SpawnerCommand(this, su);
-        eggCommand = new EggCommand(this, su);
         tabCompleter = new SilkSpawnersTabCompleter(su);
         getCommand("silkspawners").setExecutor(spawnerCommand);
-        getCommand("egg").setExecutor(eggCommand);
         getCommand("silkspawners").setTabCompleter(tabCompleter);
-        getCommand("egg").setTabCompleter(tabCompleter);
 
 
         // Listeners
