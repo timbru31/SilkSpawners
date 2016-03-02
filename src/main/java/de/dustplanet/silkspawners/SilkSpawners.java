@@ -46,12 +46,12 @@ public class SilkSpawners extends JavaPlugin {
     private SpawnerCommand spawnerCommand;
     private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    public CommentedConfiguration config, localization, mobs;
     private File configFile, localizationFile, mobsFile;
-    private static final int pluginID = 35890;
-    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3"};
     private Updater updater;
     private String nmsVersion;
+    private static final int PLUGIN_ID = 35890;
+    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1"};
+    public CommentedConfiguration config, localization, mobs;
 
     @Override
     public void onDisable() {
@@ -99,7 +99,7 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("AutoUpdater is disabled because you are running a dev build!");
             } else {
                 // Updater http://forums.bukkit.org/threads/96681/
-                updater = new Updater(this, pluginID, getFile(), Updater.UpdateType.DEFAULT, true);
+                updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, true);
                 getLogger().info("AutoUpdater is enabled.");
                 getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
             }
@@ -176,25 +176,21 @@ public class SilkSpawners extends JavaPlugin {
     }
 
     private void loadPermissions() {
-        loadPermissions("craft", "Allows you to craft the specific spawner");
-        loadPermissions("place", "Allows you to place the specific spawner");
-        loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items");
-        loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)");
-        loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]", PermissionDefault.OP);
-        loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg");
-        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]", PermissionDefault.OP);
-        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg", PermissionDefault.OP);
-    }
-
-    private void loadPermissions(String permissionPart, String description) {
-        loadPermissions(permissionPart, description, PermissionDefault.TRUE);
+        loadPermissions("craft", "Allows you to craft the specific spawner", PermissionDefault.FALSE);
+        loadPermissions("place", "Allows you to place the specific spawner", PermissionDefault.FALSE);
+        loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items", PermissionDefault.FALSE);
+        loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)", PermissionDefault.FALSE);
+        loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]", PermissionDefault.FALSE);
+        loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg", PermissionDefault.FALSE);
+        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]", PermissionDefault.FALSE);
+        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg", PermissionDefault.FALSE);
     }
 
     private void loadPermissions(String permissionPart, String description, PermissionDefault permDefault) {
         HashMap<String, Boolean> childPermissions = new HashMap<>();
         for (String mobAlias : su.eid2DisplayName.values()) {
             mobAlias = mobAlias.toLowerCase().replace(" ", "");
-            childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, false);
+            childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, true);
         }
         Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, permDefault, childPermissions);
         getServer().getPluginManager().addPermission(perm);

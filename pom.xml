@@ -26,6 +26,7 @@
     <module>modules/v1_8_R1</module>
     <module>modules/v1_8_R2</module>
     <module>modules/v1_8_R3</module>
+    <module>modules/v1_9_R1</module>
     <module>modules/SilkSpawners</module>
   </modules>
 

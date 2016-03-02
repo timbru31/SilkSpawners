@@ -46,14 +46,14 @@ public class Configuration {
     }
 
     private void loadDefaultMobs() {
-        config.options().header("creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html");
+        config.options().header("creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html");
         ArrayList<String> tempList = new ArrayList<>();
         // Creeper
         tempList.add("c");
         tempList.add("creep");
         tempList.add("cataclysm");
         config.addDefault("creatures.Creeper.aliases", tempList);
-        config.addComment("creatures.Creeper", "", " # Vanilla mobs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs");
+        config.addComment("creatures.Creeper", "", " # Vanilla mobs, from http://minecraft.gamepedia.com/Data_values/Entity_IDs");
         config.addDefault("creatures.Creeper.enable", true);
         config.addDefault("creatures.Creeper.enableCraftingSpawner", true);
         config.addDefault("creatures.Creeper.enableSpawnEggOverride", true);
@@ -342,6 +342,12 @@ public class Configuration {
         config.addDefault("creatures.Guardian.enableCraftingSpawner", true);
         config.addDefault("creatures.Guardian.enableSpawnEggOverride", true);
         tempList = new ArrayList<>();
+        // Shulker
+        tempList.add("shulk");
+        config.addDefault("creatures.Shulker.aliases", tempList);
+        config.addDefault("creatures.Shulker.enable", true);
+        config.addDefault("creatures.Shulker.enableCraftingSpawner", true);
+        config.addDefault("creatures.Shulker.enableSpawnEggOverride", true);
         // Item
         config.addDefault("creatures.Item.enable", false);
         config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
@@ -403,6 +409,16 @@ public class Configuration {
         config.addDefault("creatures.ArmorStand.enable", false);
         // ThrownEgg
         config.addDefault("creatures.ThrownEgg.enable", false);
+        // AreaEffectCloud
+        config.addDefault("creatures.AreaEffectCloud.enable", false);
+        // TippedArrow
+        config.addDefault("creatures.TippedArrow.enable", false);
+        // SpectralArrow
+        config.addDefault("creatures.SpectralArrow.enable", false);
+        // ShulkerBullet
+        config.addDefault("creatures.ShulkerBullet.enable", false);
+        // DragonFireball
+        config.addDefault("creatures.DragonFireball.enable", false);
     }
 
     private void loadDefaultLocalization() {

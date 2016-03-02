@@ -1,7 +1,7 @@
-# creatures: key is official creature type name (mobID), case-sensitive, from http://jd.bukkit.org/apidocs/org/bukkit/entity/CreatureType.html
+# creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
 creatures:
  
-   # Vanilla mobs, from http://www.minecraftwiki.net/wiki/Data_values#Entity_IDs
+   # Vanilla mobs, from http://minecraft.gamepedia.com/Data_values/Entity_IDs
   Creeper:
     aliases:
     - c
@@ -262,6 +262,12 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
+  Shulker:
+    aliases:
+    - shulk
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
  
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -324,4 +330,14 @@ creatures:
   ArmorStand:
     enable: false
   ThrownEgg:
+    enable: false
+  AreaEffectCloud:
+    enable: false
+  TippedArrow:
+    enable: false
+  SpectralArrow:
+    enable: false
+  ShulkerBullet:
+    enable: false
+  DragonFireball:
     enable: false

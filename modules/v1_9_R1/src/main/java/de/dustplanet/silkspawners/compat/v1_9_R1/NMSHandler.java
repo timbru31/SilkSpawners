@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners.compat.v1_8_R3;
+package de.dustplanet.silkspawners.compat.v1_9_R1;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -10,22 +10,21 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.block.CraftCreatureSpawner;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
-import net.minecraft.server.v1_8_R3.Entity;
-import net.minecraft.server.v1_8_R3.EntityTypes;
-import net.minecraft.server.v1_8_R3.Item;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.RegistryMaterials;
-import net.minecraft.server.v1_8_R3.TileEntityMobSpawner;
-import net.minecraft.server.v1_8_R3.World;
+import net.minecraft.server.v1_9_R1.Entity;
+import net.minecraft.server.v1_9_R1.EntityTypes;
+import net.minecraft.server.v1_9_R1.Item;
+import net.minecraft.server.v1_9_R1.NBTTagCompound;
+import net.minecraft.server.v1_9_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_9_R1.World;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -33,7 +32,7 @@ public class NMSHandler implements NMSProvider {
     public NMSHandler() {
         try {
             // Get the spawner field
-            // TODO Needs 1.8 source
+            // TODO Needs 1.9 source
             tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
@@ -44,7 +43,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
-        // TODO Needs 1.8 source
+        // TODO Needs 1.9 source
         World world = ((CraftWorld) w).getHandle();
         Entity entity = EntityTypes.a(entityID, world);
         // Should actually never happen since the method above
@@ -67,7 +66,7 @@ public class NMSHandler implements NMSProvider {
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
-            // TODO Needs 1.8 source
+            // TODO Needs 1.9 source
             // g.put(s, Integer.valueOf(i)); --> Name of ID
             Field field = EntityTypes.class.getDeclaredField("g");
             field.setAccessible(true);
@@ -104,21 +103,8 @@ public class NMSHandler implements NMSProvider {
     public void setSpawnersUnstackable() {
         // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
         try {
-            // Get the new registry HashMp from the Item class
-            Field registryField = Item.class.getDeclaredField("REGISTRY");
-            registryField.setAccessible(true);
-            RegistryMaterials<?, ?> registry = (RegistryMaterials<?, ?>) registryField.get(null);
-            // Get entry of the spawner
-            Object spawnerEntry = registry.a(52);
-            // Set maxStackSize "e(int maxStackSize)"
-            Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.setInt(spawnerEntry, 1);
-            // Item.getById(52).c(1); works?
-            // Cleanup
-            registryField.setAccessible(false);
-            maxStackSize.setAccessible(false);
-        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
+            Item.getById(52).d(1);
+        } catch (SecurityException | IllegalArgumentException e) {
             Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
             e.printStackTrace();
         }
@@ -131,10 +117,10 @@ public class NMSHandler implements NMSProvider {
 
         try {
             // Refer to the NMS TileEntityMobSpawner and change the name, see
-            // TODO Needs 1.8 source
+            // TODO Needs 1.9 source
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Changes as of 1.7.10
-            // TODO Needs 1.8 source
+            // TODO Needs 1.9 source
             tile.getSpawner().setMobName(mobID);
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -151,7 +137,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
-        net.minecraft.server.v1_8_R3.ItemStack itemStack = null;
+        net.minecraft.server.v1_9_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
@@ -182,7 +168,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public short getSilkSpawnersNBTEntityID(ItemStack item) {
-        net.minecraft.server.v1_8_R3.ItemStack itemStack = null;
+        net.minecraft.server.v1_9_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
@@ -195,7 +181,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public String getVanillaNBTEntityID(ItemStack item) {
-        net.minecraft.server.v1_8_R3.ItemStack itemStack = null;
+        net.minecraft.server.v1_9_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
