@@ -1,6 +1,7 @@
 package de.dustplanet.silkspawners.compat.v1_8_R3;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -219,5 +220,10 @@ public class NMSHandler implements NMSProvider {
             return null;
         }
         return block;
+    }
+
+    @Override
+    public Collection<? extends Player> getOnlinePlayers() {
+        return Bukkit.getOnlinePlayers();
     }
 }

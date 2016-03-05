@@ -39,7 +39,7 @@ permissions:
     default: true
   silkspawners.reload:
     description: Allows you to reload the plugin
-    default: false
+    default: op
   silkspawners.explodedrop:
     description: Allows you to receive drops on explosion
     default: false

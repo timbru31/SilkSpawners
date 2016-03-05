@@ -24,7 +24,9 @@ playerOffline: '&4Sorry this player is offline!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection.'
 getSpawnerType: '&2This is a(n) &e%creature% spawner&2.'
 unknownCreature: '&4Unrecognized creature &e%creature%&4.'
+unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'
 useNumbers: '&4Please use a numeric number between 1 and 64!'
+noConsole: '&4The console can not use this command!'
 configsReloaded: '&2Successfully reloaded the configs!'
  
 usageEggCommand: '&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)'
@@ -46,4 +48,12 @@ spawning: '&2Spawning &e%creature% (ID %ID%)'
 noSpawnerHere: '&4A spawner can not be placed here, because the block above is blocked!'
  
 lookAtSpawner: '&4You must be looking directly at a spawner.'
-lookAtSpawnerOrInHand: '&4You must be looking directly at a spawner or have a spawner in your hand to use this command!'
+ 
+help1: '&7------&6SilkSpawners Help Menu&7------'
+help2: '&e/ss help &7- &2Displays the help menu.'
+help3: '&e/ss list|all &7- &2Displays all available creatures.'
+help4: '&e/ss view &7- &2Displays information about the viewed spawner.'
+help5: '&e/ss reload|rl &7- &2Reloads the configuration files.'
+help6: '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
+help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'
+

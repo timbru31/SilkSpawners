@@ -1,5 +1,6 @@
 package de.dustplanet.silkspawners.compat.api;
 
+import java.util.Collection;
 import java.util.SortedMap;
 
 import org.bukkit.World;
@@ -21,4 +22,5 @@ public interface NMSProvider {
     short getSilkSpawnersNBTEntityID(ItemStack item);
     String getVanillaNBTEntityID(ItemStack item);
     Block getSpawnerFacing(Player player, int distance);
+    Collection<? extends Player> getOnlinePlayers();
 }

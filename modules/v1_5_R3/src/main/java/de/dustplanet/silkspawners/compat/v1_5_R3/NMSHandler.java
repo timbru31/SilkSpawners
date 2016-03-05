@@ -1,16 +1,11 @@
 package de.dustplanet.silkspawners.compat.v1_5_R3;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
-import net.minecraft.server.v1_5_R3.Entity;
-import net.minecraft.server.v1_5_R3.EntityTypes;
-import net.minecraft.server.v1_5_R3.Item;
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
-import net.minecraft.server.v1_5_R3.TileEntityMobSpawner;
-import net.minecraft.server.v1_5_R3.World;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,6 +20,12 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
+import net.minecraft.server.v1_5_R3.Entity;
+import net.minecraft.server.v1_5_R3.EntityTypes;
+import net.minecraft.server.v1_5_R3.Item;
+import net.minecraft.server.v1_5_R3.NBTTagCompound;
+import net.minecraft.server.v1_5_R3.TileEntityMobSpawner;
+import net.minecraft.server.v1_5_R3.World;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -206,5 +207,10 @@ public class NMSHandler implements NMSProvider {
             return null;
         }
         return block;
+    }
+
+    @Override
+    public Collection<? extends Player> getOnlinePlayers() {
+        return Arrays.asList(Bukkit.getOnlinePlayers());
     }
 }

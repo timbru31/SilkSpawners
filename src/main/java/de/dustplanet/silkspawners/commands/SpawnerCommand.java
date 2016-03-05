@@ -92,7 +92,7 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleGive(CommandSender sender, String receiver, String mob, String amountString) {
-        int amount = plugin.config.getInt("defaultAmount", 1);
+        int amount = plugin.config.getInt("defaultAmountGive", 1);
 
         // Check given amount
         if (amountString != null && !amountString.isEmpty()) {
@@ -229,20 +229,20 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleChange(CommandSender sender, String newMob) {
-        if (su.isUnkown(newMob)) {
-            sender.sendMessage(
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
-                    .replace("%creature%", newMob));
-            return;
-        }
-
-        // entityID
-        short entityID = su.name2Eid.get(newMob);
-        String creature = su.getCreatureName(entityID);
-        // Filter spaces (like Zombie Pigman)
-        String mobName = creature.toLowerCase().replace(" ", "");
-
         if (sender instanceof Player) {
+            if (su.isUnkown(newMob)) {
+                sender.sendMessage(
+                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
+                        .replace("%creature%", newMob));
+                return;
+            }
+
+            // entityID
+            short entityID = su.name2Eid.get(newMob);
+            String creature = su.getCreatureName(entityID);
+            // Filter spaces (like Zombie Pigman)
+            String mobName = creature.toLowerCase().replace(" ", "");
+
             Player player = (Player) sender;
 
             int distance = plugin.config.getInt("spawnerCommandReachDistance", 6);
@@ -262,10 +262,12 @@ public class SpawnerCommand implements CommandExecutor {
             } else if (itemInHand == SilkUtil.SPAWN_EGG) {
                 handleChangeEgg(player, entityID, mobName);
             } else {
-                player.sendMessage("no sutiable item or in sight");
+                player.sendMessage(
+                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawner")));
             }
         } else {
-            sender.sendMessage("change only for players");
+            sender.sendMessage(
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
         }
     }
 
@@ -349,11 +351,15 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleUnknownArgument(CommandSender sender) {
-        sender.sendMessage("unknown argument");
+        sender.sendMessage(
+                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownArgument")));
     }
 
     private void handleHelp(CommandSender sender) {
-        sender.sendMessage("help is helpful");
+        for (int i = 1; i <= 7; i++) {
+            sender.sendMessage(
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help" + i)));
+        }
     }
 
     private void handleReload(CommandSender sender) {
@@ -396,7 +402,8 @@ public class SpawnerCommand implements CommandExecutor {
                         plugin.localization.getString("noPermissionViewType")));
             }
         } else {
-            sender.sendMessage("view only for players");
+            sender.sendMessage(
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
         }
     }
 }

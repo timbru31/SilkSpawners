@@ -31,7 +31,7 @@ This plugin is released under the
 Please see [LICENSE.md](LICENSE.md) for more information.
 
 ## Standard config
-````yaml
+```yaml
 # See documentation at http://dev.bukkit.org/bukkit-plugins/silkspawners/pages/configuration
 
 # Should the plugin automatically update if an update is available?
@@ -138,6 +138,9 @@ allowedTools:
 - GOLD_PICKAXE
 - DIAMOND_PICKAXE
 
+# Amount of spawners or eggs given to a player when the argument is omitted
+defaultAmountGive: 1
+
 # Notify the player about the spawner when he clicks it in the inventory
 notifyOnClick: true
 
@@ -160,7 +163,7 @@ useReflection: true
 testMCVersion: true
 useMetadata: true
 useLegacyName: false
-````
+```
 
 ## Commands
 
@@ -178,7 +181,7 @@ useLegacyName: false
 (Fallback to OPs, if no permissions system is found)
 * Grant either wild card permission for all mobs (use the star [*])
 * or define per mob permissions by using _creature_ and replace it with a real mob name.
-	* spaces will be stripped out of names
+  * spaces will be stripped out of names
 
 #### General
 | Permission node | Default | Description |

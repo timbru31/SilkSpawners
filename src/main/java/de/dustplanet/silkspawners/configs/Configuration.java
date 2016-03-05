@@ -448,7 +448,9 @@ public class Configuration {
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");
         config.addDefault("getSpawnerType", "&2This is a(n) &e%creature% spawner&2.");
         config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%&4.");
+        config.addDefault("unknownArgument", "&4Unrecognized argument. See &e/silkspawners help");
         config.addDefault("useNumbers", "&4Please use a numeric number between 1 and 64!");
+        config.addDefault("noConsole", "&4The console can not use this command!");
         config.addDefault("configsReloaded", "&2Successfully reloaded the configs!");
         config.addDefault("usageEggCommand", "&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)");
         config.addComment("usageEggCommand", "");
@@ -470,7 +472,14 @@ public class Configuration {
         config.addDefault("noSpawnerHere", "&4A spawner can not be placed here, because the block above is blocked!");
         config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
         config.addComment("lookAtSpawner", "");
-        config.addDefault("lookAtSpawnerOrInHand", "&4You must be looking directly at a spawner or have a spawner in your hand to use this command!");
+        config.addDefault("help1", "&7------&6SilkSpawners Help Menu&7------");
+        config.addComment("help1", "");
+        config.addDefault("help2", "&e/ss help &7- &2Displays the help menu.");
+        config.addDefault("help3", "&e/ss list|all &7- &2Displays all available creatures.");
+        config.addDefault("help4", "&e/ss view &7- &2Displays information about the viewed spawner.");
+        config.addDefault("help5", "&e/ss reload|rl &7- &2Reloads the configuration files");
+        config.addDefault("help6", "&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.");
+        config.addDefault("help7", "&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional");
     }
 
     private void loadDefaultConfig() {
@@ -542,6 +551,8 @@ public class Configuration {
         temp.add(Material.DIAMOND_PICKAXE.toString());
         config.addDefault("allowedTools", temp);
         config.addComment("allowedTools", "", "# Allowed set of tools which can mine a spawner. IDs are supported, too");
+        config.addDefault("defaultAmountGive", 1);
+        config.addComment("defaultAmountGive", "", "# Amount of spawners or eggs given to a player when the argument is omitted");
         config.addDefault("notifyOnClick", true);
         config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
         config.addDefault("notifyOnHold", true);
