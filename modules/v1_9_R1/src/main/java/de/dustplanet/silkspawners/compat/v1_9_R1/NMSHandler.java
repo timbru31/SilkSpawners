@@ -24,6 +24,7 @@ import net.minecraft.server.v1_9_R1.Entity;
 import net.minecraft.server.v1_9_R1.EntityTypes;
 import net.minecraft.server.v1_9_R1.Item;
 import net.minecraft.server.v1_9_R1.NBTTagCompound;
+import net.minecraft.server.v1_9_R1.NBTTagList;
 import net.minecraft.server.v1_9_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_9_R1.World;
 
@@ -153,16 +154,33 @@ public class NMSHandler implements NMSProvider {
         if (!tag.hasKey("SilkSpawners")) {
             tag.set("SilkSpawners", new NBTTagCompound());
         }
+        tag.getCompound("SilkSpawners").setShort("entityID", entityID);
 
-        // Check for Vanilla key
+        // Check for Vanilla keys
         if (!tag.hasKey("BlockEntityTag")) {
             tag.set("BlockEntityTag", new NBTTagCompound());
         }
-        tag = tag.getCompound("SilkSpawners");
-        tag.setShort("entityID", entityID);
 
-        tag = itemStack.getTag().getCompound("BlockEntityTag");
-        tag.setString("EntityId", entity);
+        // EntityId - Deprecated in 1.9
+        tag.getCompound("BlockEntityTag").setString("EntityId", entity);
+
+        // SpawnData
+        if (!tag.hasKey("SpawnData")) {
+            tag.set("SpawnData", new NBTTagCompound());
+        }
+        tag.getCompound("SpawnData").setString("id", entity);
+
+        if (!tag.getCompound("BlockEntityTag").hasKey("SpawnPotentials")) {
+            tag.getCompound("BlockEntityTag").set("SpawnPotentials", new NBTTagCompound());
+        }
+
+        NBTTagList tagList = new NBTTagList();
+        NBTTagCompound spawnPotentials = new NBTTagCompound();
+        spawnPotentials.set("Entity", new NBTTagCompound());
+        spawnPotentials.getCompound("Entity").setString("id", entity);
+        spawnPotentials.setInt("Weight", 1);
+        tagList.add(spawnPotentials);
+        tag.getCompound("BlockEntityTag").set("SpawnPotentials", tagList);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }
@@ -190,7 +208,17 @@ public class NMSHandler implements NMSProvider {
         if (tag == null || !tag.hasKey("BlockEntityTag")) {
             return null;
         }
-        return tag.getCompound("BlockEntityTag").getString("EntityId");
+
+        tag = tag.getCompound("BlockEntityTag");
+        if (tag.hasKey("EntityId")) {
+            return tag.getString("EntityId");
+        } else if (tag.hasKey("SpawnData") && tag.getCompound("SpawnData").hasKey("id")) {
+            return tag.getCompound("SpawnData").getString("id");
+        } else if (tag.hasKey("SpawnPotentials") && !tag.getList("SpawnPotentials", 8).isEmpty()) {
+            return tag.getList("SpawnPotentials", 8).get(0).getCompound("Entity").getString("id");
+        } else {
+            return null;
+        }
     }
 
     /**

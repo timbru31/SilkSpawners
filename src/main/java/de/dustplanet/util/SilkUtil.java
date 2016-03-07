@@ -339,7 +339,7 @@ public class SilkUtil {
      * @return the ItemStack
      */
     public ItemStack newEggItem(short entityID, int amount) {
-        return new ItemStack(SPAWN_EGG, amount, entityID);
+        return new ItemStack(SPAWN_EGG, amount, entityID); // TODO fix white egg, NBT data?
     }
 
     /**
