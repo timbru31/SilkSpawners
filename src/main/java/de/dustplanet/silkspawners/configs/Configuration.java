@@ -424,11 +424,11 @@ public class Configuration {
     private void loadDefaultLocalization() {
         config.options().header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
         config.addDefault("spawnerName", "&e%creature% &fSpawner");
-        config.addDefault("addedEgg", "'&2Successfully added a(n) &e%creature% spawn egg &2to your inventory.");
+        config.addDefault("addedEgg", "'&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.");
         config.addComment("addedEgg", "");
-        config.addDefault("addedEggOtherPlayer", "&2Added a(n) &e%creature% spawn egg &2to &e%player% &2''s inventory.");
-        config.addDefault("addedSpawner", "&2Added a(n) &e%creature% spawner &2to your inventory.");
-        config.addDefault("addedSpawnerOtherPlayer", "&2Added a(n) &e%creature% spawner &2to &e%player% &2''s inventory.");
+        config.addDefault("addedEggOtherPlayer", "&2Added &e%amount% %creature% spawn egg(s) &2to &e%player%&2''s inventory.");
+        config.addDefault("addedSpawner", "&2Added &e%amount% %creature% spawner(s) &2to your inventory.");
+        config.addDefault("addedSpawnerOtherPlayer", "&2Added &e%amount% %creature% spawner(s) &2to &e%player%&2''s inventory.");
         config.addDefault("noPermission", "&4You do not have the permission to use this command!");
         config.addComment("noPermission", "");
         config.addDefault("noPermissionChangingEgg", "&4You do not have permission to change spawning eggs!");

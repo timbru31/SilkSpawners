@@ -160,20 +160,20 @@ public class SpawnerCommand implements CommandExecutor {
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
                     sender.sendMessage(
                             ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg"))
-                            .replace("%creature%", creature));
+                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 } else {
                     sender.sendMessage(
                             ChatColor
                             .translateAlternateColorCodes('\u0026', plugin.localization
                                     .getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
-                            .replace("%creature%", creature));
+                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 }
             } else {
                 sender.sendMessage(
                         ChatColor
                         .translateAlternateColorCodes('\u0026', plugin.localization
                                 .getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
-                        .replace("%creature%", creature));
+                        .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
             }
             return;
         }
@@ -209,19 +209,19 @@ public class SpawnerCommand implements CommandExecutor {
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
                     sender.sendMessage(ChatColor
                             .translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner"))
-                            .replace("%creature%", creature));
+                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 } else {
                     sender.sendMessage(ChatColor
                             .translateAlternateColorCodes('\u0026', plugin.localization
                                     .getString("addedSpawnerOtherPlayer").replace("%player%", receiver.getName()))
-                            .replace("%creature%", creature));
+                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 }
             } else {
                 sender.sendMessage(
                         ChatColor
                         .translateAlternateColorCodes('\u0026', plugin.localization
                                 .getString("addedSpawnerOtherPlayer").replace("%player%", receiver.getName()))
-                        .replace("%creature%", creature));
+                        .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
             }
             return;
         }

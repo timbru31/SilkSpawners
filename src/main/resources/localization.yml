@@ -1,10 +1,10 @@
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
  
-addedEgg: '&2Successfully added a(n) &e%creature% spawn egg &2to your inventory.'
-addedEggOtherPlayer: '&2Added a(n) &e%creature% spawn egg &2to &e%player% &2''s inventory.'
-addedSpawner: '&2Added a(n) &e%creature% spawner &2to your inventory.'
-addedSpawnerOtherPlayer: '&2Added a(n) &e%creature% spawner &2to &e%player% &2''s inventory.'
+addedEgg: '&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.'
+addedEggOtherPlayer: '&2Added &e%amount% %creature% spawn egg(s) &2to &e%player%&2''s inventory.'
+addedSpawner: '&2Added &e%amount% %creature% spawner(s) &2to your inventory.'
+addedSpawnerOtherPlayer: '&2Added &e%amount% %creature% spawner(s) &2to &e%player%&2''s inventory.'
  
 noPermission: '&4You do not have the permission to use this command!'
 noPermissionChangingEgg: '&4You do not have permission to change spawn eggs!'
