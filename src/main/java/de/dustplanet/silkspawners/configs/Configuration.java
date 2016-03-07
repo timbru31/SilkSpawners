@@ -442,9 +442,9 @@ public class Configuration {
         config.addDefault("changedEgg", "&2Successfully changed the spawning egg to a(n) &e%creature% spawn egg.");
         config.addComment("changedEgg", "");
         config.addDefault("changedSpawner", "&2Successfully changed the spawner to a(n) &e%creature% spawner.");
-        config.addDefault("changeDeniedByFactions", "&4You are not allowed to change spawners in other peoples territory!");
         config.addDefault("playerOffline", "&4Sorry this player is offline!");
         config.addComment("playerOffline", "");
+        config.addDefault("changingDeniedFactions", "&4You are not allowed to change spawners in other peoples territory!");
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");
         config.addDefault("getSpawnerType", "&2This is a(n) &e%creature% spawner&2.");
         config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%&4.");

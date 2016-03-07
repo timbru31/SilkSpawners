@@ -102,7 +102,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
                         event.setCancelled(true);
                         player.sendMessage(ChatColor
-                                .translateAlternateColorCodes('\u0026', plugin.localization.getString("changeDeniedByFactions")));
+                                .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
                         return;
                     }
                 }

@@ -18,9 +18,9 @@ noPermissionPlace: '&4You do not have the permission to place a(n) &e%creature% 
  
 changedEgg: '&2Successfully changed the spawning egg to a(n) &e%creature% spawn egg.'
 changedSpawner: '&2Successfully changed the spawner to a(n) &e%creature% spawner.'
-changeDeniedByFactions: '&4You are not allowed to change spawners in other peoples territory!'
  
 playerOffline: '&4Sorry this player is offline!'
+changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection.'
 getSpawnerType: '&2This is a(n) &e%creature% spawner&2.'
 unknownCreature: '&4Unrecognized creature &e%creature%&4.'
@@ -56,4 +56,3 @@ help4: '&e/ss view &7- &2Displays information about the viewed spawner.'
 help5: '&e/ss reload|rl &7- &2Reloads the configuration files.'
 help6: '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
 help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'
-
