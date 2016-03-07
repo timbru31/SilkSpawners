@@ -55,6 +55,7 @@ public class SpawnerCommand implements CommandExecutor {
         case 2:
             switch (args[0].toLowerCase()) {
             case "change":
+            case "set":
                 handleChange(sender, args[1]);
                 break;
             default:

@@ -19,7 +19,7 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SilkSpawnersTabCompleter implements TabCompleter {
-    private String[] commands = { "add", "all", "change", "give", "help", "list", "reload", "rl", "view" };
+    private String[] commands = { "add", "all", "change", "give", "help", "list", "reload", "rl", "set", "view" };
     private SilkUtil su;
 
     public SilkSpawnersTabCompleter(SilkUtil util) {
@@ -32,7 +32,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
         if (args.length == 1) {
             String command = args[0].toLowerCase(Locale.ENGLISH);
             return addCommands(command);
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("change")) {
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("change") || args[0].equalsIgnoreCase("set"))) {
             String mob = args[1].toLowerCase(Locale.ENGLISH);
             results.addAll(addMobs(mob));
         } else if (args.length == 2 && (args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("add"))) {
