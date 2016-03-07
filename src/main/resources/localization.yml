@@ -29,11 +29,6 @@ useNumbers: '&4Please use a numeric number between 1 and 64!'
 noConsole: '&4The console can not use this command!'
 configsReloaded: '&2Successfully reloaded the configs!'
  
-usageEggCommand: '&4To use this command, empty your hand (to get a free spawn egg) or have a spawn egg in your hand (to change the type)'
-usageEggCommandCommandLine: '&4To use SilkSpawners from the command line use /egg [creature] [amount] [name]'
-usageSpawnerCommand: '&4To use this command, empty your hand (to get a free spawner), point at an existing spawner or have a spawner in your hand (to change the spawner type)'
-usageSpawnerCommandCommandLine: '&4To use SilkSpawners from the command line use /spawner [creature]|[creature]egg [amount] [name]'
- 
 spawnerBroken: '&2%creature% &espawner broken.'
 spawnerPlaced: '&2%creature% &espawner placed.'
 placingDefault: '&ePlacing default spawner (either this spawner is invalid or disabled)'
