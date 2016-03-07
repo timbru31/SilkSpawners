@@ -338,17 +338,24 @@ public class SilkUtil {
      * @param amount the amount of spawn eggs
      * @return the ItemStack
      */
-    public ItemStack newEggItem(short entityID, int amount) {
-        return new ItemStack(SPAWN_EGG, amount, entityID); // TODO fix white egg, NBT data?
+    public ItemStack newEggItem(short entityID, String entity, int amount) {
+        return nmsProvider.newEggItem(entityID, entity, amount);
     }
 
     /**
-     * Returns a new ItemStack of a spawn egg with the amount one and mob.
-     * @param entityID which mob should be spawned
-     * @return the ItemStack (amount is one)
+     * @deprecated use {@link #newEggItem(short, String, int)} instead.
      */
+    @Deprecated
     public ItemStack newEggItem(short entityID) {
-        return newEggItem(entityID, 1);
+        return newEggItem(entityID, eid2MobID.get(entityID), 1);
+    }
+
+    /**
+     * @deprecated use {@link #newEggItem(short, String, int)} instead.
+     */
+    @Deprecated
+    public ItemStack newEggItem(short entityID, int amount) {
+        return newEggItem(entityID, eid2MobID.get(entityID), amount);
     }
 
     // Create a tagged a mob spawner item with it's entity ID and custom amount
@@ -403,10 +410,43 @@ public class SilkUtil {
         return newSpawnerItem(entityID, customName, 1, false);
     }
 
-    // Get the entity ID
     /**
-     * Returns the entity ID of a spawner or spawn egg.
-     * @param item the ItemStack
+     * Returns the entity ID of a spawn egg.
+     * @param item the egg
+     * @return the entityID
+     */
+    public short getStoredEggEntityID(ItemStack item) {
+        short durability = item.getDurability();
+        // Try durability first, works until 1.8
+        if (durability != 0) {
+            return durability;
+        }
+        short entityID = 0;
+        if (isUsingReflection()) {
+            // Now try reflection for NBT tag
+            entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
+            if (entityID != 0) {
+                return entityID;
+            }
+            String entity = nmsProvider.getVanillaEggNBTEntityID(item);
+            if (entity != null &&  mobID2Eid.containsKey(entity)) {
+                return mobID2Eid.get(entity);
+            }
+        }
+        // If we still haven't found our entityID, then check for item lore or name
+        if (item.hasItemMeta()) {
+            short metaEntityId = searchItemMeta(item.getItemMeta());
+            if (metaEntityId != 0) {
+                return metaEntityId;
+            }
+        }
+        return 0; // :(
+    }
+
+
+    /**
+     * Returns the entity ID of a spawner.
+     * @param item the spawner
      * @return the entityID
      */
     public short getStoredSpawnerItemEntityID(ItemStack item) {
@@ -429,44 +469,57 @@ public class SilkUtil {
         }
         // If we still haven't found our entityID, then check for item lore or name
         if (item.hasItemMeta()) {
-            ItemMeta meta = item.getItemMeta();
-            if (plugin.config.getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
-                for (String entityIDString : meta.getLore()) {
-                    if (!entityIDString.contains("entityID")) {
-                        // Continue if the lore does not contain entityID
-                        continue;
-                    }
-                    String[] entityIDArray = entityIDString.split(":");
-                    if (entityIDArray.length == 2) {
-                        try {
-                            durability = Short.valueOf(entityIDArray[1]);
-                            if (durability != 0) {
-                                return durability;
-                            }
-                        } catch (NumberFormatException e) {
-                            return 0;
-                        }
-                    }
-                }
+            short metaEntityId = searchItemMeta(item.getItemMeta());
+            if (metaEntityId != 0) {
+                return metaEntityId;
             }
-            // Last call - legacy mapping of the name. // TODO remove when applicable
-            if (plugin.config.getBoolean("useLegacyName", false) && meta.hasDisplayName()) {
-                String displayName = meta.getDisplayName();
-                if (displayName != null && !displayName.isEmpty()) {
-                    String[] nameParts = ChatColor.stripColor(displayName.toLowerCase()).split(" ");
-                    for (String part : nameParts) {
-                        // Continue if 'spawner' is matched
-                        if (part.equalsIgnoreCase("spawner")) {
-                            continue;
+        }
+        return 0; // :(
+    }
+
+    /**
+     * Searches item lore and display name for entityID.
+     * @param meta the ItemMeta
+     * @return entityID if found or 0
+     */
+    public short searchItemMeta(ItemMeta meta) {
+        short durability = 0;
+        if (plugin.config.getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
+            for (String entityIDString : meta.getLore()) {
+                if (!entityIDString.contains("entityID")) {
+                    // Continue if the lore does not contain entityID
+                    continue;
+                }
+                String[] entityIDArray = entityIDString.split(":");
+                if (entityIDArray.length == 2) {
+                    try {
+                        durability = Short.valueOf(entityIDArray[1]);
+                        if (durability != 0) {
+                            return durability;
                         }
-                        if (isKnown(part)) {
-                            return name2Eid.get(part);
-                        }
+                    } catch (NumberFormatException e) {
+                        return 0;
                     }
                 }
             }
         }
-        return 0; // :(
+        // Last call - legacy mapping of the name. // TODO remove when applicable
+        if (plugin.config.getBoolean("useLegacyName", false) && meta.hasDisplayName()) {
+            String displayName = meta.getDisplayName();
+            if (displayName != null && !displayName.isEmpty()) {
+                String[] nameParts = ChatColor.stripColor(displayName.toLowerCase()).split(" ");
+                for (String part : nameParts) {
+                    // Continue if 'spawner' is matched
+                    if (part.equalsIgnoreCase("spawner") || part.equalsIgnoreCase("spawn")) {
+                        continue;
+                    }
+                    if (isKnown(part)) {
+                        return name2Eid.get(part);
+                    }
+                }
+            }
+        }
+        return durability;
     }
 
     // Return whether mob is recognized by Bukkit's wrappers

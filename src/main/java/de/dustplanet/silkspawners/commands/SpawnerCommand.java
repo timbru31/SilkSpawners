@@ -153,7 +153,7 @@ public class SpawnerCommand implements CommandExecutor {
                         ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(su.newEggItem(entityID, amount));
+            receiver.getInventory().addItem(su.newEggItem(entityID, su.eid2MobID.get(entityID), amount));
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {

@@ -25,7 +25,6 @@ import net.minecraft.server.v1_8_R1.Entity;
 import net.minecraft.server.v1_8_R1.EntityTypes;
 import net.minecraft.server.v1_8_R1.Item;
 import net.minecraft.server.v1_8_R1.NBTTagCompound;
-import net.minecraft.server.v1_8_R1.RegistryMaterials;
 import net.minecraft.server.v1_8_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_8_R1.World;
 
@@ -105,24 +104,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnersUnstackable() {
         // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
-        try {
-            // Get the new registry HashMp from the Item class
-            Field registryField = Item.class.getDeclaredField("REGISTRY");
-            registryField.setAccessible(true);
-            RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
-            // Get entry of the spawner
-            Object spawnerEntry = registry.a(52);
-            // Set maxStackSize "e(int maxStackSize)"
-            Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.setInt(spawnerEntry, 1);
-            // Cleanup
-            registryField.setAccessible(false);
-            maxStackSize.setAccessible(false);
-        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
-            Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Item.getById(52).c(1);
     }
 
     @Override
@@ -232,5 +214,16 @@ public class NMSHandler implements NMSProvider {
     @Override
     public Collection<? extends Player> getOnlinePlayers() {
         return Bukkit.getOnlinePlayers();
+    }
+
+    @Override
+    public ItemStack newEggItem(short entityID, String entity, int amount) {
+        return new ItemStack(Material.MONSTER_EGG, amount, entityID);
+    }
+
+    @Override
+    public String getVanillaEggNBTEntityID(ItemStack item) {
+        // EntityTag.id for eggs was added in 1.9 only
+        return null;
     }
 }

@@ -138,7 +138,7 @@ public class SilkSpawnersBlockListener implements Listener {
                 }
                 if (randomNumber < dropChance) {
                     // Drop egg
-                    world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID));
+                    world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID, su.eid2MobID.get(entityID), 1));
                 }
             }
             // Drop iron bars (or not)

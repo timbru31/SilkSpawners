@@ -23,4 +23,6 @@ public interface NMSProvider {
     String getVanillaNBTEntityID(ItemStack item);
     Block getSpawnerFacing(Player player, int distance);
     Collection<? extends Player> getOnlinePlayers();
+    ItemStack newEggItem(short entityID, String entity, int amount);
+    String getVanillaEggNBTEntityID(ItemStack item);
 }

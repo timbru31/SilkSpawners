@@ -104,12 +104,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnersUnstackable() {
         // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
-        try {
-            Item.getById(52).d(1);
-        } catch (SecurityException | IllegalArgumentException e) {
-            Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
-            e.printStackTrace();
-        }
+        Item.getById(52).d(1);
     }
 
     @Override
@@ -239,5 +234,45 @@ public class NMSHandler implements NMSProvider {
     @Override
     public Collection<? extends Player> getOnlinePlayers() {
         return Bukkit.getOnlinePlayers();
+    }
+
+    @Override
+    public ItemStack newEggItem(short entityID, String entity, int amount) {
+        ItemStack item = new ItemStack(Material.MONSTER_EGG, amount, entityID);
+        net.minecraft.server.v1_9_R1.ItemStack itemStack = null;
+        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        NBTTagCompound tag = itemStack.getTag();
+
+        // Create tag if necessary
+        if (tag == null) {
+            tag = new NBTTagCompound();
+            itemStack.setTag(tag);
+        }
+
+        if (!tag.hasKey("EntityTag")) {
+            tag.set("EntityTag", new NBTTagCompound());
+        }
+        tag.getCompound("EntityTag").setString("id", entity);
+
+        return CraftItemStack.asCraftMirror(itemStack);
+    }
+
+    @Override
+    public String getVanillaEggNBTEntityID(ItemStack item) {
+        net.minecraft.server.v1_9_R1.ItemStack itemStack = null;
+        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        NBTTagCompound tag = itemStack.getTag();
+
+        if (tag == null || !tag.hasKey("EntityTag")) {
+            return null;
+        }
+
+        tag = tag.getCompound("EntityTag");
+        if (tag.hasKey("id")) {
+            return tag.getString("id");
+        }
+        return null;
     }
 }

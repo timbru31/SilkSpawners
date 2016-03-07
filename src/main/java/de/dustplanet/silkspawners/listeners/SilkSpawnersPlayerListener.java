@@ -73,7 +73,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         // If we use a spawn egg
         if (item != null && item.getType() == SilkUtil.SPAWN_EGG) {
             // Get the entityID
-            short entityID = item.getDurability();
+            short entityID = su.getStoredEggEntityID(item);
             // Clicked spawner with monster egg to change type
             if (block != null && block.getType() == Material.MOB_SPAWNER) {
                 Action action = event.getAction();

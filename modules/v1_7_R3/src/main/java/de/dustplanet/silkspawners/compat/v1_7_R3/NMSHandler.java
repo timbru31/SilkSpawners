@@ -223,4 +223,15 @@ public class NMSHandler implements NMSProvider {
     public Collection<? extends Player> getOnlinePlayers() {
         return Arrays.asList(Bukkit.getOnlinePlayers());
     }
+
+    @Override
+    public ItemStack newEggItem(short entityID, String entity, int amount) {
+        return new ItemStack(Material.MONSTER_EGG, amount, entityID);
+    }
+
+    @Override
+    public String getVanillaEggNBTEntityID(ItemStack item) {
+        // EntityTag.id for eggs was added in 1.9 only
+        return null;
+    }
 }
