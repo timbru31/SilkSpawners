@@ -447,8 +447,8 @@ public class Configuration {
         config.addDefault("changingDeniedFactions", "&4You are not allowed to change spawners in other peoples territory!");
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");
         config.addDefault("getSpawnerType", "&2This is a(n) &e%creature% spawner&2.");
-        config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%&4.");
         config.addDefault("unknownArgument", "&4Unrecognized argument. See &e/silkspawners help");
+        config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%&4.");
         config.addDefault("useNumbers", "&4Please use a numeric number between 1 and 64!");
         config.addDefault("noConsole", "&4The console can not use this command!");
         config.addDefault("configsReloaded", "&2Successfully reloaded the configs!");
