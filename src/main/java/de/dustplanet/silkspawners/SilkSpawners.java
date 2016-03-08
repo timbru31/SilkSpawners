@@ -262,6 +262,72 @@ public class SilkSpawners extends JavaPlugin {
             getLogger().info("Loading custom recipes");
         }
 
+        // Add "base" recipe for eggs containing no durability (not from SilkSpawners)
+        // 1.9 deprecated the durability and uses NBT tags
+        short baseSpawnerEntityID  = su.name2Eid.get(config.getString("defaultCreature", "90"));
+        int baseSpawnerAmount = config.getInt("recipeAmount", 1);
+        ItemStack baseSpawnerItem = su.newSpawnerItem(baseSpawnerEntityID, "&e&o??? &r&fSpawner", baseSpawnerAmount, false);
+        ShapedRecipe baseSpawnerRecipe = new ShapedRecipe(baseSpawnerItem);
+
+
+        String baseSpawnerTop = config.getString("recipeTop", "AAA");
+        String baseSpawnerMiddle = config.getString("recipeMiddle", "AXA");
+        String baseSpawnerBottom = config.getString("recipeBottom", "AAA");
+
+        // Set the shape
+        baseSpawnerRecipe.shape(baseSpawnerTop, baseSpawnerMiddle, baseSpawnerBottom);
+
+        List<String> baseSpawnerIngredientsList = config.getStringList("ingredients");
+
+        // Security first
+        if (baseSpawnerIngredientsList != null && !baseSpawnerIngredientsList.isEmpty()) {
+            try {
+                List<String> baseSpawnerShape = Arrays.asList(baseSpawnerRecipe.getShape());
+                // We have an ingredient that is not in our shape. Ignore it then
+                if (shapeContainsIngredient(baseSpawnerShape, 'X')) {
+                    // Use the right egg!
+                    baseSpawnerRecipe.setIngredient('X', SilkUtil.SPAWN_EGG);
+                }
+
+                for (String ingredient : baseSpawnerIngredientsList) {
+                    // They are added like this A,DIRT
+                    // Lets split the "," then
+                    String[] ingredients = ingredient.split(",");
+                    // if our array is not exactly of the size 2, something is wrong
+                    if (ingredients.length != 2) {
+                        getLogger().info("ingredient length of default invalid: " + ingredients.length);
+                        continue;
+                    }
+                    // Maybe they put a string in here, so first position and uppercase
+                    char character = ingredients[0].toUpperCase().charAt(0);
+                    // We have an ingredient that is not in our shape. Ignore it then
+                    if (!shapeContainsIngredient(baseSpawnerShape, character)) {
+                        getLogger().info("shape of default does not contain " + character);
+                        continue;
+                    }
+                    // We try to get the material (ID or name)
+                    Material material = Material.matchMaterial(ingredients[1]);
+                    // Failed!
+                    if (material == null) {
+                        getLogger().info("shape material " + ingredients[1] + " of default spawner matched null");
+                        material = Material.IRON_FENCE;
+                    }
+                    baseSpawnerRecipe.setIngredient(character, material);
+                }
+            } catch (IllegalArgumentException e) {
+                // If the custom recipe fails, we have a fallback
+                getLogger().warning("Could not add the default recipe!");
+                e.printStackTrace();
+                baseSpawnerRecipe.shape(new String[] {"AAA", "ABA", "AAA"});
+                baseSpawnerRecipe.setIngredient('A', Material.IRON_FENCE);
+                // Use the right egg!
+                baseSpawnerRecipe.setIngredient('B', SilkUtil.SPAWN_EGG);
+            } finally {
+                // Add it
+                getServer().addRecipe(baseSpawnerRecipe);
+            }
+        }
+
         // For all our entities
         for (short entityID : su.eid2MobID.keySet()) {
 
@@ -371,7 +437,7 @@ public class SilkSpawners extends JavaPlugin {
                         getLogger().info("shape of " +  mobID + " contains X");
                     }
                     // Use the right egg!
-                    recipe.setIngredient('X', Material.MONSTER_EGG, entityID);
+                    recipe.setIngredient('X', SilkUtil.SPAWN_EGG, entityID);
                 }
                 for (String ingredient : ingredientsList) {
                     // They are added like this A,DIRT
@@ -405,7 +471,7 @@ public class SilkSpawners extends JavaPlugin {
                 recipe.shape(new String[] {"AAA", "ABA", "AAA"});
                 recipe.setIngredient('A', Material.IRON_FENCE);
                 // Use the right egg!
-                recipe.setIngredient('B', Material.MONSTER_EGG, entityID);
+                recipe.setIngredient('B', SilkUtil.SPAWN_EGG, entityID);
             } finally {
                 // Add it
                 getServer().addRecipe(recipe);
