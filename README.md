@@ -167,15 +167,25 @@ useLegacyName: false
 
 ## Commands
 
-**SilkSpawners**
-* Aliases: silkspawner, ss, spawner, silk, spawnersilk
-* Description: Change or view the monster spawner creature type
-* Usage: /silkspawners [creature]|[creature]egg|all|reload
+Aliases:
+* silkspawners
+* silkspawner
+* ss
+* spawner
+* silk
+* spawnersilk
+* egg
+* eggs
+* eg
 
-**Egg**
-* Aliases: eggs, eg
-* Description: Change the egg type
-* Usage: /egg [creature]|[creature]egg|all|reload
+| Command | Description |
+|:-------:|:-----------:|
+| /ss help | Displays the help menu. |
+| /ss list&#124;all | Displays all available creatures. |
+| /ss view | Displays information about the viewed spawner. |
+| /ss reload&#124;rl | Reloads the configuration files. |
+| /ss change&#124;set <newMob> | Changes the spawner you are currently holding or viewing at. |
+| /ss give&#124;add <player> <mob> [amount] | Gives a spawner or egg to the player. Amount is optional. |
 
 ## Permissions
 (Fallback to OPs, if no permissions system is found)

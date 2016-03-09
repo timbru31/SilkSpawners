@@ -233,8 +233,7 @@ public class SilkUtil {
             }
         }
 
-        // Set the defaultID for spawners (-> memo, on some spawners it seems 0
-        // -> pig is 90)
+        // Set the defaultID for spawners -> pig is 90)
         setDefaultEntityID(EntityType.PIG.getTypeId());
 
         // Should we use something else as the default?
@@ -249,7 +248,9 @@ public class SilkUtil {
                     defaultCreatureString = getCreatureName(entityID).toLowerCase();
                 }
             } catch (NumberFormatException e) {
-                // Name then
+                if (verbose) {
+                    plugin.getLogger().info("default creature was not a number");
+                }
             }
             // If we know the internal name
             if (name2Eid.containsKey(defaultCreatureString)) {
