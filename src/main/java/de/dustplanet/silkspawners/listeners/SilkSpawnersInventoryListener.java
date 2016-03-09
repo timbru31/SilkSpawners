@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
@@ -30,6 +31,26 @@ public class SilkSpawnersInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
+        // Check for MobSpawner
+        if (event.getRecipe().getResult().getType() != Material.MOB_SPAWNER) {
+            return;
+        }
+
+        ItemStack result = event.getRecipe().getResult();
+
+        // See if a spawnegg has no durability (vanilla egg), read NBT tag and prepare result
+        for (ItemStack itemStack : event.getInventory().getContents()) {
+            if (itemStack.getType() == SilkUtil.SPAWN_EGG && itemStack.getDurability() == 0) {
+                short entityID = su.getStoredEggEntityID(itemStack);
+                String mobID = su.eid2MobID.get(entityID);
+                result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), result.getAmount(), true);
+                event.getInventory().setResult(result);
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onItemCraft(CraftItemEvent event) {
         // Null checks, somehow errors appeared...
         if (event == null || event.getCurrentItem() == null
@@ -49,20 +70,8 @@ public class SilkSpawnersInventoryListener implements Listener {
 
         Player player = (Player) event.getWhoClicked();
 
-        ItemStack result = event.getCurrentItem();
-
-        for (ItemStack itemStack : event.getInventory().getContents()) {
-            if (itemStack.getType() == SilkUtil.SPAWN_EGG && itemStack.getDurability() == 0) {
-                plugin.getServer().getLogger().warning("Found vanilla spawn egg in crafting recipe of a spawner. Please use SilkSpawners to receive spawn eggs instead!");
-                short entityID = su.getStoredEggEntityID(itemStack);
-                String mobID = su.eid2MobID.get(entityID);
-                result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), result.getAmount(), true);
-                event.setCurrentItem(result);
-            }
-        }
-
         // Variables
-        short entityID = su.getStoredSpawnerItemEntityID(result);
+        short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
         // Pig here again
         if (entityID == 0 || !su.knownEids.contains(entityID)) {
             entityID = su.getDefaultEntityID();
