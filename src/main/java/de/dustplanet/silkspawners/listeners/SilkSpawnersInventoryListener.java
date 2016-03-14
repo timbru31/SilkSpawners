@@ -32,6 +32,11 @@ public class SilkSpawnersInventoryListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
+        // Fix http://hastebin.com/okumefefex.avrasm
+        if (event.getRecipe() == null || event.getRecipe().getResult() == null) {
+            return;
+        }
+
         // Check for MobSpawner
         if (event.getRecipe().getResult().getType() != Material.MOB_SPAWNER) {
             return;

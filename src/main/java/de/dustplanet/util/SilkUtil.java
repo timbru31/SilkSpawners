@@ -567,8 +567,12 @@ public class SilkUtil {
             }
         }
 
-        // Fallback to Bukkit
-        return ((CreatureSpawner) blockState).getSpawnedType().getTypeId();
+        // Fallback to Bukkit (and fix http://pastebin.com/NQJsgt6L)
+        CreatureSpawner spawner  = (CreatureSpawner) blockState;
+        if (spawner.getSpawnedType() != null) {
+            return spawner.getSpawnedType().getTypeId();
+        }
+        return 0;
     }
 
     // Sets the creature of a spawner
