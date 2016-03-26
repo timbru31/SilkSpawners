@@ -635,7 +635,7 @@ public class SilkUtil {
     public boolean setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
         // Changing denied by WorldGuard?
         if (!canBuildHere(player, block.getLocation())) {
-            player.sendMessage(messageDenied);
+            sendMessage(player, messageDenied);
             return false;
         }
         // Set the spawner and message the player
@@ -731,7 +731,7 @@ public class SilkUtil {
         // Strip last comma out
         String message = builder.toString();
         message = message.substring(0, message.length() - ", ".length());
-        sender.sendMessage(message);
+        sendMessage(sender, message);
     }
 
     // Scan through all entities
@@ -771,13 +771,13 @@ public class SilkUtil {
             // Old bars will be overridden
             BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime", 3));
         } else {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawner1")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawner2")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawner3")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
         }
@@ -931,6 +931,17 @@ public class SilkUtil {
             // Old (1.6 e.g.) versions do not support UUID and return an Array, not a Collection
             // That's why plugin.getServer().getOnlinePlayers() doesn't work.
             return plugin.getServer().getPlayerExact(playerUUIDOrName);
+        }
+    }
+
+    /**
+     * Sends a message to a Player or CommandSender with support for newlines
+     * @param receiver the receiver of the message
+     * @param messages message with support for newlines
+     */
+    public void sendMessage(CommandSender receiver, String messages) {
+        for (String message : messages.split("\r")) {
+            receiver.sendMessage(message);
         }
     }
 

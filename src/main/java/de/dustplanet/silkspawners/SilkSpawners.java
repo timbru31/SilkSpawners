@@ -502,7 +502,7 @@ public class SilkSpawners extends JavaPlugin {
             return;
         }
         if (player.hasPermission("silkspawners.info")) {
-            player.sendMessage(message);
+            su.sendMessage(player, message);
         }
     }
 

@@ -90,7 +90,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
 
                 if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                    su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                             plugin.localization.getString("noPermissionChangingWithEggs")));
                     event.setCancelled(true);
                     return;
@@ -101,7 +101,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
                     if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
                         event.setCancelled(true);
-                        player.sendMessage(ChatColor
+                        su.sendMessage(player, ChatColor
                                 .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
                         return;
                     }
@@ -121,7 +121,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                 su.setSpawnerType(block, entityID, player, ChatColor.translateAlternateColorCodes('\u0026',
                         plugin.localization.getString("changingDeniedWorldGuard")));
-                player.sendMessage(ChatColor
+                su.sendMessage(player, ChatColor
                         .translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
                         .replace("%creature%", su.getCreatureName(entityID)));
 
@@ -143,7 +143,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                             su.reduceEggs(player);
                         }
                     } else {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+                        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                                 plugin.localization.getString("noSpawnerHere")));
                     }
                     event.setCancelled(true);
@@ -159,7 +159,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     }
                     // Deny spawning
                     if (!allowed) {
-                        player.sendMessage(ChatColor
+                        su.sendMessage(player, ChatColor
                                 .translateAlternateColorCodes('\u0026',
                                         plugin.localization.getString("spawningDenied").replace("%ID%",
                                                 Short.toString(entityID)))

@@ -44,7 +44,8 @@ public class SilkSpawnersInventoryListener implements Listener {
 
         ItemStack result = event.getRecipe().getResult();
 
-        // See if a spawnegg has no durability (vanilla egg), read NBT tag and prepare result
+        // See if a spawnegg has no durability (vanilla egg), read NBT tag and
+        // prepare result
         for (ItemStack itemStack : event.getInventory().getContents()) {
             if (itemStack.getType() == SilkUtil.SPAWN_EGG && itemStack.getDurability() == 0) {
                 short entityID = su.getStoredEggEntityID(itemStack);
@@ -58,8 +59,7 @@ public class SilkSpawnersInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onItemCraft(CraftItemEvent event) {
         // Null checks, somehow errors appeared...
-        if (event == null || event.getCurrentItem() == null
-                || event.getWhoClicked() == null) {
+        if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
 
@@ -86,7 +86,9 @@ public class SilkSpawnersInventoryListener implements Listener {
         String spawnerName = creatureName.toLowerCase().replace(" ", "");
         if (!player.hasPermission("silkspawners.craft." + spawnerName)) {
             event.setCancelled(true);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID))).replace("%creature%", spawnerName));
+            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID)))
+                    .replace("%creature%", spawnerName));
             return;
         }
     }
@@ -94,8 +96,7 @@ public class SilkSpawnersInventoryListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
         // Null checks, somehow errors appeared...
-        if (event == null || event.getCurrentItem() == null
-                || event.getWhoClicked() == null) {
+        if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
 

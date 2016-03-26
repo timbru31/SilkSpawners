@@ -192,7 +192,7 @@ public class SilkSpawnersBlockListener implements Listener {
         // Check for place permission
         if (!player.hasPermission("silkspawners.place." + spawnerName)) {
             event.setCancelled(true);
-            player.sendMessage(ChatColor.translateAlternateColorCodes('\u0026',
+            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID)))
                     .replace("%creature%", creatureName));
             return;
