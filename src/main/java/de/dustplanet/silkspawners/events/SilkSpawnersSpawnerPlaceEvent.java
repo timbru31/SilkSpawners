@@ -8,12 +8,11 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 /**
- * Event called when a spawner is changed by SilkSpawners.
+ * Event called when a spawner is placed by SilkSpawners.
  *
- * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */
-public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable {
+public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable {
     /**
      * Handlers list.
      */
@@ -35,11 +34,6 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     private short id;
 
     /**
-     * current (old) EntityID of the spawner.
-     */
-    private final short oldID;
-
-    /**
      * Block involved.
      */
     private Block block;
@@ -50,61 +44,18 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     private CreatureSpawner spawner;
 
     /**
-     * Amount of items being changed.
-     */
-    private int amount;
-
-    /**
-     * This constructor should not be used anymore,
-     * because the new one carries information about the
-     * current entityID of the spawner block or item.
-     *
-     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
-     */
-    @Deprecated
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
-        this.player = player;
-        this.block = block;
-        if (block != null) {
-            this.spawner = (CreatureSpawner) block.getState();
-        }
-        this.id = id;
-        this.oldID = 0;
-        this.setAmount(1);
-    }
-
-    /**
-     * Constructor of the event. Please note that the amount is a fallback to 1
-     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
-     */
-    @Deprecated
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID) {
-        this.player = player;
-        this.block = block;
-        if (block != null) {
-            this.spawner = (CreatureSpawner) block.getState();
-        }
-        this.id = id;
-        this.oldID = oldID;
-        this.setAmount(1);
-    }
-
-    /**
      * Constructor of the event.
      * @param player who issues the event
      * @param block is allowed to be null
      * @param id new ID
-     * @param oldID of the spawner
      */
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID, int amount) {
+    public SilkSpawnersSpawnerPlaceEvent(Player player, Block block, short id) {
         this.player = player;
         this.block = block;
         if (block != null) {
             this.spawner = (CreatureSpawner) block.getState();
         }
         this.id = id;
-        this.oldID = oldID;
-        this.setAmount(amount);
     }
 
     /**
@@ -163,30 +114,6 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      */
     public void setEntityID(short id) {
         this.id = id;
-    }
-
-    /**
-     * Gets the old entityID of the spawner (item or block).
-     * May return 0 if the deprecated constructor is used!
-     */
-    public short getOldEntityID() {
-        return this.oldID;
-    }
-
-    /**
-     * Gets the amount of the ItemStack.
-     * @return the amount
-     */
-    public int getAmount() {
-        return amount;
-    }
-
-    /**
-     * Sets the amount of the ItemStack.
-     * @param amount of the ItemStack
-     */
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 
     /**

@@ -17,6 +17,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerBreakEvent;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerPlaceEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -57,6 +59,16 @@ public class SilkSpawnersBlockListener implements Listener {
 
         // Get the entityID from the spawner
         short entityID = su.getSpawnerEntityID(block);
+
+        // Call the event and maybe change things!
+        SilkSpawnersSpawnerBreakEvent breakEvent = new SilkSpawnersSpawnerBreakEvent(player, block, entityID);
+        plugin.getServer().getPluginManager().callEvent(breakEvent);
+        // See if we need to stop
+        if (breakEvent.isCancelled()) {
+            return;
+        }
+        // Get the new ID (might be changed)
+        entityID = breakEvent.getEntityID();
 
         // Message the player about the broken spawner
         plugin.informPlayer(player,
@@ -184,6 +196,16 @@ public class SilkSpawnersBlockListener implements Listener {
             defaultID = true;
             entityID = su.getDefaultEntityID();
         }
+
+        // Call the event and maybe change things!
+        SilkSpawnersSpawnerPlaceEvent placeEvent = new SilkSpawnersSpawnerPlaceEvent(player, blockPlaced, entityID);
+        plugin.getServer().getPluginManager().callEvent(placeEvent);
+        // See if we need to stop
+        if (placeEvent.isCancelled()) {
+            return;
+        }
+        // Get the new ID (might be changed)
+        entityID = placeEvent.getEntityID();
 
         // Names
         String creatureName = su.getCreatureName(entityID);
