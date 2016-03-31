@@ -940,9 +940,7 @@ public class SilkUtil {
      * @param messages message with support for newlines
      */
     public void sendMessage(CommandSender receiver, String messages) {
-        for (String message : messages.split("\r")) {
-            receiver.sendMessage(message);
-        }
+        receiver.sendMessage(messages.split("\n"));
     }
 
     /*
