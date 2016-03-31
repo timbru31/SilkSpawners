@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -300,5 +301,21 @@ public class NMSHandler implements NMSProvider {
                 bar.setProgress(bar.getProgress() - interval);
             }
         }.runTaskTimerAsynchronously(plugin, 0, 1L);
+    }
+
+    @Override
+    public Player getPlayer(String playerUUIDOrName) {
+        try {
+            // Try if the String could be an UUID
+            UUID playerUUID = UUID.fromString(playerUUIDOrName);
+            return Bukkit.getPlayer(playerUUID);
+        } catch (IllegalArgumentException e) {
+            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                if (onlinePlayer.getName().equalsIgnoreCase(playerUUIDOrName)) {
+                    return onlinePlayer;
+                }
+            }
+        }
+        return null;
     }
 }

@@ -106,7 +106,7 @@ public class SpawnerCommand implements CommandExecutor {
         }
 
         // Check player
-        Player player = su.getPlayer(receiver);
+        Player player = su.nmsProvider.getPlayer(receiver);
         // Online check
         if (player == null) {
             su.sendMessage(sender,

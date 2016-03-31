@@ -245,4 +245,9 @@ public class NMSHandler implements NMSProvider {
         // Only implemented in >= 1.9
         return;
     }
+
+    @Override
+    public Player getPlayer(String playerUUIDOrName) {
+        return Bukkit.getPlayerExact(playerUUIDOrName);
+    }
 }

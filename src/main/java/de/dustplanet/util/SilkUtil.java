@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -928,25 +927,6 @@ public class SilkUtil {
             return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
         }
         return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
-    }
-
-    /**
-     * Get the player regardless of UUID or name supplied.
-     * @param playerUUIDOrName a String with a name or UUID
-     * @return the player if found otherwise null
-     */
-    public Player getPlayer(String playerUUIDOrName) {
-        try {
-            // Try if the String could be an UUID
-            UUID playerUUID = UUID.fromString(playerUUIDOrName);
-            return plugin.getServer().getPlayer(playerUUID);
-        } catch (NoSuchMethodError | IllegalArgumentException e) {
-            // Use deprecated method as a fallback.
-            // Potential candidate to be used in NMS interface.
-            // Old (1.6 e.g.) versions do not support UUID and return an Array, not a Collection
-            // That's why plugin.getServer().getOnlinePlayers() doesn't work.
-            return plugin.getServer().getPlayerExact(playerUUIDOrName);
-        }
     }
 
     /**
