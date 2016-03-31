@@ -118,6 +118,17 @@ barAPI:
   enable: false
   displayTime: 3
  
+# Configure displaying with 1.9 BossBarApi, time is in seconds
+vanillaBossBar:
+  enable: true
+  displayTime: 3
+ 
+  # Valid colors are BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW
+  color: RED
+ 
+  # Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
+  style: SOLID
+ 
 # Prevent that a spawner is changed via eggs in other territories
 factionsSupport: false
  

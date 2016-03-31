@@ -28,12 +28,10 @@
       <id>Plugin Metrics</id>
       <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository>
-    <!-- Repo is down as of 02/25/16
     <repository>
       <id>confuser-repo</id>
       <url>http://ci.frostcast.net/plugin/repository/everything</url>
     </repository>
-    -->
     <repository>
       <id>gravity-repo</id>
       <url>http://repo.gravitydevelopment.net</url>
@@ -81,7 +79,7 @@
     <dependency>
       <groupId>me.confuser</groupId>
       <artifactId>BarAPI</artifactId>
-      <version>3.3</version>
+      <version>3.4</version>
     </dependency>
     <dependency>
       <groupId>com.massivecraft</groupId>

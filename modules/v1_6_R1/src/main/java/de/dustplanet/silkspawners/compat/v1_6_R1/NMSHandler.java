@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_6_R1.Entity;
@@ -221,7 +222,13 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public String getVanillaEggNBTEntityID(ItemStack item) {
-        // EntityTag.id for eggs was added in 1.9 only
+        // EntityTag.id for eggs was added in >= 1.9
         return null;
+    }
+
+    @Override
+    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
+        // Only implemented in >= 1.9
+        return;
     }
 }

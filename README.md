@@ -20,6 +20,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Localization
 * Economy addon [SilkSpawnersEcoAddon](http://dev.bukkit.org/bukkit-plugins/silkspawnersecoaddon)
 * Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
+* BossBarAPI support for >= 1.9, otherwise BarAPI can be used
 
 *Third party features, all of them can be disabled*
 * Metrics for usage statistics
@@ -151,6 +152,17 @@ notifyOnHold: true
 barAPI:
   enable: false
   displayTime: 3
+
+# Configure displaying with 1.9 BossBarApi, time is in seconds
+vanillaBossBar:
+  enable: true
+  displayTime: 3
+
+  # Valid colors are BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW
+  color: RED
+
+  # Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
+  style: SOLID
 
 # Prevent that a spawner is changed via eggs in other territories
 factionsSupport: false

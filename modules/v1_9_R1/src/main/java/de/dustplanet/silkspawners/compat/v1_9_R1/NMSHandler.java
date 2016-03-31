@@ -11,6 +11,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
@@ -18,6 +21,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_9_R1.Entity;
@@ -274,5 +279,26 @@ public class NMSHandler implements NMSProvider {
             return tag.getString("id");
         }
         return null;
+    }
+
+    @Override
+    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
+        BarColor color = BarColor.valueOf(colorName.toUpperCase());
+        BarStyle style = BarStyle.valueOf(styleName.toUpperCase());
+        final BossBar bar = Bukkit.createBossBar(title, color, style);
+        bar.addPlayer(player);
+        bar.setVisible(true);
+        final double interval = 1.0 / (period * 20L);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (bar.getProgress() <= 0.0) {
+                    bar.setVisible(false);
+                    bar.removeAll();
+                    this.cancel();
+                }
+                bar.setProgress(bar.getProgress() - interval);
+            }
+        }.runTaskTimerAsynchronously(plugin, 0, 1L);
     }
 }

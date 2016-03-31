@@ -325,6 +325,14 @@ public class SilkUtil {
     }
 
     /**
+     * Returns if vanilla boss bar is used.
+     * @return whether vanilla boss bar is used or not
+     */
+    public boolean isVanillaBossBar() {
+        return plugin.config.getBoolean("vanillaBossBar.enable", true);
+    }
+
+    /**
      * Sets if BarAPI should be used or not.
      * @param barAPI true or false
      */
@@ -523,9 +531,8 @@ public class SilkUtil {
         return durability;
     }
 
-    // Return whether mob is recognized by Bukkit's wrappers
     /**
-     * Lookup if the mob is known.
+     * Lookup if mob is recognized by Bukkit's wrappers.
      * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
@@ -770,6 +777,14 @@ public class SilkUtil {
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
             // Old bars will be overridden
             BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime", 3));
+        } else if (isVanillaBossBar()) {
+            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("informationOfSpawnerBar")
+                    .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
+            String barColor = plugin.config.getString("vanillaBossBar.color", "RED");
+            String barStyle = plugin.config.getString("vanillaBossBar.style", "SOLID");
+            int barTime = plugin.config.getInt("vanillaBossBar.displayTime", 3);
+            nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
             sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawner1")

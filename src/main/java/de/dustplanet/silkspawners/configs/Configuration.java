@@ -555,6 +555,13 @@ public class Configuration {
         config.addDefault("barAPI.enable", false);
         config.addDefault("barAPI.displayTime", 3);
         config.addComment("barAPI", "", "# Configure displaying with BarAPI, time is in seconds");
+        config.addDefault("vanillaBossBar.enable", true);
+        config.addDefault("vanillaBossBar.displayTime", 3);
+        config.addDefault("vanillaBossBar.color", "RED");
+        config.addComment("vanillaBossBar.color", "", "# Valid colors are BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW");
+        config.addDefault("vanillaBossBar.style", "SOLID");
+        config.addComment("vanillaBossBar.style", "", "# Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID");
+        config.addComment("vanillaBossBar", "", "# Configure displaying with 1.9 BossBarApi, time is in seconds");
         config.addDefault("factionsSupport", false);
         config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
         config.addDefault("verboseConfig", false);
