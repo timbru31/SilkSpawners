@@ -27,6 +27,9 @@ public interface NMSProvider {
     ItemStack newEggItem(short entityID, String entity, int amount);
     String getVanillaEggNBTEntityID(ItemStack item);
     void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period);
-    //ItemStack getItemInHand(Player player);
+    ItemStack getItemInHand(Player player);
+    ItemStack getSpawnerItemInHand(Player player);
+    void setSpawnerItemInHand(Player player, ItemStack newItem);
+    void reduceEggs(Player player);
     Player getPlayer(String playerUUIDOrName);
 }

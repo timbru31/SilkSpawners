@@ -257,4 +257,32 @@ public class NMSHandler implements NMSProvider {
         }
         return null;
     }
+
+    @Override
+    public ItemStack getItemInHand(Player player) {
+        return player.getItemInHand();
+    }
+
+    @Override
+    public void reduceEggs(Player player) {
+        ItemStack eggs = player.getItemInHand();
+        // Make it empty
+        if (eggs.getAmount() == 1) {
+            player.setItemInHand(null);
+        } else {
+            // Reduce egg
+            eggs.setAmount(eggs.getAmount() - 1);
+            player.setItemInHand(eggs);
+        }
+    }
+
+    @Override
+    public ItemStack getSpawnerItemInHand(Player player) {
+        return player.getItemInHand();
+    }
+
+    @Override
+    public void setSpawnerItemInHand(Player player, ItemStack newItem) {
+        player.setItemInHand(newItem);
+    }
 }

@@ -376,14 +376,15 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(short entityID, String customName, int amount, boolean forceLore) {
+        String spawnerName = customName;
         if (customName == null || customName.isEmpty()) {
-            customName = "Monster Spawner";
+            spawnerName = "Monster Spawner";
         }
         ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
         ItemMeta meta = item.getItemMeta();
         // Check if we need a colored name
-        if (!customName.equalsIgnoreCase("Monster Spawner")) {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
+        if (!spawnerName.equalsIgnoreCase("Monster Spawner")) {
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
         }
 
         // The way it should be stored (double sure!)
@@ -848,23 +849,6 @@ public class SilkUtil {
             return -1;
         }
     }
-
-    /**
-     * Reduces the egg (item stack) by 1.
-     * @param player the player
-     */
-    public void reduceEggs(Player player) {
-        ItemStack eggs = player.getItemInHand();
-        // Make it empty
-        if (eggs.getAmount() == 1) {
-            player.setItemInHand(null);
-        } else {
-            // Reduce egg
-            eggs.setAmount(eggs.getAmount() - 1);
-            player.setItemInHand(eggs);
-        }
-    }
-
 
     /**
      * @deprecated use {@link #isValidItemAndHasSilkTouch(ItemStack)} instead.

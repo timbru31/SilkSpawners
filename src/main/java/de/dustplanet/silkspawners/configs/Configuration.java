@@ -467,6 +467,7 @@ public class Configuration {
         config.addDefault("noSpawnerHere", "&4A spawner can not be placed here, because the block above is blocked!");
         config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
         config.addComment("lookAtSpawner", "");
+        config.addDefault("spawnerNotDeterminable", "&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!");
         config.addDefault("help1", "&7------&6SilkSpawners Help Menu&7------");
         config.addComment("help1", "");
         config.addDefault("help2", "&e/ss help &7- &2Displays the help menu.");

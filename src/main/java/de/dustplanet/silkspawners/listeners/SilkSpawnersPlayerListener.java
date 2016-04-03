@@ -81,6 +81,10 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
+                if (action != Action.RIGHT_CLICK_BLOCK && plugin.config.getBoolean("disableChangeTypeWithEgg", false)) {
+                    return;
+                }
+
                 // WorldGuard region protection
                 if (!su.canBuildHere(player, block.getLocation())) {
                     return;
@@ -127,7 +131,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                 // Consume egg
                 if (plugin.config.getBoolean("consumeEgg", true)) {
-                    su.reduceEggs(player);
+                    su.nmsProvider.reduceEggs(player);
                 }
                 // Normal spawning
             } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
@@ -140,7 +144,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                         // Prevent mob spawning
                         // Should we consume the egg?
                         if (plugin.config.getBoolean("consumeEgg", true)) {
-                            su.reduceEggs(player);
+                            su.nmsProvider.reduceEggs(player);
                         }
                     } else {
                         su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
@@ -186,7 +190,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     // We can spawn using the direct method from EntityTypes
                     su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z);
 
-                    su.reduceEggs(player);
+                    su.nmsProvider.reduceEggs(player);
 
                     // Prevent normal spawning
                     event.setCancelled(true);

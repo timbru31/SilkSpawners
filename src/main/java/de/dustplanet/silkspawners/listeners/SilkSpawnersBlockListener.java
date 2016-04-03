@@ -76,7 +76,7 @@ public class SilkSpawnersBlockListener implements Listener {
                 .replace("%creature%", su.getCreatureName(entityID)));
 
         // If using silk touch, drop spawner itself
-        ItemStack tool = player.getItemInHand();
+        ItemStack tool = su.nmsProvider.getItemInHand(player);
         // Check for SilkTocuh level
         boolean validToolAndSilkTouch = su.isValidItemAndHasSilkTouch(tool);
 

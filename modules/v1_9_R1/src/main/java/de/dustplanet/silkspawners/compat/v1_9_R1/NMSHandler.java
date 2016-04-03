@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -183,6 +184,12 @@ public class NMSHandler implements NMSProvider {
         tagList.add(spawnPotentials);
         tag.getCompound("BlockEntityTag").set("SpawnPotentials", tagList);
 
+        // SpawnEgg data
+        if (!tag.hasKey("EntityTag")) {
+            tag.set("EntityTag", new NBTTagCompound());
+        }
+        tag.getCompound("EntityTag").setString("id", entity);
+
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -317,5 +324,69 @@ public class NMSHandler implements NMSProvider {
             }
         }
         return null;
+    }
+
+    @Override
+    public ItemStack getItemInHand(Player player) {
+        return player.getInventory().getItemInMainHand();
+    }
+
+    @Override
+    public void reduceEggs(Player player) {
+        ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+        ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
+        ItemStack eggs;
+        if (itemInMainHand.getType() == Material.MONSTER_EGG) {
+            eggs = itemInMainHand;
+            // Make it empty
+            if (eggs.getAmount() == 1) {
+                player.getInventory().setItemInMainHand(null);
+            } else {
+                // Reduce egg
+                eggs.setAmount(eggs.getAmount() - 1);
+                player.getInventory().setItemInMainHand(eggs);
+            }
+        } else {
+            eggs = itemInOffHand;
+            // Make it empty
+            if (eggs.getAmount() == 1) {
+                player.getInventory().setItemInOffHand(null);
+            } else {
+                // Reduce egg
+                eggs.setAmount(eggs.getAmount() - 1);
+                player.getInventory().setItemInOffHand(eggs);
+            }
+        }
+    }
+
+    @Override
+    public ItemStack getSpawnerItemInHand(Player player) {
+        PlayerInventory inv = player.getInventory();
+        ItemStack mainHand = inv.getItemInMainHand();
+        ItemStack offHand = inv.getItemInOffHand();
+        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
+                && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
+            return null; // not determinable which was wanted
+        } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
+            return mainHand;
+        } else if (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER) {
+            return offHand;
+        }
+        return null;
+    }
+
+    @Override
+    public void setSpawnerItemInHand(Player player, ItemStack newItem) {
+        PlayerInventory inv = player.getInventory();
+        ItemStack mainHand = inv.getItemInMainHand();
+        ItemStack offHand = inv.getItemInOffHand();
+        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
+                && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
+            return; // not determinable which was wanted
+        } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
+            inv.setItemInMainHand(newItem);
+        } else if (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER) {
+            inv.setItemInOffHand(newItem);
+        }
     }
 }
