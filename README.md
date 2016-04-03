@@ -122,6 +122,9 @@ enableCreatureDefault: true
 # Should numbers be ignored (on eggs) and allow every number value?
 ignoreCheckNumbers: false
 
+# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.
+disableChangeTypeWithEgg: false
+
 # Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)
 spawnEggToSpawner: false
 

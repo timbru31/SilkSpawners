@@ -532,6 +532,8 @@ public class Configuration {
         config.addComment("enableCreatureDefault", "", "# Fallback if the creature should be enabled, if not specified for the entity");
         config.addDefault("ignoreCheckNumbers", false);
         config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
+        config.addDefault("disableChangeTypeWithEgg", false);
+        config.addComment("disableChangeTypeWithEgg", "", "# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.");
         config.addDefault("spawnEggToSpawner", false);
         config.addComment("spawnEggToSpawner", "", "# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)");
         config.addDefault("spawnEggOverride", false);
