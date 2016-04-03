@@ -366,7 +366,7 @@ public class NMSHandler implements NMSProvider {
         ItemStack offHand = inv.getItemInOffHand();
         if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
                 && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
-            return null; // not determinable which was wanted
+            return null; // not determinable
         } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
             return mainHand;
         } else if (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER) {
@@ -382,7 +382,7 @@ public class NMSHandler implements NMSProvider {
         ItemStack offHand = inv.getItemInOffHand();
         if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
                 && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
-            return; // not determinable which was wanted
+            return; // not determinable
         } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
             inv.setItemInMainHand(newItem);
         } else if (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER) {

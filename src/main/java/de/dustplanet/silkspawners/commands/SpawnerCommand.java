@@ -261,7 +261,7 @@ public class SpawnerCommand implements CommandExecutor {
             Material itemMaterial;
             try {
                 itemMaterial = itemInHand.getType();
-            } catch(NullPointerException  e) {
+            } catch (NullPointerException e) {
                 itemMaterial = null;
             }
 
