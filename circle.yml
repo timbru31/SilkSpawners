@@ -1,0 +1,7 @@
+machine:
+  java:
+    version: oraclejdk7
+test:
+  override:
+    - mvn -version
+    - mvn clean package
