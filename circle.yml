@@ -1,7 +1,7 @@
 machine:
   java:
     version: oraclejdk7
-dependency:
+dependencies:
   pre:
     - mvn -version
     - mvn clean install
