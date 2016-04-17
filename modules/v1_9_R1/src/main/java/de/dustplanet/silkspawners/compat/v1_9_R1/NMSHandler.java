@@ -300,12 +300,13 @@ public class NMSHandler implements NMSProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (bar.getProgress() <= 0.0) {
+                double progress = bar.getProgress();
+                if (progress <= 0.0 || progress - interval <= 0.0) {
                     bar.setVisible(false);
                     bar.removeAll();
                     this.cancel();
                 }
-                bar.setProgress(bar.getProgress() - interval);
+                bar.setProgress(progress - interval);
             }
         }.runTaskTimerAsynchronously(plugin, 0, 1L);
     }
