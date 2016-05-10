@@ -301,12 +301,14 @@ public class NMSHandler implements NMSProvider {
             @Override
             public void run() {
                 double progress = bar.getProgress();
-                if (progress <= 0.0 || progress - interval <= 0.0) {
+                double newProgress = progress - interval;
+                if (progress <= 0.0 || newProgress <= 0.0) {
                     bar.setVisible(false);
                     bar.removeAll();
                     this.cancel();
+                } else {
+                    bar.setProgress(newProgress);
                 }
-                bar.setProgress(progress - interval);
             }
         }.runTaskTimerAsynchronously(plugin, 0, 1L);
     }
