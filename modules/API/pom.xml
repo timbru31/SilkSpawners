@@ -16,9 +16,8 @@
     <!-- Repositories -->
   <repositories>
     <repository>
-      <id>Dustplanet Snapshots</id>
-      <name>Dustplanet-snapshots</name>
-      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+      <id>dustplanet</id>
+      <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
     </repository>
   </repositories>
 
