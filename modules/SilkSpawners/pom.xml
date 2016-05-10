@@ -37,7 +37,11 @@
       <url>http://repo.gravitydevelopment.net</url>
     </repository>
     <repository>
-      <id>Dustplanet Releases</id>
+      <id>dustplanet</id>
+      <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
+    </repository>
+      <repository>
+      <id>dustplanet-releases</id>
       <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
   </repositories>
@@ -47,7 +51,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.9.2-R0.1-SNAPSHOT</version>
+      <version>1.9.4-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
@@ -173,6 +177,12 @@
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_9_R1</artifactId>
       <version>v1_9_R1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
+      <artifactId>SilkSpawners-v1_9_R2</artifactId>
+      <version>v1_9_R2</version>
       <type>jar</type>
     </dependency>
     <dependency>

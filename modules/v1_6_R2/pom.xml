@@ -16,9 +16,8 @@
   <!-- Repositories -->
   <repositories>
     <repository>
-      <id>Dustplanet Releases</id>
-      <name>Dustplanet-releases</name>
-      <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
+      <id>dustplanet</id>
+      <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
     </repository>
   </repositories>
 

@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>SilkSpawners-v1_7_R1</artifactId>
+  <artifactId>SilkSpawners-v1_9_R2</artifactId>
   <packaging>jar</packaging>
-  <name>SilkSpawners for v1_7_R1</name>
-  <version>v1_7_R1</version>
+  <name>SilkSpawners for v1_9_R2</name>
+  <version>v1_9_R2</version>
 
   <parent>
     <groupId>de.dustplanet</groupId>
@@ -25,8 +25,14 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>craftbukkit</artifactId>
-      <version>1.7.2-R0.3</version>
+      <version>1.9.4-R0.1-SNAPSHOT</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>minecraft-server</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
