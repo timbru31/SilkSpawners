@@ -1,0 +1,9 @@
+<settings>
+  <servers>
+    <server>
+      <id>dustplanet</id>
+      <username>${env.CI_USER}</username>
+      <password>${env.CI_PASSWORD}</password>
+    </server>
+  </servers>
+</settings>

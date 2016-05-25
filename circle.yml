@@ -4,9 +4,9 @@ machine:
 dependencies:
   pre:
     - mvn -version
-    - mvn clean install
+    - mvn -s conf/settings.xml clean install
   override:
-    - mvn dependency:resolve
+    - mvn -s conf/settings.xml dependency:resolve
 test:
   override:
-    - mvn clean package
+    - mvn -s conf/settings.xml clean package
