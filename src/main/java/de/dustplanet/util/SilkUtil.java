@@ -115,8 +115,10 @@ public class SilkUtil {
     public SilkUtil(SilkSpawners instance) {
         getWorldGuard(instance);
         plugin = instance;
-        setupNMSProvider();
-        load();
+        boolean nmsProviderFound = setupNMSProvider();
+        if (nmsProviderFound) {
+            load();
+        }
     }
 
     /**
