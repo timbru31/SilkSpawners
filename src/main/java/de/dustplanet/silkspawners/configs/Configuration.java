@@ -348,6 +348,17 @@ public class Configuration {
         config.addDefault("creatures.Shulker.enable", true);
         config.addDefault("creatures.Shulker.enableCraftingSpawner", true);
         config.addDefault("creatures.Shulker.enableSpawnEggOverride", true);
+        tempList = new ArrayList<>();
+        // PolarBear
+        tempList.add("bear");
+        tempList.add("polar");
+        tempList.add("ursus");
+        tempList.add("whitebear");
+        tempList.add("icebear");
+        config.addDefault("creatures.PolarBear.aliases", tempList);
+        config.addDefault("creatures.PolarBear.enable", true);
+        config.addDefault("creatures.PolarBear.enableCraftingSpawner", true);
+        config.addDefault("creatures.PolarBear.enableSpawnEggOverride", true);
         // Item
         config.addDefault("creatures.Item.enable", false);
         config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
