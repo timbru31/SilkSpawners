@@ -14,6 +14,11 @@ import java.util.HashMap;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.YamlConstructor;
+import org.bukkit.configuration.file.YamlRepresenter;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.representer.Representer;
 
 /**
  * Custom configuration with the ability to add comments.
@@ -25,11 +30,32 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class CommentedConfiguration extends YamlConfiguration {
     private HashMap<String, String> comments;
     private File file;
+    private final DumperOptions yamlOptions = new DumperOptions();
+    private final Representer yamlRepresenter = new YamlRepresenter();
+    private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+
 
     public CommentedConfiguration(File file) {
         super();
         comments = new HashMap<>();
         this.file = file;
+    }
+
+    @Override
+    public String saveToString() {
+        yamlOptions.setIndent(options().indent());
+        yamlOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.LITERAL);
+        yamlOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+        yamlRepresenter.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+
+        String header = buildHeader();
+        String dump = yaml.dump(getValues(false));
+
+        if (dump.equals(BLANK_CONFIG)) {
+            dump = "";
+        }
+
+        return header + dump;
     }
 
     public boolean load() {
