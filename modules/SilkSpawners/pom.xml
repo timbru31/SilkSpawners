@@ -96,6 +96,11 @@
       <version>2.8.16</version>
     </dependency>
     <dependency>
+      <groupId>com.massivecraft</groupId>
+      <artifactId>Factions</artifactId>
+      <version>1.6.9.5-U0.1.19-RC1</version>
+    </dependency>
+    <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_5_R1</artifactId>
       <version>v1_5_R1</version>

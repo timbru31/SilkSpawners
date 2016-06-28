@@ -14,6 +14,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.entity.BoardColl;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.MPlayer;
@@ -101,13 +105,27 @@ public class SilkSpawnersPlayerListener implements Listener {
                 }
 
                 if (plugin.config.getBoolean("factionsSupport", false)) {
-                    MPlayer mp = MPlayer.get(player);
-                    Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
-                    if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
-                        event.setCancelled(true);
-                        su.sendMessage(player, ChatColor
-                                .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
-                        return;
+                    try {
+                        MPlayer mp = MPlayer.get(player);
+                        Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
+                        if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
+                            event.setCancelled(true);
+                            su.sendMessage(player, ChatColor
+                                    .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                            return;
+                        }
+                    } catch (NoClassDefFoundError e) {
+                        // Try for legacy 1.6 factions, e.g. FactionsUUID
+                        FPlayers fPlayers = FPlayers.getInstance();
+                        FPlayer fPlayer = fPlayers.getByPlayer(player);
+                        Board board = Board.getInstance();
+                        com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
+                        if (!blockFaction.isWilderness() && !fPlayer.isInOwnTerritory()) {
+                            event.setCancelled(true);
+                            su.sendMessage(player, ChatColor
+                                    .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                            return;
+                        }
                     }
                 }
 
