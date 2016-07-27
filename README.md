@@ -5,6 +5,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/3uvrma09rul7myk5?svg=true)](https://ci.appveyor.com/project/timbru31/silkspawners)
 [![BukkitDev](https://img.shields.io/badge/BukkitDev-v3.7.3-orange.svg)](http://dev.bukkit.org/bukkit-plugins/silkspawners/)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
+[![Join the chat at https://gitter.im/timbru31/SilkSpawners](https://badges.gitter.im/timbru31/SilkSpawners.svg)](https://gitter.im/timbru31/SilkSpawners?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Info
 This CraftBukkit plugin adds a way to obtain the spawner with the corresponding mob when mined with SilkTouch and offers a various range of changing spawners.
