@@ -24,10 +24,12 @@
       <id>sk89q-repo</id>
       <url>http://maven.sk89q.com/repo/</url>
     </repository>
+    <!--
     <repository>
       <id>Plugin Metrics</id>
       <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository>
+    -->
     <repository>
       <id>confuser-repo</id>
       <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -40,9 +42,13 @@
       <id>dustplanet</id>
       <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
     </repository>
-      <repository>
+    <repository>
       <id>dustplanet-releases</id>
       <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
+    </repository>
+    <repository>
+      <id>dustplanet-snapshots</id>
+      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
     </repository>
   </repositories>
 
