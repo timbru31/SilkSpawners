@@ -38,7 +38,7 @@ public class NMSHandler implements NMSProvider {
             tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
-            Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+            Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -51,7 +51,7 @@ public class NMSHandler implements NMSProvider {
         // Should actually never happen since the method above
         // contains a null check, too
         if (entity == null) {
-            Bukkit.getLogger().warning("Failed to spawn, falling through. You should report this (entity == null)!");
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
             return;
         }
 
@@ -79,7 +79,7 @@ public class NMSHandler implements NMSProvider {
                 sortedMap.put(entry.getValue(), entry.getKey());
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-            Bukkit.getServer().getLogger().severe("Failed to dump entity map: " + e.getMessage());
+            Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }
         return sortedMap;
@@ -95,7 +95,7 @@ public class NMSHandler implements NMSProvider {
             // Get the name from the field of our spawner
             return tile.a().getMobName();
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+            Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
         }
         return "";
@@ -110,7 +110,7 @@ public class NMSHandler implements NMSProvider {
             maxStackSizeField.setAccessible(true);
             maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
-            Bukkit.getLogger().info("Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -127,7 +127,7 @@ public class NMSHandler implements NMSProvider {
             tile.a().a(mobID);
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
-            Bukkit.getServer().getLogger().info("Reflection failed: " + e.getMessage());
+            Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
         }
         return false;
@@ -140,6 +140,10 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
+        if (item == null || entityID == 0 || entity == null || entity.isEmpty()) {
+            Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
+        }
+
         net.minecraft.server.v1_6_R3.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
