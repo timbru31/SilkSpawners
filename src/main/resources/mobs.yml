@@ -190,6 +190,7 @@ creatures:
     - ironman
     - iron
     - ig
+    - irongolem
     displayName: Iron Golem
     enable: true
     enableCraftingSpawner: true
