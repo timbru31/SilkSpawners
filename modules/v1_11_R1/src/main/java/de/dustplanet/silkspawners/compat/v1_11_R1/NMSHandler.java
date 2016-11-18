@@ -3,7 +3,6 @@ package de.dustplanet.silkspawners.compat.v1_11_R1;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -33,7 +32,6 @@ import net.minecraft.server.v1_11_R1.EntityTypes;
 import net.minecraft.server.v1_11_R1.Item;
 import net.minecraft.server.v1_11_R1.MinecraftKey;
 import net.minecraft.server.v1_11_R1.NBTTagCompound;
-import net.minecraft.server.v1_11_R1.NBTTagList;
 import net.minecraft.server.v1_11_R1.RegistryMaterials;
 import net.minecraft.server.v1_11_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_11_R1.World;
@@ -64,15 +62,23 @@ public class NMSHandler implements NMSProvider {
             field.setAccessible(true);
             registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field.get(null);
         } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         if (registry == null) {
             Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (RegistryMaterials == null)!");
+            return;
         }
-        // TODO more null checks, since registry.getId is @Nullable
-        String mobString = registry.b(registry.getId(entityID)).a();
-        Entity entity = EntityTypes.a(new MinecraftKey(mobString), world);
+        Class<? extends Entity> entityClazz = registry.getId(entityID);
+        if (entityClazz == null) {
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entityClazz == null)!");
+            return;
+        }
+        MinecraftKey minecraftKey = registry.b(entityClazz);
+        if (minecraftKey == null) {
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (minecraftKey == null)!");
+            return;
+        }
+        Entity entity = EntityTypes.a(minecraftKey, world);
         // Should actually never happen since the method above
         // contains a null check, too
         if (entity == null) {
@@ -94,14 +100,13 @@ public class NMSHandler implements NMSProvider {
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
             // TODO Needs 1.11 source
-            // g.put(s, Integer.valueOf(i)); --> Name of ID
             Field field = EntityTypes.class.getDeclaredField("g");
             Field field2 = EntityTypes.class.getDeclaredField("b");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
             List<String> list = (List<String>) field.get(null);
             @SuppressWarnings("unchecked")
-            RegistryMaterials<MinecraftKey, Class<? extends Entity>> foo = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2.get(null);
+            RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2.get(null);
             
             // For each entry in our name -- ID map but it into the sortedMap
             for (int entityID = 0; entityID < list.size(); entityID++) {
@@ -109,7 +114,12 @@ public class NMSHandler implements NMSProvider {
                 if (displayName == null) {
                     continue;
                 }
-                MinecraftKey b = foo.b(foo.getId(entityID));
+                Class<? extends Entity> entity = registry.getId(entityID);
+                if (entity == null) {
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null");
+                    continue;
+                }
+                MinecraftKey b = registry.b(entity);
                 String a = b.a();
                 sortedMap.put(entityID, a);
             }
@@ -128,7 +138,8 @@ public class NMSHandler implements NMSProvider {
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Get the name from the field of our spawner
-            return tile.getSpawner().getMobName().b();
+            MinecraftKey minecraftKey = tile.getSpawner().getMobName();
+            return minecraftKey != null ? minecraftKey.b() : ""; 
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -208,17 +219,12 @@ public class NMSHandler implements NMSProvider {
             tag.getCompound("BlockEntityTag").set("SpawnPotentials", new NBTTagCompound());
         }
 
-        NBTTagList tagList = new NBTTagList();
-        NBTTagCompound spawnPotentials = new NBTTagCompound();
-        spawnPotentials.set("Entity", new NBTTagCompound());
-        spawnPotentials.getCompound("Entity").setString("id", entity);
-        spawnPotentials.setInt("Weight", 1);
-        tagList.add(spawnPotentials);
-        tag.getCompound("BlockEntityTag").set("SpawnPotentials", tagList);
-
         // SpawnEgg data
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
+        }
+        if (!entity.startsWith("minecraft:")) {
+            entity = "minecraft:" + entity;
         }
         tag.getCompound("EntityTag").setString("id", entity);
 
@@ -298,6 +304,9 @@ public class NMSHandler implements NMSProvider {
 
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
+        }
+        if (!entity.startsWith("minecraft:")) {
+            entity = "minecraft:" + entity;
         }
         tag.getCompound("EntityTag").setString("id", entity);
 
