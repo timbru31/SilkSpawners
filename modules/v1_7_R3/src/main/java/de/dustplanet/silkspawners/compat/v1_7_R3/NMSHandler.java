@@ -152,6 +152,7 @@ public class NMSHandler implements NMSProvider {
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
         if (item == null || entityID == 0 || entity == null || entity.isEmpty()) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
+            return null;
         }
 
         net.minecraft.server.v1_7_R3.ItemStack itemStack = null;
