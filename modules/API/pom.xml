@@ -16,8 +16,8 @@
     <!-- Repositories -->
   <repositories>
     <repository>
-      <id>dustplanet</id>
-      <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
+      <id>spigotmc-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
   </repositories>
 
