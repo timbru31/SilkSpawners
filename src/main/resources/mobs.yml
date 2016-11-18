@@ -337,6 +337,8 @@ creatures:
   elder_guardian:
     enable: true
   wither_skeleton:
+    aliases:
+      - witherskeleton
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -352,16 +354,22 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Husk
   zombie_villager:
+    aliases:
+      - zombievillager
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Zombie Villager
   skeleton_horse:
+    aliases:
+      - skeletonhorse
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Skeleton Horse
   zombie_horse:
+    aliases:
+      - zombiehorse
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -377,6 +385,8 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Mule
   evocation_illager:
+    aliases:
+      - evoker
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -387,11 +397,15 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Vex
   vindication_illager:
+    aliases:
+      - vindicator
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Vindicator
   llama:
+    aliases:
+      - spitter
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
