@@ -24,12 +24,6 @@
       <id>sk89q-repo</id>
       <url>http://maven.sk89q.com/repo/</url>
     </repository>
-    <!--
-    <repository>
-      <id>Plugin Metrics</id>
-      <url>http://repo.mcstats.org/content/repositories/public</url>
-    </repository>
-    -->
     <repository>
       <id>confuser-repo</id>
       <url>http://ci.frostcast.net/plugin/repository/everything</url>
@@ -57,7 +51,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.10-R0.1-SNAPSHOT</version>
+      <version>1.11-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
@@ -94,12 +88,12 @@
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>massivecore</artifactId>
-      <version>2.8.16</version>
+      <version>2.8.21</version>
     </dependency>
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>factions</artifactId>
-      <version>2.8.16</version>
+      <version>2.8.21</version>
     </dependency>
     <dependency>
       <groupId>com.massivecraft</groupId>
@@ -204,6 +198,12 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
+      <artifactId>SilkSpawners-v1_11_R1</artifactId>
+      <version>v1_11_R1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-API</artifactId>
       <version>API</version>
       <type>jar</type>
@@ -244,7 +244,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.6.0</version>
         <configuration>
           <verbose>true</verbose>
           <source>1.7</source>
@@ -289,7 +289,6 @@
       </plugin>
     </plugins>
   </build>
-
 
   <!-- Github information -->
   <scm>
