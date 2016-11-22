@@ -65,6 +65,7 @@ public class SilkSpawnersBlockListener implements Listener {
         plugin.getServer().getPluginManager().callEvent(breakEvent);
         // See if we need to stop
         if (breakEvent.isCancelled()) {
+            event.setCancelled(true);
             return;
         }
         // Get the new ID (might be changed)
@@ -202,6 +203,7 @@ public class SilkSpawnersBlockListener implements Listener {
         plugin.getServer().getPluginManager().callEvent(placeEvent);
         // See if we need to stop
         if (placeEvent.isCancelled()) {
+            event.setCancelled(true);
             return;
         }
         // Get the new ID (might be changed)
