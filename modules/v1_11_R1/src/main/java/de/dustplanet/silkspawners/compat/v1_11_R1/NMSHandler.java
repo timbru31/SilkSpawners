@@ -119,8 +119,12 @@ public class NMSHandler implements NMSProvider {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null");
                     continue;
                 }
-                MinecraftKey b = registry.b(entity);
-                String a = b.a();
+                MinecraftKey minecraftKey = registry.b(entity);
+                if (minecraftKey == null) {
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
+                    continue;
+                }
+                String a = minecraftKey.a();
                 sortedMap.put(entityID, a);
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
