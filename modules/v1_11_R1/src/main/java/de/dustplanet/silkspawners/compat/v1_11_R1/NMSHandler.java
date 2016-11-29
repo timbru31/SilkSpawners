@@ -107,7 +107,6 @@ public class NMSHandler implements NMSProvider {
             List<String> list = (List<String>) field.get(null);
             @SuppressWarnings("unchecked")
             RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2.get(null);
-            
             // For each entry in our name -- ID map but it into the sortedMap
             for (int entityID = 0; entityID < list.size(); entityID++) {
                 String displayName = list.get(entityID);
@@ -116,12 +115,22 @@ public class NMSHandler implements NMSProvider {
                 }
                 Class<? extends Entity> entity = registry.getId(entityID);
                 if (entity == null) {
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null");
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
                     continue;
                 }
-                MinecraftKey minecraftKey = registry.b(entity);
+                MinecraftKey minecraftKey = null;
+
+                try {
+                 minecraftKey = registry.b(entity);
+                } catch (ClassCastException e) {
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
+                    continue;
+                }
+
                 if (minecraftKey == null) {
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entityID: " + entityID);
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
                     continue;
                 }
                 String a = minecraftKey.a();
