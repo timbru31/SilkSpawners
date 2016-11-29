@@ -362,8 +362,9 @@ public class SpawnerCommand implements CommandExecutor {
 
     private void handleHelp(CommandSender sender) {
         for (int i = 1; i <= 7; i++) {
+            String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help" + i).replace("%version%", plugin.getDescription().getVersion()));
             su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help" + i)));
+                    message);
         }
     }
 
