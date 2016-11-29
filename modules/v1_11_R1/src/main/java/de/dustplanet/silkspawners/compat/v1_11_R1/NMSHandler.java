@@ -331,7 +331,7 @@ public class NMSHandler implements NMSProvider {
 
         tag = tag.getCompound("EntityTag");
         if (tag.hasKey("id")) {
-            return tag.getString("id");
+            return tag.getString("id").replace("minecraft:", "");
         }
         return null;
     }
