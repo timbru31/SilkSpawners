@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Event called when a spawner is broken by SilkSpawners.
@@ -42,6 +43,11 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable 
      * Spawner involved.
      */
     private CreatureSpawner spawner;
+
+    /**
+     * Overridden ItemStack that should instead be dropped.
+     */
+    private ItemStack drop;
 
     /**
      * Constructor of the event.
@@ -114,6 +120,22 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable 
      */
     public void setEntityID(short id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the overridden ItemStack.
+     * @return the overridden ItemStack to drop if set or null
+     */
+    public ItemStack getDrop() {
+        return drop;
+    }
+
+    /**
+     * Sets the ItemStack to drop.
+     * @param drop the ItemStack to drop
+     */
+    public void setDrop(ItemStack drop) {
+        this.drop = drop;
     }
 
     /**
