@@ -1,5 +1,6 @@
 package de.dustplanet.silkspawners.listeners;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -133,12 +134,21 @@ public class SilkSpawnersBlockListener implements Listener {
             }
             if (randomNumber < dropChance) {
                 // Drop spawner
-                ItemStack spawnerToDrop = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false);
-                if (spawnerToDrop == null) {
+                ItemStack spawnerItemStack = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false);
+                if (spawnerItemStack == null) {
                     plugin.getLogger().warning("Skipping dropping of spawner, since item is null");
                     return;
                 }
-                world.dropItemNaturally(block.getLocation(), spawnerToDrop);
+                if (plugin.getConfig().getBoolean("dropSpawnerToInventory", false)) {
+                    HashMap<Integer, ItemStack> additionalItems = player.getInventory().addItem(spawnerItemStack);
+                    if (!additionalItems.isEmpty()) {
+                        for (ItemStack itemStack : additionalItems.values()) {
+                            world.dropItemNaturally(block.getLocation(), itemStack);
+                        }
+                    }
+                } else {
+                    world.dropItemNaturally(block.getLocation(), spawnerItemStack);
+                }
             }
             return;
         }

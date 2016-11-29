@@ -41,6 +41,9 @@ destroyDropEgg: false
 # If a spawner is destroyed, should XP be dropped
 destroyDropXP: 0
  
+# If a spawner is mined, should it be directly added to the inventory of the player
+dropSpawnerToInventory: false
+ 
 # Flag a spawner as already mined to prevent XP duping
 preventXPFarming: true
  

@@ -62,7 +62,7 @@ public class Configuration {
         config.addDefault("creatures.creeper.enableCraftingSpawner", true);
         config.addDefault("creatures.creeper.enableSpawnEggOverride", true);
         config.addDefault("creatures.creeper.displayName", "Creeper");
-        
+
         tempList = new ArrayList<>();
         // Skeleton
         tempList.add("s");
@@ -726,7 +726,7 @@ public class Configuration {
         config.addDefault("creatures.llama_spit.enable", false);
         // evocation_fangs
         config.addDefault("creatures.evocation_fangs.enable", false);
-        
+
     }
 
     private void loadDefaultLocalization() {
@@ -815,6 +815,8 @@ public class Configuration {
         config.addComment("destroyDropEgg", "", "# If a spawner is destroyed, should the egg be dropped");
         config.addDefault("destroyDropXP", 0);
         config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
+        config.addDefault("dropSpawnerToInventory", false);
+        config.addComment("dropSpawnerToInventory", "", "# If a spawner is mined, should it be directly added to the inventory of the player");
         config.addDefault("preventXPFarming", true);
         config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
         config.addDefault("dropXPOnlyOnDestroy", false);

@@ -77,18 +77,21 @@ noDropsCreative: true
 # If a spawner is destroyed, should the egg be dropped
 destroyDropEgg: false
 
+# If a spawner is destroyed, should XP be dropped
+destroyDropXP: 0
+
+# If a spawner is mined, should it be directly added to the inventory of the player
+dropSpawnerToInventory: false
+
 # Flag a spawner as already mined to prevent XP duping
 preventXPFarming: true
 
 # Drops XP only when a spawner is destroyed and not mined via SilkTouch
 dropXPOnlyOnDestroy: false
 
-# If a spawner is destroyed, should XP be dropped
-destroyDropXP: 0
-
 # If a spawner is destroyed, should iron bars be dropped
 destroyDropBars: 0
-
+ 
 # Should the player be able to craft spawners
 craftableSpawners: false
 

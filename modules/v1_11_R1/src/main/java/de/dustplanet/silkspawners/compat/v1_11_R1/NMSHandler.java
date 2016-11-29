@@ -121,7 +121,7 @@ public class NMSHandler implements NMSProvider {
                 MinecraftKey minecraftKey = null;
 
                 try {
-                 minecraftKey = registry.b(entity);
+                    minecraftKey = registry.b(entity);
                 } catch (ClassCastException e) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
@@ -152,7 +152,7 @@ public class NMSHandler implements NMSProvider {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Get the name from the field of our spawner
             MinecraftKey minecraftKey = tile.getSpawner().getMobName();
-            return minecraftKey != null ? minecraftKey.b() : ""; 
+            return minecraftKey != null ? minecraftKey.b() : "";
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
