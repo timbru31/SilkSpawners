@@ -149,7 +149,7 @@ public class SilkUtil {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
             plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
-            plugin.getLogger().info("Check for updates at http://dev.bukkit.org/bukkit-plugins/silkspawners/");
+            plugin.getLogger().info("Check for updates at https://dev.bukkit.org/projects/silkspawners/");
             plugin.getLogger().info("Disabling SilkSpawners now!");
             clearAll();
             plugin.shutdown();

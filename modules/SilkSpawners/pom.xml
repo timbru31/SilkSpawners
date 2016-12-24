@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
   <version>3.8-SNAPSHOT</version>
   <name>SilkSpawners</name>
-  <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
+  <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
 
   <!-- Encode in UTF-8 -->

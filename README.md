@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
 [![Circle CI](https://img.shields.io/circleci/project/timbru31/SilkSpawners.svg)](https://circleci.com/gh/timbru31/SilkSpawners)
 [![Build status](https://ci.appveyor.com/api/projects/status/3uvrma09rul7myk5?svg=true)](https://ci.appveyor.com/project/timbru31/silkspawners)
-[![BukkitDev](https://img.shields.io/badge/BukkitDev-v3.7.4-orange.svg)](http://dev.bukkit.org/bukkit-plugins/silkspawners/)
+[![BukkitDev](https://img.shields.io/badge/BukkitDev-v3.7.4-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
 [![SpigotMC](https://img.shields.io/badge/SpigotMC-v3.7.4-orange.svg)](https://www.spigotmc.org/resources/7811/)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
 [![Join the chat at https://gitter.im/timbru31/SilkSpawners](https://badges.gitter.im/timbru31/SilkSpawners.svg)](https://gitter.im/timbru31/SilkSpawners?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -22,7 +22,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
   * MCPC(+) and ported mods (auto-detects IDs)
 * Flexible creature type names on input (pigman, zombiepigman, pigzombie, etc. all accepted), official names on output (Magma Cube, not "LavaSlime")
 * Localization
-* Economy addon [SilkSpawnersEcoAddon](http://dev.bukkit.org/bukkit-plugins/silkspawnersecoaddon)
+* Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 * Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 * BossBarAPI support for >= 1.9, otherwise BarAPI can be used
 
@@ -37,7 +37,7 @@ Please see [LICENSE.md](LICENSE.md) for more information.
 
 ## Standard config
 ```yaml
-# See documentation at http://dev.bukkit.org/bukkit-plugins/silkspawners/pages/configuration
+# See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration
 
 # Should the plugin automatically update if an update is available?
 autoUpdater: true
@@ -268,7 +268,7 @@ Aliases:
 * Jeroendedoem for the Dutch translation
 
 ## Support
-For support visit the dev.bukkit.org page: http://dev.bukkit.org/bukkit-plugins/silkspawners
+For support visit the dev.bukkit.org page: https://dev.bukkit.org/projects/silkspawners
 
 ## Pull Requests
 Feel free to submit any PRs here. :)

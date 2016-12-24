@@ -6,7 +6,7 @@
   <packaging>pom</packaging>
   <version>parent</version>
   <name>SilkSpawners Parent</name>
-  <url>http://dev.bukkit.org/bukkit-plugins/silkspawners/</url>
+  <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

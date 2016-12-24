@@ -788,7 +788,7 @@ public class Configuration {
     }
 
     private void loadDefaultConfig() {
-        config.options().header("See documentation at http://dev.bukkit.org/bukkit-plugins/silkspawners/pages/configuration");
+        config.options().header("See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration");
         config.addDefault("autoUpdater", true);
         config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
         config.addDefault("permissionExplode", false);
