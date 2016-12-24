@@ -22,11 +22,11 @@
     </repository>
     <repository>
       <id>sk89q-repo</id>
-      <url>http://maven.sk89q.com/repo/</url>
+      <url>https://maven.sk89q.com/repo/</url>
     </repository>
     <repository>
       <id>confuser-repo</id>
-      <url>http://ci.frostcast.net/plugin/repository/everything</url>
+      <url>https://ci.frostcast.net/plugin/repository/everything</url>
     </repository>
     <!--<repository>
       <id>gravity-repo</id>
@@ -34,15 +34,15 @@
     </repository>-->
     <repository>
       <id>dustplanet</id>
-      <url>http://repo.dustplanet.de/artifactory/craftbukkit</url>
+      <url>https://repo.dustplanet.de/artifactory/craftbukkit</url>
     </repository>
     <repository>
       <id>dustplanet-releases</id>
-      <url>http://repo.dustplanet.de/artifactory/ext-release-local</url>
+      <url>https://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
     <repository>
       <id>dustplanet-snapshots</id>
-      <url>http://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
+      <url>https://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
     </repository>
   </repositories>
 
