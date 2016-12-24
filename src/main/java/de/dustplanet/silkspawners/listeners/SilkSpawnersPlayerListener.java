@@ -150,6 +150,8 @@ public class SilkSpawnersPlayerListener implements Listener {
                 // Consume egg
                 if (plugin.config.getBoolean("consumeEgg", true)) {
                     su.nmsProvider.reduceEggs(player);
+                    // Prevent normal eggs reducing
+                    event.setCancelled(true);
                 }
                 // Normal spawning
             } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
