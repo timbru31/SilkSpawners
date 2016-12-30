@@ -1,0 +1,43 @@
+# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
+spawnerName: '&e%creature% &fSpawner'
+ 
+addedEgg: '&2Du har nå lagt til ett &e%amount% %creature% spawn egg &2til din Inventory!'
+addedEggOtherPlayer: '&2La til ett &e%amount% %creature% spawn egg &2til &e%player%&2sin inventory'
+addedSpawner: '&2La til ett &e%amount% %creature% spawner &2til din inventory'
+addedSpawnerOtherPlayer: '&2La til en &e%amount% %creature% Spawner &2til &e%player%&2sin inventory'
+noFreeSlot: '&4There is no free slot in the inventory!'
+ 
+noPermission: '&4Du har ikke lov til å bruke denne kommandoen!'
+noPermissionChangingEgg: '&4Du har ikke lov til å bytte spawning egg med /egg'
+noPermissionChangingSpawner: '&4Du har ikke lov til å bytte spawners med /spawner'
+noPermissionFreeEgg: '&4Du har ikke lov til spawne gratis egg!'
+noPermissionFreeSpawner: '&4Du har ikke riktig lov til å spawne gratis spawnere!'
+noPermissionViewType: '&4Du har ikke lov til å se hvilken spawner type dette er!'
+noPermissionChangingWithEggs: '&4Du har ikke lov til å bytte spawnere med spawn eggs!'
+noPermissionCraft: '&4Du har ikke lov til å crafte en &e%creature% &4spawner!'
+noPermissionPlace: '&4Du har ikke lov til å plassere en &e%creature% &4spawner!'
+ 
+changedEgg: '&2Du har nå endret egget til å bli ett &e%creature% spawn egg!'
+changedSpawner: '&2Du har nå endret Spawneren til en &e%creature% spawner'
+ 
+playerOffline: '&4Beklager denne brukeren er avlogget!'
+changingDeniedWorldGuard: '&4WorldGuard lar deg ikke forandre denne Spawneren!'
+getSpawnerType: '&2Dette er en &e%creature% spawner'
+unknownCreature: '&4Ukjent dyr &e%creature%'
+useNumbers: '&4Værsåsnill. Velg et nummer mellom 1 and 64!'
+configsReloaded: '&2Du har nå lastet inn ny data fra din konfigurasjon!'
+ 
+spawnerBroken: '&2%creature% &espawner ødelagt'
+spawnerPlaced: '&2%creature% &espawner plassert'
+placingDefault: '&ePlacing default spawner (Spawneren er ødelagt eller bugget!)'
+ 
+informationOfSpawner1: '-- Monster Spawner --'
+informationOfSpawner2: '-- Type: %creature% --'
+informationOfSpawner3: '-- EntityID: %ID% --'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+ 
+spawningDenied: '&4Spawning av &e%creature% (ID %ID%) &4benektet!'
+spawning: '&2Spawner en &e%creature% (ID %ID%)'
+noSpawnerHere: '&4En Spawner kan ikke bli plasert her, fordi blocken over den er blokkert!'
+ 
+lookAtSpawner: '&4Du må se direkte på en spawner.'

@@ -1,0 +1,43 @@
+# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
+spawnerName: '&e%creature% &fSpawner'
+ 
+addedEgg: '&2Berhasil menambahkan spawn egg &e%creature% &2kedalam inventory mu'
+addedEggOtherPlayer: '&2Menambahkan sebuah &e%creature% spawn egg &2kepada &e%player%&2''s inventory'
+addedSpawner: '&2Added a &e%creature% spawner &2to your inventory'
+addedSpawnerOtherPlayer: '&2Added a &e%creature% spawner &2to &e%player%&2''s inventory'
+noFreeSlot: '&4There is no free slot in the inventory!'
+ 
+noPermission: '&4Kamu tidak diperbolehkan untuk menggunakan perintah ini'
+noPermissionChangingEgg: '&4Kamu tidak diperbolehkan untuk mengganti spawn egg menggunakan /egg'
+noPermissionChangingSpawner: '&4Kamu tidak diperbolehkan untuk mengubah spawner menggunakan /spawner'
+noPermissionFreeEgg: '&4Kamu tidak diperbolehkan untuk mendapatkan spawn egg gratis'
+noPermissionFreeSpawner: '&4kamu tidak diperbolehkan untuk mendapatkan spawner gratis'
+noPermissionViewType: '&4Kamu tidak diperbolehkan untuk melihat jenis spawn ini!'
+noPermissionChangingWithEggs: '&4Kamu tidak diperbolehkan untuk mengubah spawner dengan spawn egg'
+noPermissionCraft: '&4Kamu tidak diperbolehkan untuk membuat spawner &e%creature%!'
+noPermissionPlace: '&4Kamu tidak diperbolehkan untuk menaruh spawner &e%creature%!'
+ 
+changedEgg: '&2Berhasil mengubah spawn egg tersebut menjadi &e%creature% spawn egg'
+changedSpawner: '&2Berhasil mengubah spawner tersebut menjadi &e%creature% spawner'
+ 
+playerOffline: '&4Maaf, player ini sedang offline!'
+changingDeniedWorldGuard: '&4Mengubah jenis spawner dilarang oleh proteksi WorldGuard'
+getSpawnerType: '&2Ini adalah spawner &e%creature%'
+unknownCreature: '&4Makhluk tak dikenal &e%creature%'
+useNumbers: '&4Mohon gunakan angka diantara 1 dan 64!'
+configsReloaded: '&2Berhasil me-reload config!'
+ 
+spawnerBroken: '&2%creature% &espawner dihancurkan'
+spawnerPlaced: '&2%creature% &espawner ditaruh'
+placingDefault: '&eMenaruh spawner biasa (Antara spawner ini cacad atau tidak diperbolehkan)'
+ 
+informationOfSpawner1: '-- Monster Spawner --'
+informationOfSpawner2: '-- Type: %creature% --'
+informationOfSpawner3: '-- EntityID: %ID% --'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+ 
+spawningDenied: '&4Pemanggilan &e%creature% (ID %ID%) &4ditolak!'
+spawning: '&2Memanggil &e%creature% (ID %ID%)'
+noSpawnerHere: '&4Spawner tidak bisa ditaruh disini, karena blok di atas di blokir!'
+ 
+lookAtSpawner: '&4Kamu harus melihat langsung sebuah spawner.'

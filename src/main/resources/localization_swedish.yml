@@ -1,0 +1,43 @@
+# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
+spawnerName: '&e%creature% &fSpawner'
+ 
+addedEgg: '&2Gav ett &e%amount% %creature% spawn ägg &2till dig.'
+addedEggOtherPlayer: '&2Gav ett &e%amount% %creature% spawn ägg &2till &e%player%&2.'
+addedSpawner: '&2Gav en &e%amount% %creature% spawner &2till dig.'
+addedSpawnerOtherPlayer: '&2Added a &e%amount% %creature% spawner &2till &e%player%&2.'
+noFreeSlot: '&4There is no free slot in the inventory!'
+ 
+noPermission: '&4Du har inte tillåtelse att använda detta kommando!'
+noPermissionChangingEgg: '&4Du har inte tillåtelse att ändra ägg med /egg!'
+noPermissionChangingSpawner: '&4Du har inte tillåtelse att ändra spawner med /spawner!'
+noPermissionFreeEgg: '&4Du har inte tillåtelse att ge dig själv gratis ägg!'
+noPermissionFreeSpawner: '&4Du har inte tillåtelse att ge dig själv gratis spawners!'
+noPermissionViewType: '&4Du har inte tillåtelse att se vilken typ av spawner detta är!'
+noPermissionChangingWithEggs: '&4Du har inte tillåtelse att ändra spawner med ägg!'
+noPermissionCraft: '&4Du har inte tillåtelse att tillverka en &e%creature% &4spawner!'
+noPermissionPlace: '&4Du har inte tillåtelse att placera en &e%creature% &4spawner!'
+ 
+changedEgg: '&2Ändrade ägget till &e%creature% spawn ägg.'
+changedSpawner: '&2Ändrade spawnern till &e%creature% spawner.'
+ 
+playerOffline: '&4Denna spelare är offline för tillfället!'
+changingDeniedWorldGuard: '&4Ändrandet av spawner nekades av Worldguard Proteciton.'
+getSpawnerType: '&2Detta är en &e%creature% spawner.'
+unknownCreature: '&4Okänd varelse &e%creature%.'
+useNumbers: '&4Använd ett mellan 1 och 64!'
+configsReloaded: 'Inställingarna laddades om!'
+ 
+spawnerBroken: '&eTog sönder en &2%creature% &espawner.'
+spawnerPlaced: '&ePlacerade en &2%creature% &espawner.'
+placingDefault: '&ePlacerar en normal spawner (antigen så är denna spawner okänd eller otillåten).'
+ 
+informationOfSpawner1: '-- Monster Spawner --'
+informationOfSpawner2: '-- Typ: %creature% --'
+informationOfSpawner3: '-- ID: %ID% --'
+informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%&f, ID: %ID%'
+ 
+spawningDenied: '&4Försök av att spawna en &e%creature% (ID %ID%) &4nekat'
+spawning: '&2Spawnar &e%creature% (ID %ID%)'
+noSpawnerHere: '&4Du kan inte placera en spawner här, blocket ovanför är blockerat.'
+ 
+lookAtSpawner: '&4Titta eller peka mot spawnern.'
