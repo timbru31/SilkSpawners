@@ -1,12 +1,12 @@
 # Questa linea influisce sul nome dei nuovi spawners, per DISABILITARE questo ri-cambia il messaggio a "Monster Spawner".
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Aggiunto con successo l''uovo di &e%creature% &2al tuo inventario'
 addedEggOtherPlayer: '&2Aggiunto un uovo di &e%creature% &2all''inventario di &e%player%'
 addedSpawner: '&2Aggiunto uno spawner di &e%creature% &2al tuo inventario'
 addedSpawnerOtherPlayer: '&2Aggiunto uno spawner di &e%creature% &2all''inventario di %player%'
 noFreeSlot: '&4There is no free slot in the inventory!'
- 
+
 noPermission: '&4Non hai il permesso di usare questo comando'
 noPermissionChangingEgg: '&4Non hai il permesso di cambiare le uova con /egg'
 noPermissionChangingSpawner: ' &4Non hai il permesso di cambiare gli spawner con /spawner '
@@ -16,28 +16,28 @@ noPermissionViewType: '&4Non hai il permesso di vedere il tipo di spawner'
 noPermissionChangingWithEggs: '&4Non hai il permesso di cambiare gli spawner con le uova'
 noPermissionCraft: '&4Non hai il permesso di creare uno spawner di &e%creature%'
 noPermissionPlace: '&4Non hai il permesso di piazzare uno spawner di &e%creature%!'
- 
+
 changedEgg: '&2Cambiato con successo l''uovo ad uno di &e%creature%'
 changedSpawner: '&2Cambiato con successo lo spawner ad uno di &e%creature%'
- 
+
 playerOffline: '&4Questo player non è online!'
 changingDeniedWorldGuard: '&4Cambio del tipo di spawner impedito dalla protezione di WorldGuard'
 getSpawnerType: '&2Questo è uno spawner di &e%creature%'
 unknownCreature: '&4Mob sconosciuto: &e%creature%'
 useNumbers: '&4Usa un numero fra 1 e 64!'
 configsReloaded: '&2Configurazioni ricaricate con successo!'
- 
+
 spawnerBroken: '&eSpawner di &2%creature% &erimosso'
 spawnerPlaced: '&eSpawner di &2%creature% &epiazzato'
 placingDefault: '&ePiazzando lo spawner di default (forse questo spawner è invalido o disabilitato)'
- 
+
 informationOfSpawner1: '-- Spawner di Mob --'
 informationOfSpawner2: '-- Tipo: %creature% --'
 informationOfSpawner3: '-- ID Entità: %ID% --'
 informationOfSpawnerBar: 'Spawner di Mob, Tipo: &e%creature%&f, ID: %ID%'
- 
+
 spawningDenied: '&4Creazione di &e%creature% (ID %ID%) &4bloccata!'
 spawning: '&2Creando &e%creature% (ID: %ID%)'
 noSpawnerHere: '&4Lo spawner non può essere piazzato qui poichè il blocco sopra è bloccato!'
- 
+
 lookAtSpawner: '&4Devi guardare direttamente lo spawner.'

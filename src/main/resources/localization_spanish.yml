@@ -6,13 +6,13 @@
 
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 spawnerName: '&fGenerador de &e%creature%'
- 
+
 addedEgg: '&2Agregado exitosamente &e%amount% de huevo(s) de spawn de %creature% &2a tu inventario.'
 addedEggOtherPlayer: '&2Agregado &e%amount% de huevo(s) de spawn de %creature% &2al inventario de &e%player%&2.'
 addedSpawner: '&2Agregados &e%amount% Generador(es) de %creature% &2a tu inventario.'
 addedSpawnerOtherPlayer: '&2Agregados &e%amount% Generador(es) de %creature% &2al inventario de &e%player%&2.'
 noFreeSlot: '&4No hay espacio insuficiente en tu inventario!'
- 
+
 noPermission: '&4No tienes permiso para utilizar este comando!'
 noPermissionChangingEgg: '&4No tienes permiso para cambiar huevos generadores!'
 noPermissionChangingSpawner: '&4No tienes permiso para cambiar generadores!'
@@ -22,10 +22,10 @@ noPermissionViewType: '&4No tienes permiso para ver el tipo de entidad de este g
 noPermissionChangingWithEggs: '&4No tienes permiso para cambiar el generador con huevos generadores!'
 noPermissionCraft: '&4No tienes permiso para fabricar un generador de &e%creature%&4!'
 noPermissionPlace: '&4No tienes permiso para poner un generador de &e%creature%&4!'
- 
+
 changedEgg: '&2Huevo cambiado exitosamente a un huevo generador de &e%creature%.'
 changedSpawner: '&2Generador cambiado exitosamente a un generador de &e%creature%.'
- 
+
 playerOffline: '&4Lo sentimos, el jugador esta offline!'
 changingDeniedFactions: '&4No tienes permitido cambiar generadores en territorios ajenos!'
 changingDeniedWorldGuard: '&4Cambiar tipo de generador fue negado por la proteccion de WorldGuard.'
@@ -35,24 +35,24 @@ unknownCreature: '&4Criatura desconocida: &e%creature%&4.'
 useNumbers: '&4Por favor usa numeros numericos entre 1 y 64!'
 noConsole: '&4La consola no puede usar este comando!'
 configsReloaded: '&2Configuracion recargada!'
- 
+
 spawnerBroken: '&eGenerador de &2%creature% &eroto.'
 spawnerPlaced: '&eGenerador de &2%creature% &epuesto.'
 placingDefault: '&ePoniendo generador predeterminado (sera que este generador es invalido o esta bloqueado)'
- 
+
 informationOfSpawner1: -- Generador de monstruos --
 informationOfSpawner2: '-- Tipo: %creature% --'
 informationOfSpawner3: '-- ID de entidad: %ID% --'
 informationOfSpawnerBar: 'Generador de monstruos, Tipo: &e%creature%&f, ID de entidad: %ID%'
- 
+
 spawningDenied: '&4Spawneo de criatura &e%creature% (ID de entidad %ID%) &4denegado!'
 spawning: '&2Spawneando criatura &e%creature% (ID de entidad %ID%)'
 noSpawnerHere: '&4Un generador no se puede poner aqui, debido a que el bloque superior esta bloqueado!'
- 
+
 lookAtSpawner: '&4Debes mirar directamente a un generador.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner
   or egg in both hands. Please make one empty!'
- 
+
 help1: '&7------&6Menu de ayuda de SilkSpawners&7------'
 help2: '&e/ss help &7- &2Mostrar el menu de ayuda.'
 help3: '&e/ss list|all &7- &2Mostrar todas las criaturas disponibles.'
