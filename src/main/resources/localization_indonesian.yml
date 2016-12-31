@@ -21,10 +21,13 @@ changedEgg: '&2Berhasil mengubah spawn egg tersebut menjadi &e%creature% spawn e
 changedSpawner: '&2Berhasil mengubah spawner tersebut menjadi &e%creature% spawner'
  
 playerOffline: '&4Maaf, player ini sedang offline!'
+changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Mengubah jenis spawner dilarang oleh proteksi WorldGuard'
 getSpawnerType: '&2Ini adalah spawner &e%creature%'
+unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'
 unknownCreature: '&4Makhluk tak dikenal &e%creature%'
 useNumbers: '&4Mohon gunakan angka diantara 1 dan 64!'
+noConsole: '&4The console can not use this command!'
 configsReloaded: '&2Berhasil me-reload config!'
  
 spawnerBroken: '&2%creature% &espawner dihancurkan'
@@ -41,3 +44,12 @@ spawning: '&2Memanggil &e%creature% (ID %ID%)'
 noSpawnerHere: '&4Spawner tidak bisa ditaruh disini, karena blok di atas di blokir!'
  
 lookAtSpawner: '&4Kamu harus melihat langsung sebuah spawner.'
+spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
+ 
+help1: '&7------&6SilkSpawners v%version% Help Menu&7------'
+help2: '&e/ss help &7- &2Displays the help menu.'
+help3: '&e/ss list|all &7- &2Displays all available creatures.'
+help4: '&e/ss view &7- &2Displays information about the viewed spawner.'
+help5: '&e/ss reload|rl &7- &2Reloads the configuration files.'
+help6: '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
+help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'

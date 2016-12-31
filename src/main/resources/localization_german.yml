@@ -1,4 +1,4 @@
-# Diese Linie bezieht sich auf den Item Namen, zum Ausschalten bearbeiten zu Monster Spawner
+# Diese Zeile bezieht sich auf den Item Namen, zum Ausschalten bearbeiten zu Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
  
 addedEgg: '&2Erfolgreich &e%amount% %creature% Ei(er) &2zu deinem Inventar hinzugefügt'
@@ -43,9 +43,10 @@ spawningDenied: '&4Spawnen von &e%creature% (ID %ID%) &4nicht erlaubt!'
 spawning: '&2Spawne ein(en) &e%creature% (ID %ID%)'
 noSpawnerHere: '&4Ein Spawner kann hier nicht aufgestellt werden, da der Block oberhalb nicht frei ist!'
  
-lookAtSpawner: '&4Du musst den Spawner direkt angucken'
+lookAtSpawner: '&4Du musst den Spawner direkt anschauen'
+spawnerNotDeterminable: '&4Du hast entweder keinen Spawner oder ein Ei in deiner Hand, oder in beiden Händen etwas. Bitte mache eine leer!'
  
-help1: '&7------&6SilkSpawners Hilfsmenü&7------'
+help1: '&7------&6SilkSpawners v%version% Hilfe&7------'
 help2: '&e/ss help &7- &2Zeigt diese Hilfe.'
 help3: '&e/ss list|all &7- &2Zeigt alle Kreaturen.'
 help4: '&e/ss view &7- &2Zeigt informationen über den angeschauten Spawner.'

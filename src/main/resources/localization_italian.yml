@@ -1,12 +1,12 @@
 # Questa linea influisce sul nome dei nuovi spawners, per DISABILITARE questo ri-cambia il messaggio a "Monster Spawner".
 spawnerName: '&e%creature% &fSpawner'
-
+ 
 addedEgg: '&2Aggiunto con successo l''uovo di &e%creature% &2al tuo inventario'
 addedEggOtherPlayer: '&2Aggiunto un uovo di &e%creature% &2all''inventario di &e%player%'
 addedSpawner: '&2Aggiunto uno spawner di &e%creature% &2al tuo inventario'
 addedSpawnerOtherPlayer: '&2Aggiunto uno spawner di &e%creature% &2all''inventario di %player%'
 noFreeSlot: '&4There is no free slot in the inventory!'
-
+ 
 noPermission: '&4Non hai il permesso di usare questo comando'
 noPermissionChangingEgg: '&4Non hai il permesso di cambiare le uova con /egg'
 noPermissionChangingSpawner: ' &4Non hai il permesso di cambiare gli spawner con /spawner '
@@ -16,28 +16,40 @@ noPermissionViewType: '&4Non hai il permesso di vedere il tipo di spawner'
 noPermissionChangingWithEggs: '&4Non hai il permesso di cambiare gli spawner con le uova'
 noPermissionCraft: '&4Non hai il permesso di creare uno spawner di &e%creature%'
 noPermissionPlace: '&4Non hai il permesso di piazzare uno spawner di &e%creature%!'
-
+ 
 changedEgg: '&2Cambiato con successo l''uovo ad uno di &e%creature%'
 changedSpawner: '&2Cambiato con successo lo spawner ad uno di &e%creature%'
-
+ 
 playerOffline: '&4Questo player non è online!'
+changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Cambio del tipo di spawner impedito dalla protezione di WorldGuard'
 getSpawnerType: '&2Questo è uno spawner di &e%creature%'
+unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'
 unknownCreature: '&4Mob sconosciuto: &e%creature%'
 useNumbers: '&4Usa un numero fra 1 e 64!'
+noConsole: '&4The console can not use this command!'
 configsReloaded: '&2Configurazioni ricaricate con successo!'
-
+ 
 spawnerBroken: '&eSpawner di &2%creature% &erimosso'
 spawnerPlaced: '&eSpawner di &2%creature% &epiazzato'
 placingDefault: '&ePiazzando lo spawner di default (forse questo spawner è invalido o disabilitato)'
-
+ 
 informationOfSpawner1: '-- Spawner di Mob --'
 informationOfSpawner2: '-- Tipo: %creature% --'
 informationOfSpawner3: '-- ID Entità: %ID% --'
 informationOfSpawnerBar: 'Spawner di Mob, Tipo: &e%creature%&f, ID: %ID%'
-
+ 
 spawningDenied: '&4Creazione di &e%creature% (ID %ID%) &4bloccata!'
 spawning: '&2Creando &e%creature% (ID: %ID%)'
 noSpawnerHere: '&4Lo spawner non può essere piazzato qui poichè il blocco sopra è bloccato!'
-
+ 
 lookAtSpawner: '&4Devi guardare direttamente lo spawner.'
+spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
+ 
+help1: '&7------&6SilkSpawners v%version% Help Menu&7------'
+help2: '&e/ss help &7- &2Displays the help menu.'
+help3: '&e/ss list|all &7- &2Displays all available creatures.'
+help4: '&e/ss view &7- &2Displays information about the viewed spawner.'
+help5: '&e/ss reload|rl &7- &2Reloads the configuration files.'
+help6: '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
+help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'
