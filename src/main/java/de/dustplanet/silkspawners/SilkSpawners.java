@@ -193,7 +193,11 @@ public class SilkSpawners extends JavaPlugin {
             childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, true);
         }
         Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, permDefault, childPermissions);
-        getServer().getPluginManager().addPermission(perm);
+        try {
+            getServer().getPluginManager().addPermission(perm);
+        } catch (IllegalArgumentException e) {
+            getLogger().info("Permission " + perm.getName() + " is already registered. Skipping...");
+        }
     }
 
     private void initializeConfigs() {
