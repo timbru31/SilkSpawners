@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bstats.Metrics;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -18,7 +19,6 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
 
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
@@ -124,14 +124,7 @@ public class SilkSpawners extends JavaPlugin {
         getServer().getPluginManager().registerEvents(inventoryListener, this);
         getServer().getPluginManager().registerEvents(entityListener, this);
 
-        // Metrics
-        try {
-            Metrics metrics = new Metrics(this);
-            metrics.start();
-        } catch (IOException e) {
-            getLogger().info("Couldn't start Metrics, please report this!");
-            e.printStackTrace();
-        }
+        new Metrics(this);
 
         // BarAPI check
         if (config.getBoolean("barAPI.enable", false)) {
