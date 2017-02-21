@@ -39,19 +39,14 @@ import net.gravitydevelopment.updater.Updater;
  */
 
 public class SilkSpawners extends JavaPlugin {
-    private SilkSpawnersBlockListener blockListener;
-    private SilkSpawnersPlayerListener playerListener;
-    private SilkSpawnersInventoryListener inventoryListener;
-    private SilkSpawnersEntityListener entityListener;
-    private SpawnerCommand spawnerCommand;
-    private SilkSpawnersTabCompleter tabCompleter;
     private SilkUtil su;
-    private File configFile, localizationFile, mobsFile;
     private Updater updater;
     private String nmsVersion;
     private static final int PLUGIN_ID = 35890;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1"};
-    public CommentedConfiguration config, localization, mobs;
+    public CommentedConfiguration config;
+    public CommentedConfiguration localization;
+    public CommentedConfiguration mobs;
 
     @Override
     public void onDisable() {
@@ -108,17 +103,17 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         // Commands
-        spawnerCommand = new SpawnerCommand(this, su);
-        tabCompleter = new SilkSpawnersTabCompleter(su);
+        SpawnerCommand spawnerCommand = new SpawnerCommand(this, su);
+        SilkSpawnersTabCompleter tabCompleter = new SilkSpawnersTabCompleter(su);
         getCommand("silkspawners").setExecutor(spawnerCommand);
         getCommand("silkspawners").setTabCompleter(tabCompleter);
 
 
         // Listeners
-        blockListener = new SilkSpawnersBlockListener(this, su);
-        playerListener = new SilkSpawnersPlayerListener(this, su);
-        inventoryListener = new SilkSpawnersInventoryListener(this, su);
-        entityListener = new SilkSpawnersEntityListener(this, su);
+        SilkSpawnersBlockListener blockListener = new SilkSpawnersBlockListener(this, su);
+        SilkSpawnersPlayerListener playerListener = new SilkSpawnersPlayerListener(this, su);
+        SilkSpawnersInventoryListener inventoryListener = new SilkSpawnersInventoryListener(this, su);
+        SilkSpawnersEntityListener entityListener = new SilkSpawnersEntityListener(this, su);
         getServer().getPluginManager().registerEvents(blockListener, this);
         getServer().getPluginManager().registerEvents(playerListener, this);
         getServer().getPluginManager().registerEvents(inventoryListener, this);
@@ -195,7 +190,7 @@ public class SilkSpawners extends JavaPlugin {
 
     private void initializeConfigs() {
         // Config
-        configFile = new File(getDataFolder(), "config.yml");
+        File configFile = new File(getDataFolder(), "config.yml");
         // One file and the folder not existent
         if (!configFile.exists() && !getDataFolder().exists() && !getDataFolder().mkdirs()) {
             getLogger().severe("The config folder could NOT be created, make sure it's writable!");
@@ -209,13 +204,13 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         // Localization
-        localizationFile = new File(getDataFolder(), "localization.yml");
+        File localizationFile = new File(getDataFolder(), "localization.yml");
         if (!localizationFile.exists()) {
             copy("localization.yml", localizationFile);
         }
 
         // Mobs
-        mobsFile = new File(getDataFolder(), "mobs.yml");
+        File mobsFile = new File(getDataFolder(), "mobs.yml");
         if (!mobsFile.exists()) {
             copy("mobs.yml", mobsFile);
         }
@@ -370,7 +365,9 @@ public class SilkSpawners extends JavaPlugin {
             // changed it right ;)
             try {
                 // Per type recipe?
-                String top, middle, bottom;
+                String top;
+                String middle;
+                String bottom;
 
                 // Top
                 if (mobs.contains("creatures." + mobID + ".recipe.top")) {

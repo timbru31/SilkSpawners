@@ -237,10 +237,13 @@ public class NMSHandler implements NMSProvider {
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
         }
+        String prefixedEntity;
         if (!entity.startsWith("minecraft:")) {
-            entity = "minecraft:" + entity;
+            prefixedEntity = "minecraft:" + entity;
+        } else {
+            prefixedEntity = entity;
         }
-        tag.getCompound("EntityTag").setString("id", entity);
+        tag.getCompound("EntityTag").setString("id", prefixedEntity);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }
@@ -319,10 +322,14 @@ public class NMSHandler implements NMSProvider {
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
         }
+
+        String prefixedEntity;
         if (!entity.startsWith("minecraft:")) {
-            entity = "minecraft:" + entity;
+            prefixedEntity = "minecraft:" + entity;
+        } else {
+            prefixedEntity = entity;
         }
-        tag.getCompound("EntityTag").setString("id", entity);
+        tag.getCompound("EntityTag").setString("id", prefixedEntity);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }

@@ -205,7 +205,9 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                     // Spawn on top of targeted block
                     Location location = block.getLocation().add(0, 1, 0);
-                    double x = location.getX(), y = location.getY(), z = location.getZ();
+                    double x = location.getX();
+                    double y = location.getY();
+                    double z = location.getZ();
 
                     // We can spawn using the direct method from EntityTypes
                     su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z);
