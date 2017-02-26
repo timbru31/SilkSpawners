@@ -46,10 +46,11 @@ noSpawnerHere: '&4En Spawner kan ikke bli plassert her, fordi blokken over den e
 lookAtSpawner: '&4Du må se direkte på en spawner når du gjør dette.'
 spawnerNotDeterminable: '&4Du har enten ingen spawner/egg i hånden, eller så har du i begge hendene. Prøv igjen med bare èn.'
  
-help1: '&7------&6SilkSpawners v%version% Help Menu&7------'
-help2: '&e/ss help &7- &2Viser menyen for hjelp.'
-help3: '&e/ss list|all &7- &2Viser alle tilgjengelige "vesener".'
-help4: '&e/ss view &7- &2Vis informasjon om Spawneren du ser på.'
-help5: '&e/ss reload|rl &7- &2Last inn konfigurasjonen på nytt.'
-help6: '&e/ss change <newMob> &7- &2Forandrer Spawneren du holder/ser på.'
-help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gir en Spawner/Egg til en spiller. Antall er valgfritt.'
+help: |-
+  '&7------&6SilkSpawners v%version% Help Menu&7------'
+  '&e/ss help &7- &2Viser menyen for hjelp.'
+  '&e/ss list|all &7- &2Viser alle tilgjengelige "vesener".'
+  '&e/ss view &7- &2Vis informasjon om Spawneren du ser på.'
+  '&e/ss reload|rl &7- &2Last inn konfigurasjonen på nytt.'
+  '&e/ss change <newMob> &7- &2Forandrer Spawneren du holder/ser på.'
+  '&e/ss give|add <player> <mob> [amount] &7- &2Gir en Spawner/Egg til en spiller. Antall er valgfritt.'

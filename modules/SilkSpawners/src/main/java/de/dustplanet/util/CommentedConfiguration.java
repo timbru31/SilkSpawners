@@ -34,7 +34,6 @@ public class CommentedConfiguration extends YamlConfiguration {
     private final Representer yamlRepresenter = new YamlRepresenter();
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
 
-
     public CommentedConfiguration(File file) {
         super();
         comments = new HashMap<>();

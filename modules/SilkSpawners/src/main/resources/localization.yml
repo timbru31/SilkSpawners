@@ -46,10 +46,11 @@ noSpawnerHere: '&4A spawner can not be placed here, because the block above is b
 lookAtSpawner: '&4You must be looking directly at a spawner.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
  
-help1: '&7------&6SilkSpawners v%version% Help Menu&7------'
-help2: '&e/ss help &7- &2Displays the help menu.'
-help3: '&e/ss list|all &7- &2Displays all available creatures.'
-help4: '&e/ss view &7- &2Displays information about the viewed spawner.'
-help5: '&e/ss reload|rl &7- &2Reloads the configuration files.'
-help6: '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
-help7: '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'
+help: |-
+  '&7------&6SilkSpawners v%version% Help Menu&7------'
+  '&e/ss help &7- &2Displays the help menu.'
+  '&e/ss list|all &7- &2Displays all available creatures.'
+  '&e/ss view &7- &2Displays information about the viewed spawner.'
+  '&e/ss reload|rl &7- &2Reloads the configuration files.'
+  '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
+  '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'

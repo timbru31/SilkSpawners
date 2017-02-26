@@ -46,10 +46,11 @@ noSpawnerHere: '&4Ein Spawner kann hier nicht aufgestellt werden, da der Block o
 lookAtSpawner: '&4Du musst den Spawner direkt anschauen'
 spawnerNotDeterminable: '&4Du hast entweder keinen Spawner oder ein Ei in deiner Hand, oder in beiden Händen etwas. Bitte mache eine leer!'
  
-help1: '&7------&6SilkSpawners v%version% Hilfe&7------'
-help2: '&e/ss help &7- &2Zeigt diese Hilfe.'
-help3: '&e/ss list|all &7- &2Zeigt alle Kreaturen.'
-help4: '&e/ss view &7- &2Zeigt informationen über den angeschauten Spawner.'
-help5: '&e/ss reload|rl &7- &2Lädt die Konfiguration neu.'
-help6: '&e/ss change <newMob> &7- &2Ändert den Spawner in der Hand oder in Sicht.'
-help7: '&e/ss give|add <spieler> <mob> [anzahl] &7- &2Gibt dem Spieler ein Ei oder Spawner. Anzahl ist optional.'
+help: |-
+  '&7------&6SilkSpawners v%version% Hilfe&7------'
+  '&e/ss help &7- &2Zeigt diese Hilfe.'
+  '&e/ss list|all &7- &2Zeigt alle Kreaturen.'
+  '&e/ss view &7- &2Zeigt informationen über den angeschauten Spawner.'
+  '&e/ss reload|rl &7- &2Lädt die Konfiguration neu.'
+  '&e/ss change <newMob> &7- &2Ändert den Spawner in der Hand oder in Sicht.'
+  '&e/ss give|add <spieler> <mob> [anzahl] &7- &2Gibt dem Spieler ein Ei oder Spawner. Anzahl ist optional.'

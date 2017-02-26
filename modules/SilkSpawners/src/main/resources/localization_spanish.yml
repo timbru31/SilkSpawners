@@ -53,12 +53,11 @@ lookAtSpawner: '&4Debes mirar directamente a un generador.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner
   or egg in both hands. Please make one empty!'
  
-help1: '&7------&6Menu de ayuda de SilkSpawners v%version%&7------'
-help2: '&e/ss help &7- &2Mostrar el menu de ayuda.'
-help3: '&e/ss list|all &7- &2Mostrar todas las criaturas disponibles.'
-help4: '&e/ss view &7- &2Mostrar informacion acerca del generador ya visto.'
-help5: '&e/ss reload|rl &7- &2Recargar las filas de configuracion.'
-help6: '&e/ss change <entidad> &7- &2Cambia el generador que estas agarrando o que
-  estas mirando.'
-help7: '&e/ss give|add <jugador> <entidad> [monto] &7- &2Obtener generador o huevo
-  o darselo a un jugador en especifico. Monto es opcional'
+help: |-
+  '&7------&6Menu de ayuda de SilkSpawners v%version%&7------'
+  '&e/ss help &7- &2Mostrar el menu de ayuda.'
+  '&e/ss list|all &7- &2Mostrar todas las criaturas disponibles.'
+  '&e/ss view &7- &2Mostrar informacion acerca del generador ya visto.'
+  '&e/ss reload|rl &7- &2Recargar las filas de configuracion.'
+  '&e/ss change <entidad> &7- &2Cambia el generador que estas agarrando o que estas mirando.'
+  '&e/ss give|add <jugador> <entidad> [monto] &7- &2Obtener generador o huevo o darselo a un jugador en especifico. Monto es opcional'

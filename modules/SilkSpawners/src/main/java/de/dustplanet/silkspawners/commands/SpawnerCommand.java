@@ -31,63 +31,63 @@ public class SpawnerCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         switch (args.length) {
-        case 1:
-            switch (args[0].toLowerCase()) {
-            case "help":
-                handleHelp(sender);
+            case 1:
+                switch (args[0].toLowerCase()) {
+                    case "help":
+                        handleHelp(sender);
+                        break;
+                    case "all":
+                    case "list":
+                        handleList(sender);
+                        break;
+                    case "reload":
+                    case "rl":
+                        handleReload(sender);
+                        break;
+                    case "view":
+                        handleView(sender);
+                        break;
+                    default:
+                        handleUnknownArgument(sender);
+                        break;
+                }
                 break;
-            case "all":
-            case "list":
-                handleList(sender);
+            case 2:
+                switch (args[0].toLowerCase()) {
+                    case "change":
+                    case "set":
+                        handleChange(sender, args[1]);
+                        break;
+                    default:
+                        handleUnknownArgument(sender);
+                        break;
+                }
                 break;
-            case "reload":
-            case "rl":
-                handleReload(sender);
+            case 3:
+                switch (args[0].toLowerCase()) {
+                    case "give":
+                    case "add":
+                        handleGive(sender, args[1], args[2].toLowerCase(), null);
+                        break;
+                    default:
+                        handleUnknownArgument(sender);
+                        break;
+                }
                 break;
-            case "view":
-                handleView(sender);
+            case 4:
+                switch (args[0].toLowerCase()) {
+                    case "give":
+                    case "add":
+                        handleGive(sender, args[1], args[2].toLowerCase(), args[3]);
+                        break;
+                    default:
+                        handleUnknownArgument(sender);
+                        break;
+                }
                 break;
             default:
                 handleUnknownArgument(sender);
                 break;
-            }
-            break;
-        case 2:
-            switch (args[0].toLowerCase()) {
-            case "change":
-            case "set":
-                handleChange(sender, args[1]);
-                break;
-            default:
-                handleUnknownArgument(sender);
-                break;
-            }
-            break;
-        case 3:
-            switch (args[0].toLowerCase()) {
-            case "give":
-            case "add":
-                handleGive(sender, args[1], args[2].toLowerCase(), null);
-                break;
-            default:
-                handleUnknownArgument(sender);
-                break;
-            }
-            break;
-        case 4:
-            switch (args[0].toLowerCase()) {
-            case "give":
-            case "add":
-                handleGive(sender, args[1], args[2].toLowerCase(), args[3]);
-                break;
-            default:
-                handleUnknownArgument(sender);
-                break;
-            }
-            break;
-        default:
-            handleUnknownArgument(sender);
-            break;
         }
         return true;
     }
@@ -361,11 +361,8 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleHelp(CommandSender sender) {
-        for (int i = 1; i <= 7; i++) {
-            String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help" + i).replace("%version%", plugin.getDescription().getVersion()));
-            su.sendMessage(sender,
-                    message);
-        }
+        String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help").replace("%version%", plugin.getDescription().getVersion()));
+        su.sendMessage(sender, message);
     }
 
     private void handleReload(CommandSender sender) {
