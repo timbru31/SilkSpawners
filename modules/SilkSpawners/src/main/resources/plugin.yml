@@ -17,6 +17,7 @@ permissions:
       silkspawners.viewtype: true
       silkspawners.reload: true
       silkspawners.explodedrop: true
+      silkspawners.help: true
       silkspawners.free: true
       silkspawners.createshop: true
       silkspawners.destroyshop: true
@@ -43,4 +44,7 @@ permissions:
   silkspawners.explodedrop:
     description: Allows you to receive drops on explosion
     default: false
+  silkspawners.help:
+    description: Allows you to see the help menu
+    default: true
 softdepend: [WorldGuard, BarAPI, Factions]

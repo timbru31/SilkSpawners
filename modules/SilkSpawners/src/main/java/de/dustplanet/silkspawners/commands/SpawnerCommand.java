@@ -361,8 +361,13 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleHelp(CommandSender sender) {
-        String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help").replace("%version%", plugin.getDescription().getVersion()));
-        su.sendMessage(sender, message);
+        if (sender.hasPermission("silkspawners.help")) {
+            String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help").replace("%version%", plugin.getDescription().getVersion()));
+            su.sendMessage(sender, message);
+        } else {
+            su.sendMessage(sender,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+        }
     }
 
     private void handleReload(CommandSender sender) {
