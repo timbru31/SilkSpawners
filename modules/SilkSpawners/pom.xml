@@ -206,15 +206,15 @@
 
   <build>
     <finalName>${project.artifactId}</finalName>
-    <sourceDirectory>../../src/main/java</sourceDirectory>
-    <directory>../../target</directory>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <directory>target</directory>
 
     <!-- Include .yml files -->
     <resources>
       <resource>
         <targetPath>.</targetPath>
         <filtering>true</filtering>
-        <directory>../../src/main/resources</directory>
+        <directory>src/main/resources</directory>
         <includes>
           <include>plugin.yml</include>
           <include>config.yml</include>
