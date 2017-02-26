@@ -105,7 +105,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
-        // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+        // https://bukkit.org/threads/66364/
         try {
             Field maxStackSizeField = Item.class.getDeclaredField("maxStackSize");
             // Set the stackable field back to 1

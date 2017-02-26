@@ -110,7 +110,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
-        // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+        // https://bukkit.org/threads/66364/
         Item.getById(52).d(1);
     }
 

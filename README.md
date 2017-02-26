@@ -28,7 +28,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 
 *Third party features, all of them can be disabled*
 * bStats for usage statistics
-* Auto Updater (connecting to http://dev.bukkit.org for updating checking)
+* Auto Updater (connecting to https://dev.bukkit.org for updating checking)
 
 ## License
 This plugin is released under the

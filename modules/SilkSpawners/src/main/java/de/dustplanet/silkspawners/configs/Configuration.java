@@ -53,7 +53,7 @@ public class Configuration {
         tempList.add("creep");
         tempList.add("cataclysm");
         config.addDefault("creatures.Creeper.aliases", tempList);
-        config.addComment("creatures.Creeper", "", " # Vanilla mobs, from http://minecraft.gamepedia.com/Data_values/Entity_IDs");
+        config.addComment("creatures.Creeper", "", " # Vanilla mobs, from https://minecraft.gamepedia.com/Data_values/Entity_IDs");
         config.addDefault("creatures.Creeper.enable", true);
         config.addDefault("creatures.Creeper.enableCraftingSpawner", true);
         config.addDefault("creatures.Creeper.enableSpawnEggOverride", true);

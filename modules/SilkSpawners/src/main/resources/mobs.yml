@@ -1,7 +1,7 @@
 # creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
 creatures:
 
-   # Vanilla mobs, from http://minecraft.gamepedia.com/Data_values/Entity_IDs
+   # Vanilla mobs, from https://minecraft.gamepedia.com/Data_values/Entity_IDs
   Creeper: &creeper
     aliases:
     - c

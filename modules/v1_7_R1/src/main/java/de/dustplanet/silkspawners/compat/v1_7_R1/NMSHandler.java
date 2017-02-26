@@ -104,7 +104,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
-        // http://forums.bukkit.org/threads/setting-max-stack-size.66364/
+        // https://bukkit.org/threads/66364/
         try {
             // Get the new registry HashMp from the Item class
             Field registryField = Item.class.getDeclaredField("REGISTRY");

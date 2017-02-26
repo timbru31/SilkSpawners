@@ -576,7 +576,6 @@ public class SilkUtil {
             }
         }
 
-        // Fallback to Bukkit (and fix http://pastebin.com/NQJsgt6L)
         CreatureSpawner spawner  = (CreatureSpawner) blockState;
         if (spawner.getSpawnedType() != null) {
             return spawner.getSpawnedType().getTypeId();
@@ -927,7 +926,7 @@ public class SilkUtil {
     /*
      * WorldGuard stuff
      * Enabled check and build permission check
-     * http://wiki.sk89q.com/wiki/WorldGuard/Regions/API
+     * https://wiki.sk89q.com/wiki/WorldGuard/Regions/API
      */
 
     // Is WorldGuard enabled?
