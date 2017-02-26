@@ -53,7 +53,7 @@ public class Config extends AbstractConfiguration {
         config.addDefault("preventXPFarming", true);
         config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
         config.addDefault("dropXPOnlyOnDestroy", false);
-        config.addComment("dropXPOnlyOnDestroy", "", "# Drops XP only when a spawner is destroyed and not mined via SilkTouch");
+        config.addComment("dropXPOnlyOnDestroy", "", "# Drops XP only when a spawner is destroyed and not mined via silk touch");
         config.addDefault("destroyDropBars", 0);
         config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
         config.addDefault("craftableSpawners", false);
@@ -111,6 +111,8 @@ public class Config extends AbstractConfiguration {
         config.addComment("vanillaBossBar", "", "# Configure displaying with 1.9 BossBarApi, time is in seconds");
         config.addDefault("factionsSupport", false);
         config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
+        config.addDefault("feudalSupport", false);
+        config.addComment("feudalSupport", "", "# Prevent that a spawner is changed via eggs in other kingdoms");
         config.addDefault("verboseConfig", false);
         config.addComment("verboseConfig", "", "# Puts more information out on startup");
         config.addDefault("useReflection", true);

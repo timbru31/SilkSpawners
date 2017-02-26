@@ -26,6 +26,10 @@ import com.massivecraft.massivecore.ps.PS;
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
+import us.forseth11.feudal.core.Feudal;
+import us.forseth11.feudal.kingdoms.Kingdom;
+import us.forseth11.feudal.kingdoms.Land;
+import us.forseth11.feudal.user.User;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type.
@@ -104,7 +108,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
-                if (plugin.config.getBoolean("factionsSupport", false)) {
+                if (plugin.config.getBoolean("factionsSupport", false) && su.isPluginEnabled("Factions")) {
                     try {
                         MPlayer mp = MPlayer.get(player);
                         Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
@@ -126,6 +130,18 @@ public class SilkSpawnersPlayerListener implements Listener {
                                     .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
                             return;
                         }
+                    }
+                }
+                if (plugin.config.getBoolean("feudalSupport", false) && su.isPluginEnabled("Feudal")) {
+                    Land blockLand = new Land(block.getLocation());
+                    Kingdom blockKingdom = Feudal.getLandKingdom(blockLand);
+                    User user = Feudal.getUser(player.getUniqueId().toString());
+                    boolean isKondgomMember = blockKingdom.isMember(user.getUUID());
+                    if (!isKondgomMember) {
+                        event.setCancelled(true);
+                        su.sendMessage(player, ChatColor
+                                .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFeudal")));
+                        return;
                     }
                 }
 

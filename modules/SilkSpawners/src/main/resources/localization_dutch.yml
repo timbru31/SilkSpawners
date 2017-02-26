@@ -22,6 +22,7 @@ changedSpawner: '&2Succesvol spawner veranderd naar: &e%creature% spawner.'
  
 playerOffline: '&4Sorry, deze speler is niet online!!'
 changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
+changingDeniedFeudal: '&4You are not allowed to change spawners in other peoples kingdom!'
 changingDeniedWorldGuard: '&4Het veranderen van de spawner is tegen gehouden door een WorldGuard Protectie!'
 getSpawnerType: '&2Dit is een &e%creature% spawner.'
 unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'

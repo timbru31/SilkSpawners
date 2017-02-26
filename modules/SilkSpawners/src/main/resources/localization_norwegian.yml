@@ -22,6 +22,7 @@ changedSpawner: '&2Du har nå endret Spawneren til en &e%creature% spawner'
  
 playerOffline: '&4Beklager denne brukeren er avlogget!'
 changingDeniedFactions: '&4Du kan ikke endre Spawner typen i en annen Factions territorie!'
+changingDeniedFeudal: '&4You are not allowed to change spawners in other peoples kingdom!'
 changingDeniedWorldGuard: '&4WorldGuard lar deg ikke forandre denne Spawneren!'
 getSpawnerType: '&2Dette er en &e%creature% spawner'
 unknownArgument: '&4Ugjenkjennelig kommando. Prøv &e/silkspawners help &4for å få hjelp!'

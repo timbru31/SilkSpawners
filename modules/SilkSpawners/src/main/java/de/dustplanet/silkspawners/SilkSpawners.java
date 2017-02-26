@@ -138,13 +138,21 @@ public class SilkSpawners extends JavaPlugin {
             getLogger().info("BarAPI is disabled due to config setting.");
         }
 
-        // Check if Factions support is enabled
         if (config.getBoolean("factionsSupport", false)) {
             Plugin factionsPlugin = getServer().getPluginManager().getPlugin("Factions");
             if (factionsPlugin == null) {
                 getLogger().warning("Factions support was enabled, but Factions was not found.");
                 getLogger().warning("Disabling Factions support in config.yml again");
                 config.set("factionsSupport", false);
+                saveConfig();
+            }
+        }
+        if (config.getBoolean("feudalSupport", false)) {
+            Plugin factionsPlugin = getServer().getPluginManager().getPlugin("Feudal");
+            if (factionsPlugin == null) {
+                getLogger().warning("Feudal support was enabled, but Feudal was not found.");
+                getLogger().warning("Disabling Feudal support in config.yml again");
+                config.set("feudalSupport", false);
                 saveConfig();
             }
         }

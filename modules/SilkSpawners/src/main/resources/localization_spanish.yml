@@ -28,6 +28,7 @@ changedSpawner: '&2Generador cambiado exitosamente a un generador de &e%creature
  
 playerOffline: '&4Lo sentimos, el jugador esta offline!'
 changingDeniedFactions: '&4No tienes permitido cambiar generadores en territorios ajenos!'
+changingDeniedFeudal: '&4You are not allowed to change spawners in other peoples kingdom!'
 changingDeniedWorldGuard: '&4Cambiar tipo de generador fue negado por la proteccion de WorldGuard.'
 getSpawnerType: '&2Esto es un generador de &e%creature%.'
 unknownArgument: '&4Argumento irreconocible. Ver &e/silkspawners help'

@@ -961,4 +961,9 @@ public class SilkUtil {
         }
         return wg.canBuild(player, location);
     }
+
+    public boolean isPluginEnabled(String _plugin) {
+        Plugin pluginToCheck = plugin.getServer().getPluginManager().getPlugin(_plugin);
+        return pluginToCheck != null && pluginToCheck.isEnabled();
+    }
 }

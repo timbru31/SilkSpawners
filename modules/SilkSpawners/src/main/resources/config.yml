@@ -140,6 +140,9 @@ vanillaBossBar:
  
 # Prevent that a spawner is changed via eggs in other territories
 factionsSupport: false
+
+# Prevent that a spawner is changed via eggs in other kingdoms
+feudalSupport: false
  
 # Puts more information out on startup
 verboseConfig: false
