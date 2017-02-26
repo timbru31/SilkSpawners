@@ -48,6 +48,8 @@ public class Config extends AbstractConfiguration {
         config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
         config.addDefault("dropSpawnerToInventory", false);
         config.addComment("dropSpawnerToInventory", "", "# If a spawner is mined, should it be directly added to the inventory of the player");
+        config.addDefault("dropAmount", 1);
+        config.addComment("dropAmount", "", "# Amount of spawners to be dropped when mined with valid silk touch");
         config.addDefault("preventXPFarming", true);
         config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
         config.addDefault("dropXPOnlyOnDestroy", false);

@@ -83,6 +83,9 @@ destroyDropXP: 0
 # If a spawner is mined, should it be directly added to the inventory of the player
 dropSpawnerToInventory: false
 
+# Amount of spawners to be dropped when mined with valid silk touch
+dropAmount: 1
+
 # Flag a spawner as already mined to prevent XP duping
 preventXPFarming: true
 
@@ -271,7 +274,7 @@ Aliases:
 For support visit the dev.bukkit.org page: https://dev.bukkit.org/projects/silkspawners
 
 ## Pull Requests
-Feel free to submit any PRs here. :)
+Feel free to submit any PRs here. :)  
 Please follow the Sun Coding Guidelines, thanks!
 
 ## Usage statistics

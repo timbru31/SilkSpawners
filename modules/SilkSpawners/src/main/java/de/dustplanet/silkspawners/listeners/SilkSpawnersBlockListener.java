@@ -140,7 +140,13 @@ public class SilkSpawnersBlockListener implements Listener {
                 if (breakEventDrop != null) {
                     spawnerItemStack = breakEventDrop;
                 } else {
-                    spawnerItemStack = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false);
+                    int amount = 1;
+                    if (plugin.mobs.contains("creatures." + mobID + ".dropAmount")) {
+                        amount = plugin.mobs.getInt("creatures." + mobID + ".dropAmount", 1);
+                    } else {
+                        amount = plugin.config.getInt("dropAmount", 1);
+                    }
+                    spawnerItemStack = su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount, false);
                 }
                 if (spawnerItemStack == null) {
                     plugin.getLogger().warning("Skipping dropping of spawner, since item is null");
