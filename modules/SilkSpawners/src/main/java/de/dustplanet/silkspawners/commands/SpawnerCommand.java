@@ -331,7 +331,7 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleChangeEgg(Player player, short entityID, String mobName, ItemStack itemInHand) {
-        if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
+        if (!player.hasPermission("silkspawners.changetype." + mobName)) {
             su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("noPermissionChangingEgg")));
             return;
