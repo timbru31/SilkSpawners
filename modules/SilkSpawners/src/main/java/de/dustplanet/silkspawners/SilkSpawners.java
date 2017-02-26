@@ -22,7 +22,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
-import de.dustplanet.silkspawners.configs.Configuration;
+import de.dustplanet.silkspawners.configs.Config;
+import de.dustplanet.silkspawners.configs.Localization;
+import de.dustplanet.silkspawners.configs.Mobs;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersBlockListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersEntityListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
@@ -217,13 +219,13 @@ public class SilkSpawners extends JavaPlugin {
 
         // Load configs
         config = new CommentedConfiguration(configFile);
-        new Configuration(config).loadConfig("config");
+        new Config(config).loadConfig();
 
         localization = new CommentedConfiguration(localizationFile);
-        new Configuration(localization).loadConfig("localization");
+        new Localization(localization).loadConfig();
 
         mobs = new CommentedConfiguration(mobsFile);
-        new Configuration(mobs).loadConfig("mobs");
+        new Mobs(mobs).loadConfig();
 
         // We need to migrate the old mobs from config.yml to mobs.yml
         if (config.contains("creatures")) {

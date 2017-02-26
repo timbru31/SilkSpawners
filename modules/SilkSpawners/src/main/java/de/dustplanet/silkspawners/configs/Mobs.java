@@ -2,47 +2,17 @@ package de.dustplanet.silkspawners.configs;
 
 import java.util.ArrayList;
 
-import org.bukkit.Material;
-
 import de.dustplanet.util.CommentedConfiguration;
 
-/**
- * Default configs.
- *
- * @author (former) mushroomhostage
- * @author xGhOsTkiLLeRx
- */
-public class Configuration {
-    private CommentedConfiguration config;
-
-    public Configuration(CommentedConfiguration config) {
-        if (config == null) {
-            throw new IllegalArgumentException("given config is null");
-        }
-        this.config = config;
+public class Mobs extends AbstractConfiguration {
+    public Mobs(CommentedConfiguration config) {
+        super(config);
     }
 
-    public void loadConfig(String configString) {
-        // Switch between our cases
-        switch (configString) {
-            case "config":
-                loadDefaultConfig();
-                break;
-            case "localization":
-                loadDefaultLocalization();
-                break;
-            case "mobs":
-                loadDefaultMobs();
-                break;
-            default:
-                loadDefaultConfig();
-                break;
-        }
-        config.load();
-        // Copy defaults and save
-        config.options().copyDefaults(true);
-        config.save();
-        config.load();
+    @Override
+    public void loadConfig() {
+        loadDefaultMobs();
+        super.loadConfig();
     }
 
     private void loadDefaultMobs() {
@@ -726,163 +696,5 @@ public class Configuration {
         config.addDefault("creatures.llama_spit.enable", false);
         // evocation_fangs
         config.addDefault("creatures.evocation_fangs.enable", false);
-
-    }
-
-    private void loadDefaultLocalization() {
-        config.options().header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
-        config.addDefault("spawnerName", "&e%creature% &fSpawner");
-        config.addDefault("addedEgg", "'&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.");
-        config.addComment("addedEgg", "");
-        config.addDefault("addedEggOtherPlayer", "&2Added &e%amount% %creature% spawn egg(s) &2to &e%player%&2''s inventory.");
-        config.addDefault("addedSpawner", "&2Added &e%amount% %creature% spawner(s) &2to your inventory.");
-        config.addDefault("addedSpawnerOtherPlayer", "&2Added &e%amount% %creature% spawner(s) &2to &e%player%&2''s inventory.");
-        config.addDefault("noFreeSlot", "&4There is no free slot in the inventory!");
-        config.addDefault("noPermission", "&4You do not have the permission to use this command!");
-        config.addComment("noPermission", "");
-        config.addDefault("noPermissionChangingEgg", "&4You do not have permission to change spawning eggs!");
-        config.addDefault("noPermissionChangingSpawner", "&4You do not have permission to change spawners!");
-        config.addDefault("noPermissionFreeEgg", "&4You do not have permission to spawn free eggs!");
-        config.addDefault("noPermissionFreeSpawner", "&4You do not have the permission to spawn free spawners!");
-        config.addDefault("noPermissionViewType", "&4You do not have the permission to view the type of this spawner!");
-        config.addDefault("noPermissionChangingWithEggs", "&4You do not have permission to change spawners with spawn eggs!");
-        config.addDefault("noPermissionCraft", "&4You do not have the permission to craft a(n) &e%creature% &4spawner!");
-        config.addDefault("noPermissionPlace", "&4You do not have the permission to place a(n) &e%creature% &4spawner!");
-        config.addDefault("changedEgg", "&2Successfully changed the spawning egg to a(n) &e%creature% spawn egg.");
-        config.addComment("changedEgg", "");
-        config.addDefault("changedSpawner", "&2Successfully changed the spawner to a(n) &e%creature% spawner.");
-        config.addDefault("playerOffline", "&4Sorry this player is offline!");
-        config.addComment("playerOffline", "");
-        config.addDefault("changingDeniedFactions", "&4You are not allowed to change spawners in other peoples territory!");
-        config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");
-        config.addDefault("getSpawnerType", "&2This is a(n) &e%creature% spawner&2.");
-        config.addDefault("unknownArgument", "&4Unrecognized argument. See &e/silkspawners help");
-        config.addDefault("unknownCreature", "&4Unrecognized creature &e%creature%&4.");
-        config.addDefault("useNumbers", "&4Please use a numeric number between 1 and 64!");
-        config.addDefault("noConsole", "&4The console can not use this command!");
-        config.addDefault("configsReloaded", "&2Successfully reloaded the configs!");
-        config.addDefault("spawnerBroken", "&e%creature% spawner broken.");
-        config.addComment("spawnerBroken", "");
-        config.addDefault("spawnerPlaced", "&e%creature% spawner placed.");
-        config.addDefault("placingDefault", "&ePlacing default spawner (either this spawner is invalid or disabled)");
-        config.addDefault("informationOfSpawner1", "-- Monster Spawner --");
-        config.addComment("informationOfSpawner1", "");
-        config.addDefault("informationOfSpawner2", "-- Type: %creature% --");
-        config.addDefault("informationOfSpawner3", "-- EntityID: %ID% --");
-        config.addDefault("informationOfSpawnerBar", "Monster Spawner, Type: &e%creature%&f, %ID%");
-        config.addDefault("spawningDenied", "&4Spawning of &e%creature% (ID %ID%) &4denied!");
-        config.addComment("spawningDenied", "");
-        config.addDefault("spawning", "&2Spawning &e%creature% (ID %ID%)");
-        config.addDefault("noSpawnerHere", "&4A spawner can not be placed here, because the block above is blocked!");
-        config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
-        config.addComment("lookAtSpawner", "");
-        config.addDefault("spawnerNotDeterminable", "&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!");
-        config.addDefault("help", "&7------&6SilkSpawners v%version% Help Menu&7------\n" +
-                "&e/ss help &7- &2Displays the help menu.\n" +
-                "&e/ss list|all &7- &2Displays all available creatures.\n" +
-                "&e/ss view &7- &2Displays information about the viewed spawner.\n" +
-                "&e/ss reload|rl &7- &2Reloads the configuration files\n" +
-                "&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.\n" +
-                "&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional");
-    }
-
-    private void loadDefaultConfig() {
-        config.options().header("See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration");
-        config.addDefault("autoUpdater", true);
-        config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
-        config.addDefault("permissionExplode", false);
-        config.addComment("permissionExplode", "", "# Should a permission be required when a spawner explodes by TNT to achieve a drop");
-        config.addDefault("useWorldGuard", true);
-        config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");
-        config.addDefault("explosionDropChance", 30);
-        config.addComment("explosionDropChance", "", "# Percentage of dropping a spawner block when TNT or creepers explode");
-        config.addDefault("destroyDropChance", 100);
-        config.addComment("destroyDropChance", "", "# Percentage of dropping a iron bars when a spawner is mined");
-        config.addDefault("eggDropChance", 100);
-        config.addComment("eggDropChance", "", "# Percentage of dropping an egg when a spawner is mined");
-        config.addDefault("silkDropChance", 100);
-        config.addComment("silkDropChance", "", "# Percentage of dropping the spawner when mined");
-        config.addDefault("defaultCreature", 90);
-        config.addComment("defaultCreature", "", "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)", "# PIG (90) is Minecraft default (put NAMES or IDs here!)");
-        config.addDefault("spawnerCommandReachDistance", 6);
-        config.addComment("spawnerCommandReachDistance", "", "# How far is the spawner reachable with your crosshair (disable with -1)");
-        config.addDefault("minSilkTouchLevel", 1);
-        config.addComment("minSilkTouchLevel", "", "# Minimum silk touch level [can be changed via other plugins to a higher value]", "# Set it to 0 to mine it without silk touch");
-        config.addDefault("noDropsCreative", true);
-        config.addComment("noDropsCreative", "", "# If a player in creative destroys a spawner nothing is dropped");
-        config.addDefault("destroyDropEgg", false);
-        config.addComment("destroyDropEgg", "", "# If a spawner is destroyed, should the egg be dropped");
-        config.addDefault("destroyDropXP", 0);
-        config.addComment("destroyDropXP", "", "# If a spawner is destroyed, should XP be dropped");
-        config.addDefault("dropSpawnerToInventory", false);
-        config.addComment("dropSpawnerToInventory", "", "# If a spawner is mined, should it be directly added to the inventory of the player");
-        config.addDefault("preventXPFarming", true);
-        config.addComment("preventXPFarming", "", "# Flag a spawner as already mined to prevent XP duping");
-        config.addDefault("dropXPOnlyOnDestroy", false);
-        config.addComment("dropXPOnlyOnDestroy", "", "# Drops XP only when a spawner is destroyed and not mined via SilkTouch");
-        config.addDefault("destroyDropBars", 0);
-        config.addComment("destroyDropBars", "", "# If a spawner is destroyed, should iron bars be dropped");
-        config.addDefault("craftableSpawners", false);
-        config.addComment("craftableSpawners", "", "# Should the player be able to craft spawners");
-        config.addDefault("recipeTop", "AAA");
-        config.addComment("recipeTop", "", "# Leave a slot empty (null/air)? Just make a space then, example 'A A' -> middle is free", "# X is always the egg");
-        config.addDefault("recipeMiddle", "AXA");
-        config.addDefault("recipeBottom", "AAA");
-        config.addDefault("recipeAmount", 1);
-        ArrayList<String> temp = new ArrayList<>();
-        temp.add("A,IRON_FENCE");
-        config.addDefault("ingredients", temp);
-        config.addComment("ingredients", "", "# Custom example:", "#recipeTop: 'A A'", "#recipeMiddle: 'BXA'", "#recipeBottom: 'C D'",
-                "#ingredients:", "#  - 'A,IRON_FENCE'", "#  - 'B,DIRT'", "#  - 'C,2'", "#  - 'D,5'",
-                "", "# You can put IDs or the NAME here (please uppercase)", "# Add it for each custom ingredient you add, too!");
-        config.addDefault("spawnersUnstackable", false);
-        config.addComment("spawnersUnstackable", "", "# Should spawners be stackable");
-        config.addDefault("consumeEgg", true);
-        config.addComment("consumeEgg", "", "# Should the egg be consumed when the spawner is changed with it");
-        config.addDefault("enableCreatureDefault", true);
-        config.addComment("enableCreatureDefault", "", "# Fallback if the creature should be enabled, if not specified for the entity");
-        config.addDefault("ignoreCheckNumbers", false);
-        config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
-        config.addDefault("disableChangeTypeWithEgg", false);
-        config.addComment("disableChangeTypeWithEgg", "", "# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.");
-        config.addDefault("spawnEggToSpawner", false);
-        config.addComment("spawnEggToSpawner", "", "# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)");
-        config.addDefault("spawnEggOverride", false);
-        config.addComment("spawnEggOverride", "", "# Should the spawn algorithm be overridden? Allows spawning of non-standard entities");
-        config.addDefault("spawnEggOverrideSpawnDefault", true);
-        config.addComment("spawnEggOverrideSpawnDefault", "", "# Fallback if the creature should be spawned, if not specified for the entity");
-        temp = new ArrayList<>();
-        temp.add(Material.WOOD_PICKAXE.toString());
-        temp.add(Material.STONE_PICKAXE.toString());
-        temp.add(Material.IRON_PICKAXE.toString());
-        temp.add(Material.GOLD_PICKAXE.toString());
-        temp.add(Material.DIAMOND_PICKAXE.toString());
-        config.addDefault("allowedTools", temp);
-        config.addComment("allowedTools", "", "# Allowed set of tools which can mine a spawner. IDs are supported, too");
-        config.addDefault("defaultAmountGive", 1);
-        config.addComment("defaultAmountGive", "", "# Amount of spawners or eggs given to a player when the argument is omitted");
-        config.addDefault("notifyOnClick", true);
-        config.addComment("notifyOnClick", "", "# Notify the player about the spawner when he clicks it in the inventory");
-        config.addDefault("notifyOnHold", true);
-        config.addComment("notifyOnHold", "", "# Notify the player about the spawner when he holds the spawner in the hand");
-        config.addDefault("barAPI.enable", false);
-        config.addDefault("barAPI.displayTime", 3);
-        config.addComment("barAPI", "", "# Configure displaying with BarAPI, time is in seconds");
-        config.addDefault("vanillaBossBar.enable", true);
-        config.addDefault("vanillaBossBar.displayTime", 3);
-        config.addDefault("vanillaBossBar.color", "RED");
-        config.addComment("vanillaBossBar.color", "", "# Valid colors are BLUE, GREEN, PINK, PURPLE, RED, WHITE, YELLOW");
-        config.addDefault("vanillaBossBar.style", "SOLID");
-        config.addComment("vanillaBossBar.style", "", "# Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID");
-        config.addComment("vanillaBossBar", "", "# Configure displaying with 1.9 BossBarApi, time is in seconds");
-        config.addDefault("factionsSupport", false);
-        config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
-        config.addDefault("verboseConfig", false);
-        config.addComment("verboseConfig", "", "# Puts more information out on startup");
-        config.addDefault("useReflection", true);
-        config.addComment("useReflection", "", "# Internal stuff, do NOT change unless advised - the plugin might break otherwise");
-        config.addDefault("testMCVersion", true);
-        config.addDefault("useMetadata", true);
-        config.addDefault("useLegacyName", false);
     }
 }
