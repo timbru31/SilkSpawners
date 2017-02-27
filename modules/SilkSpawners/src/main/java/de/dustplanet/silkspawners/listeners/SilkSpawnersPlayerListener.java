@@ -136,8 +136,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     Land blockLand = new Land(block.getLocation());
                     Kingdom blockKingdom = Feudal.getLandKingdom(blockLand);
                     User user = Feudal.getUser(player.getUniqueId().toString());
-                    boolean isKondgomMember = blockKingdom.isMember(user.getUUID());
-                    if (!isKondgomMember) {
+                    if (blockKingdom != null && !blockKingdom.isMember(user.getUUID())) {
                         event.setCancelled(true);
                         su.sendMessage(player, ChatColor
                                 .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFeudal")));
