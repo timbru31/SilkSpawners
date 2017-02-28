@@ -29,7 +29,6 @@ import de.dustplanet.util.SilkUtil;
 import us.forseth11.feudal.core.Feudal;
 import us.forseth11.feudal.kingdoms.Kingdom;
 import us.forseth11.feudal.kingdoms.Land;
-import us.forseth11.feudal.user.User;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type.
@@ -135,8 +134,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 if (plugin.config.getBoolean("feudalSupport", false) && su.isPluginEnabled("Feudal")) {
                     Land blockLand = new Land(block.getLocation());
                     Kingdom blockKingdom = Feudal.getLandKingdom(blockLand);
-                    User user = Feudal.getUser(player.getUniqueId().toString());
-                    if (blockKingdom != null && !blockKingdom.isMember(user.getUUID())) {
+                    if (blockKingdom != null && !blockKingdom.isMember(player.getUniqueId().toString())) {
                         event.setCancelled(true);
                         su.sendMessage(player, ChatColor
                                 .translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFeudal")));
