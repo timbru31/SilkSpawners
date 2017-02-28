@@ -1,4 +1,6 @@
 # SilkSpawners
+
+[![Join the chat at https://gitter.im/timbru31/SilkSpawners](https://badges.gitter.im/timbru31/SilkSpawners.svg)](https://gitter.im/timbru31/SilkSpawners?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://ci.dustplanet.de/job/SilkSpawners/badge/icon)](https://ci.dustplanet.de/job/SilkSpawners/)
 [![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
 [![Circle CI](https://img.shields.io/circleci/project/timbru31/SilkSpawners.svg)](https://circleci.com/gh/timbru31/SilkSpawners)
