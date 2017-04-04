@@ -2,15 +2,17 @@
 
 ## Expected output
 
+## What do you see instead?
+
 ## Log file of the issue/error
 
 ## /version output?
 
-**Please note that _without_ the specific version output your issue might be _IGNORED_**
+<!-- Please note that _without_ the specific version output your issue might be _IGNORED_ -->
 
 ## SilkSpawners version
 
-**_LATEST_ is not a valid version**
+<!-- _LATEST_ is not a valid version -->
 
 ## Please provide any additional information below.
 
