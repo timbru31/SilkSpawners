@@ -13,14 +13,6 @@
     <relativePath>../../</relativePath>
   </parent>
 
-  <!-- Repositories -->
-  <repositories>
-    <repository>
-      <id>dustplanet</id>
-      <url>https://repo.dustplanet.de/artifactory/craftbukkit</url>
-    </repository>
-  </repositories>
-
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>
@@ -35,19 +27,4 @@
       <type>jar</type>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.0</version>
-        <configuration>
-          <verbose>true</verbose>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

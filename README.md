@@ -274,7 +274,7 @@ Aliases:
 * Jeroendedoem for the Dutch translation
 
 ## Support
-For support visit the dev.bukkit.org page: https://dev.bukkit.org/projects/silkspawners
+For support visit the [Bukkit](https://dev.bukkit.org/projects/silkspawners) page or open an [issue](https://github.com/timbru31/SilkSpawners/issues/new)
 
 ## Pull Requests
 Feel free to submit any PRs here. :)  
@@ -287,7 +287,7 @@ _stats images are returning soon!_
 ## Data usage collection of bStats
 
 #### Disabling bStats
-The file _../plugins/bStats/config.yml_ contains an option to opt-out.
+The file `./plugins/bStats/config.yml` contains an option to *opt-out*.
 
 #### The following data is **read and sent** to https://bstats.org and can be seen under https://bstats.org/plugin/bukkit/SilkSpawners
 * Your server's randomly generated UUID
@@ -305,5 +305,5 @@ The file _../plugins/bStats/config.yml_ contains an option to opt-out.
 ## Donation
 [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donation via PayPal")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T9TEV7Q88B9M2)
 
-![BitCoin](https://dl.dropboxusercontent.com/u/26476995/bitcoin_logo.png "Donation via BitCoins")  
-Address: 1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C
+![BitCoin](https://dustplanet.de/wp-content/uploads/2015/01/bitcoin-logo-plain.png "Donation via BitCoins")  
+1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C

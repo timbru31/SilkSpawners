@@ -9,12 +9,10 @@
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
 
-  <!-- Encode in UTF-8 -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
-  <!-- Repositories -->
   <repositories>
     <repository>
       <id>spigotmc-repo</id>
@@ -46,7 +44,6 @@
     </repository>
   </repositories>
 
-  <!-- Dependencies -->
   <dependencies>
     <dependency>
       <groupId>org.bukkit</groupId>
@@ -214,7 +211,6 @@
     <sourceDirectory>src/main/java</sourceDirectory>
     <directory>target</directory>
 
-    <!-- Include .yml files -->
     <resources>
       <resource>
         <targetPath>.</targetPath>
@@ -238,22 +234,20 @@
       </resource>
     </resources>
 
-    <!-- Compile for 1.7 -->
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.6.1</version>
         <configuration>
-          <verbose>true</verbose>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>1.8</source>
+          <target>1.8</target>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>2.4.3</version>
+        <version>3.0.0</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -261,6 +255,7 @@
               <goal>shade</goal>
             </goals>
             <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
               <artifactSet>
                 <includes>
                   <include>de.dustplanet:SilkSpawners*</include>
@@ -281,7 +276,6 @@
                   <shadedPattern>de.dustplanet.util</shadedPattern>
                 </relocation>
               </relocations>
-              <createDependencyReducedPom>false</createDependencyReducedPom>
             </configuration>
           </execution>
         </executions>
@@ -289,15 +283,12 @@
     </plugins>
   </build>
 
-  <!-- Github information -->
   <scm>
     <url>https://github.com/timbru31/SilkSpawners</url>
     <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
-    <tag>master</tag>
     <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
   </scm>
 
-  <!-- Jenkins information -->
   <ciManagement>
     <url>https://ci.dustplanet.de/job/SilkSpawners</url>
     <system>jenkins</system>
