@@ -1,4 +1,11 @@
 language: java
+cache:
+
+  directories:
+  - $HOME/.m2
+
+jdk:
+  - oraclejdk8
 
 before_install:
   - wget https://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.zip
@@ -7,12 +14,16 @@ before_install:
   - export PATH=$M2_HOME/bin:$PATH
   # fix travis-ci/travis-ci#4629
   - sed -i.bak -e 's|https://nexus.codehaus.org/snapshots/|https://oss.sonatype.org/content/repositories/codehaus-snapshots/|g' ~/.m2/settings.xml
+
 install:
   - mvn -s conf/settings.xml install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
-cache:
-  directories:
-  - $HOME/.m2
-
-jdk:
-  - oraclejdk8
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/029aeea7192da947a226
+    on_success: change
+    on_failure: always
+    on_start: never
+    on_cancel: always
+    on_error: always
