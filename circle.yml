@@ -5,8 +5,6 @@ dependencies:
   pre:
     - java -version
     - mvn -version
-    - wget https://letsencrypt.org/certs/lets-encrypt-x3-cross-signed.pem
-    - sudo keytool -trustcacerts -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt -importcert -file lets-encrypt-x3-cross-signed.pem
     - mvn -s conf/settings.xml clean install
   override:
     - mvn -s conf/settings.xml dependency:resolve
