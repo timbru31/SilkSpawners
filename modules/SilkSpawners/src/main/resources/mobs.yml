@@ -410,6 +410,23 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Llama
+  illusion_illager:
+    aliases:
+      - illusioner
+      - illusion
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Illusioner
+  parrot:
+    aliases:
+      - macaw
+      - pirate_bird
+      - popinjay
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Parrot
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!

@@ -588,6 +588,25 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.llama.enableCraftingSpawner", true);
         config.addDefault("creatures.llama.enableSpawnEggOverride", true);
         config.addDefault("creatures.llama.displayName", "Llama");
+        tempList = new ArrayList<>();
+        // Illusioner
+        tempList.add("illusioner");
+        tempList.add("illusion");
+        config.addDefault("creatures.illusion_illager.aliases", tempList);
+        config.addDefault("creatures.illusion_illager.enable", true);
+        config.addDefault("creatures.illusion_illager.enableCraftingSpawner", true);
+        config.addDefault("creatures.illusion_illager.enableSpawnEggOverride", true);
+        config.addDefault("creatures.illusion_illager.displayName", "Illusioner");
+        tempList = new ArrayList<>();
+        // Parrot
+        tempList.add("macaw");
+        tempList.add("pirate_bird");
+        tempList.add("popinjay");
+        config.addDefault("creatures.parrot.aliases", tempList);
+        config.addDefault("creatures.parrot.enable", true);
+        config.addDefault("creatures.parrot.enableCraftingSpawner", true);
+        config.addDefault("creatures.parrot.enableSpawnEggOverride", true);
+        config.addDefault("creatures.parrot.displayName", "Parrot");
         // Item
         config.addDefault("creatures.Item.enable", false);
         config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
