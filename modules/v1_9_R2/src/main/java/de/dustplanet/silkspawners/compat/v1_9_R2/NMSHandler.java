@@ -250,11 +250,6 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public Collection<? extends Player> getOnlinePlayers() {
-        return Bukkit.getOnlinePlayers();
-    }
-
-    @Override
     public ItemStack newEggItem(short entityID, String entity, int amount) {
         ItemStack item = new ItemStack(Material.MONSTER_EGG, amount, entityID);
         net.minecraft.server.v1_9_R2.ItemStack itemStack = null;
