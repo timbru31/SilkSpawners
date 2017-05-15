@@ -89,7 +89,7 @@
     <dependency>
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
-      <version>1.2</version>
+      <version>1.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>us.forseth11</groupId>
