@@ -19,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_5_R1.Entity;
@@ -53,7 +52,8 @@ public class NMSHandler implements NMSProvider {
         // Should actually never happen since the method above
         // contains a null check, too
         if (entity == null) {
-            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
+            Bukkit.getLogger().warning(
+                    "[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
             return;
         }
 
@@ -112,7 +112,8 @@ public class NMSHandler implements NMSProvider {
             maxStackSizeField.setAccessible(true);
             maxStackSizeField.setInt(Material.MOB_SPAWNER.getId(), 1);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchFieldException e) {
-            Bukkit.getLogger().warning("[SilkSpawners] Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
+            Bukkit.getLogger().warning(
+                    "[SilkSpawners] Failed to set max stack size, ignoring spawnersUnstackable: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -137,7 +138,8 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
-        // Backport https://github.com/Bukkit/CraftBukkit/commit/84a45ed7d68b613ee6438fb8f4fa44e671700073#diff-7553562b73bf0037f9ef2ffa0da0f8f6
+        // Backport
+        // https://github.com/Bukkit/CraftBukkit/commit/84a45ed7d68b613ee6438fb8f4fa44e671700073#diff-7553562b73bf0037f9ef2ffa0da0f8f6
         // Regular method was added in v1_5_R2
         EntityLiving source = ((CraftTNTPrimed) tnt).getHandle().getSource();
 
@@ -216,6 +218,7 @@ public class NMSHandler implements NMSProvider {
 
     /**
      * Return the spawner block the player is looking at, or null if isn't.
+     *
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
@@ -237,18 +240,6 @@ public class NMSHandler implements NMSProvider {
     @Override
     public ItemStack newEggItem(short entityID, String entity, int amount) {
         return new ItemStack(Material.MONSTER_EGG, amount, entityID);
-    }
-
-    @Override
-    public String getVanillaEggNBTEntityID(ItemStack item) {
-        // EntityTag.id for eggs was added >= 1.9
-        return null;
-    }
-
-    @Override
-    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
-        // Only implemented in >= 1.9
-        return;
     }
 
     @Override

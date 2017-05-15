@@ -18,7 +18,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_7_R3.Entity;
@@ -144,11 +143,6 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
-        return tnt.getSource();
-    }
-
-    @Override
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
         if (item == null || entityID == 0 || entity == null || entity.isEmpty()) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
@@ -228,18 +222,6 @@ public class NMSHandler implements NMSProvider {
     @Override
     public ItemStack newEggItem(short entityID, String entity, int amount) {
         return new ItemStack(Material.MONSTER_EGG, amount, entityID);
-    }
-
-    @Override
-    public String getVanillaEggNBTEntityID(ItemStack item) {
-        // EntityTag.id for eggs was added in >= 1.9
-        return null;
-    }
-
-    @Override
-    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
-        // Only implemented in >= 1.9
-        return;
     }
 
     @Override

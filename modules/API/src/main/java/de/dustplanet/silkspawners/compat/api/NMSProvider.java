@@ -24,7 +24,9 @@ public interface NMSProvider {
 
     void setSpawnersUnstackable();
 
-    Entity getTNTSource(TNTPrimed tnt);
+    default Entity getTNTSource(TNTPrimed tnt) {
+        return tnt.getSource();
+    }
 
     ItemStack setNBTEntityID(ItemStack item, short entityID, String entity);
 
@@ -40,9 +42,14 @@ public interface NMSProvider {
 
     ItemStack newEggItem(short entityID, String entity, int amount);
 
-    String getVanillaEggNBTEntityID(ItemStack item);
+    default String getVanillaEggNBTEntityID(ItemStack item) {
+        return null;
+    }
 
-    void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period);
+    default void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin,
+            int period) {
+        return;
+    }
 
     ItemStack getItemInHand(Player player);
 

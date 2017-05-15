@@ -135,11 +135,6 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public org.bukkit.entity.Entity getTNTSource(TNTPrimed tnt) {
-        return tnt.getSource();
-    }
-
-    @Override
     public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
         if (item == null || entityID == 0 || entity == null || entity.isEmpty()) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
