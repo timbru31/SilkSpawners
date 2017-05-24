@@ -136,6 +136,9 @@ ignoreCheckNumbers: false
 # Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.
 disableChangeTypeWithEgg: false
 
+# Disable right click to change spawners, spawns mob instead. Still blocks left click behavior. (unless disableChangeTypeWithEgg is true)
+disableChangeTypeWithEggRightClick: false
+
 # Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)
 spawnEggToSpawner: false
 
