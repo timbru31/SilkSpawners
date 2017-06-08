@@ -25,7 +25,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 * Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 * BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-* Support for multiple Minecraft versions, from 1.5.X to 1.12-pre2
+* Support for multiple Minecraft versions, from 1.5.X to 1.12
 
 *Third party features, all of them can be disabled*
 * bStats for usage statistics
