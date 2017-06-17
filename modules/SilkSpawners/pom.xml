@@ -72,14 +72,14 @@
       <version>3.5</version>
     </dependency>
     <dependency>
-      <groupId>com.massivecraft</groupId>
-      <artifactId>massivecore</artifactId>
-      <version>2.10.0</version>
+      <groupId>com.massivecraft.massivecore</groupId>
+      <artifactId>MassiveCore</artifactId>
+      <version>2.12.0</version>
     </dependency>
     <dependency>
-      <groupId>com.massivecraft</groupId>
-      <artifactId>factions</artifactId>
-      <version>2.11.0</version>
+      <groupId>com.massivecraft.factions</groupId>
+      <artifactId>Factions</artifactId>
+      <version>2.12.0</version>
     </dependency>
     <dependency>
       <groupId>com.massivecraft</groupId>
