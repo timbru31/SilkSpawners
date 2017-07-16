@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import org.bstats.Metrics;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
