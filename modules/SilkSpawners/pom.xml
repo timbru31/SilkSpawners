@@ -89,7 +89,7 @@
     <dependency>
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
-      <version>1.2-SNAPSHOT</version>
+      <version>1.2</version>
     </dependency>
     <dependency>
       <groupId>us.forseth11</groupId>
@@ -265,7 +265,7 @@
               <artifactSet>
                 <includes>
                   <include>de.dustplanet:SilkSpawners*</include>
-                  <include>org.bstats:*</include>
+                  <include>org.bstats.bukkit:*</include>
                   <include>net.gravitydevelopment.updater:updater</include>
                 </includes>
                 <excludes>
@@ -278,7 +278,7 @@
                   <shadedPattern>de.dustplanet.util</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>org.bstats</pattern>
+                  <pattern>org.bstats.bukkit</pattern>
                   <shadedPattern>de.dustplanet.util</shadedPattern>
                 </relocation>
               </relocations>
