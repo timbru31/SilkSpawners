@@ -45,6 +45,12 @@ public class SilkSpawnersBlockListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
+
+        boolean isFakeEvent = !BlockBreakEvent.class.equals(event.getClass());
+        if (isFakeEvent) {
+            return;
+        }
+
         Block block = event.getBlock();
         Player player = event.getPlayer();
 
@@ -73,9 +79,7 @@ public class SilkSpawnersBlockListener implements Listener {
         entityID = breakEvent.getEntityID();
 
         // Message the player about the broken spawner
-        plugin.informPlayer(player,
-                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken"))
-                .replace("%creature%", su.getCreatureName(entityID)));
+        plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken")).replace("%creature%", su.getCreatureName(entityID)));
 
         // If using silk touch, drop spawner itself
         ItemStack tool = su.nmsProvider.getItemInHand(player);
@@ -203,6 +207,12 @@ public class SilkSpawnersBlockListener implements Listener {
         if (event.isCancelled()) {
             return;
         }
+
+        boolean isFakeEvent = !BlockPlaceEvent.class.equals(event.getClass());
+        if (isFakeEvent) {
+            return;
+        }
+
         Block blockPlaced = event.getBlockPlaced();
         // Just mob spawner events
         if (blockPlaced.getType() != Material.MOB_SPAWNER) {
@@ -243,21 +253,16 @@ public class SilkSpawnersBlockListener implements Listener {
         // Check for place permission
         if (!player.hasPermission("silkspawners.place." + spawnerName)) {
             event.setCancelled(true);
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID)))
-                    .replace("%creature%", creatureName));
+            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID))).replace("%creature%", creatureName));
             return;
         }
 
         // Message default
         if (defaultID) {
-            plugin.informPlayer(player,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
+            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
         } else {
             // Else message the type
-            plugin.informPlayer(player,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced"))
-                    .replace("%creature%", su.getCreatureName(entityID)));
+            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced")).replace("%creature%", su.getCreatureName(entityID)));
         }
 
         su.setSpawnerEntityID(blockPlaced, entityID);
