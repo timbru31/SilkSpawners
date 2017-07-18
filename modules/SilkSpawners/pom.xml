@@ -19,14 +19,6 @@
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
     <repository>
-      <id>sk89q-repo</id>
-      <url>https://maven.sk89q.com/repo/</url>
-    </repository>
-    <repository>
-      <id>confuser-repo</id>
-      <url>https://ci.frostcast.net/plugin/repository/everything</url>
-    </repository>
-    <repository>
       <id>bstats-repo</id>
       <url>https://repo.bstats.org/content/groups/public/</url>
     </repository>
@@ -53,7 +45,7 @@
     <dependency>
       <groupId>com.sk89q</groupId>
       <artifactId>worldguard</artifactId>
-      <version>6.1.1-SNAPSHOT</version>
+      <version>6.2.1</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
@@ -84,7 +76,7 @@
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>Factions</artifactId>
-      <version>1.6.9.5-U0.1.20</version>
+      <version>1.6.9.5-U0.1.21</version>
     </dependency>
     <dependency>
       <groupId>org.bstats</groupId>
