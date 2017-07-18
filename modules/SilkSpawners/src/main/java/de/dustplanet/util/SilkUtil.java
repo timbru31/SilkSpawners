@@ -451,7 +451,7 @@ public class SilkUtil {
                 return metaEntityId;
             }
         }
-        return 0; // :(
+        return 0;
     }
 
 
@@ -485,7 +485,7 @@ public class SilkUtil {
                 return metaEntityId;
             }
         }
-        return 0; // :(
+        return 0;
     }
 
     /**
@@ -510,22 +510,6 @@ public class SilkUtil {
                         }
                     } catch (NumberFormatException e) {
                         return 0;
-                    }
-                }
-            }
-        }
-        // Last call - legacy mapping of the name. // TODO remove when applicable
-        if (plugin.config.getBoolean("useLegacyName", false) && meta.hasDisplayName()) {
-            String displayName = meta.getDisplayName();
-            if (displayName != null && !displayName.isEmpty()) {
-                String[] nameParts = ChatColor.stripColor(displayName.toLowerCase()).split(" ");
-                for (String part : nameParts) {
-                    // Continue if 'spawner' is matched
-                    if (part.equalsIgnoreCase("spawner") || part.equalsIgnoreCase("spawn")) {
-                        continue;
-                    }
-                    if (isKnown(part)) {
-                        return name2Eid.get(part);
                     }
                 }
             }
