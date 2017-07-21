@@ -8,11 +8,11 @@
 
 ## /version output?
 
-<!-- Please note that _without_ the specific version output your issue might be _IGNORED_ -->
+<!-- Please note that _WITHOUT_ the specific version output your issue _WILL BE IGNORED_ -->
 
 ## SilkSpawners version
 
-<!-- _LATEST_ is not a valid version -->
+<!-- _LATEST_ is _NOT_ a valid version -->
 
 ## Please provide any additional information below.
 
