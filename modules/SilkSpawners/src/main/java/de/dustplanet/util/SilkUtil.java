@@ -83,7 +83,7 @@ public class SilkUtil {
     public static final Material SPAWN_EGG = Material.MONSTER_EGG;
 
     /**
-     * Boolean toogle for reflection.
+     * Boolean toggle for reflection.
      */
     private boolean useReflection = true;
 
@@ -127,6 +127,11 @@ public class SilkUtil {
      */
     public static SilkUtil hookIntoSilkSpanwers() {
         SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
+        if (plugin == null || plugin.config == null) {
+            Bukkit.getLogger()
+                    .severe("SilkSpawners is not yet ready, have you called SilkUtil.hookIntoSilkSpanwers() before your onEnable()?");
+            return null;
+        }
         return new SilkUtil(plugin);
     }
 
@@ -146,7 +151,8 @@ public class SilkUtil {
                 plugin.getLogger().info("Loading support for " + version);
                 return true;
             }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException
+                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
             plugin.getLogger().severe("Could not find support for this CraftBukkit version.");
             plugin.getLogger().info("Check for updates at https://dev.bukkit.org/projects/silkspawners/");
@@ -190,9 +196,8 @@ public class SilkUtil {
             }
             if (!enable) {
                 if (verbose) {
-                    plugin.getLogger().info("Entity " + entityID + " = " + mobID + "/"
-                            + bukkitEntity + "[" + bukkitEntityClass
-                            + "] (disabled)");
+                    plugin.getLogger()
+                            .info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass + "] (disabled)");
                 }
                 continue;
             }
@@ -227,10 +232,8 @@ public class SilkUtil {
 
             // Detailed message
             if (verbose) {
-                plugin.getLogger().info("Entity " + entityID + " = " + mobID + "/"
-                        + bukkitEntity + "[" + bukkitEntityClass
-                        + "] (display name: " + displayName
-                        + ", aliases: " + aliases + ")");
+                plugin.getLogger().info("Entity " + entityID + " = " + mobID + "/" + bukkitEntity + "[" + bukkitEntityClass
+                        + "] (display name: " + displayName + ", aliases: " + aliases + ")");
             }
         }
 
@@ -386,7 +389,8 @@ public class SilkUtil {
         ItemMeta meta = item.getItemMeta();
         // Check if we need a colored name
         if (!spawnerName.equalsIgnoreCase("Monster Spawner")) {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', spawnerName)
+                    .replace("%creature%", getCreatureName(entityID)).replace("%entityID%", Short.toString(entityID)));
         }
 
         // The way it should be stored (double sure!)
@@ -440,7 +444,7 @@ public class SilkUtil {
                 return entityID;
             }
             String entity = nmsProvider.getVanillaEggNBTEntityID(item);
-            if (entity != null &&  mobID2Eid.containsKey(entity)) {
+            if (entity != null && mobID2Eid.containsKey(entity)) {
                 return mobID2Eid.get(entity);
             }
         }
@@ -453,7 +457,6 @@ public class SilkUtil {
         }
         return 0;
     }
-
 
     /**
      * Returns the entity ID of a spawner.
@@ -474,7 +477,7 @@ public class SilkUtil {
                 return entityID;
             }
             String entity = nmsProvider.getVanillaNBTEntityID(item);
-            if (entity != null &&  mobID2Eid.containsKey(entity)) {
+            if (entity != null && mobID2Eid.containsKey(entity)) {
                 return mobID2Eid.get(entity);
             }
         }
@@ -560,7 +563,7 @@ public class SilkUtil {
             }
         }
 
-        CreatureSpawner spawner  = (CreatureSpawner) blockState;
+        CreatureSpawner spawner = (CreatureSpawner) blockState;
         if (spawner.getSpawnedType() != null) {
             return spawner.getSpawnedType().getTypeId();
         }
@@ -621,8 +624,7 @@ public class SilkUtil {
      * @param block the MonsterSpawner
      * @param entityID the new entity ID
      * @param player the player
-     * @param messageDenied the message which is shown, when the player can't build here
-     * see {@link #canBuildHere(Player, Location)}
+     * @param messageDenied the message which is shown, when the player can't build here see {@link #canBuildHere(Player, Location)}
      */
     public boolean setSpawnerType(Block block, short entityID, Player player, String messageDenied) {
         // Changing denied by WorldGuard?
@@ -654,7 +656,8 @@ public class SilkUtil {
         ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
         if (item.getType() == Material.MOB_SPAWNER && !customName.equalsIgnoreCase("Monster Spawner")) {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
+            meta.setDisplayName(
+                    ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
         }
 
         // 1.8 broke durability, workaround is the lore
@@ -757,28 +760,23 @@ public class SilkUtil {
      */
     public void notify(Player player, String spawnerName, short entityID) {
         if (isBarAPI()) {
-            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawnerBar")
+            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
             // Old bars will be overridden
             BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime", 3));
         } else if (isVanillaBossBar()) {
-            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawnerBar")
+            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
             String barColor = plugin.config.getString("vanillaBossBar.color", "RED");
             String barStyle = plugin.config.getString("vanillaBossBar.style", "SOLID");
             int barTime = plugin.config.getInt("vanillaBossBar.displayTime", 3);
             nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner1")
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner1")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner2")
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner2")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner3")
+            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner3")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName)));
         }
     }
@@ -886,14 +884,14 @@ public class SilkUtil {
     }
 
     /**
-     * Get the spawner name, specified for each mob or default.
-     * from localization.yml
+     * Get the spawner name, specified for each mob or default. from localization.yml
      * @param mobName the internal name the spawner name is wanted for
      * @return the found string
      */
     public String getCustomSpawnerName(String mobName) {
         if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
-            return ChatColor.translateAlternateColorCodes('&', plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
+            return ChatColor.translateAlternateColorCodes('&',
+                    plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
         }
         return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
     }
@@ -907,13 +905,6 @@ public class SilkUtil {
         receiver.sendMessage(messages.split("\n"));
     }
 
-    /*
-     * WorldGuard stuff
-     * Enabled check and build permission check
-     * https://wiki.sk89q.com/wiki/WorldGuard/Regions/API
-     */
-
-    // Is WorldGuard enabled?
     /**
      * Prepare for WorldGuard support.
      * @param plugin SilkSpawners instance
@@ -932,7 +923,6 @@ public class SilkUtil {
         wg = (WorldGuardPlugin) worldGuard;
     }
 
-    // Is the player allowed to build here?
     /**
      * Checks if a player can build here (WorldGuard).
      * @param player the player
