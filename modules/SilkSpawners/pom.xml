@@ -257,7 +257,7 @@
               <artifactSet>
                 <includes>
                   <include>de.dustplanet:SilkSpawners*</include>
-                  <include>org.bstats.bukkit:*</include>
+                  <include>org.bstats:*</include>
                   <include>net.gravitydevelopment.updater:updater</include>
                 </includes>
                 <excludes>
