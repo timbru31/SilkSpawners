@@ -1,7 +1,6 @@
 package de.dustplanet.silkspawners.compat.v1_12_R1;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
@@ -19,7 +18,6 @@ import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -65,28 +63,25 @@ public class NMSHandler implements NMSProvider {
             e.printStackTrace();
         }
         if (registry == null) {
-            Bukkit.getLogger().warning(
-                    "[SilkSpawners] Failed to spawn, falling through. You should report this (RegistryMaterials == null)!");
+            Bukkit.getLogger()
+                    .warning("[SilkSpawners] Failed to spawn, falling through. You should report this (RegistryMaterials == null)!");
             return;
         }
         Class<? extends Entity> entityClazz = registry.getId(entityID);
         if (entityClazz == null) {
-            Bukkit.getLogger().warning(
-                    "[SilkSpawners] Failed to spawn, falling through. You should report this (entityClazz == null)!");
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entityClazz == null)!");
             return;
         }
         MinecraftKey minecraftKey = registry.b(entityClazz);
         if (minecraftKey == null) {
-            Bukkit.getLogger().warning(
-                    "[SilkSpawners] Failed to spawn, falling through. You should report this (minecraftKey == null)!");
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (minecraftKey == null)!");
             return;
         }
         Entity entity = EntityTypes.a(minecraftKey, world);
         // Should actually never happen since the method above
         // contains a null check, too
         if (entity == null) {
-            Bukkit.getLogger().warning(
-                    "[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
+            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
             return;
         }
 
@@ -120,8 +115,7 @@ public class NMSHandler implements NMSProvider {
                 }
                 Class<? extends Entity> entity = registry.getId(entityID);
                 if (entity == null) {
-                    Bukkit.getLogger()
-                            .severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
                     continue;
                 }
                 MinecraftKey minecraftKey = null;
@@ -129,18 +123,16 @@ public class NMSHandler implements NMSProvider {
                 try {
                     minecraftKey = registry.b(entity);
                 } catch (ClassCastException e) {
-                    Bukkit.getLogger().severe(
-                            "[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: "
-                            + entity.getSimpleName());
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
+                    Bukkit.getLogger()
+                            .severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
                     continue;
                 }
 
                 if (minecraftKey == null) {
-                    Bukkit.getLogger().severe(
-                            "[SilkSpawners] Failed to dump entity map: minecraftKey is null, entityID: " + entityID);
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: "
-                            + entity.getSimpleName());
+                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entityID: " + entityID);
+                    Bukkit.getLogger()
+                            .severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
                     continue;
                 }
                 sortedMap.put(entityID, minecraftKey.getKey());
@@ -352,8 +344,7 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin,
-            int period) {
+    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
         BarColor color = BarColor.valueOf(colorName.toUpperCase());
         BarStyle style = BarStyle.valueOf(styleName.toUpperCase());
         final BossBar bar = Bukkit.createBossBar(title, color, style);
