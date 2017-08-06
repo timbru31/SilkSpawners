@@ -15,6 +15,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_12_R1.block.CraftBlockEntityState;
 import org.bukkit.craftbukkit.v1_12_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
@@ -44,8 +45,15 @@ public class NMSHandler implements NMSProvider {
             tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
-            Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
-            e.printStackTrace();
+            try {
+                Class.forName("org.bukkit.craftbukkit.v1_12_R1.block.CraftBlockEntityState");
+                tileField = CraftBlockEntityState.class.getDeclaredField("snapshot");
+                tileField.setAccessible(true);
+            } catch (NoSuchFieldException | SecurityException | ClassNotFoundException e1) {
+                Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage() + " " + e1.getMessage());
+                e.printStackTrace();
+                e1.printStackTrace();
+            }
         }
     }
 
