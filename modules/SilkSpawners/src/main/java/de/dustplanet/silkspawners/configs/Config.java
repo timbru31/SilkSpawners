@@ -70,7 +70,7 @@ public class Config extends AbstractConfiguration {
                 "#ingredients:", "#  - 'A,IRON_FENCE'", "#  - 'B,DIRT'", "#  - 'C,2'", "#  - 'D,5'",
                 "", "# You can put IDs or the NAME here (please uppercase)", "# Add it for each custom ingredient you add, too!");
         config.addDefault("spawnersUnstackable", false);
-        config.addComment("spawnersUnstackable", "", "# Should spawners be stackable");
+        config.addComment("spawnersUnstackable", "", "# Should spawners be unstackable");
         config.addDefault("consumeEgg", true);
         config.addComment("consumeEgg", "", "# Should the egg be consumed when the spawner is changed with it");
         config.addDefault("enableCreatureDefault", true);

@@ -121,7 +121,7 @@ recipeAmount: 1
 ingredients:
 - A,IRON_FENCE
 
-# Should spawners be stackable
+# Should spawners be unstackable
 spawnersUnstackable: false
 
 # Should the egg be consumed when the spawner is changed with it
