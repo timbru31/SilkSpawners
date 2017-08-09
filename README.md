@@ -25,7 +25,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 * Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 * BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-* Support for multiple Minecraft versions, from 1.5.X to 1.12
+* Support for multiple Minecraft versions, from 1.5.X to 1.12.1
 
 *Third party features, all of them can be disabled*
 * bStats for usage statistics
@@ -206,14 +206,14 @@ Aliases:
 * eggs
 * eg
 
-| Command | Description |
-|:-------:|:-----------:|
-| /ss help | Displays the help menu. |
-| /ss list&#124;all | Displays all available creatures. |
-| /ss view | Displays information about the viewed spawner. |
-| /ss reload&#124;rl | Reloads the configuration files. |
-| /ss change&#124;set <newMob> | Changes the spawner you are currently holding or viewing at. |
-| /ss give&#124;add <player> <mob> [amount] | Gives a spawner or egg to the player. Amount is optional. |
+| Command                                   | Description                                                  |
+|:-----------------------------------------:|:------------------------------------------------------------:|
+| /ss help                                  | Displays the help menu.                                      |
+| /ss list&#124;all                         | Displays all available creatures.                            |
+| /ss view                                  | Displays information about the viewed spawner.               |
+| /ss reload&#124;rl                        | Reloads the configuration files.                             |
+| /ss change&#124;set <newMob>              | Changes the spawner you are currently holding or viewing at. |
+| /ss give&#124;add <player> <mob> [amount] | Gives a spawner or egg to the player. Amount is optional.    |
 
 ## Permissions
 (Fallback to OPs, if no permissions system is found)
@@ -222,49 +222,49 @@ Aliases:
   * spaces will be stripped out of names
 
 #### General
-| Permission node | Default | Description |
-|:----------:|:----------:|:----------:|
-| silkspawners.* | false | Grants access to all other permissions |
-| silkspawners.info | true | See informative messages about the spawners as you place and break them |
-| silkspawners.viewtype | true | View the spawner type using /spawner |
-| silkspawners.reload | op | Reload the configs on the fly |
-| silkspawners.explodedrop | true | Receive a drop when Spawner explodes via TNT (off by default, see permissionExplode) |
+| Permission node          | Default | Description                                                                          |
+|:------------------------:|:-------:|:------------------------------------------------------------------------------------:|
+| silkspawners.*           | false   | Grants access to all other permissions                                               |
+| silkspawners.info        | true    | See informative messages about the spawners as you place and break them              |
+| silkspawners.viewtype    | true    | View the spawner type using /spawner                                                 |
+| silkspawners.reload      | op      | Reload the configs on the fly                                                        |
+| silkspawners.explodedrop | true    | Receive a drop when Spawner explodes via TNT (off by default, see permissionExplode) |
 
 #### Placing spawners
-| Permission node | Default | Description |
-|:-----------------:|:----------:|:----------:|
-| silkspawners.place.* | true | Ability to place all spawners |
-| silkspawners.place._creature_ | true | Ability to place a _creature_ spawner |
+| Permission node               | Default | Description                           |
+|:-----------------------------:|:-------:|:-------------------------------------:|
+| silkspawners.place.*          | true    | Ability to place all spawners         |
+| silkspawners.place._creature_ | true    | Ability to place a _creature_ spawner |
 
 #### Crafting spawners
-| Permission node | Default | Description |
-|:-----------------:|:----------:|:----------:|
-| silkspawners.craft.* | true | Ability to craft all spawners (if enabled) |
-| silkspawners.craft._creature_ | true | Ability to craft a _creature_ spawner (if enabled) |
+| Permission node               | Default | Description                                        |
+|:-----------------------------:|:-------:|:--------------------------------------------------:|
+| silkspawners.craft.*          | true    | Ability to craft all spawners (if enabled)         |
+| silkspawners.craft._creature_ | true    | Ability to craft a _creature_ spawner (if enabled) |
 
 #### Mining spawners
-| Permission node | Default | Description |
-|:-----------------:|:----------:|:----------:|
-| silkspawners.destroydrop.* | true | Allows you to destroy all mob spawners to acquire mob spawn eggs / iron bars / XP (as configured) |
-| silkspawners.destroydrop._creature_ | true | Allows you to destroy mob a _creature_ spawner to acquire mob spawn eggs / iron bars / XP (as configured) |
-| silkspawners.silkdrop.* | true | Allows you to use silk touch to acquire all mob spawner items |
-| silkspawners.silkdrop._creature_ | true | Allows you to use silk touch to acquire a _creautre_ mob spawner item |
+| Permission node                     | Default | Description                                                                                               |
+|:-----------------------------------:|:-------:|:---------------------------------------------------------------------------------------------------------:|
+| silkspawners.destroydrop.*          | true    | Allows you to destroy all mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)         |
+| silkspawners.destroydrop._creature_ | true    | Allows you to destroy mob a _creature_ spawner to acquire mob spawn eggs / iron bars / XP (as configured) |
+| silkspawners.silkdrop.*             | true    | Allows you to use silk touch to acquire all mob spawner items                                             |
+| silkspawners.silkdrop._creature_    | true    | Allows you to use silk touch to acquire a _creautre_ mob spawner item                                     |
 
 #### Changing spawners
-| Permission node | Default | Description |
-|:-----------------:|:----------:|:----------:|
-| silkspawners.changetype.* | op | Allows you to change all spawner types using /spawner _creature_ |
-| silkspawners.changetype._creature_ | op | Allows you to change a _creature_ spawner type using /spawner _creature_ |
-| silkspawners.changetypewithegg.* | op | Allows you to change all spawner types by left-clicking with a spawn egg |
-| silkspawners.changetypewithegg._creature_ | op | Allows you to change a _creature_ spawner type by left-clicking with a spawn egg |
+| Permission node                           | Default | Description                                                                      |
+|:-----------------------------------------:|:-------:|:--------------------------------------------------------------------------------:|
+| silkspawners.changetype.*                 | op      | Allows you to change all spawner types using /spawner _creature_                 |
+| silkspawners.changetype._creature_        | op      | Allows you to change a _creature_ spawner type using /spawner _creature_         |
+| silkspawners.changetypewithegg.*          | op      | Allows you to change all spawner types by left-clicking with a spawn egg         |
+| silkspawners.changetypewithegg._creature_ | op      | Allows you to change a _creature_ spawner type by left-clicking with a spawn egg |
 
 #### Free spawners and eggs
-| Permission node | Default | Description |
-|:-----------------:|:----------:|:----------:|
-| silkspawners.freeitem.* | op | Allows you to get all spawner items in your hand for free using /spawner _creature_ |
-| silkspawners.freeitem._creature_ | op | Allows you to get a _creature_ spawner item in your hand for free using /spawner _creature_ |
-| silkspawners.freeitemegg.* | op | Allows you to get all spawner eggs in your hand for free using /egg _creature_ |
-| silkspawners.freeitemegg._creature_ | op | Allows you to get a _creature_ spawner egg in your hand for free using /egg _creature_ |
+| Permission node                     | Default | Description                                                                                 |
+|:-----------------------------------:|:-------:|:-------------------------------------------------------------------------------------------:|
+| silkspawners.freeitem.*             | op      | Allows you to get all spawner items in your hand for free using /spawner _creature_         |
+| silkspawners.freeitem._creature_    | op      | Allows you to get a _creature_ spawner item in your hand for free using /spawner _creature_ |
+| silkspawners.freeitemegg.*          | op      | Allows you to get all spawner eggs in your hand for free using /egg _creature_              |
+| silkspawners.freeitemegg._creature_ | op      | Allows you to get a _creature_ spawner egg in your hand for free using /egg _creature_      |
 
 ## Credits
 * mushroomhostage for the original SilkSpawners plugin
