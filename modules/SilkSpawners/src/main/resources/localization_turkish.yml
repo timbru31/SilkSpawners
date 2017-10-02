@@ -1,0 +1,59 @@
+# Bu satır Canavar Yaratıcıları için yeni isim belirlemek için kullanılır. Bunu iptal etmek için, mesajı Canavar Yaratıcısı olarak değiştiriniz.
+spawnerName: '&e%creature% &fYaratıcı'
+ 
+addedEgg: '&e%amount% &2adet &e%creature% &2yumurtası çantanıza eklendi.'
+addedEggOtherPlayer: '&e%amount% &2adet &e%creature% &2yumurtası &e%player%&2 isimli oyuncunun çantasına eklendi.'
+addedSpawner: '&e%amount% &2adet &e%creature% &2yaratıcısı çantanıza eklendi.'
+addedSpawnerOtherPlayer: '&e%amount% &2adet &e%creature% &2yaratıcısı &e%player%&2 isimli oyuncunun çantanıza eklendi.'
+noFreeSlot: '&4Çantada bunun için yeterli alan yok!'
+ 
+noPermission: '&4Bu komutu kullanmaya yetkiniz yok!'
+noPermissionChangingEgg: '&4Canavar yumurtalarını değiştirmeye yetkiniz yok!'
+noPermissionChangingSpawner: '&4Canavar yaratıcılarını değiştirecek yetkiniz yok!'
+noPermissionFreeEgg: '&4Yumurta yaratmaya yetkiniz yok!'
+noPermissionFreeSpawner: '&4Canavar yaratıcısı yaratmaya yetkiniz yok!'
+noPermissionViewType: '&4Canavar yaratıcısının türünü öğrenmeye yetkiniz yok!'
+noPermissionChangingWithEggs: '&4Canavar yaratıcısını, yumurta ile değiştirmeye yetkiniz yok!'
+noPermissionCraft: '&4Canavar yaratıcısı üretmeye yetkiniz yok!'
+noPermissionPlace: '&4Canavar yaratıcısı yerleştirmeye yetkiniz yok!'
+ 
+changedEgg: '&2Canavar yumurtası başarı ile &e%creature%&2 olarak değiştirildi.'
+changedSpawner: '&2Canavar yaratıcısı başarı ile &e&creature%&2 olarak değiştirildi.'
+ 
+playerOffline: '&4Bu oyuncu çevrimdışı.'
+changingDeniedFactions: '&4Başka oyuncuların bölgesindeki yaratıcıları değiştirmeye yetkiniz yok!'
+changingDeniedFeudal: '&4Başka oyuncuların krallığındaki yaratıcıları değiştirmeye yetkiniz yok!'
+changingDeniedWorldGuard: '&4Canavar yaratıcısının değiştirilme işlemi WorldGuard tarafındna engellendi.'
+getSpawnerType: '&2Bu bir &e%creature%&2 yaratıcısı.'
+unknownArgument: '&4Tanımlanamayan argüman. Yardım için &e/silkspawners help&4 komutunu inceleyiniz.'
+unknownCreature: '&e%creature% &4tanımlanamadı.'
+useNumbers: '&4Lütfen 1 ile 64 arasında bir sayı belirtiniz!'
+noConsole: '&4Bu komut konsol üzerinden kullanılamaz!'
+configsReloaded: '&2Ayar dosyası başarıyla yenilendi!'
+ 
+spawnerBroken: '&e%creature% &2yaratıcısı başarıyla kırıldı.'
+spawnerPlaced: '&e%creature% &2yaratıcısı başarıyla yerleştirildi.'
+placingDefault: '&eVarsayılan canavar yaratıcısı yerleştiriliyor (Bu yaratıcı geçersiz veya iptal edilmiş olabilir)'
+ 
+informationOfSpawner1: '-- Canavar Yaratıcısı --'
+informationOfSpawner2: '-- Tür: %creature% --'
+informationOfSpawner3: '-- ID: %ID% --'
+informationOfSpawnerBar: 'Canavar Yaratıcısı, Tür: &e%creature%&f, ID: %ID%'
+ 
+spawningDenied: '&e%creature% (ID %ID%) &4çağırılamadı!'
+spawning: '&e%creature% (ID %ID%) &2çağırılıyor.'
+noSpawnerHere: '&4Bu yaratıcı buraya yerleştirilemez çünkü üzerindeki blok tarafından engelleniyor.!'
+ 
+lookAtSpawner: '&4Direkt olarak yaratıcıya bakmalısınız.'
+# Buradaki cümlenin tam bir Türkçe karşılığı yok, tam olarak nasıl çevireceğimden emin olamadım.
+# Direkt olarak chicken translate dediğimiz yani cümlede ne yazıyorsa direkt yazdığı gibi çevirmeye çalıştım.
+spawnerNotDeterminable: '&4Elinizde bir canavar yaratıcısı veya yumurtası yok veya bir elinizde yumurta diğer elinizde yaratıcı yok. Lütfen birini boşaltınız!'
+ 
+help: |-
+  '&7------&6SilkSpawners v%version% Yardım Menüsü&7------'
+  '&e/ss help &7- &2Yardım menüsünü gösterir.'
+  '&e/ss list|all &7- &2Tüm uygun canavarları gösterir.'
+  '&e/ss view &7- &2Bakılan yaratıcının bilgilerini gösterir.'
+  '&e/ss reload|rl &7- &2Ayar dosyalarının yeniden yüklenmesini sağlar.'
+  '&e/ss change <canavar> &7- &2Tuttuğunuz veya baktığınız canavar yaratıcısının türünü değiştirir.'
+  '&e/ss give|add <oyuncu> <canavar> [miktar] &7- &2Oyuncuya yaratıcı veya yumurta verir. (Miktar isteğe bağlıdır.)'
