@@ -1,0 +1,58 @@
+# Translation made by Luligabi
+# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
+spawnerName: '&fGerador de &e%creature%'
+ 
+addedEgg: '&2Adicionado &e%amount% ovo(s) de geração de %creature% &2para seu inventário.'
+addedEggOtherPlayer: '&2Adicionado &e%amount% ovo(s) de geração de %creature% &2para o inventário de &e%player%.'
+addedSpawner: '&2Adicionado &e%amount% gerador(es) de %creature% &2para seu inventário.'
+addedSpawnerOtherPlayer: '&2Adicionado &e%amount% gerador(es) de %creature% &2para o inventário de &e%player%&2.'
+noFreeSlot: '&4Não há espaço suficiente no inventário!'
+ 
+noPermission: '&4Você não tem permissão para utilizar esse comando!'
+noPermissionChangingEgg: '&4Você não tem permissão para mudar ovos de geração!'
+noPermissionChangingSpawner: '&4Você não tem permissão para mudar geradores!'
+noPermissionFreeEgg: '&4Você não tem permissão para invocar esse ovo!'
+noPermissionFreeSpawner: '&4VocÊ não tem permissão para colocar esse gerador!'
+noPermissionViewType: '&4Você não tem permissão para ver o tipo desse gerador!'
+noPermissionChangingWithEggs: '&4You do not have permission to change spawners with spawn eggs!'
+noPermissionCraft: '&4Você não tem permissão para criar um gerador de %creature%!'
+noPermissionPlace: '&4Você não tem permissão para colocar um gerador de &e%creature%!'
+ 
+changedEgg: '&2Ovo de geração mudado com êxito para um ovo de geração de &e%creature%.'
+changedSpawner: '&2Criatura gerada no gerador mudada para &e%creature%.'
+ 
+playerOffline: '&4Desculpe,este jogador está offline!'
+changingDeniedFactions: '&4Você não tem permissão para mudar geradores no território de outras pessoas!'
+changingDeniedFeudal: '&4Você não tem permissão para mudar geradores no reino de outras pessoas!'
+changingDeniedWorldGuard: '&4A mudança do gerador foi negada pela proteção WorldGuard.'
+getSpawnerType: '&2Esse é um gerador de &e%creature%.'
+unknownArgument: '&4Argumento não reconhecido.Use &e/silkspawners help &4para ajuda.'
+unknownCreature: '&4A criatura &e%creature% &4não foi reconhecida.'
+useNumbers: '&4Use um número entre 1 e 64!'
+noConsole: '&4O console não pode usar esse comando!'
+configsReloaded: '&2Configurações recarregadas com êxito!'
+ 
+spawnerBroken: '&eO gerador de %creature% &2está quebrado.'
+spawnerPlaced: '&eO gerador de %creature% &2foi colocado.'
+placingDefault: '&eColocando gerador padrão (O gerador pode estar desativado ou ser de tipo não reconhecido)'
+ 
+informationOfSpawner1: '-- Gerador de Monstros --'
+informationOfSpawner2: '-- Tipo: %creature% --'
+informationOfSpawner3: '-- ID da entidade: %ID% --'
+informationOfSpawnerBar: 'Gerador de Monstros, Tipo: &e%creature%&f, ID: %ID%'
+ 
+spawningDenied: '&4Geração da criatura &e%creature% (ID %ID%) &4negado!'
+spawning: '&2Gerando &e%creature% (ID %ID%)'
+noSpawnerHere: '&4Um gerador não pode ser colocado aqui porque o bloco acima está bloqueado!'
+ 
+lookAtSpawner: '&4Você deve estar olhando diretamente para o gerador.'
+spawnerNotDeterminable: '&4Você ou não tem um gerador ou ovo em sua mão ou tem um gerador ou ovo em ambas mãos. Remova um da mão secundária!'
+ 
+help: |-
+  '&7------&6Menu de Ajuda SilkSpawners v%version%7------'
+  '&e/ss help &7- &2Mostra o menu de ajuda.'
+  '&e/ss list|all &7- &2Mostra todas as criaturas disponíveis.'
+  '&e/ss view &7- &2Mostra informação sobre o spawner observado.'
+  '&e/ss reload|rl &7- &2Recarrega os arquivos de configuração.'
+  '&e/ss change <newMob> &7- &2Muda o gerador que você está olhando ou segurando.'
+  '&e/ss give|add <player> <mob> [amount] &7- &2Dá um gerador ou ovo de geração a um jogador.Quantidade é opcional.'
