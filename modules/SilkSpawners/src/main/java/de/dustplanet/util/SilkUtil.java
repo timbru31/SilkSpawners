@@ -118,7 +118,7 @@ public class SilkUtil {
             instance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
         }
         plugin = instance;
-        getWorldGuard(instance);
+        getWorldGuard();
         boolean nmsProviderFound = setupNMSProvider();
         if (nmsProviderFound) {
             load();
