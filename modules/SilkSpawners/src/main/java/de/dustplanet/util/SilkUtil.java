@@ -113,6 +113,10 @@ public class SilkUtil {
      * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
+        if (instance == null) {
+            Bukkit.getogger().severe("Nag API user: Don't initialize SilkUtil without a SilkSpawners instance!");
+            instance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
+        }
         getWorldGuard(instance);
         plugin = instance;
         boolean nmsProviderFound = setupNMSProvider();
