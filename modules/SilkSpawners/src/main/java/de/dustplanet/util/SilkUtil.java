@@ -117,8 +117,8 @@ public class SilkUtil {
             Bukkit.getLogger().severe("SilkSpawners - Nag API user: Don't initialize SilkUtil without a SilkSpawners instance!");
             instance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
         }
-        getWorldGuard(instance);
         plugin = instance;
+        getWorldGuard(instance);
         boolean nmsProviderFound = setupNMSProvider();
         if (nmsProviderFound) {
             load();
@@ -131,7 +131,7 @@ public class SilkUtil {
      */
     public static SilkUtil hookIntoSilkSpanwers() {
         SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
-        if (plugin == null || plugin.config == null) {
+        if (plugin == null || plugin.getConfig() == null) {
             Bukkit.getLogger()
                     .severe("SilkSpawners is not yet ready, have you called SilkUtil.hookIntoSilkSpanwers() before your onEnable()?");
             return null;
@@ -337,7 +337,7 @@ public class SilkUtil {
      * @return whether vanilla boss bar is used or not
      */
     public boolean isVanillaBossBar() {
-        return plugin.config.getBoolean("vanillaBossBar.enable", true);
+        return plugin.getConfig().getBoolean("vanillaBossBar.enable", true);
     }
 
     /**
@@ -401,7 +401,7 @@ public class SilkUtil {
         item.setDurability(entityID);
 
         // 1.8 broke durability, workaround is the lore
-        if ((forceLore || !isUsingReflection()) && plugin.config.getBoolean("useMetadata", true)) {
+        if ((forceLore || !isUsingReflection()) && plugin.getConfig().getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
@@ -502,7 +502,7 @@ public class SilkUtil {
      */
     public short searchItemMeta(ItemMeta meta) {
         short durability = 0;
-        if (plugin.config.getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
+        if (plugin.getConfig().getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
             for (String entityIDString : meta.getLore()) {
                 if (!entityIDString.contains("entityID")) {
                     // Continue if the lore does not contain entityID
@@ -665,7 +665,7 @@ public class SilkUtil {
         }
 
         // 1.8 broke durability, workaround is the lore
-        if (!isUsingReflection() && plugin.config.getBoolean("useMetadata", true)) {
+        if (!isUsingReflection() && plugin.getConfig().getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
@@ -767,13 +767,13 @@ public class SilkUtil {
             String shortInfo = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
             // Old bars will be overridden
-            BarAPI.setMessage(player, shortInfo, plugin.config.getInt("barAPI.displayTime", 3));
+            BarAPI.setMessage(player, shortInfo, plugin.getConfig().getInt("barAPI.displayTime", 3));
         } else if (isVanillaBossBar()) {
             String shortInfo = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawnerBar")
                     .replace("%ID%", Short.toString(entityID)).replace("%creature%", spawnerName));
-            String barColor = plugin.config.getString("vanillaBossBar.color", "RED");
-            String barStyle = plugin.config.getString("vanillaBossBar.style", "SOLID");
-            int barTime = plugin.config.getInt("vanillaBossBar.displayTime", 3);
+            String barColor = plugin.getConfig().getString("vanillaBossBar.color", "RED");
+            String barStyle = plugin.getConfig().getString("vanillaBossBar.style", "SOLID");
+            int barTime = plugin.getConfig().getInt("vanillaBossBar.displayTime", 3);
             nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
             sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("informationOfSpawner1")
@@ -859,7 +859,7 @@ public class SilkUtil {
 
         boolean toolAllowed = false;
         Material toolType = tool.getType();
-        List<String> allowedTools = plugin.config.getStringList("allowedTools");
+        List<String> allowedTools = plugin.getConfig().getStringList("allowedTools");
         for (String allowedTool : allowedTools) {
             if (toolType == Material.matchMaterial(allowedTool)) {
                 toolAllowed = true;
@@ -870,7 +870,7 @@ public class SilkUtil {
             return false;
         }
 
-        int minLevel = plugin.config.getInt("minSilkTouchLevel", 1);
+        int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
         // Always have it
         if (minLevel == 0) {
             return true;
@@ -913,17 +913,17 @@ public class SilkUtil {
      * Prepare for WorldGuard support.
      * @param plugin SilkSpawners instance
      */
-    private void getWorldGuard(SilkSpawners silkSpawnersPlugin) {
-        if (!silkSpawnersPlugin.config.getBoolean("useWorldGuard", true)) {
-            silkSpawnersPlugin.getLogger().info("WorldGuard support is disabled due to config setting");
+    private void getWorldGuard() {
+        if (!plugin.getConfig().getBoolean("useWorldGuard", true)) {
+            plugin.getLogger().info("WorldGuard support is disabled due to config setting");
             return;
         }
-        Plugin worldGuard = silkSpawnersPlugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
         if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
-            silkSpawnersPlugin.getLogger().info("WorldGuard was not found and support is disabled");
+            plugin.getLogger().info("WorldGuard was not found and support is disabled");
             return;
         }
-        silkSpawnersPlugin.getLogger().info("WorldGuard was found and support is enabled");
+        plugin.getLogger().info("WorldGuard was found and support is enabled");
         wg = (WorldGuardPlugin) worldGuard;
     }
 
