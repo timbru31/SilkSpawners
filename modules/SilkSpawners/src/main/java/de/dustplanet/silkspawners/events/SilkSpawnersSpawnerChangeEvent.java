@@ -13,7 +13,7 @@ import org.bukkit.event.HandlerList;
  * @author (former) mushroomhostage
  * @author xGhOsTkiLLeRx
  */
-public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable {
+public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable, ISilkSpawnersEvent {
     /**
      * Handlers list.
      */
@@ -55,9 +55,8 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     private int amount;
 
     /**
-     * This constructor should not be used anymore,
-     * because the new one carries information about the
-     * current entityID of the spawner block or item.
+     * This constructor should not be used anymore, because the new one carries information about the current entityID of the spawner block
+     * or item.
      *
      * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
      */
@@ -75,6 +74,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Constructor of the event. Please note that the amount is a fallback to 1
+     * 
      * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
      */
     @Deprecated
@@ -91,6 +91,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Constructor of the event.
+     * 
      * @param player who issues the event
      * @param block is allowed to be null
      * @param id new ID
@@ -109,6 +110,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Determine if the event is cancelled or not.
+     * 
      * @return yes or no
      */
     @Override
@@ -118,6 +120,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Cancels the event.
+     * 
      * @param cancel whether the event should be cancelled or not
      */
     @Override
@@ -127,47 +130,56 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Get the player from this event.
+     * 
      * @return the player object
      */
+    @Override
     public Player getPlayer() {
         return this.player;
     }
 
     /**
      * Get the block of this event.
+     * 
      * @return the block - in this case a spawner; returns null when an egg is used
      */
+    @Override
     public Block getBlock() {
         return this.block;
     }
 
     /**
      * Get the creature spawner of this event.
+     * 
      * @return the creature spawner; returns null when an egg is used
      */
+    @Override
     public CreatureSpawner getSpawner() {
         return this.spawner;
     }
 
     /**
      * Get the entity ID (mob to spawn) from this event.
+     * 
      * @return the entity ID
      */
+    @Override
     public short getEntityID() {
         return this.id;
     }
 
     /**
      * Sets the entityID of the spawner.
+     * 
      * @param id the new entityID
      */
+    @Override
     public void setEntityID(short id) {
         this.id = id;
     }
 
     /**
-     * Gets the old entityID of the spawner (item or block).
-     * May return 0 if the deprecated constructor is used!
+     * Gets the old entityID of the spawner (item or block). May return 0 if the deprecated constructor is used!
      */
     public short getOldEntityID() {
         return this.oldID;
@@ -175,6 +187,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Gets the amount of the ItemStack.
+     * 
      * @return the amount
      */
     public int getAmount() {
@@ -183,6 +196,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Sets the amount of the ItemStack.
+     * 
      * @param amount of the ItemStack
      */
     public void setAmount(int amount) {
@@ -191,6 +205,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Returns the HandlerList.
+     * 
      * @return the HandlerList
      */
     @Override
@@ -200,6 +215,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Returns the HanderList in a static way.
+     * 
      * @return the HanderList
      */
     public static HandlerList getHandlerList() {

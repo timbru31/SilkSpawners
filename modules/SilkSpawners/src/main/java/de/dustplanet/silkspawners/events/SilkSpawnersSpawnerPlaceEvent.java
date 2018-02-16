@@ -12,7 +12,7 @@ import org.bukkit.event.HandlerList;
  *
  * @author xGhOsTkiLLeRx
  */
-public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable {
+public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable, ISilkSpawnersEvent {
     /**
      * Handlers list.
      */
@@ -45,6 +45,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable 
 
     /**
      * Constructor of the event.
+     * 
      * @param player who issues the event
      * @param block is allowed to be null
      * @param id new ID
@@ -60,6 +61,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable 
 
     /**
      * Determine if the event is cancelled or not.
+     * 
      * @return yes or no
      */
     @Override
@@ -69,6 +71,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable 
 
     /**
      * Cancels the event.
+     * 
      * @param cancel whether the event should be cancelled or not
      */
     @Override
@@ -78,46 +81,57 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable 
 
     /**
      * Get the player from this event.
+     * 
      * @return the player object
      */
+    @Override
     public Player getPlayer() {
         return this.player;
     }
 
     /**
      * Get the block of this event.
+     * 
      * @return the block - in this case a spawner; returns null when an egg is used
      */
+    @Override
     public Block getBlock() {
         return this.block;
     }
 
     /**
      * Get the creature spawner of this event.
+     * 
      * @return the creature spawner; returns null when an egg is used
      */
+    @Override
     public CreatureSpawner getSpawner() {
         return this.spawner;
     }
 
     /**
      * Get the entity ID (mob to spawn) from this event.
+     * 
      * @return the entity ID
      */
+    @Override
     public short getEntityID() {
         return this.id;
     }
 
     /**
      * Sets the entityID of the spawner.
+     * 
      * @param id the new entityID
      */
+    @Override
     public void setEntityID(short id) {
         this.id = id;
     }
 
     /**
      * Returns the HandlerList.
+     * 
      * @return the HandlerList
      */
     @Override
@@ -127,6 +141,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable 
 
     /**
      * Returns the HanderList in a static way.
+     * 
      * @return the HanderList
      */
     public static HandlerList getHandlerList() {
