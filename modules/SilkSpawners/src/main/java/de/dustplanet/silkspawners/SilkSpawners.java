@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -45,7 +46,9 @@ public class SilkSpawners extends JavaPlugin {
     private Updater updater;
     private String nmsVersion;
     private static final int PLUGIN_ID = 35890;
-    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = {"v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3", "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1", "v1_12_R1"};
+    private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = { "v1_5_R1", "v1_5_R2", "v1_5_R3", "v1_6_R1", "v1_6_R2", "v1_6_R3",
+            "v1_7_R1", "v1_7_R2", "v1_7_R3", "v1_7_R4", "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1", "v1_11_R1",
+            "v1_12_R1" };
     public CommentedConfiguration config;
     public CommentedConfiguration localization;
     public CommentedConfiguration mobs;
@@ -110,7 +113,6 @@ public class SilkSpawners extends JavaPlugin {
         getCommand("silkspawners").setExecutor(spawnerCommand);
         getCommand("silkspawners").setTabCompleter(tabCompleter);
 
-
         // Listeners
         SilkSpawnersBlockListener blockListener = new SilkSpawnersBlockListener(this, su);
         SilkSpawnersPlayerListener playerListener = new SilkSpawnersPlayerListener(this, su);
@@ -160,8 +162,7 @@ public class SilkSpawners extends JavaPlugin {
 
     // If no config is found, copy the default one(s)!
     private void copy(String yml, File file) {
-        try (OutputStream out = new FileOutputStream(file);
-                InputStream in = getResource(yml)) {
+        try (OutputStream out = new FileOutputStream(file); InputStream in = getResource(yml)) {
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {
@@ -177,11 +178,15 @@ public class SilkSpawners extends JavaPlugin {
         loadPermissions("craft", "Allows you to craft the specific spawner", PermissionDefault.FALSE);
         loadPermissions("place", "Allows you to place the specific spawner", PermissionDefault.FALSE);
         loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items", PermissionDefault.FALSE);
-        loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)", PermissionDefault.FALSE);
+        loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)",
+                PermissionDefault.FALSE);
         loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]", PermissionDefault.FALSE);
-        loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg", PermissionDefault.FALSE);
-        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]", PermissionDefault.FALSE);
-        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg", PermissionDefault.FALSE);
+        loadPermissions("changetypewithegg", "Allows you to change the spawner type by left-clicking with a spawn egg",
+                PermissionDefault.FALSE);
+        loadPermissions("freeitem", "Allows you to get spawner items in your hand for free using /spawner [creature]",
+                PermissionDefault.FALSE);
+        loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg",
+                PermissionDefault.FALSE);
     }
 
     private void loadPermissions(String permissionPart, String description, PermissionDefault permDefault) {
@@ -266,11 +271,15 @@ public class SilkSpawners extends JavaPlugin {
 
         // Add "base" recipe for eggs containing no durability (not from SilkSpawners)
         // 1.9 deprecated the durability and uses NBT tags
-        short baseSpawnerEntityID  = su.name2Eid.get(config.getString("defaultCreature", "90"));
+        short baseSpawnerEntityID = su.name2Eid.get(config.getString("defaultCreature", "90"));
         int baseSpawnerAmount = config.getInt("recipeAmount", 1);
         ItemStack baseSpawnerItem = su.newSpawnerItem(baseSpawnerEntityID, "&e&o??? &r&fSpawner", baseSpawnerAmount, false);
-        ShapedRecipe baseSpawnerRecipe = new ShapedRecipe(baseSpawnerItem);
-
+        ShapedRecipe baseSpawnerRecipe = null;
+        try {
+            baseSpawnerRecipe = new ShapedRecipe(new NamespacedKey(this, "baseSpawner"), baseSpawnerItem);
+        } catch (Exception e) {
+            baseSpawnerRecipe = new ShapedRecipe(baseSpawnerItem);
+        }
 
         String baseSpawnerTop = config.getString("recipeTop", "AAA");
         String baseSpawnerMiddle = config.getString("recipeMiddle", "AXA");
@@ -320,7 +329,7 @@ public class SilkSpawners extends JavaPlugin {
                 // If the custom recipe fails, we have a fallback
                 getLogger().warning("Could not add the default recipe!");
                 e.printStackTrace();
-                baseSpawnerRecipe.shape(new String[] {"AAA", "ABA", "AAA"});
+                baseSpawnerRecipe.shape(new String[] { "AAA", "ABA", "AAA" });
                 baseSpawnerRecipe.setIngredient('A', Material.IRON_FENCE);
                 // Use the right egg!
                 baseSpawnerRecipe.setIngredient('B', SilkUtil.SPAWN_EGG);
@@ -360,15 +369,15 @@ public class SilkSpawners extends JavaPlugin {
             }
             // Output is a spawner of this type with a custom amount
             ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), amount, true);
-            ShapedRecipe recipe = new ShapedRecipe(spawnerItem);
+            ShapedRecipe recipe = null;
+            try {
+                recipe = new ShapedRecipe(new NamespacedKey(this, mobID), spawnerItem);
+            } catch (Exception e) {
+                recipe = new ShapedRecipe(spawnerItem);
+            }
+
             /*
-             * Default is
-             * A A A
-             * A B A
-             * A A A
-             *
-             * where A is IRON_FENCE
-             * and B is MONSTER_EGG
+             * Default is A A A A B A A A A where A is IRON_FENCE and B is MONSTER_EGG
              */
 
             // We try to use the custom recipe, but we don't know if the user
@@ -438,7 +447,7 @@ public class SilkSpawners extends JavaPlugin {
                 // We have an ingredient that is not in our shape. Ignore it then
                 if (shapeContainsIngredient(shape, 'X')) {
                     if (verbose) {
-                        getLogger().info("shape of " +  mobID + " contains X");
+                        getLogger().info("shape of " + mobID + " contains X");
                     }
                     // Use the right egg!
                     recipe.setIngredient('X', SilkUtil.SPAWN_EGG, entityID);
@@ -456,7 +465,7 @@ public class SilkSpawners extends JavaPlugin {
                     char character = ingredients[0].toUpperCase().charAt(0);
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(shape, character)) {
-                        getLogger().info("shape of " +  mobID + " does not contain " + character);
+                        getLogger().info("shape of " + mobID + " does not contain " + character);
                         continue;
                     }
                     // We try to get the material (ID or name)
@@ -472,7 +481,7 @@ public class SilkSpawners extends JavaPlugin {
                 // If the custom recipe fails, we have a fallback
                 getLogger().warning("Could not add the recipe of " + mobID + "!");
                 e.printStackTrace();
-                recipe.shape(new String[] {"AAA", "ABA", "AAA"});
+                recipe.shape(new String[] { "AAA", "ABA", "AAA" });
                 recipe.setIngredient('A', Material.IRON_FENCE);
                 // Use the right egg!
                 recipe.setIngredient('B', SilkUtil.SPAWN_EGG, entityID);
