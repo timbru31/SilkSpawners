@@ -9,6 +9,9 @@
 ## /version output?
 
 <!-- Please note that _WITHOUT_ the specific version output your issue _WILL BE IGNORED_ -->
+<!-- A /version output looks like this: This server is running CraftBukkit version git-Spigot-06f33d0-86fdf92 (MC: 1.12.2) (Implementing API version 1.12.2-R0.1-SNAPSHOT) -->
+
+<!-- Adding e.g. only 1.12.2 will lead _IGNORED ISSUES_ -->
 
 ## SilkSpawners version
 
