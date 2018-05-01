@@ -1,0 +1,61 @@
+# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
+#
+# Chinese Simplified Translation by 佛壁灯 
+# F0rb1d @ Github
+#
+spawnerName: '&e%creature% &f刷怪笼'
+ 
+addedEgg: '&2已成功添加 &e%amount% 个 %creature% 的怪物蛋&2至您的背包。'
+addedEggOtherPlayer: '&2已添加 &e%amount% 个 %creature% 怪物蛋&2至 &e%player%&2的背包。'
+addedSpawner: '&2已添加 &e%amount% 个 %creature% 的刷怪笼&2至您的背包。'
+addedSpawnerOtherPlayer: '&2已添加 &e%amount% 个 %creature% 的刷怪笼&2至 &e%player%&2的背包。'
+noFreeSlot: '&4背包空位不足！'
+ 
+noPermission: '&4您没有使用此命令的权限！'
+noPermissionChangingEgg: '&4您没有更改怪物蛋的权限！'
+noPermissionChangingSpawner: '&4您没有更改刷怪笼的权限！'
+noPermissionFreeEgg: '&4您没有生成空怪物蛋的权限！'
+noPermissionFreeSpawner: '&4您没有生成空刷怪笼的权限！'
+noPermissionViewType: '&4您没有查看此刷怪笼类型的权限！'
+noPermissionChangingWithEggs: '&4您没有使用怪物蛋修改刷怪笼类型的权限！'
+noPermissionCraft: '&4您没有合成 &e%creature% &4刷怪笼的权限！'
+noPermissionPlace: '&4您没有放置 &e%creature% &4刷怪笼的权限！'
+ 
+changedEgg: '&2已成功将怪物蛋更改为 &e%creature% 怪物蛋。'
+changedSpawner: '&2已成功将刷怪笼更改为 &e%creature% 刷怪笼。'
+ 
+playerOffline: '&4很抱歉，此玩家不在线！'
+changingDeniedFactions: '&4您无法在其他人的领地里更改刷怪笼类型！'
+changingDeniedFeudal: '&4您无法在其他人的王国中更改刷怪笼类型！'
+changingDeniedWorldGuard: '&4刷怪笼类型修改被 WorldGuard 保护所拒绝。'
+getSpawnerType: '&2这是一个 &e%creature% 的刷怪笼&2.'
+unknownArgument: '&4未知参数。请输入 &e/ss help 获取帮助。'
+unknownCreature: '&4未知生物类型 &e%creature%&4。'
+useNumbers: '&4请使用介于 1 和 64 之间的数字！'
+noConsole: '&4控制台无法使用此命令！'
+configsReloaded: '&2已成功重载配置文件！'
+ 
+spawnerBroken: '&2%creature% &e刷怪笼被打破。'
+spawnerPlaced: '&2%creature% &e刷挂笼被放置。'
+placingDefault: '&e正在放置默认刷挂笼（刷挂笼可能无效或被禁用）'
+ 
+informationOfSpawner1: '-- 刷挂笼 --'
+informationOfSpawner2: '-- 类型： %creature% --'
+informationOfSpawner3: '-- 实体 ID： %ID% --'
+informationOfSpawnerBar: '刷挂笼，类型： &e%creature%&f，ID：%ID%'
+ 
+spawningDenied: '&4已拒绝生成 &e%creature%（ID %ID%）！'
+spawning: '&2正在生成 &e%creature%（ID %ID%）'
+noSpawnerHere: '&4由于上方方块被阻挡，刷挂笼无法在此放置！'
+ 
+lookAtSpawner: '&4您必须直视刷挂笼。'
+spawnerNotDeterminable: '&4您单手或双手上既没有刷挂笼也没有怪物蛋。请清空一个！'
+ 
+help: |-
+  '&7------&6丝绸刷怪笼 版本 %version% 帮助菜单&7------'
+  '&e/ss help &7- &2显示帮助菜单。'
+  '&e/ss list|all &7- &2显示所有可用生物。'
+  '&e/ss view &7- &2显示有关查看过的刷怪笼信息。'
+  '&e/ss reload|rl &7- &2重载配置文件。'
+  '&e/ss change <新生物> &7- &2更改您正拿着或看向的刷怪笼类型。'
+  '&e/ss give|add <玩家> <怪物> [数量] &7- &2给予玩家刷怪笼或怪物蛋。数量为可选项。'
