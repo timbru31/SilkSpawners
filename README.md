@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
 [![Circle CI](https://img.shields.io/circleci/project/timbru31/SilkSpawners.svg)](https://circleci.com/gh/timbru31/SilkSpawners)
 [![Build status](https://ci.appveyor.com/api/projects/status/3uvrma09rul7myk5?svg=true)](https://ci.appveyor.com/project/timbru31/silkspawners)
-[![BukkitDev](https://img.shields.io/badge/BukkitDev-v5.0.0-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
-[![SpigotMC](https://img.shields.io/badge/SpigotMC-v5.0.0-orange.svg)](https://www.spigotmc.org/resources/7811/)
+[![BukkitDev](https://img.shields.io/badge/BukkitDev-v5.0.2-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
+[![SpigotMC](https://img.shields.io/badge/SpigotMC-v5.0.2-orange.svg)](https://www.spigotmc.org/resources/7811/)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
 [![Join the chat at https://gitter.im/timbru31/SilkSpawners](https://badges.gitter.im/timbru31/SilkSpawners.svg)](https://gitter.im/timbru31/SilkSpawners?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -25,7 +25,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 * Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 * Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 * BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-* Support for multiple Minecraft versions, from 1.5.X to 1.12.1
+* Support for multiple Minecraft versions, from 1.5.X to 1.12.2
 
 *Third party features, all of them can be disabled*
 * bStats for usage statistics
