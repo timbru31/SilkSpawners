@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>5.1.0</version>
+  <version>5.0.3-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -38,10 +38,6 @@
       <id>dustplanet-libs</id>
       <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
     </repository>
-    <repository>
-      <id>dustplanet-libs-snapshot</id>
-      <url>https://repo.dustplanet.de/artifactory/libs-snapshot-local</url>
-    </repository>
   </repositories>
 
   <dependencies>
@@ -64,7 +60,7 @@
     <dependency>
       <groupId>net.gravitydevelopment.updater</groupId>
       <artifactId>updater</artifactId>
-      <version>3.0.2-SNAPSHOT</version>
+      <version>3.0.2</version>
     </dependency>
     <dependency>
       <groupId>me.confuser</groupId>
