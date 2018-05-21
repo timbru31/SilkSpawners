@@ -38,8 +38,7 @@ public class SilkSpawnersEntityListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntiyExplode(EntityExplodeEvent event) {
         /*
-         * Skip if event is cancelled entity is not known or null EnderDragon
-         * calls this event explosionChance is 0
+         * Skip if event is cancelled entity is not known or null EnderDragon calls this event explosionChance is 0
          */
         Entity entity = event.getEntity();
         if (event.isCancelled() || event.getEntity() == null || entity instanceof EnderDragon
@@ -49,7 +48,7 @@ public class SilkSpawnersEntityListener implements Listener {
 
         boolean drop = true;
         if (plugin.config.getBoolean("permissionExplode", false) && entity instanceof TNTPrimed) {
-            Entity igniter = su.nmsProvider.getTNTSource((TNTPrimed) entity);
+            Entity igniter = ((TNTPrimed) entity).getSource();
             if (igniter != null && igniter instanceof Player) {
                 Player sourcePlayer = (Player) igniter;
                 drop = sourcePlayer.hasPermission("silkspawners.explodedrop");
@@ -76,8 +75,8 @@ public class SilkSpawnersEntityListener implements Listener {
                         World world = block.getWorld();
                         // Drop a spawner (first get the entityID from the block
                         // and then make a new spawner item)
-                        world.dropItemNaturally(block.getLocation(), su.newSpawnerItem(entityID,
-                                su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
+                        world.dropItemNaturally(block.getLocation(),
+                                su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), 1, false));
                     }
                 }
             }
