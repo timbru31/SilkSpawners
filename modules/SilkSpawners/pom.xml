@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>5.0.3-SNAPSHOT</version>
+  <version>6.0.0-SNAPSHOT</version>
   <name>SilkSpawners</name>
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -97,42 +97,6 @@
       <groupId>us.forseth11</groupId>
       <artifactId>feudal</artifactId>
       <version>1.13.2</version>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_5_R1</artifactId>
-      <version>v1_5_R1</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_5_R2</artifactId>
-      <version>v1_5_R2</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_5_R3</artifactId>
-      <version>v1_5_R3</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_6_R1</artifactId>
-      <version>v1_6_R1</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_6_R2</artifactId>
-      <version>v1_6_R2</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_6_R3</artifactId>
-      <version>v1_6_R3</version>
-      <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
