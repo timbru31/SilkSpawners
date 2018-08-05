@@ -90,6 +90,8 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                 if (action != Action.RIGHT_CLICK_BLOCK && plugin.config.getBoolean("disableChangeTypeWithEgg", false)) {
                     return;
+                } else if(action == Action.RIGHT_CLICK_BLOCK && plugin.config.getBoolean("disableChangeTypeWithEggRightClick")) {
+                    return;
                 }
 
                 // WorldGuard region protection

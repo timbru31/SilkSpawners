@@ -78,7 +78,9 @@ public class Config extends AbstractConfiguration {
         config.addDefault("ignoreCheckNumbers", false);
         config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
         config.addDefault("disableChangeTypeWithEgg", false);
-        config.addComment("disableChangeTypeWithEgg", "", "# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.");
+        config.addComment("disableChangeTypeWithEgg", "", "# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.  (unless disableChangeTypeWithEggRightClick is true)");
+        config.addDefault("disableChangeTypeWithEggRightClick", false);
+        config.addComment("disableChangeTypeWithEggRightClick", "", "# Disable right click to change spawners, spawns mob instead. Still blocks left click behavior. (unless disableChangeTypeWithEgg is true)");
         config.addDefault("spawnEggToSpawner", false);
         config.addComment("spawnEggToSpawner", "", "# Should instead of spawning a mob a MonsterSpawner be placed? (Uses consumeEgg value, too)");
         config.addDefault("spawnEggOverride", false);
