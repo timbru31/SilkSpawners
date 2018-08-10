@@ -6,8 +6,9 @@ cache:
 
 jdk:
   - oraclejdk8
-  - oraclejdk9
+  - oraclejdk10
   - openjdk8
+  - openjdk10
 
 before_install:
   - java -version
