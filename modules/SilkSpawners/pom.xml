@@ -66,6 +66,12 @@
       <groupId>me.confuser</groupId>
       <artifactId>BarAPI</artifactId>
       <version>3.5</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.massivecraft.massivecore</groupId>
