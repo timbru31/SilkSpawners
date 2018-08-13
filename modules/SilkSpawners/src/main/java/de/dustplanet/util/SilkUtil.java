@@ -75,13 +75,6 @@ public class SilkUtil {
      */
     private short defaultEntityID = EntityType.PIG.getTypeId();
 
-    // To avoid confusing with badly name MONSTER_EGGS (silverfish), set our own
-    // material
-    /**
-     * Custom name for the monster egg, to avoid the MONSTER_EGGS (silverfish).
-     */
-    public static final Material SPAWN_EGG = Material.MONSTER_EGG;
-
     /**
      * Boolean toggle for reflection.
      */
@@ -110,6 +103,7 @@ public class SilkUtil {
 
     /**
      * Constructor to make your own SilkUtil instance.
+     *
      * @param instance
      */
     public SilkUtil(SilkSpawners instance) {
@@ -127,6 +121,7 @@ public class SilkUtil {
 
     /**
      * This method will return the SilkUtil instance.
+     *
      * @return SilkUtil instance
      */
     public static SilkUtil hookIntoSilkSpanwers() {
@@ -294,6 +289,7 @@ public class SilkUtil {
 
     /**
      * Receives the default entityID.
+     *
      * @return the default entityID defined by SilkSpawners.
      */
     public short getDefaultEntityID() {
@@ -302,6 +298,7 @@ public class SilkUtil {
 
     /**
      * Sets the default entityID.
+     *
      * @param defaultEntityID short value of the default mob
      */
     public void setDefaultEntityID(short defaultEntityID) {
@@ -310,6 +307,7 @@ public class SilkUtil {
 
     /**
      * Returns if SilkUtil is using reflection.
+     *
      * @return true for reflection, false for not
      */
     public boolean isUsingReflection() {
@@ -318,6 +316,7 @@ public class SilkUtil {
 
     /**
      * Set if SilkUtil should use reflection.
+     *
      * @param useReflection true or false
      */
     public void setUseReflection(boolean useReflection) {
@@ -326,6 +325,7 @@ public class SilkUtil {
 
     /**
      * Returns if BarAPI is used.
+     *
      * @return whether BarAPI is used or not
      */
     public boolean isBarAPI() {
@@ -334,6 +334,7 @@ public class SilkUtil {
 
     /**
      * Returns if vanilla boss bar is used.
+     *
      * @return whether vanilla boss bar is used or not
      */
     public boolean isVanillaBossBar() {
@@ -342,6 +343,7 @@ public class SilkUtil {
 
     /**
      * Sets if BarAPI should be used or not.
+     *
      * @param barAPI true or false
      */
     public void setBarAPI(boolean barAPI) {
@@ -351,6 +353,7 @@ public class SilkUtil {
     // Give a new SpawnerEgg with the given entityID
     /**
      * Returns a new ItemStack of a spawn egg with the specified amount and mob.
+     *
      * @param entityID which mob should be spawned
      * @param amount the amount of spawn eggs
      * @return the ItemStack
@@ -378,6 +381,7 @@ public class SilkUtil {
     // Create a tagged a mob spawner item with it's entity ID and custom amount
     /**
      * This method will make a new MobSpawner with a custom entityID, name and amount.
+     *
      * @param entityID the mob
      * @param customName if the MobSpawner should be named different
      * @param amount the wanted amount
@@ -389,7 +393,7 @@ public class SilkUtil {
         if (customName == null || customName.isEmpty()) {
             spawnerName = "Monster Spawner";
         }
-        ItemStack item = new ItemStack(Material.MOB_SPAWNER, amount, entityID);
+        ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount, entityID);
         ItemMeta meta = item.getItemMeta();
         // Check if we need a colored name
         if (!spawnerName.equalsIgnoreCase("Monster Spawner")) {
@@ -431,6 +435,7 @@ public class SilkUtil {
 
     /**
      * Returns the entity ID of a spawn egg.
+     *
      * @param item the egg
      * @return the entityID
      */
@@ -464,6 +469,7 @@ public class SilkUtil {
 
     /**
      * Returns the entity ID of a spawner.
+     *
      * @param item the spawner
      * @return the entityID
      */
@@ -497,6 +503,7 @@ public class SilkUtil {
 
     /**
      * Searches item lore and display name for entityID.
+     *
      * @param meta the ItemMeta
      * @return entityID if found or 0
      */
@@ -526,6 +533,7 @@ public class SilkUtil {
 
     /**
      * Lookup if mob is recognized by Bukkit's wrappers.
+     *
      * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
@@ -536,6 +544,7 @@ public class SilkUtil {
     // Check if the entityID is known or not
     /**
      * Lookup if the mob is known.
+     *
      * @param entityID the ID (short) of the mob
      * @return the result, true of false
      */
@@ -548,6 +557,7 @@ public class SilkUtil {
     // mobID directly from the tile entity
     /**
      * Returns the entity ID of a spawner (block).
+     *
      * @param block the spawner block
      * @return the entity ID
      */
@@ -577,6 +587,7 @@ public class SilkUtil {
     // Sets the creature of a spawner
     /**
      * Set the specified MonterSpawner to another entity ID.
+     *
      * @param block MonsterSpawner
      * @param entityID the wanted entityID
      */
@@ -625,6 +636,7 @@ public class SilkUtil {
     // Set spawner type from user
     /**
      * Set a spawner (if allowed) to a new mob.
+     *
      * @param block the MonsterSpawner
      * @param entityID the new entity ID
      * @param player the player
@@ -643,6 +655,7 @@ public class SilkUtil {
 
     /**
      * Sets a spawner item or egg to a new ID.
+     *
      * @param item ItemStack (Egg or Spawner)
      * @param entityID wanted entity ID
      * @param customName if a custom name should be used (null for none)
@@ -654,12 +667,12 @@ public class SilkUtil {
             customName = "Monster Spawner";
         }
         // Please eggs or spawners
-        if (item == null || item.getType() != Material.MOB_SPAWNER && item.getType() != SPAWN_EGG) {
+        if (item == null || item.getType() != nmsProvider.getSpawnerMaterial() && item.getType() != nmsProvider.getSpawnEggMaterial()) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
-        if (item.getType() == Material.MOB_SPAWNER && !customName.equalsIgnoreCase("Monster Spawner")) {
+        if (item.getType() == nmsProvider.getSpawnerMaterial() && !customName.equalsIgnoreCase("Monster Spawner")) {
             meta.setDisplayName(
                     ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
         }
@@ -695,6 +708,7 @@ public class SilkUtil {
     // the in-game name like 'Magma Cube'
     /**
      * Get the creature name (display name) of an ID.
+     *
      * @param entityID the entity ID
      * @return the displayname of the mob
      */
@@ -718,6 +732,7 @@ public class SilkUtil {
     // Show them all the possible creature names
     /**
      * Lists all enabled creatures to a CommandSender.
+     *
      * @param sender CommandSender (player or console)
      */
     public void showAllCreatures(CommandSender sender) {
@@ -736,6 +751,7 @@ public class SilkUtil {
     // Scan through all entities
     /**
      * Use reflection to scan through each mob and the IDs/name.
+     *
      * @return Map with a result of Integer (ID), String (name)
      */
     public SortedMap<Integer, String> scanEntityMap() {
@@ -758,6 +774,7 @@ public class SilkUtil {
     // Notify player
     /**
      * Notify a player about the spawner.
+     *
      * @param player the player
      * @param spawnerName the creature name
      * @param entityID the ID
@@ -799,6 +816,7 @@ public class SilkUtil {
 
     /**
      * Test a String if it ends with egg.
+     *
      * @param creatureString the name
      * @return result, true or false
      */
@@ -808,6 +826,7 @@ public class SilkUtil {
 
     /**
      * Check if given creature name is known or not. Aliases are supported, too
+     *
      * @param creatureString the mob name
      * @return the result, true of false
      */
@@ -817,6 +836,7 @@ public class SilkUtil {
 
     /**
      * Check if given creature name is known or not. Aliases are supported, too.
+     *
      * @param creatureString the mob name
      * @return the result, true of false
      */
@@ -826,6 +846,7 @@ public class SilkUtil {
 
     /**
      * Check if the given string is a number.
+     *
      * @param number to check
      * @return number or not found -1
      */
@@ -848,6 +869,7 @@ public class SilkUtil {
     // Checks if the given ItemStack has got the SilkTouch
     /**
      * Checks if a given ItemStack is in the list of allowed tools and if the SilkTouch level is high enough.
+     *
      * @param tool ItemStack to check
      * @return the result if the tool hasSilkTouch
      */
@@ -889,6 +911,7 @@ public class SilkUtil {
 
     /**
      * Get the spawner name, specified for each mob or default. from localization.yml
+     *
      * @param mobName the internal name the spawner name is wanted for
      * @return the found string
      */
@@ -902,6 +925,7 @@ public class SilkUtil {
 
     /**
      * Sends a message to a Player or CommandSender with support for newlines
+     *
      * @param receiver the receiver of the message
      * @param messages message with support for newlines
      */
@@ -911,6 +935,7 @@ public class SilkUtil {
 
     /**
      * Prepare for WorldGuard support.
+     *
      * @param plugin SilkSpawners instance
      */
     private void getWorldGuard() {
@@ -929,6 +954,7 @@ public class SilkUtil {
 
     /**
      * Checks if a player can build here (WorldGuard).
+     *
      * @param player the player
      * @param location the location to check
      * @return the result, true or false

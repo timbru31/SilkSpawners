@@ -189,6 +189,7 @@ public class NMSHandler implements NMSProvider {
 
     /**
      * Return the spawner block the player is looking at, or null if isn't.
+     * 
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
@@ -213,7 +214,7 @@ public class NMSHandler implements NMSProvider {
             // Try if the String could be an UUID
             UUID playerUUID = UUID.fromString(playerUUIDOrName);
             return Bukkit.getPlayer(playerUUID);
-        } catch (IllegalArgumentException e) {
+        } catch (@SuppressWarnings("unused") IllegalArgumentException e) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.getName().equalsIgnoreCase(playerUUIDOrName)) {
                     return onlinePlayer;

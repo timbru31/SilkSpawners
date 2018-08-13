@@ -16,7 +16,8 @@ public class Mobs extends AbstractConfiguration {
     }
 
     private void loadDefaultMobs() {
-        config.options().header("creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html");
+        config.options().header(
+                "creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html");
         ArrayList<String> tempList = new ArrayList<>();
         // Creeper
         tempList.add("c");

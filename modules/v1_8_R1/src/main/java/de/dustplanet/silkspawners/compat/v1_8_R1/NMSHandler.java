@@ -190,10 +190,12 @@ public class NMSHandler implements NMSProvider {
 
     /**
      * Return the spawner block the player is looking at, or null if isn't.
+     *
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
      */
+    @SuppressWarnings("deprecation")
     @Override
     public Block getSpawnerFacing(Player player, int distance) {
         // in 1.8 Spigot they have added a second method without deprecation, however there are older builds without it
@@ -201,7 +203,7 @@ public class NMSHandler implements NMSProvider {
         Block block = null;
         try {
             block = player.getTargetBlock((Set<Material>) null, distance);
-        } catch (NoSuchMethodError e) {
+        } catch (@SuppressWarnings("unused") NoSuchMethodError e) {
             block = player.getTargetBlock((HashSet<Byte>) null, distance);
         }
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
@@ -221,7 +223,7 @@ public class NMSHandler implements NMSProvider {
             // Try if the String could be an UUID
             UUID playerUUID = UUID.fromString(playerUUIDOrName);
             return Bukkit.getPlayer(playerUUID);
-        } catch (IllegalArgumentException e) {
+        } catch (@SuppressWarnings("unused") IllegalArgumentException e) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.getName().equalsIgnoreCase(playerUUIDOrName)) {
                     return onlinePlayer;

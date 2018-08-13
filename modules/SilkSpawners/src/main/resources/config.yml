@@ -108,9 +108,11 @@ spawnEggOverrideSpawnDefault: true
 # Allowed set of tools which can mine a spawner. IDs are supported, too
 allowedTools:
 - WOOD_PICKAXE
+- WOODEN_PICKAXE
 - STONE_PICKAXE
 - IRON_PICKAXE
 - GOLD_PICKAXE
+- GOLDEN_PICKAXE
 - DIAMOND_PICKAXE
  
 # Amount of spawners or eggs given to a player when the argument is omitted

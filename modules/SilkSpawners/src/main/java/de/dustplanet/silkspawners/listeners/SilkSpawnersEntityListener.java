@@ -2,7 +2,6 @@ package de.dustplanet.silkspawners.listeners;
 
 import java.util.Random;
 
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EnderDragon;
@@ -59,7 +58,7 @@ public class SilkSpawnersEntityListener implements Listener {
         if (drop) {
             for (Block block : event.blockList()) {
                 // We have a spawner
-                if (block.getType() == Material.MOB_SPAWNER) {
+                if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
                     // Roll the dice
                     int randomNumber = rnd.nextInt(100);
                     short entityID = su.getSpawnerEntityID(block);

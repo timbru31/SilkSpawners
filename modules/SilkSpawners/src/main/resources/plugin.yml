@@ -5,6 +5,7 @@ main: de.dustplanet.silkspawners.SilkSpawners
 version: ${project.version}-b${BUILD_NUMBER}
 url: https://dev.bukkit.org/projects/silkspawners
 description: pick up and move monster spawners using silk touch
+api-version: 1.13
 commands:
   silkspawners:
     aliases: [silkspawner, ss, spawner, silk, spawnersilk, egg, eg, eggs]

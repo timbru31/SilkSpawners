@@ -1,7 +1,6 @@
 package de.dustplanet.silkspawners.compat.v1_11_R1;
 
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedMap;
@@ -19,7 +18,6 @@ import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_11_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -65,7 +63,8 @@ public class NMSHandler implements NMSProvider {
             e.printStackTrace();
         }
         if (registry == null) {
-            Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (RegistryMaterials == null)!");
+            Bukkit.getLogger()
+                    .warning("[SilkSpawners] Failed to spawn, falling through. You should report this (RegistryMaterials == null)!");
             return;
         }
         Class<? extends Entity> entityClazz = registry.getId(entityID);
@@ -106,7 +105,8 @@ public class NMSHandler implements NMSProvider {
             @SuppressWarnings("unchecked")
             List<String> list = (List<String>) field.get(null);
             @SuppressWarnings("unchecked")
-            RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2.get(null);
+            RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2
+                    .get(null);
             // For each entry in our name -- ID map but it into the sortedMap
             for (int entityID = 0; entityID < list.size(); entityID++) {
                 String displayName = list.get(entityID);
@@ -122,15 +122,17 @@ public class NMSHandler implements NMSProvider {
 
                 try {
                     minecraftKey = registry.b(entity);
-                } catch (ClassCastException e) {
+                } catch (@SuppressWarnings("unused") ClassCastException e) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
+                    Bukkit.getLogger()
+                            .severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
                     continue;
                 }
 
                 if (minecraftKey == null) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entityID: " + entityID);
-                    Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
+                    Bukkit.getLogger()
+                            .severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
                     continue;
                 }
                 String a = minecraftKey.a();
@@ -372,7 +374,7 @@ public class NMSHandler implements NMSProvider {
             // Try if the String could be an UUID
             UUID playerUUID = UUID.fromString(playerUUIDOrName);
             return Bukkit.getPlayer(playerUUID);
-        } catch (IllegalArgumentException e) {
+        } catch (@SuppressWarnings("unused") IllegalArgumentException e) {
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.getName().equalsIgnoreCase(playerUUIDOrName)) {
                     return onlinePlayer;
@@ -420,7 +422,8 @@ public class NMSHandler implements NMSProvider {
         PlayerInventory inv = player.getInventory();
         ItemStack mainHand = inv.getItemInMainHand();
         ItemStack offHand = inv.getItemInOffHand();
-        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
+        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
+                && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
             return null; // not determinable
         } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
             return mainHand;
@@ -435,7 +438,8 @@ public class NMSHandler implements NMSProvider {
         PlayerInventory inv = player.getInventory();
         ItemStack mainHand = inv.getItemInMainHand();
         ItemStack offHand = inv.getItemInOffHand();
-        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
+        if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
+                && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
             return; // not determinable
         } else if (mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER) {
             inv.setItemInMainHand(newItem);

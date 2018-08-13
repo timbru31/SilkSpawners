@@ -99,8 +99,7 @@ public class SpawnerCommand implements CommandExecutor {
         if (amountString != null && !amountString.isEmpty()) {
             amount = su.getNumber(amountString);
             if (amount == -1) {
-                su.sendMessage(sender,
-                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
+                su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));
                 return;
             }
         }
@@ -109,8 +108,7 @@ public class SpawnerCommand implements CommandExecutor {
         Player player = su.nmsProvider.getPlayer(receiver);
         // Online check
         if (player == null) {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("playerOffline")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("playerOffline")));
             return;
         }
 
@@ -132,8 +130,7 @@ public class SpawnerCommand implements CommandExecutor {
         short entityID = su.getNumber(mob);
         if (su.isUnkown(mob) && !plugin.config.getBoolean("ignoreCheckNumbers", false)
                 || su.isUnkown(mob) && plugin.config.getBoolean("ignoreCheckNumbers", false) && entityID == -1) {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                     .replace("%creature%", mob));
             return;
         }
@@ -150,41 +147,37 @@ public class SpawnerCommand implements CommandExecutor {
         if (sender.hasPermission("silkspawners.freeitemegg." + mobName)) {
             // Have space in inventory
             if (receiver.getInventory().firstEmpty() == -1) {
-                su.sendMessage(sender,
-                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
+                su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
             receiver.getInventory().addItem(su.newEggItem(entityID, su.eid2MobID.get(entityID), amount));
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
-                    su.sendMessage(sender,
-                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg"))
+                    su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedEgg"))
                             .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 } else {
                     su.sendMessage(sender,
                             ChatColor
-                            .translateAlternateColorCodes('\u0026', plugin.localization
-                                    .getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
-                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
+                                    .translateAlternateColorCodes('\u0026',
+                                            plugin.localization.getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
+                                    .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 }
             } else {
                 su.sendMessage(sender,
                         ChatColor
-                        .translateAlternateColorCodes('\u0026', plugin.localization
-                                .getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
-                        .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
+                                .translateAlternateColorCodes('\u0026',
+                                        plugin.localization.getString("addedEggOtherPlayer").replace("%player%", receiver.getName()))
+                                .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
             }
             return;
         }
-        su.sendMessage(sender,
-                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
+        su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeEgg")));
     }
 
     private void handleGiveSpawner(CommandSender sender, Player receiver, String mob, int amount) {
         if (su.isUnkown(mob)) {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                     .replace("%creature%", mob));
             return;
         }
@@ -198,42 +191,40 @@ public class SpawnerCommand implements CommandExecutor {
         if (sender.hasPermission("silkspawners.freeitem." + mobName)) {
             // Have space in inventory
             if (receiver.getInventory().firstEmpty() == -1) {
-                su.sendMessage(sender,
-                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
+                su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(
-                    su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount, false));
+            receiver.getInventory()
+                    .addItem(su.newSpawnerItem(entityID, su.getCustomSpawnerName(su.eid2MobID.get(entityID)), amount, false));
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
-                    su.sendMessage(sender, ChatColor
-                            .translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner"))
+                    su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("addedSpawner"))
                             .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 } else {
-                    su.sendMessage(sender, ChatColor
-                            .translateAlternateColorCodes('\u0026', plugin.localization
-                                    .getString("addedSpawnerOtherPlayer").replace("%player%", receiver.getName()))
-                            .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
+                    su.sendMessage(sender,
+                            ChatColor
+                                    .translateAlternateColorCodes('\u0026',
+                                            plugin.localization.getString("addedSpawnerOtherPlayer").replace("%player%",
+                                                    receiver.getName()))
+                                    .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
                 }
             } else {
                 su.sendMessage(sender,
                         ChatColor
-                        .translateAlternateColorCodes('\u0026', plugin.localization
-                                .getString("addedSpawnerOtherPlayer").replace("%player%", receiver.getName()))
-                        .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
+                                .translateAlternateColorCodes('\u0026',
+                                        plugin.localization.getString("addedSpawnerOtherPlayer").replace("%player%", receiver.getName()))
+                                .replace("%creature%", creature).replace("%amount%", Integer.toString(amount)));
             }
             return;
         }
-        su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026',
-                plugin.localization.getString("noPermissionFreeSpawner")));
+        su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionFreeSpawner")));
     }
 
     private void handleChange(CommandSender sender, String newMob) {
         if (sender instanceof Player) {
             if (su.isUnkown(newMob)) {
-                su.sendMessage(sender,
-                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
+                su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                         .replace("%creature%", newMob));
                 return;
             }
@@ -261,28 +252,27 @@ public class SpawnerCommand implements CommandExecutor {
             Material itemMaterial;
             try {
                 itemMaterial = itemInHand.getType();
-            } catch (NullPointerException e) {
+            } catch (@SuppressWarnings("unused") NullPointerException e) {
                 itemMaterial = null;
             }
 
-            if (itemMaterial != null && itemMaterial == Material.MOB_SPAWNER) {
+            if (itemMaterial != null && itemMaterial == su.nmsProvider.getSpawnerMaterial()) {
                 handleChangeSpawner(player, entityID, mobName, itemInHand);
-            } else if (itemMaterial != null && itemMaterial == SilkUtil.SPAWN_EGG) {
+            } else if (itemMaterial != null && itemMaterial == su.nmsProvider.getSpawnEggMaterial()) {
                 handleChangeEgg(player, entityID, mobName, itemInHand);
             } else {
                 su.sendMessage(player,
                         ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerNotDeterminable")));
             }
         } else {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
         }
     }
 
     private void handleBlockChange(Player player, Block block, short entityID, String mobName) {
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("noPermissionChangingSpawner")));
+            su.sendMessage(player,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
             return;
         }
         // Call the event and maybe change things!
@@ -296,18 +286,17 @@ public class SpawnerCommand implements CommandExecutor {
         // Get the new ID (might be changed)
         short newEntityID = changeEvent.getEntityID();
         String newMob = su.getCreatureName(entityID);
-        if (su.setSpawnerType(block, newEntityID, player, ChatColor.translateAlternateColorCodes('\u0026',
-                plugin.localization.getString("changingDeniedWorldGuard")))) {
-            su.sendMessage(player,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
+        if (su.setSpawnerType(block, newEntityID, player,
+                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")))) {
+            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
                     .replace("%creature%", newMob));
         }
     }
 
     private void handleChangeSpawner(Player player, short entityID, String mobName, ItemStack itemInHand) {
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("noPermissionChangingSpawner")));
+            su.sendMessage(player,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
             return;
         }
 
@@ -325,15 +314,14 @@ public class SpawnerCommand implements CommandExecutor {
         String newMob = su.getCreatureName(entityID);
         ItemStack newItem = su.setSpawnerType(itemInHand, newEntityID, plugin.localization.getString("spawnerName"));
         su.nmsProvider.setSpawnerItemInHand(player, newItem);
-        su.sendMessage(player,
-                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
+        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
                 .replace("%creature%", newMob));
     }
 
     private void handleChangeEgg(Player player, short entityID, String mobName, ItemStack itemInHand) {
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("noPermissionChangingEgg")));
+            su.sendMessage(player,
+                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
             return;
         }
 
@@ -356,28 +344,25 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleUnknownArgument(CommandSender sender) {
-        su.sendMessage(sender,
-                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownArgument")));
+        su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownArgument")));
     }
 
     private void handleHelp(CommandSender sender) {
         if (sender.hasPermission("silkspawners.help")) {
-            String message = ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("help").replace("%version%", plugin.getDescription().getVersion()));
+            String message = ChatColor.translateAlternateColorCodes('\u0026',
+                    plugin.localization.getString("help").replace("%version%", plugin.getDescription().getVersion()));
             su.sendMessage(sender, message);
         } else {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
         }
     }
 
     private void handleReload(CommandSender sender) {
         if (sender.hasPermission("silkspawners.reload")) {
             plugin.reloadConfigs();
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("configsReloaded")));
         } else {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermission")));
         }
     }
 
@@ -396,22 +381,19 @@ public class SpawnerCommand implements CommandExecutor {
             Player player = (Player) sender;
             Block block = su.nmsProvider.getSpawnerFacing(player, distance);
             if (block == null) {
-                su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                        plugin.localization.getString("lookAtSpawner")));
+                su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("lookAtSpawner")));
                 return;
             }
             short entityID = su.getSpawnerEntityID(block);
             if (player.hasPermission("silkspawners.viewtype")) {
-                su.sendMessage(player, ChatColor
-                        .translateAlternateColorCodes('\u0026', plugin.localization.getString("getSpawnerType"))
+                su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("getSpawnerType"))
                         .replace("%creature%", su.getCreatureName(entityID)));
             } else {
-                su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                        plugin.localization.getString("noPermissionViewType")));
+                su.sendMessage(player,
+                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionViewType")));
             }
         } else {
-            su.sendMessage(sender,
-                    ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noConsole")));
         }
     }
 }

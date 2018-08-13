@@ -5,7 +5,6 @@ import java.util.Random;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -55,7 +54,7 @@ public class SilkSpawnersBlockListener implements Listener {
         Player player = event.getPlayer();
 
         // We just want the mob spawner events
-        if (block.getType() != Material.MOB_SPAWNER) {
+        if (block.getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
@@ -79,7 +78,8 @@ public class SilkSpawnersBlockListener implements Listener {
         entityID = breakEvent.getEntityID();
 
         // Message the player about the broken spawner
-        plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken")).replace("%creature%", su.getCreatureName(entityID)));
+        plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken"))
+                .replace("%creature%", su.getCreatureName(entityID)));
 
         // If using silk touch, drop spawner itself
         ItemStack tool = su.nmsProvider.getItemInHand(player);
@@ -196,7 +196,7 @@ public class SilkSpawnersBlockListener implements Listener {
                     dropChance = plugin.config.getInt("destroyDropChance", 100);
                 }
                 if (randomNumber < dropChance) {
-                    world.dropItem(block.getLocation(), new ItemStack(Material.IRON_FENCE, dropBars));
+                    world.dropItem(block.getLocation(), new ItemStack(su.nmsProvider.getIronFenceMaterial(), dropBars));
                 }
             }
         }
@@ -215,7 +215,7 @@ public class SilkSpawnersBlockListener implements Listener {
 
         Block blockPlaced = event.getBlockPlaced();
         // Just mob spawner events
-        if (blockPlaced.getType() != Material.MOB_SPAWNER) {
+        if (blockPlaced.getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
         Player player = event.getPlayer();
@@ -253,7 +253,11 @@ public class SilkSpawnersBlockListener implements Listener {
         // Check for place permission
         if (!player.hasPermission("silkspawners.place." + spawnerName)) {
             event.setCancelled(true);
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID))).replace("%creature%", creatureName));
+            su.sendMessage(player,
+                    ChatColor
+                            .translateAlternateColorCodes('\u0026',
+                                    plugin.localization.getString("noPermissionPlace").replace("%ID%", Short.toString(entityID)))
+                            .replace("%creature%", creatureName));
             return;
         }
 
@@ -262,7 +266,8 @@ public class SilkSpawnersBlockListener implements Listener {
             plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
         } else {
             // Else message the type
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced")).replace("%creature%", su.getCreatureName(entityID)));
+            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced"))
+                    .replace("%creature%", su.getCreatureName(entityID)));
         }
 
         su.setSpawnerEntityID(blockPlaced, entityID);

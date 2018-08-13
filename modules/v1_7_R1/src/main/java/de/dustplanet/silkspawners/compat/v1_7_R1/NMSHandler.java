@@ -205,12 +205,14 @@ public class NMSHandler implements NMSProvider {
 
     /**
      * Return the spawner block the player is looking at, or null if isn't.
+     * 
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
      */
     @Override
     public Block getSpawnerFacing(Player player, int distance) {
+        @SuppressWarnings("deprecation")
         Block block = player.getTargetBlock(null, distance);
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             return null;

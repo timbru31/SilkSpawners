@@ -15,7 +15,8 @@ public class Localization extends AbstractConfiguration {
     }
 
     private void loadDefaultLocalization() {
-        config.options().header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
+        config.options()
+                .header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
         config.addDefault("spawnerName", "&e%creature% &fSpawner");
         config.addDefault("addedEgg", "'&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.");
         config.addComment("addedEgg", "");
@@ -62,13 +63,14 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("noSpawnerHere", "&4A spawner can not be placed here, because the block above is blocked!");
         config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
         config.addComment("lookAtSpawner", "");
-        config.addDefault("spawnerNotDeterminable", "&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!");
-        config.addDefault("help", "&7------&6SilkSpawners v%version% Help Menu&7------\n" +
-                "&e/ss help &7- &2Displays the help menu.\n" +
-                "&e/ss list|all &7- &2Displays all available creatures.\n" +
-                "&e/ss view &7- &2Displays information about the viewed spawner.\n" +
-                "&e/ss reload|rl &7- &2Reloads the configuration files\n" +
-                "&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.\n" +
-                "&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional");
+        config.addDefault("spawnerNotDeterminable",
+                "&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!");
+        config.addDefault("help",
+                "&7------&6SilkSpawners v%version% Help Menu&7------\n" + "&e/ss help &7- &2Displays the help menu.\n"
+                        + "&e/ss list|all &7- &2Displays all available creatures.\n"
+                        + "&e/ss view &7- &2Displays information about the viewed spawner.\n"
+                        + "&e/ss reload|rl &7- &2Reloads the configuration files\n"
+                        + "&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.\n"
+                        + "&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional");
     }
 }

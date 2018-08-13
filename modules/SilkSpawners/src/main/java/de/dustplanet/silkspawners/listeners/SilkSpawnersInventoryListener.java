@@ -1,7 +1,6 @@
 package de.dustplanet.silkspawners.listeners;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -37,7 +36,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         }
 
         // Check for MobSpawner
-        if (event.getRecipe().getResult().getType() != Material.MOB_SPAWNER) {
+        if (event.getRecipe().getResult().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
@@ -46,7 +45,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         // See if a spawnegg has no durability (vanilla egg), read NBT tag and
         // prepare result
         for (ItemStack itemStack : event.getInventory().getContents()) {
-            if (itemStack.getType() == SilkUtil.SPAWN_EGG && itemStack.getDurability() == 0) {
+            if (itemStack.getType() == su.nmsProvider.getSpawnEggMaterial() && itemStack.getDurability() == 0) {
                 short entityID = su.getStoredEggEntityID(itemStack);
                 String mobID = su.eid2MobID.get(entityID);
                 result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), result.getAmount(), true);
@@ -63,7 +62,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         }
 
         // Check for MobSpawner
-        if (event.getCurrentItem().getType() != Material.MOB_SPAWNER) {
+        if (event.getCurrentItem().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
@@ -85,9 +84,11 @@ public class SilkSpawnersInventoryListener implements Listener {
         String spawnerName = creatureName.toLowerCase().replace(" ", "");
         if (!player.hasPermission("silkspawners.craft." + spawnerName)) {
             event.setCancelled(true);
-            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID)))
-                    .replace("%creature%", spawnerName));
+            su.sendMessage(player,
+                    ChatColor
+                            .translateAlternateColorCodes('\u0026',
+                                    plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID)))
+                            .replace("%creature%", spawnerName));
             return;
         }
     }
@@ -100,7 +101,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         }
 
         // Check for MobSpawner
-        if (event.getCurrentItem().getType() != Material.MOB_SPAWNER) {
+        if (event.getCurrentItem().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
