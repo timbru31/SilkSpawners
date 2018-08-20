@@ -963,7 +963,12 @@ public class SilkUtil {
         if (wg == null) {
             return true;
         }
-        return wg.canBuild(player, location);
+        try {
+            return wg.canBuild(player, location);
+        } catch (@SuppressWarnings("unused") NoSuchMethodError e) {
+            plugin.getLogger().warning("WorldGuard v7 is not yet supported, please turn off 'useWorldGuard' in the meantime!");
+            return false;
+        }
     }
 
     public boolean isPluginEnabled(String _plugin) {
