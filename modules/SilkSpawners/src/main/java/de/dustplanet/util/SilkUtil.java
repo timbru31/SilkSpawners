@@ -362,22 +362,6 @@ public class SilkUtil {
         return nmsProvider.newEggItem(entityID, entity, amount);
     }
 
-    /**
-     * @deprecated use {@link #newEggItem(short, String, int)} instead.
-     */
-    @Deprecated
-    public ItemStack newEggItem(short entityID) {
-        return newEggItem(entityID, eid2MobID.get(entityID), 1);
-    }
-
-    /**
-     * @deprecated use {@link #newEggItem(short, String, int)} instead.
-     */
-    @Deprecated
-    public ItemStack newEggItem(short entityID, int amount) {
-        return newEggItem(entityID, eid2MobID.get(entityID), amount);
-    }
-
     // Create a tagged a mob spawner item with it's entity ID and custom amount
     /**
      * This method will make a new MobSpawner with a custom entityID, name and amount.
@@ -413,24 +397,6 @@ public class SilkUtil {
         item.setItemMeta(meta);
 
         return nmsProvider.setNBTEntityID(item, entityID, eid2MobID.get(entityID));
-    }
-
-    // Create a new MobSpawner without and ignore (old) force value
-    /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead.
-     */
-    @Deprecated
-    public ItemStack newSpawnerItem(short entityID, String customName, int amount) {
-        return newSpawnerItem(entityID, customName, amount, false);
-    }
-
-    // Create a tagged mob spawner item with it's entityID and amount 1
-    /**
-     * @deprecated use {@link #newSpawnerItem(short, String, int, boolean)} instead.
-     */
-    @Deprecated
-    public ItemStack newSpawnerItem(short entityID, String customName) {
-        return newSpawnerItem(entityID, customName, 1, false);
     }
 
     /**
@@ -522,7 +488,7 @@ public class SilkUtil {
                         if (durability != 0) {
                             return durability;
                         }
-                    } catch (NumberFormatException e) {
+                    } catch (@SuppressWarnings("unused") NumberFormatException e) {
                         return 0;
                     }
                 }
@@ -856,14 +822,6 @@ public class SilkUtil {
         } catch (NumberFormatException e) {
             return -1;
         }
-    }
-
-    /**
-     * @deprecated use {@link #isValidItemAndHasSilkTouch(ItemStack)} instead.
-     */
-    @Deprecated
-    public boolean hasSilkTouch(ItemStack tool) {
-        return isValidItemAndHasSilkTouch(tool);
     }
 
     // Checks if the given ItemStack has got the SilkTouch
