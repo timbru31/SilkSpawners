@@ -99,7 +99,7 @@ public class SilkSpawnersBlockListener implements Listener {
             // If we have more than 0 XP, drop them
             // either we drop XP for destroy and silktouch or only when
             // destroyed and we have no silktouch
-            if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !validToolAndSilkTouch && dropXPOnlyOnDestroy)) {
+            if (!mined && addXP != 0 && (!dropXPOnlyOnDestroy || !validToolAndSilkTouch)) {
                 event.setExpToDrop(addXP);
                 // check if we should flag spawners
                 if (plugin.config.getBoolean("preventXPFarming", true)) {

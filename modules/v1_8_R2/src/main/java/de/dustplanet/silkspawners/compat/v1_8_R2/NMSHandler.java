@@ -91,7 +91,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
-        Item.getById(52).c(1);
+        Item.getById(SPAWNER_ID).c(1);
     }
 
     @Override

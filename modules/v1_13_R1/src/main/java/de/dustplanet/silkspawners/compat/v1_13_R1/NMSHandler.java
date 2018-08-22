@@ -111,7 +111,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnersUnstackable() {
         try {
-            Item spawner = Item.getById(52);
+            Item spawner = Item.getById(SPAWNER_ID);
             Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
             maxStackSize.setAccessible(true);
             maxStackSize.set(spawner, 1);

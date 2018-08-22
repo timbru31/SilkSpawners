@@ -183,7 +183,6 @@ public class SilkUtil {
 
             mobIDToDisplayName.put(entityID, displayName);
 
-            // Get our lit of aliases
             List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(entityID.toLowerCase().replace(" ", ""));
@@ -192,7 +191,6 @@ public class SilkUtil {
                 displayNameToMobID.put(entityID, alias);
             }
 
-            // Detailed message
             if (verbose) {
                 plugin.getLogger().info("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (display name: "
                         + displayName + ", aliases: " + aliases + ")");

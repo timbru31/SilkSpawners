@@ -14,6 +14,8 @@ import org.bukkit.plugin.Plugin;
 
 public interface NMSProvider {
 
+    public static final int SPAWNER_ID = 52;
+
     void spawnEntity(World world, String entityID, double x, double y, double z);
 
     List<String> rawEntityMap();

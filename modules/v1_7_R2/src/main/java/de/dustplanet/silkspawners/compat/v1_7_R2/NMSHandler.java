@@ -100,7 +100,7 @@ public class NMSHandler implements NMSProvider {
             registryField.setAccessible(true);
             RegistryMaterials registry = (RegistryMaterials) registryField.get(null);
             // Get entry of the spawner
-            Object spawnerEntry = registry.a(52);
+            Object spawnerEntry = registry.a(SPAWNER_ID);
             // Set maxStackSize "e(int maxStackSize)"
             Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
             maxStackSize.setAccessible(true);
