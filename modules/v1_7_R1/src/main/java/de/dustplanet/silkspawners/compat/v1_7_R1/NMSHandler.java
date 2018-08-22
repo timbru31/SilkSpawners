@@ -1,11 +1,13 @@
 package de.dustplanet.silkspawners.compat.v1_7_R1;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+
+import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -32,8 +34,6 @@ public class NMSHandler implements NMSProvider {
 
     public NMSHandler() {
         try {
-            // Get the spawner field
-            // https://github.com/Bukkit/CraftBukkit/blob/d9f4d57cd660bfde7d828a377df5d6387df40229/src/main/java/org/bukkit/craftbukkit/block/CraftCreatureSpawner.java#L12
             tileField = CraftCreatureSpawner.class.getDeclaredField("spawner");
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
@@ -43,45 +43,37 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void spawnEntity(org.bukkit.World w, short entityID, double x, double y, double z) {
-        // https://github.com/SpigotMC/mc-dev/blob/5a9a0ae2b3e408a9e8bf4a3dc3247d95e61bd3a1/net/minecraft/server/EntityTypes.java#L96
+    public void spawnEntity(org.bukkit.World w, String entityID, double x, double y, double z) {
+        NBTTagCompound tag = new NBTTagCompound();
+        tag.setString("id", entityID);
+
         World world = ((CraftWorld) w).getHandle();
-        Entity entity = EntityTypes.a(entityID, world);
-        // Should actually never happen since the method above
-        // contains a null check, too
+        Entity entity = EntityTypes.a(tag, world);
         if (entity == null) {
             Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
             return;
         }
 
-        // Random facing
         entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
-        // We need to add the entity to the world, reason is of
-        // course a spawn egg so that other events can handle this
         world.addEntity(entity, SpawnReason.SPAWNER_EGG);
     }
 
     @Override
-    public SortedMap<Integer, String> rawEntityMap() {
-        SortedMap<Integer, String> sortedMap = new TreeMap<>();
-        // Use reflection to dump native EntityTypes
-        // This bypasses Bukkit's wrappers, so it works with mods
+    public List<String> rawEntityMap() {
+        List<String> entities = new ArrayList<>();
         try {
-            // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/EntityTypes.java#L32
-            // g.put(s, Integer.valueOf(i)); --> Name of ID
             Field field = EntityTypes.class.getDeclaredField("g");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
             Map<String, Integer> map = (Map<String, Integer>) field.get(null);
-            // For each entry in our name -- ID map but it into the sortedMap
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                sortedMap.put(entry.getValue(), entry.getKey());
+            for (String entity : map.keySet()) {
+                entities.add(entity);
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }
-        return sortedMap;
+        return entities;
     }
 
     @Override
@@ -142,8 +134,9 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack setNBTEntityID(ItemStack item, short entityID, String entity) {
-        if (item == null || entityID == 0 || entity == null || entity.isEmpty()) {
+    @Nullable
+    public ItemStack setNBTEntityID(ItemStack item, String entity) {
+        if (item == null || entity == null || entity.isEmpty()) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
             return null;
         }
@@ -164,30 +157,30 @@ public class NMSHandler implements NMSProvider {
             tag.set("SilkSpawners", new NBTTagCompound());
         }
 
+        tag.getCompound("SilkSpawners").setString("entity", entity);
+
         // Check for Vanilla key
         if (!tag.hasKey("BlockEntityTag")) {
             tag.set("BlockEntityTag", new NBTTagCompound());
         }
-        tag = tag.getCompound("SilkSpawners");
-        tag.setShort("entityID", entityID);
 
-        tag = itemStack.getTag().getCompound("BlockEntityTag");
-        tag.setString("EntityId", entity);
+        tag.getCompound("BlockEntityTag").setString("EntityId", entity);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
     @Override
-    public short getSilkSpawnersNBTEntityID(ItemStack item) {
+    @Nullable
+    public String getSilkSpawnersNBTEntityID(ItemStack item) {
         net.minecraft.server.v1_7_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
 
         if (tag == null || !tag.hasKey("SilkSpawners")) {
-            return 0;
+            return null;
         }
-        return tag.getCompound("SilkSpawners").getShort("entityID");
+        return tag.getCompound("SilkSpawners").getString("entity");
     }
 
     @Override
@@ -205,7 +198,7 @@ public class NMSHandler implements NMSProvider {
 
     /**
      * Return the spawner block the player is looking at, or null if isn't.
-     * 
+     *
      * @param player the player
      * @param distance the reach distance
      * @return the found block or null
@@ -226,8 +219,8 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(short entityID, String entity, int amount) {
-        return new ItemStack(Material.MONSTER_EGG, amount, entityID);
+    public ItemStack newEggItem(String entity, int amount) {
+        return new ItemStack(Material.MONSTER_EGG, amount);
     }
 
     @Override

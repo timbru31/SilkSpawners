@@ -55,9 +55,9 @@ public class SilkSpawnersPlayerListener implements Listener {
                 && plugin.config.getBoolean("notifyOnHold") && event.getPlayer().hasPermission("silkspawners.info")) {
 
             // Get ID
-            short entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
+            String entityID = su.getStoredSpawnerItemEntityID(event.getPlayer().getInventory().getItem(event.getNewSlot()));
             // Check for unknown/invalid ID
-            if (entityID == 0 || !su.knownEids.contains(entityID)) {
+            if (entityID == null) {
                 entityID = su.getDefaultEntityID();
             }
             // Get the name from the entityID
@@ -78,7 +78,7 @@ public class SilkSpawnersPlayerListener implements Listener {
         // If we use a spawn egg
         if (item != null && item.getType() == su.nmsProvider.getSpawnEggMaterial()) {
             // Get the entityID
-            short entityID = su.getStoredEggEntityID(item);
+            String entityID = su.getStoredEggEntityID(item);
             // Clicked spawner with monster egg to change type
             if (block != null && block.getType() == su.nmsProvider.getSpawnerMaterial()) {
                 Action action = event.getAction();
@@ -90,7 +90,6 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
-                // WorldGuard region protection
                 if (!su.canBuildHere(player, block.getLocation())) {
                     return;
                 }
@@ -182,20 +181,16 @@ public class SilkSpawnersPlayerListener implements Listener {
                     }
                     event.setCancelled(true);
                 } else if (plugin.config.getBoolean("spawnEggOverride", false)) {
-                    // Disabled by default, since it is dangerous
-                    // Name
-                    String mobID = su.eid2MobID.get(entityID);
-                    // Are we allowed to spawn?
                     boolean allowed = plugin.config.getBoolean("spawnEggOverrideSpawnDefault", true);
-                    if (mobID != null) {
-                        allowed = plugin.mobs.getBoolean("creatures." + mobID + ".enableSpawnEggOverrideAllowSpawn", allowed);
+                    if (entityID != null) {
+                        allowed = plugin.mobs.getBoolean("creatures." + entityID + ".enableSpawnEggOverrideAllowSpawn", allowed);
                     }
                     // Deny spawning
                     if (!allowed) {
                         su.sendMessage(player,
                                 ChatColor
                                         .translateAlternateColorCodes('\u0026',
-                                                plugin.localization.getString("spawningDenied").replace("%ID%", Short.toString(entityID)))
+                                                plugin.localization.getString("spawningDenied").replace("%ID%", entityID))
                                         .replace("%creature%", su.getCreatureName(entityID)));
                         event.setCancelled(true);
                         return;
@@ -208,7 +203,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     plugin.informPlayer(player,
                             ChatColor
                                     .translateAlternateColorCodes('\u0026',
-                                            plugin.localization.getString("spawning").replace("%ID%", Short.toString(entityID)))
+                                            plugin.localization.getString("spawning").replace("%ID%", entityID))
                                     .replace("%creature%", su.getCreatureName(entityID)));
 
                     // Spawn on top of targeted block

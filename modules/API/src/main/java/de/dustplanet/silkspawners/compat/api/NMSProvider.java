@@ -1,7 +1,7 @@
 package de.dustplanet.silkspawners.compat.api;
 
 import java.util.Collection;
-import java.util.SortedMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,19 +14,19 @@ import org.bukkit.plugin.Plugin;
 
 public interface NMSProvider {
 
-    void spawnEntity(World world, short entityID, double x, double y, double z);
+    void spawnEntity(World world, String entityID, double x, double y, double z);
 
-    SortedMap<Integer, String> rawEntityMap();
+    List<String> rawEntityMap();
 
     String getMobNameOfSpawner(BlockState blockState);
 
-    boolean setMobNameOfSpawner(BlockState blockState, String mobID);
+    boolean setMobNameOfSpawner(BlockState blockState, String entityID);
 
     void setSpawnersUnstackable();
 
-    ItemStack setNBTEntityID(ItemStack item, short entityID, String entity);
+    ItemStack setNBTEntityID(ItemStack item, String entityID);
 
-    short getSilkSpawnersNBTEntityID(ItemStack item);
+    String getSilkSpawnersNBTEntityID(ItemStack item);
 
     String getVanillaNBTEntityID(ItemStack item);
 
@@ -36,7 +36,7 @@ public interface NMSProvider {
         return Bukkit.getOnlinePlayers();
     }
 
-    ItemStack newEggItem(short entityID, String entity, int amount);
+    ItemStack newEggItem(String entityID, int amount);
 
     @SuppressWarnings("unused")
     default String getVanillaEggNBTEntityID(ItemStack item) {

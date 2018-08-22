@@ -6,9 +6,9 @@ import org.bukkit.entity.Player;
 
 public interface ISilkSpawnersEvent {
 
-    short getEntityID();
+    String getEntityID();
 
-    void setEntityID(short entityID);
+    void setEntityID(String entityID);
 
     Player getPlayer();
 

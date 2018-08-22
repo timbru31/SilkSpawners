@@ -58,7 +58,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 
     private ArrayList<String> addMobs(String mob) {
         ArrayList<String> results = new ArrayList<>();
-        for (String displayName : su.name2Eid.keySet()) {
+        for (String displayName : su.getDisplayNameToMobID().keySet()) {
             // Lowercase, too and strip spaces
             displayName = displayName.toLowerCase().replace(" ", "");
             // Add the string if our name starts with the argument

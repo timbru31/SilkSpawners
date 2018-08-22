@@ -30,14 +30,14 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     private Player player;
 
     /**
-     * new EntityID.
+     * new entity ID.
      */
-    private short id;
+    private String entityID;
 
     /**
-     * current (old) EntityID of the spawner.
+     * current (old) entity ID of the spawner.
      */
-    private final short oldID;
+    private final String oldEntityID;
 
     /**
      * Block involved.
@@ -55,62 +55,27 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     private int amount;
 
     /**
-     * This constructor should not be used anymore, because the new one carries information about the current entityID of the spawner block
-     * or item.
-     *
-     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
-     */
-    @Deprecated
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id) {
-        this.player = player;
-        this.block = block;
-        if (block != null) {
-            this.spawner = (CreatureSpawner) block.getState();
-        }
-        this.id = id;
-        this.oldID = 0;
-        this.setAmount(1);
-    }
-
-    /**
-     * Constructor of the event. Please note that the amount is a fallback to 1
-     * 
-     * @deprecated use {@link #SilkSpawnersSpawnerChangeEvent(Player, Block, short, short, int)} instead.
-     */
-    @Deprecated
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID) {
-        this.player = player;
-        this.block = block;
-        if (block != null) {
-            this.spawner = (CreatureSpawner) block.getState();
-        }
-        this.id = id;
-        this.oldID = oldID;
-        this.setAmount(1);
-    }
-
-    /**
      * Constructor of the event.
-     * 
+     *
      * @param player who issues the event
      * @param block is allowed to be null
-     * @param id new ID
-     * @param oldID of the spawner
+     * @param entityID new entity ID
+     * @param oldEntityID of the spawner
      */
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, short id, short oldID, int amount) {
+    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, String entityID, String oldEntityID, int amount) {
         this.player = player;
         this.block = block;
         if (block != null) {
             this.spawner = (CreatureSpawner) block.getState();
         }
-        this.id = id;
-        this.oldID = oldID;
-        this.setAmount(amount);
+        this.entityID = entityID;
+        this.oldEntityID = oldEntityID;
+        this.amount = amount;
     }
 
     /**
      * Determine if the event is cancelled or not.
-     * 
+     *
      * @return yes or no
      */
     @Override
@@ -120,7 +85,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Cancels the event.
-     * 
+     *
      * @param cancel whether the event should be cancelled or not
      */
     @Override
@@ -130,7 +95,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Get the player from this event.
-     * 
+     *
      * @return the player object
      */
     @Override
@@ -140,7 +105,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Get the block of this event.
-     * 
+     *
      * @return the block - in this case a spawner; returns null when an egg is used
      */
     @Override
@@ -150,7 +115,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Get the creature spawner of this event.
-     * 
+     *
      * @return the creature spawner; returns null when an egg is used
      */
     @Override
@@ -160,34 +125,34 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Get the entity ID (mob to spawn) from this event.
-     * 
+     *
      * @return the entity ID
      */
     @Override
-    public short getEntityID() {
-        return this.id;
+    public String getEntityID() {
+        return this.entityID;
     }
 
     /**
-     * Sets the entityID of the spawner.
-     * 
-     * @param id the new entityID
+     * Sets the entity ID of the spawner.
+     *
+     * @param entity ID the new entity
      */
     @Override
-    public void setEntityID(short id) {
-        this.id = id;
+    public void setEntityID(String entityID) {
+        this.entityID = entityID;
     }
 
     /**
-     * Gets the old entityID of the spawner (item or block). May return 0 if the deprecated constructor is used!
+     * Gets the old entity ID of the spawner (item or block).
      */
-    public short getOldEntityID() {
-        return this.oldID;
+    public String getOldEntityID() {
+        return this.oldEntityID;
     }
 
     /**
      * Gets the amount of the ItemStack.
-     * 
+     *
      * @return the amount
      */
     public int getAmount() {
@@ -196,7 +161,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Sets the amount of the ItemStack.
-     * 
+     *
      * @param amount of the ItemStack
      */
     public void setAmount(int amount) {
@@ -205,7 +170,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Returns the HandlerList.
-     * 
+     *
      * @return the HandlerList
      */
     @Override
@@ -215,7 +180,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Returns the HanderList in a static way.
-     * 
+     *
      * @return the HanderList
      */
     public static HandlerList getHandlerList() {

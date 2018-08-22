@@ -30,9 +30,9 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
     private Player player;
 
     /**
-     * new EntityID.
+     * new Entity.
      */
-    private short id;
+    private String entityID;
 
     /**
      * Block involved.
@@ -54,15 +54,15 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      *
      * @param player who issues the event
      * @param block is allowed to be null
-     * @param id new ID
+     * @param entityID new entity ID
      */
-    public SilkSpawnersSpawnerBreakEvent(Player player, Block block, short id) {
+    public SilkSpawnersSpawnerBreakEvent(Player player, Block block, String entityID) {
         this.player = player;
         this.block = block;
         if (block != null) {
             this.spawner = (CreatureSpawner) block.getState();
         }
-        this.id = id;
+        this.entityID = entityID;
     }
 
     /**
@@ -121,18 +121,18 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      * @return the entity ID
      */
     @Override
-    public short getEntityID() {
-        return this.id;
+    public String getEntityID() {
+        return this.entityID;
     }
 
     /**
-     * Sets the entityID of the spawner.
+     * Sets the entity ID of the spawner.
      *
-     * @param id the new entityID
+     * @param entity ID the new entity
      */
     @Override
-    public void setEntityID(short id) {
-        this.id = id;
+    public void setEntityID(String entityID) {
+        this.entityID = entityID;
     }
 
     /**

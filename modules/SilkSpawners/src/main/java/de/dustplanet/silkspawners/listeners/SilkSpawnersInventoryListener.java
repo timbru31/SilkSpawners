@@ -35,20 +35,16 @@ public class SilkSpawnersInventoryListener implements Listener {
             return;
         }
 
-        // Check for MobSpawner
         if (event.getRecipe().getResult().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
         ItemStack result = event.getRecipe().getResult();
 
-        // See if a spawnegg has no durability (vanilla egg), read NBT tag and
-        // prepare result
         for (ItemStack itemStack : event.getInventory().getContents()) {
             if (itemStack.getType() == su.nmsProvider.getSpawnEggMaterial() && itemStack.getDurability() == 0) {
-                short entityID = su.getStoredEggEntityID(itemStack);
-                String mobID = su.eid2MobID.get(entityID);
-                result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(mobID), result.getAmount(), true);
+                String entityID = su.getStoredEggEntityID(itemStack);
+                result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), result.getAmount(), true);
                 event.getInventory().setResult(result);
             }
         }
@@ -56,27 +52,22 @@ public class SilkSpawnersInventoryListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onItemCraft(CraftItemEvent event) {
-        // Null checks, somehow errors appeared...
         if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
 
-        // Check for MobSpawner
         if (event.getCurrentItem().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
-        // Player
         if (!(event.getWhoClicked() instanceof Player)) {
             return;
         }
 
         Player player = (Player) event.getWhoClicked();
 
-        // Variables
-        short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
-        // Pig here again
-        if (entityID == 0 || !su.knownEids.contains(entityID)) {
+        String entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
+        if (entityID == null) {
             entityID = su.getDefaultEntityID();
         }
         String creatureName = su.getCreatureName(entityID);
@@ -87,7 +78,7 @@ public class SilkSpawnersInventoryListener implements Listener {
             su.sendMessage(player,
                     ChatColor
                             .translateAlternateColorCodes('\u0026',
-                                    plugin.localization.getString("noPermissionCraft").replace("%ID%", Short.toString(entityID)))
+                                    plugin.localization.getString("noPermissionCraft").replace("%ID%", entityID))
                             .replace("%creature%", spawnerName));
             return;
         }
@@ -95,17 +86,14 @@ public class SilkSpawnersInventoryListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onInventoryClick(InventoryClickEvent event) {
-        // Null checks, somehow errors appeared...
         if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
 
-        // Check for MobSpawner
         if (event.getCurrentItem().getType() != su.nmsProvider.getSpawnerMaterial()) {
             return;
         }
 
-        // Player
         if (!(event.getWhoClicked() instanceof Player)) {
             return;
         }
@@ -113,10 +101,10 @@ public class SilkSpawnersInventoryListener implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         // Variables
-        short entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
+        String entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
 
         // Pig here again
-        if (entityID == 0 || !su.knownEids.contains(entityID)) {
+        if (entityID == null) {
             entityID = su.getDefaultEntityID();
         }
         String creatureName = su.getCreatureName(entityID);
