@@ -88,7 +88,7 @@ public class SilkUtil {
     /**
      * Constructor to make your own SilkUtil instance.
      *
-     * @param instance
+     * @param instance SilkSpawners instance
      */
     public SilkUtil(SilkSpawners instance) {
         if (instance == null) {
@@ -478,6 +478,7 @@ public class SilkUtil {
      * @param entityID the new entity ID
      * @param player the player
      * @param messageDenied the message which is shown, when the player can't build here see {@link #canBuildHere(Player, Location)}
+     * @return whether the operation was successful or not
      */
     public boolean setSpawnerType(Block block, String entityID, Player player, String messageDenied) {
         // Changing denied by WorldGuard?

@@ -61,6 +61,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * @param block is allowed to be null
      * @param entityID new entity ID
      * @param oldEntityID of the spawner
+     * @param amount of items being changed
      */
     public SilkSpawnersSpawnerChangeEvent(Player player, Block block, String entityID, String oldEntityID, int amount) {
         this.player = player;
@@ -136,7 +137,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     /**
      * Sets the entity ID of the spawner.
      *
-     * @param entity ID the new entity
+     * @param entityID the new entity ID
      */
     @Override
     public void setEntityID(String entityID) {
@@ -145,6 +146,8 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
 
     /**
      * Gets the old entity ID of the spawner (item or block).
+     *
+     * @return the old entity ID
      */
     public String getOldEntityID() {
         return this.oldEntityID;

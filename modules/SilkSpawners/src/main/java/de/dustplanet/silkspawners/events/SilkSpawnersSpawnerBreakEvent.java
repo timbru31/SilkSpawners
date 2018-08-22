@@ -128,7 +128,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
     /**
      * Sets the entity ID of the spawner.
      *
-     * @param entity ID the new entity
+     * @param entityID the new entity ID
      */
     @Override
     public void setEntityID(String entityID) {
