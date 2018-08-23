@@ -21,6 +21,7 @@
 
 ## Checklist
 
+<!-- Please check the items below with x and replace the space. [x] NOT [x ] or [+] -->
 - [ ] I am aware that issues caused by /reload are ignored
 - [ ] If there is a (potential) plugin conflict, I've identified the conflicting plugin
 - [ ] I have added a valid /version output
