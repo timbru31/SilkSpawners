@@ -37,11 +37,10 @@ placingDefault: '&eStandaard spawner &4geplaatst. (De spawner is ongeldig of uit
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
-informationOfSpawner3: '-- EntityID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%'
  
-spawningDenied: '&4Het plaatsen van &e%creature% (ID %ID%) &4is verboden!'
-spawning: '&2Spawning &e%creature% (ID %ID%).'
+spawningDenied: '&4Het plaatsen van &e%creature% &4is verboden!'
+spawning: '&2Spawning &e%creature%.'
 noSpawnerHere: '&4Een spawner kan niet geplaats worden hier, omdat het block daar boven een block staat!'
  
 lookAtSpawner: '&4Je moet de spawner recht aan kijken!'

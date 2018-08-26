@@ -55,11 +55,10 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("informationOfSpawner1", "-- Monster Spawner --");
         config.addComment("informationOfSpawner1", "");
         config.addDefault("informationOfSpawner2", "-- Type: %creature% --");
-        config.addDefault("informationOfSpawner3", "-- EntityID: %ID% --");
-        config.addDefault("informationOfSpawnerBar", "Monster Spawner, Type: &e%creature%&f, %ID%");
-        config.addDefault("spawningDenied", "&4Spawning of &e%creature% (ID %ID%) &4denied!");
+        config.addDefault("informationOfSpawnerBar", "Monster Spawner, Type: &e%creature%");
+        config.addDefault("spawningDenied", "&4Spawning of &e%creature% &4denied!");
         config.addComment("spawningDenied", "");
-        config.addDefault("spawning", "&2Spawning &e%creature% (ID %ID%)");
+        config.addDefault("spawning", "&2Spawning &e%creature%");
         config.addDefault("noSpawnerHere", "&4A spawner can not be placed here, because the block above is blocked!");
         config.addDefault("lookAtSpawner", "&4You must be looking directly at a spawner.");
         config.addComment("lookAtSpawner", "");

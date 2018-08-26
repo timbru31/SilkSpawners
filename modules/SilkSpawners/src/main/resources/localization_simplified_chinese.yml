@@ -41,11 +41,10 @@ placingDefault: '&e正在放置默认刷挂笼（刷挂笼可能无效或被禁�
  
 informationOfSpawner1: '-- 刷挂笼 --'
 informationOfSpawner2: '-- 类型： %creature% --'
-informationOfSpawner3: '-- 实体 ID： %ID% --'
-informationOfSpawnerBar: '刷挂笼，类型： &e%creature%&f，ID：%ID%'
+informationOfSpawnerBar: '刷挂笼，类型： &e%creature%'
  
-spawningDenied: '&4已拒绝生成 &e%creature%（ID %ID%）！'
-spawning: '&2正在生成 &e%creature%（ID %ID%）'
+spawningDenied: '&4已拒绝生成 &e%creature%！'
+spawning: '&2正在生成 &e%creature%'
 noSpawnerHere: '&4由于上方方块被阻挡，刷挂笼无法在此放置！'
  
 lookAtSpawner: '&4您必须直视刷挂笼。'

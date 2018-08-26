@@ -37,11 +37,10 @@ placingDefault: '&eMenaruh spawner biasa (Antara spawner ini cacad atau tidak di
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
-informationOfSpawner3: '-- EntityID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%'
  
-spawningDenied: '&4Pemanggilan &e%creature% (ID %ID%) &4ditolak!'
-spawning: '&2Memanggil &e%creature% (ID %ID%)'
+spawningDenied: '&4Pemanggilan &e%creature% &4ditolak!'
+spawning: '&2Memanggil &e%creature%'
 noSpawnerHere: '&4Spawner tidak bisa ditaruh disini, karena blok di atas di blokir!'
  
 lookAtSpawner: '&4Kamu harus melihat langsung sebuah spawner.'

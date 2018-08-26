@@ -37,11 +37,10 @@ placingDefault: '&ePiazzando lo spawner di default (forse questo spawner è inva
  
 informationOfSpawner1: '-- Spawner di Mob --'
 informationOfSpawner2: '-- Tipo: %creature% --'
-informationOfSpawner3: '-- ID Entità: %ID% --'
-informationOfSpawnerBar: 'Spawner di Mob, Tipo: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Spawner di Mob, Tipo: &e%creature%'
  
-spawningDenied: '&4Creazione di &e%creature% (ID %ID%) &4bloccata!'
-spawning: '&2Creando &e%creature% (ID: %ID%)'
+spawningDenied: '&4Creazione di &e%creature% &4bloccata!'
+spawning: '&2Creando &e%creature%'
 noSpawnerHere: '&4Lo spawner non può essere piazzato qui poichè il blocco sopra è bloccato!'
  
 lookAtSpawner: '&4Devi guardare direttamente lo spawner.'

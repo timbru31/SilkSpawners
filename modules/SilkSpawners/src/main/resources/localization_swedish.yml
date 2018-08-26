@@ -37,11 +37,10 @@ placingDefault: '&ePlacerar en normal spawner (antigen så är denna spawner ok�
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Typ: %creature% --'
-informationOfSpawner3: '-- ID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%'
  
-spawningDenied: '&4Försök av att spawna en &e%creature% (ID %ID%) &4nekat'
-spawning: '&2Spawnar &e%creature% (ID %ID%)'
+spawningDenied: '&4Försök av att spawna en &e%creature% &4nekat'
+spawning: '&2Spawnar &e%creature%'
 noSpawnerHere: '&4Du kan inte placera en spawner här, blocket ovanför är blockerat.'
  
 lookAtSpawner: '&4Titta eller peka mot spawnern.'

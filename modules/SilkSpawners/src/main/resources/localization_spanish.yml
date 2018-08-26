@@ -43,11 +43,10 @@ placingDefault: '&ePoniendo generador predeterminado (sera que este generador es
  
 informationOfSpawner1: -- Generador de monstruos --
 informationOfSpawner2: '-- Tipo: %creature% --'
-informationOfSpawner3: '-- ID de entidad: %ID% --'
-informationOfSpawnerBar: 'Generador de monstruos, Tipo: &e%creature%&f, ID de entidad: %ID%'
+informationOfSpawnerBar: 'Generador de monstruos, Tipo: &e%creature%'
  
-spawningDenied: '&4Spawneo de criatura &e%creature% (ID de entidad %ID%) &4denegado!'
-spawning: '&2Spawneando criatura &e%creature% (ID de entidad %ID%)'
+spawningDenied: '&4Spawneo de criatura &e%creature% &4denegado!'
+spawning: '&2Spawneando criatura &e%creature%'
 noSpawnerHere: '&4Un generador no se puede poner aqui, debido a que el bloque superior esta bloqueado!'
  
 lookAtSpawner: '&4Debes mirar directamente a un generador.'

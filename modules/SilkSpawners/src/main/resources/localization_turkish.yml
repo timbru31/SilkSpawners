@@ -37,11 +37,10 @@ placingDefault: '&eVarsayılan canavar yaratıcısı yerleştiriliyor (Bu yarat�
  
 informationOfSpawner1: '-- Canavar Yaratıcısı --'
 informationOfSpawner2: '-- Tür: %creature% --'
-informationOfSpawner3: '-- ID: %ID% --'
-informationOfSpawnerBar: 'Canavar Yaratıcısı, Tür: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Canavar Yaratıcısı, Tür: &e%creature%'
  
-spawningDenied: '&e%creature% (ID %ID%) &4çağırılamadı!'
-spawning: '&e%creature% (ID %ID%) &2çağırılıyor.'
+spawningDenied: '&e%creature% &4çağırılamadı!'
+spawning: '&e%creature% &2çağırılıyor.'
 noSpawnerHere: '&4Bu yaratıcı buraya yerleştirilemez çünkü üzerindeki blok tarafından engelleniyor.!'
  
 lookAtSpawner: '&4Direkt olarak yaratıcıya bakmalısınız.'

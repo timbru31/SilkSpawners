@@ -38,11 +38,10 @@ placingDefault: '&eColocando gerador padrão (O gerador pode estar desativado ou
  
 informationOfSpawner1: '-- Gerador de Monstros --'
 informationOfSpawner2: '-- Tipo: %creature% --'
-informationOfSpawner3: '-- ID da entidade: %ID% --'
-informationOfSpawnerBar: 'Gerador de Monstros, Tipo: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Gerador de Monstros, Tipo: &e%creature%'
  
-spawningDenied: '&4Geração da criatura &e%creature% (ID %ID%) &4negado!'
-spawning: '&2Gerando &e%creature% (ID %ID%)'
+spawningDenied: '&4Geração da criatura &e%creature% &4negado!'
+spawning: '&2Gerando &e%creature%'
 noSpawnerHere: '&4Um gerador não pode ser colocado aqui porque o bloco acima está bloqueado!'
  
 lookAtSpawner: '&4Você deve estar olhando diretamente para o gerador.'

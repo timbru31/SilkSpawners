@@ -37,11 +37,10 @@ placingDefault: '&ePlacing default spawner (either this spawner is invalid or di
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
-informationOfSpawner3: '-- EntityID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f'
  
-spawningDenied: '&4Spawning of &e%creature% (ID %ID%) &4denied!'
-spawning: '&2Spawning &e%creature% (ID %ID%)'
+spawningDenied: '&4Spawning of &e%creature% &4denied!'
+spawning: '&2Spawning &e%creature%'
 noSpawnerHere: '&4A spawner can not be placed here, because the block above is blocked!'
  
 lookAtSpawner: '&4You must be looking directly at a spawner.'

@@ -48,7 +48,6 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
     private ArrayList<String> addCommands(String cmd) {
         ArrayList<String> results = new ArrayList<>();
         for (String command : commands) {
-            // Add the string if our name starts with the argument
             if (command.startsWith(cmd)) {
                 results.add(command);
             }
@@ -58,10 +57,10 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 
     private ArrayList<String> addMobs(String mob) {
         ArrayList<String> results = new ArrayList<>();
+        System.out.println("completing: " + mob);
         for (String displayName : su.getDisplayNameToMobID().keySet()) {
-            // Lowercase, too and strip spaces
+            System.out.println(displayName);
             displayName = displayName.toLowerCase().replace(" ", "");
-            // Add the string if our name starts with the argument
             if (displayName.startsWith(mob)) {
                 results.add(displayName);
             }
@@ -72,9 +71,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
     private ArrayList<String> addPlayers(String playerString) {
         ArrayList<String> results = new ArrayList<>();
         for (Player player : su.nmsProvider.getOnlinePlayers()) {
-            // Lowercase, too and strip spaces
             String displayName = player.getName().toLowerCase().replace(" ", "");
-            // Add the string if our name starts with the argument
             if (displayName.startsWith(playerString)) {
                 results.add(player.getName());
             }

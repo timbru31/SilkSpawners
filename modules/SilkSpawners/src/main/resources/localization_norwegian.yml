@@ -37,11 +37,10 @@ placingDefault: '&ePlasserer vanlig spawner (Spawneren er ødelagt eller bugget!
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
-informationOfSpawner3: '-- EntityID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%'
  
-spawningDenied: '&4Spawning av &e%creature% (ID %ID%) &4avvist!'
-spawning: '&2Spawner en &e%creature% (ID %ID%)'
+spawningDenied: '&4Spawning av &e%creature% &4avvist!'
+spawning: '&2Spawner en &e%creature%'
 noSpawnerHere: '&4En Spawner kan ikke bli plassert her, fordi blokken over den er blokkert!'
  
 lookAtSpawner: '&4Du må se direkte på en spawner når du gjør dette.'

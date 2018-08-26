@@ -63,7 +63,7 @@ public class SilkSpawnersPlayerListener implements Listener {
             // Get the name from the entityID
             String spawnerName = su.getCreatureName(entityID);
             Player player = event.getPlayer();
-            su.notify(player, spawnerName, entityID);
+            su.notify(player, spawnerName);
         }
     }
 

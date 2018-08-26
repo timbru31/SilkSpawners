@@ -37,11 +37,10 @@ placingDefault: '&eSetze einen Standard Spawner (entweder ist diese Kreatur nich
  
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Typ: %creature% --'
-informationOfSpawner3: '-- EntityID: %ID% --'
-informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%'
  
-spawningDenied: '&4Spawnen von &e%creature% (ID %ID%) &4nicht erlaubt!'
-spawning: '&2Spawne ein(en) &e%creature% (ID %ID%)'
+spawningDenied: '&4Spawnen von &e%creature% &4nicht erlaubt!'
+spawning: '&2Spawne ein(en) &e%creature%'
 noSpawnerHere: '&4Ein Spawner kann hier nicht aufgestellt werden, da der Block oberhalb nicht frei ist!'
  
 lookAtSpawner: '&4Du musst den Spawner direkt anschauen'

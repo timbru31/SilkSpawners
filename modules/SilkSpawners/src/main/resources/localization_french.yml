@@ -37,11 +37,10 @@ placingDefault: '&ePlacer un spawner par défaut(soit le spawner est invalide so
  
 informationOfSpawner1: -- Spawner --
 informationOfSpawner2: '-- Type: %creature% --'
-informationOfSpawner3: '-- ID: %ID% --'
-informationOfSpawnerBar: 'Spawner, Type: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Spawner, Type: &e%creature%'
  
-spawningDenied: '&4Spawn de &e%creature% (ID %ID%) &4refusé!'
-spawning: '&2Spawn de &e%creature% (ID %ID%)'
+spawningDenied: '&4Spawn de &e%creature%&4refusé!'
+spawning: '&2Spawn de &e%creature%s'
 noSpawnerHere: '&4Un spawner ne peut pas etre placé ici, parce que le bloc au dessus est bloqué!'
  
 lookAtSpawner: '&4Tu dois regarder directement le spawner.'

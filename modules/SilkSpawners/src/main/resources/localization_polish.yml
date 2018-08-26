@@ -38,11 +38,10 @@ placingDefault: '&eMiejsce domyslnego spawnera (spawner jest nieprawidlowy lub w
  
 informationOfSpawner1: -- Spawner Potworow --
 informationOfSpawner2: '-- Typ: %creature% --'
-informationOfSpawner3: '-- IDPotwora: %ID% --'
-informationOfSpawnerBar: 'Spawner Potworow, Typ: &e%creature%&f, ID: %ID%'
+informationOfSpawnerBar: 'Spawner Potworow, Typ: &e%creature%'
  
-spawningDenied: '&4Spawnowanie potworow &e%creature% (ID %ID%) &4zabronione!'
-spawning: '&2Spawnowanie &e%creature% (ID %ID%)'
+spawningDenied: '&4Spawnowanie potworow &e%creature% &4zabronione!'
+spawning: '&2Spawnowanie &e%creature%'
 noSpawnerHere: '&4Nie mozna tu umiescic spawnera, poniewaz ten blok jest zablokowany!'
  
 lookAtSpawner: '&4Musisz patrzec prosto na spawner.'

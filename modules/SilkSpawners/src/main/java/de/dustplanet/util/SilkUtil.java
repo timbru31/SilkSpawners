@@ -188,7 +188,7 @@ public class SilkUtil {
             aliases.add(entityID.toLowerCase().replace(" ", ""));
 
             for (String alias : aliases) {
-                displayNameToMobID.put(entityID, alias);
+                displayNameToMobID.put(alias, entityID);
             }
 
             if (verbose) {
@@ -605,29 +605,25 @@ public class SilkUtil {
      *
      * @param player the player
      * @param spawnerName the creature name
-     * @param entityID the ID
      */
     @SuppressWarnings("deprecation")
-    public void notify(Player player, String spawnerName, String entityID) {
+    public void notify(Player player, String spawnerName) {
         if (isBarAPI()) {
             String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawnerBar").replace("%ID%", entityID).replace("%creature%", spawnerName));
-            // Old bars will be overridden
+                    plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
             BarAPI.setMessage(player, shortInfo, plugin.getConfig().getInt("barAPI.displayTime", 3));
         } else if (isVanillaBossBar()) {
             String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawnerBar").replace("%ID%", entityID).replace("%creature%", spawnerName));
+                    plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
             String barColor = plugin.getConfig().getString("vanillaBossBar.color", "RED");
             String barStyle = plugin.getConfig().getString("vanillaBossBar.style", "SOLID");
             int barTime = plugin.getConfig().getInt("vanillaBossBar.displayTime", 3);
             nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
             sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner1").replace("%ID%", entityID).replace("%creature%", spawnerName)));
+                    plugin.localization.getString("informationOfSpawner1").replace("%creature%", spawnerName)));
             sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner2").replace("%ID%", entityID).replace("%creature%", spawnerName)));
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner3").replace("%ID%", entityID).replace("%creature%", spawnerName)));
+                    plugin.localization.getString("informationOfSpawner2").replace("%creature%", spawnerName)));
         }
     }
 
