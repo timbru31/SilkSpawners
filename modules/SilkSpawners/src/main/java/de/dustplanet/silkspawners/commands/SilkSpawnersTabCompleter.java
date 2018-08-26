@@ -57,9 +57,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
 
     private ArrayList<String> addMobs(String mob) {
         ArrayList<String> results = new ArrayList<>();
-        System.out.println("completing: " + mob);
         for (String displayName : su.getDisplayNameToMobID().keySet()) {
-            System.out.println(displayName);
             displayName = displayName.toLowerCase().replace(" ", "");
             if (displayName.startsWith(mob)) {
                 results.add(displayName);
