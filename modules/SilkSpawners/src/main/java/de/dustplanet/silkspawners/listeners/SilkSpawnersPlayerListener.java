@@ -86,7 +86,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
-                if (action != Action.RIGHT_CLICK_BLOCK && plugin.config.getBoolean("disableChangeTypeWithEgg", false)) {
+                if (action != Action.RIGHT_CLICK_BLOCK || plugin.config.getBoolean("disableChangeTypeWithEgg", false)) {
                     return;
                 }
 
