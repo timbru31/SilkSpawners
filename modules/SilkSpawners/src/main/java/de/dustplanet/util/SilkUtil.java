@@ -25,7 +25,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.flags.Flags;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
@@ -780,9 +785,17 @@ public class SilkUtil {
             return true;
         }
         try {
-            return wg.canBuild(player, location);
-        } catch (@SuppressWarnings("unused") NoSuchMethodError e) {
-            plugin.getLogger().warning("WorldGuard v7 is not yet supported, please turn off 'useWorldGuard' in the meantime!");
+            WorldGuard instance = WorldGuard.getInstance();
+            RegionContainer regionContainer = instance.getPlatform().getRegionContainer();
+            RegionQuery query = regionContainer.createQuery();
+            return query.testBuild(BukkitAdapter.adapt(location), wg.wrapPlayer(player), Flags.BUILD);
+        } catch (@SuppressWarnings("unused") Exception e) {
+            try {
+                wg.getClass().getDeclaredMethod("canBuild", Player.class, Location.class).invoke(wg, player, location);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                    | SecurityException e1) {
+                e1.printStackTrace();
+            }
             return false;
         }
     }

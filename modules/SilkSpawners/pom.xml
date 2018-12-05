@@ -21,7 +21,7 @@
     </repository>
     <repository>
       <id>bstats-repo</id>
-      <url>https://repo.bstats.org/content/groups/public/</url>
+      <url>https://repo.codemc.org/repository/maven-public</url>
     </repository>
     <repository>
       <id>dustplanet</id>
@@ -50,12 +50,23 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.13-R0.1-SNAPSHOT</version>
+      <version>1.13.2-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
       <artifactId>worldguard</artifactId>
-      <version>6.2.1</version>
+      <version>7.0.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.sk89q</groupId>
+      <artifactId>worldedit</artifactId>
+      <version>7.0.0</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
@@ -103,7 +114,7 @@
     <dependency>
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
-      <version>1.2</version>
+      <version>1.4</version>
     </dependency>
     <dependency>
       <groupId>us.forseth11</groupId>
