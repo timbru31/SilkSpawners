@@ -278,7 +278,7 @@ public class SilkSpawners extends JavaPlugin {
         ShapedRecipe baseSpawnerRecipe = null;
         try {
             baseSpawnerRecipe = new ShapedRecipe(new NamespacedKey(this, "baseSpawner"), baseSpawnerItem);
-        } catch (Exception e) {
+        } catch (Exception | Error e) {
             // Legacy
             baseSpawnerRecipe = new ShapedRecipe(baseSpawnerItem);
         }
@@ -371,7 +371,7 @@ public class SilkSpawners extends JavaPlugin {
             ShapedRecipe recipe = null;
             try {
                 recipe = new ShapedRecipe(new NamespacedKey(this, entityID), spawnerItem);
-            } catch (Exception e) {
+            } catch (Exception | Error e) {
                 recipe = new ShapedRecipe(spawnerItem);
             }
 
