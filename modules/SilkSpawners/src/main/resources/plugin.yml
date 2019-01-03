@@ -49,3 +49,4 @@ permissions:
     description: Allows you to see the help menu
     default: true
 softdepend: [WorldGuard, BarAPI, Factions, Feudal]
+loadbefore: [MergedSpawner, ShopGUIPlus]
