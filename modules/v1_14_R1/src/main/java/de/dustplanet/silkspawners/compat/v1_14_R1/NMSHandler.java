@@ -176,6 +176,7 @@ public class NMSHandler implements NMSProvider {
 
         // EntityId - Deprecated in 1.9
         tag.getCompound("BlockEntityTag").setString("EntityId", entity);
+        tag.getCompound("BlockEntityTag").setString("id", TileEntityTypes.a(TileEntityTypes.MOB_SPAWNER).getKey());
 
         // SpawnData
         if (!tag.hasKey("SpawnData")) {
