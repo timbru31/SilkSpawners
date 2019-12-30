@@ -14,8 +14,8 @@
 
   <repositories>
     <repository>
-      <id>dustplanet</id>
-      <url>https://repo.dustplanet.de/artifactory/craftbukkit</url>
+      <id>getbukkit-craftbukkit</id>
+      <url>https://cdn.getbukkit.org/</url>
     </repository>
   </repositories>
 
