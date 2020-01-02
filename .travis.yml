@@ -5,18 +5,9 @@ cache:
   - $HOME/.m2
 
 jdk:
-  - oraclejdk8
-  - oraclejdk10
   - openjdk8
-
-matrix:
-  include:
-    - jdk: openjdk10
-      before_install:
-        - java -version
-        - mvn --version
-        - rm "${JAVA_HOME}/lib/security/cacerts"
-        - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+  - oraclejdk11
+  - openjdk11
 
 before_install:
   - java -version
