@@ -25,7 +25,7 @@
     </repository>
     <repository>
       <id>dustplanet</id>
-      <url>https://repo.dustplanet.de/artifactory/craftbukkit</url>
+      <url>https://repo.dustplanet.de/artifactory/private</url>
     </repository>
     <repository>
       <id>dustplanet-releases</id>
