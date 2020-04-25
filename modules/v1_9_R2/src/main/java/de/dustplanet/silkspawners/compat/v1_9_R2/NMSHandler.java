@@ -155,6 +155,11 @@ public class NMSHandler implements NMSProvider {
         }
         tag.getCompound("SpawnData").setString("id", entity);
 
+        if (!tag.getCompound("BlockEntityTag").hasKey("SpawnData")) {
+            tag.getCompound("BlockEntityTag").set("SpawnData", new NBTTagCompound());
+        }
+        tag.getCompound("BlockEntityTag").getCompound("SpawnData").setString("id", entity);
+
         if (!tag.getCompound("BlockEntityTag").hasKey("SpawnPotentials")) {
             tag.getCompound("BlockEntityTag").set("SpawnPotentials", new NBTTagCompound());
         }

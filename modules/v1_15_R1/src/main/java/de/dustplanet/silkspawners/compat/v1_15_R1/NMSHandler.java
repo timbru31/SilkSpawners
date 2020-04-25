@@ -42,6 +42,7 @@ import net.minecraft.server.v1_15_R1.NBTTagCompound;
 import net.minecraft.server.v1_15_R1.RegistryID;
 import net.minecraft.server.v1_15_R1.RegistryMaterials;
 import net.minecraft.server.v1_15_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_15_R1.TileEntityTypes;
 import net.minecraft.server.v1_15_R1.World;
 
 public class NMSHandler implements NMSProvider {
@@ -176,12 +177,18 @@ public class NMSHandler implements NMSProvider {
 
         // EntityId - Deprecated in 1.9
         tag.getCompound("BlockEntityTag").setString("EntityId", entity);
+        tag.getCompound("BlockEntityTag").setString("id", TileEntityTypes.a(TileEntityTypes.MOB_SPAWNER).getKey());
 
         // SpawnData
         if (!tag.hasKey("SpawnData")) {
             tag.set("SpawnData", new NBTTagCompound());
         }
         tag.getCompound("SpawnData").setString("id", entity);
+
+        if (!tag.getCompound("BlockEntityTag").hasKey("SpawnData")) {
+            tag.getCompound("BlockEntityTag").set("SpawnData", new NBTTagCompound());
+        }
+        tag.getCompound("BlockEntityTag").getCompound("SpawnData").setString("id", entity);
 
         if (!tag.getCompound("BlockEntityTag").hasKey("SpawnPotentials")) {
             tag.getCompound("BlockEntityTag").set("SpawnPotentials", new NBTTagCompound());
