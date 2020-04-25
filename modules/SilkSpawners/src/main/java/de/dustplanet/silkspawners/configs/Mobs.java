@@ -608,6 +608,108 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.parrot.enableCraftingSpawner", true);
         config.addDefault("creatures.parrot.enableSpawnEggOverride", true);
         config.addDefault("creatures.parrot.displayName", "Parrot");
+        tempList = new ArrayList<>();
+        // Cod
+        tempList.add("codfish");
+        tempList.add("codling");
+        config.addDefault("creatures.cod.aliases", tempList);
+        config.addDefault("creatures.cod.enable", true);
+        config.addDefault("creatures.cod.enableCraftingSpawner", true);
+        config.addDefault("creatures.cod.enableSpawnEggOverride", true);
+        config.addDefault("creatures.cod.displayName", "Cod");
+        tempList = new ArrayList<>();
+        // Dolphin
+        tempList.add("delphinus");
+        config.addDefault("creatures.dolphin.aliases", tempList);
+        config.addDefault("creatures.dolphin.enable", true);
+        config.addDefault("creatures.dolphin.enableCraftingSpawner", true);
+        config.addDefault("creatures.dolphin.enableSpawnEggOverride", true);
+        config.addDefault("creatures.dolphin.displayName", "Dolphin");
+        tempList = new ArrayList<>();
+        // Drowned
+        tempList.add("underwater_z");
+        tempList.add("underwater_zombie");
+        tempList.add("underwaterz");
+        tempList.add("underwaterzombie");
+        config.addDefault("creatures.drowned.aliases", tempList);
+        config.addDefault("creatures.drowned.enable", true);
+        config.addDefault("creatures.drowned.enableCraftingSpawner", true);
+        config.addDefault("creatures.drowned.enableSpawnEggOverride", true);
+        config.addDefault("creatures.drowned.displayName", "Drowned");
+        tempList = new ArrayList<>();
+        // Evoker
+        config.addDefault("creatures.evoker.enable", true);
+        config.addDefault("creatures.evoker.enableCraftingSpawner", true);
+        config.addDefault("creatures.evoker.enableSpawnEggOverride", true);
+        config.addDefault("creatures.evoker.displayName", "Evoker");
+        // Illusioner
+        tempList.add("illusion");
+        config.addDefault("creatures.illusioner.aliases", tempList);
+        config.addDefault("creatures.illusioner.enable", true);
+        config.addDefault("creatures.illusioner.enableCraftingSpawner", true);
+        config.addDefault("creatures.illusioner.enableSpawnEggOverride", true);
+        config.addDefault("creatures.illusioner.displayName", "Illusioner");
+        tempList = new ArrayList<>();
+        // Pufferfish
+        tempList.add("globefish");
+        tempList.add("puffer");
+        tempList.add("blowfish");
+        config.addDefault("creatures.pufferfish.aliases", tempList);
+        config.addDefault("creatures.pufferfish.enable", true);
+        config.addDefault("creatures.pufferfish.enableCraftingSpawner", true);
+        config.addDefault("creatures.pufferfish.enableSpawnEggOverride", true);
+        config.addDefault("creatures.pufferfish.displayName", "Pufferfish");
+        tempList = new ArrayList<>();
+        // Salmon
+        tempList.add("samlet");
+        tempList.add("smolt");
+        tempList.add("grilse");
+        config.addDefault("creatures.salmon.aliases", tempList);
+        config.addDefault("creatures.salmon.enable", true);
+        config.addDefault("creatures.salmon.enableCraftingSpawner", true);
+        config.addDefault("creatures.salmon.enableSpawnEggOverride", true);
+        config.addDefault("creatures.salmon.displayName", "Salmon");
+        tempList = new ArrayList<>();
+        // Tropical Fish
+        config.addDefault("creatures.tropical_fish.enable", true);
+        config.addDefault("creatures.tropical_fish.enableCraftingSpawner", true);
+        config.addDefault("creatures.tropical_fish.enableSpawnEggOverride", true);
+        config.addDefault("creatures.tropical_fish.displayName", "Tropical Fish");
+        // Turtle
+        tempList.add("tortoise");
+        tempList.add("testudo");
+        config.addDefault("creatures.turtle.aliases", tempList);
+        config.addDefault("creatures.turtle.enable", true);
+        config.addDefault("creatures.turtle.enableCraftingSpawner", true);
+        config.addDefault("creatures.turtle.enableSpawnEggOverride", true);
+        config.addDefault("creatures.turtle.displayName", "Turtle");
+        tempList = new ArrayList<>();
+        // Vindicator
+        config.addDefault("creatures.vindicator.enable", true);
+        config.addDefault("creatures.vindicator.enableCraftingSpawner", true);
+        config.addDefault("creatures.vindicator.enableSpawnEggOverride", true);
+        config.addDefault("creatures.vindicator.displayName", "Vindicator");
+        // Phantom
+        tempList.add("spectre");
+        tempList.add("specter");
+        config.addDefault("creatures.phantom.aliases", tempList);
+        config.addDefault("creatures.phantom.enable", true);
+        config.addDefault("creatures.phantom.enableCraftingSpawner", true);
+        config.addDefault("creatures.phantom.enableSpawnEggOverride", true);
+        config.addDefault("creatures.phantom.displayName", "Phantom");
+        tempList = new ArrayList<>();
+        // Iron Golem
+        tempList.add("igolem");
+        tempList.add("ironman");
+        tempList.add("iron");
+        tempList.add("ig");
+        config.addDefault("creatures.iron_golem.aliases", tempList);
+        config.addDefault("creatures.iron_golem.enable", true);
+        config.addDefault("creatures.iron_golem.enableCraftingSpawner", true);
+        config.addDefault("creatures.iron_golem.enableSpawnEggOverride", true);
+        config.addDefault("creatures.iron_golem.displayName", "Iron Golem");
+
+        // Non-mob vanilla entities below
         // Item
         config.addDefault("creatures.Item.enable", false);
         config.addComment("creatures.Item", "", "# Non-mob vanilla entities", "# Enable on your own risk, some might work, some not!");
@@ -716,5 +818,27 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.llama_spit.enable", false);
         // evocation_fangs
         config.addDefault("creatures.evocation_fangs.enable", false);
+        // end_crystal
+        config.addDefault("creatures.end_crystal.enable", false);
+        // evoker_fangs
+        config.addDefault("creatures.evoker_fangs.enable", false);
+        // experience_orb
+        config.addDefault("creatures.experience_orb.enable", false);
+        // eye_of_ender
+        config.addDefault("creatures.eye_of_ender.enable", false);
+        // firework_rocket
+        config.addDefault("creatures.firework_rocket.enable", false);
+        // command_block_minecart
+        config.addDefault("creatures.command_block_minecart.enable", false);
+        // experience_bottle
+        config.addDefault("creatures.experience_bottle.enable", false);
+        // lightning_bolt
+        config.addDefault("creatures.lightning_bolt.enable", false);
+        // player
+        config.addDefault("creatures.player.enable", false);
+        // fishing_bobber
+        config.addDefault("creatures.fishing_bobber.enable", false);
+        // trident
+        config.addDefault("creatures.trident.enable", false);
     }
 }

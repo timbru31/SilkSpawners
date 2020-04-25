@@ -206,11 +206,13 @@ creatures:
     - sg
     - sm
     - snowmen
+    - snowman
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Snow Golem
   snowman: *snowman
+  snow_golem: *snowman
   Ozelot: &ocelot
     aliases:
     - ocelot
@@ -427,6 +429,88 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Parrot
+  cod:
+    aliases:
+      - codfish
+      - codling
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Cod
+  dolphin:
+    aliases:
+      - delphinus
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Dolphin
+  drowned:
+    aliases:
+      - underwater_z
+      - underwater_zombie
+      - underwaterz
+      - underwaterzombie
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Drowned
+  evoker:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Evoker
+  illusioner:
+    aliases:
+      - illusion
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Illusioner
+  pufferfish:
+    aliases:
+      - globefish
+      - puffer
+      - blowfish
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Pufferfish
+  salmon:
+    aliases:
+      - samlet
+      - smolt
+      - grilse
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Salmon
+  tropical_fish:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Tropical Fish
+  turtle:
+    aliases:
+      - testudo
+      - tortoise
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Turtle
+  vindicator:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Vindicator
+  phantom:
+    aliases:
+      - spectre
+      - specter
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Phantom
+  iron_golem: *villager_golem
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -538,4 +622,26 @@ creatures:
   llama_spit:
     enable: false
   evocation_fangs:
+    enable: false
+  end_crystal:
+    enable: false
+  evoker_fangs:
+    enable: false
+  experience_orb:
+    enable: false
+  eye_of_ender:
+    enable: false
+  firework_rocket:
+    enable: false
+  command_block_minecart:
+    enable: false
+  experience_bottle:
+    enable: false
+  lightning_bolt:
+    enable: false
+  player:
+    enable: false
+  fishing_bobber:
+    enable: false
+  trident:
     enable: false
