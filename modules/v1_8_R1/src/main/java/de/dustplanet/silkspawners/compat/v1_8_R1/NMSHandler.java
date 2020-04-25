@@ -33,6 +33,7 @@ import net.minecraft.server.v1_8_R1.World;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
+    private SortedMap<String, Integer> entitiesMaps = new TreeMap<>();
 
     public NMSHandler() {
         try {
@@ -76,6 +77,7 @@ public class NMSHandler implements NMSProvider {
             // For each entry in our name -- ID map but it into the sortedMap
             for (Map.Entry<String, Integer> entry : map.entrySet()) {
                 sortedMap.put(entry.getValue(), entry.getKey());
+                entitiesMaps.put(entry.getKey(), entry.getValue());
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
@@ -205,8 +207,8 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(String entity, int amount, String displayName) {
-        return new ItemStack(Material.MONSTER_EGG, amount);
+    public ItemStack newEggItem(String entityID, int amount, String displayName) {
+        return new ItemStack(Material.MONSTER_EGG, amount, this.entitiesMaps.get(entityID).shortValue());
     }
 
     @Override

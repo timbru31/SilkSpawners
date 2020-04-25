@@ -132,7 +132,6 @@ public class NMSHandler implements NMSProvider {
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // TODO Needs 1.13 source
-            // alternative: EntityTypes.a(string s)
             tile.getSpawner().setMobName(EntityTypes.REGISTRY.get(new MinecraftKey(mobID)));
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -257,11 +256,11 @@ public class NMSHandler implements NMSProvider {
     @Override
     public ItemStack newEggItem(String entityID, int amount, String displayName) {
         Material spawnEgg = Material.matchMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
-        if (spawnEgg != null) {
-            return new ItemStack(spawnEgg, amount);
+        if (spawnEgg == null) {
+            spawnEgg = Material.LEGACY_MONSTER_EGG;
         }
 
-        ItemStack item = new ItemStack(Material.LEGACY_MONSTER_EGG, amount);
+        ItemStack item = new ItemStack(spawnEgg, amount);
         if (displayName != null) {
             ItemMeta itemMeta = item.getItemMeta();
             itemMeta.setDisplayName(displayName);

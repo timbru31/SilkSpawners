@@ -210,6 +210,7 @@ public class SilkUtil {
             List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(entityID.toLowerCase().replace(" ", ""));
+            aliases.add(entityID);
             Set<String> aliasSet = new HashSet<>(aliases);
 
             for (String alias : aliasSet) {
@@ -333,7 +334,15 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(String entityID, String customName, int amount, boolean forceLore) {
-        entityID = displayNameToMobID.get(entityID);
+        String targetEntityID = null;
+        try {
+            targetEntityID = displayNameToMobID.get(entityID);
+        } catch (@SuppressWarnings("unused") NullPointerException e) {
+            targetEntityID = entityID;
+        }
+        if (targetEntityID == null) {
+            targetEntityID = entityID;
+        }
         String spawnerName = customName;
         if (customName == null || customName.isEmpty()) {
             spawnerName = "Monster Spawner";
@@ -343,17 +352,17 @@ public class SilkUtil {
 
         if (!spawnerName.equalsIgnoreCase("Monster Spawner")) {
             meta.setDisplayName(
-                    ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(entityID)));
+                    ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(targetEntityID)));
         }
 
         if ((forceLore || !isUsingReflection()) && plugin.getConfig().getBoolean("useMetadata", true)) {
             ArrayList<String> lore = new ArrayList<>();
-            lore.add("entityID:" + entityID);
+            lore.add("entityID:" + targetEntityID);
             meta.setLore(lore);
         }
         item.setItemMeta(meta);
 
-        return nmsProvider.setNBTEntityID(item, entityID);
+        return nmsProvider.setNBTEntityID(item, targetEntityID);
     }
 
     /**
@@ -587,7 +596,11 @@ public class SilkUtil {
     public String getCreatureName(String entity) {
         String displayName = null;
         if (mobIDToDisplayName != null) {
-            displayName = mobIDToDisplayName.get(entity);
+            try {
+                displayName = mobIDToDisplayName.get(entity);
+            } catch (@SuppressWarnings("unused") NullPointerException e) {
+                // Ignore
+            }
         }
         if (displayName == null) {
             EntityType entityType = EntityType.fromName(entity);
@@ -641,7 +654,7 @@ public class SilkUtil {
             SortedMap<Integer, String> legacyRawEntityMap = nmsProvider.legacyRawEntityMap();
             entities = new ArrayList<>(legacyRawEntityMap.values());
             for (Entry<Integer, String> entry : legacyRawEntityMap.entrySet()) {
-                displayNameToMobID.put(entry.getValue(), entry.getKey().toString());
+                displayNameToMobID.put(entry.getKey().toString(), entry.getValue());
             }
         }
         // Let's scan for added entities by e.g MCPC+
@@ -653,7 +666,6 @@ public class SilkUtil {
                 continue;
             }
             if (!entities.stream().anyMatch(name::equalsIgnoreCase)) {
-                System.err.println("adding " + name);
                 entities.add(name);
             }
         }

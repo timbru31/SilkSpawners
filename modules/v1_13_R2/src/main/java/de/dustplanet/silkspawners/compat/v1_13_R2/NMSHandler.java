@@ -258,11 +258,11 @@ public class NMSHandler implements NMSProvider {
     @Override
     public ItemStack newEggItem(String entityID, int amount, String displayName) {
         Material spawnEgg = Material.matchMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
-        if (spawnEgg != null) {
-            return new ItemStack(spawnEgg, amount);
+        if (spawnEgg == null) {
+            spawnEgg = Material.LEGACY_MONSTER_EGG;
         }
 
-        ItemStack item = new ItemStack(Material.LEGACY_MONSTER_EGG, amount);
+        ItemStack item = new ItemStack(spawnEgg, amount);
         if (displayName != null) {
             ItemMeta itemMeta = item.getItemMeta();
             itemMeta.setDisplayName(displayName);
