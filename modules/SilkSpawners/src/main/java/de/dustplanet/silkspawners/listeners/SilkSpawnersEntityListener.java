@@ -37,11 +37,10 @@ public class SilkSpawnersEntityListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntiyExplode(EntityExplodeEvent event) {
         /*
-         * Skip if event is cancelled entity is not known or null EnderDragon calls this event explosionChance is 0
+         * Skip if entity is not known or null or EnderDragon calls or this event explosionChance is 0
          */
         Entity entity = event.getEntity();
-        if (event.isCancelled() || event.getEntity() == null || entity instanceof EnderDragon
-                || plugin.config.getInt("explosionDropChance", 30) == 0) {
+        if (event.getEntity() == null || entity instanceof EnderDragon || plugin.config.getInt("explosionDropChance", 30) == 0) {
             return;
         }
 
