@@ -178,6 +178,18 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
+      <artifactId>SilkSpawners-v1_14_R1</artifactId>
+      <version>v1_14_R1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
+      <artifactId>SilkSpawners-v1_15_R1</artifactId>
+      <version>v1_15_R1</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-API</artifactId>
       <version>API</version>
       <type>jar</type>

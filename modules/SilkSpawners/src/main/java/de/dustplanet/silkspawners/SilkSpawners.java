@@ -48,7 +48,7 @@ public class SilkSpawners extends JavaPlugin {
     private static final int PLUGIN_ID = 35890;
     private static final int BSTATS_PLUGIN_ID = 273;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = { "v1_8_R1", "v1_8_R2", "v1_8_R3", "v1_9_R1", "v1_9_R2", "v1_10_R1",
-            "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2" };
+            "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1" };
     public CommentedConfiguration config;
     public CommentedConfiguration localization;
     public CommentedConfiguration mobs;
