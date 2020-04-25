@@ -42,6 +42,7 @@ import net.minecraft.server.v1_14_R1.NBTTagCompound;
 import net.minecraft.server.v1_14_R1.RegistryID;
 import net.minecraft.server.v1_14_R1.RegistryMaterials;
 import net.minecraft.server.v1_14_R1.TileEntityMobSpawner;
+import net.minecraft.server.v1_14_R1.TileEntityTypes;
 import net.minecraft.server.v1_14_R1.World;
 
 public class NMSHandler implements NMSProvider {
