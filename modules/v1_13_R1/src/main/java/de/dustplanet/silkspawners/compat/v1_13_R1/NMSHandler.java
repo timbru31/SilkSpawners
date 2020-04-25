@@ -422,16 +422,6 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public Material getSpawnerMaterial() {
-        return Material.SPAWNER;
-    }
-
-    @Override
-    public Material getIronFenceMaterial() {
-        return Material.IRON_BARS;
-    }
-
-    @Override
     public Collection<Material> getSpawnEggMaterials() {
         return spawnEggs;
     }

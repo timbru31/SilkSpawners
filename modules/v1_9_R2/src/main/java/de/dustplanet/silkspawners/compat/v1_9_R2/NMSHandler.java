@@ -380,4 +380,14 @@ public class NMSHandler implements NMSProvider {
     public Collection<Material> getSpawnEggMaterials() {
         return Collections.singleton(Material.MONSTER_EGG);
     }
+
+    @Override
+    public Material getSpawnerMaterial() {
+        return Material.MOB_SPAWNER;
+    }
+
+    @Override
+    public Material getIronFenceMaterial() {
+        return Material.IRON_FENCE;
+    }
 }

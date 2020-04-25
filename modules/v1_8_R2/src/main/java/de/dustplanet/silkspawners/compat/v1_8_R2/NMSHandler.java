@@ -248,4 +248,14 @@ public class NMSHandler implements NMSProvider {
     public int getIDForEntity(String entityID) {
         return entitiesMaps.get(entityID);
     }
+
+    @Override
+    public Material getSpawnerMaterial() {
+        return Material.MOB_SPAWNER;
+    }
+
+    @Override
+    public Material getIronFenceMaterial() {
+        return Material.IRON_FENCE;
+    }
 }

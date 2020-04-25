@@ -73,11 +73,11 @@ public interface NMSProvider {
     Player getPlayer(String playerUUIDOrName);
 
     default Material getSpawnerMaterial() {
-        return Material.MOB_SPAWNER;
+        return Material.SPAWNER;
     }
 
     default Material getIronFenceMaterial() {
-        return Material.IRON_FENCE;
+        return Material.IRON_BARS;
     }
 
     @Deprecated
