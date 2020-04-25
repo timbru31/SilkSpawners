@@ -53,4 +53,3 @@ help: |-
   '&e/ss reload|rl &7- &2Przeladowanie pliku konfiguracyjnego.'
   '&e/ss change <newMob> &7- &2Zmiana rodzaju spawnera, ktory trzymasz lub na ktory patrzysz.'
   '&e/ss give|add <player> <mob> [amount] &7- &2Daj graczowi spawner lub jajko potworow. Amount jest opcjonalne'
-changingDeniedFeudal: '&4Nie wolno zmieniac spawnerow na terytorium innych graczy!'

@@ -48,5 +48,5 @@ permissions:
   silkspawners.help:
     description: Allows you to see the help menu
     default: true
-softdepend: [WorldGuard, BarAPI, Factions, Feudal]
+softdepend: [WorldGuard, BarAPI, Factions]
 loadbefore: [MergedSpawner, ShopGUIPlus]
