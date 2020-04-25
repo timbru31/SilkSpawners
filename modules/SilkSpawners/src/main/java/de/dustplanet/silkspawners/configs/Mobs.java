@@ -768,6 +768,14 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.ravager.displayName", "Ravager");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Bee
+        tempList.add("bees");
+        config.addDefault("creatures.bee.aliases", tempList);
+        config.addDefault("creatures.bee.enable", true);
+        config.addDefault("creatures.bee.enableCraftingSpawner", true);
+        config.addDefault("creatures.bee.enableSpawnEggOverride", true);
+        config.addDefault("creatures.bee.displayName", "Bee");
+        config.options().copyDefaults(true);
 
         // Non-mob vanilla entities below
         // Item

@@ -559,6 +559,14 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Ravager
+  bee:
+    aliases:
+      - bees
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Bee
+
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
