@@ -117,35 +117,6 @@
       <version>1.7</version>
     </dependency>
     <dependency>
-      <groupId>us.forseth11</groupId>
-      <artifactId>feudal</artifactId>
-      <version>1.13.4</version>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_7_R1</artifactId>
-      <version>v1_7_R1</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_7_R2</artifactId>
-      <version>v1_7_R2</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_7_R3</artifactId>
-      <version>v1_7_R3</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-v1_7_R4</artifactId>
-      <version>v1_7_R4</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R1</artifactId>
       <version>v1_8_R1</version>
