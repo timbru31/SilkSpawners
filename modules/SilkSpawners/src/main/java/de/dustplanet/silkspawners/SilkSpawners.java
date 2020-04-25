@@ -301,7 +301,7 @@ public class SilkSpawners extends JavaPlugin {
             }
 
             /*
-             * Default is A A A A B A A A A where A is IRON_FENCE and B is MONSTER_EGG
+             * Default is A A A A B A A A A. where A is IRON_FENCE and B is MONSTER_EGG
              */
 
             // We try to use the custom recipe, but we don't know if the user
@@ -374,7 +374,7 @@ public class SilkSpawners extends JavaPlugin {
                         getLogger().info("shape of " + entityID + " contains X");
                     }
                     if (legacySpawnEggs) {
-                        recipe.setIngredient('X', su.nmsProvider.getSpawnEggMaterial(), 0);
+                        recipe.setIngredient('X', su.nmsProvider.getSpawnEggMaterial(), su.nmsProvider.getIDForEntity(entityID));
                     } else {
                         Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                         if (material == null) {

@@ -91,4 +91,9 @@ public interface NMSProvider {
     }
 
     Collection<Material> getSpawnEggMaterials();
+
+    // Only required for MC 1.8
+    default int getIDForEntity(@SuppressWarnings("unused") String entityID) {
+        return 0;
+    }
 }

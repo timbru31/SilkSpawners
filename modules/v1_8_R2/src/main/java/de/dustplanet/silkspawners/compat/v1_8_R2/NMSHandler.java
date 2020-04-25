@@ -243,4 +243,9 @@ public class NMSHandler implements NMSProvider {
     public Collection<Material> getSpawnEggMaterials() {
         return Collections.singleton(Material.MONSTER_EGG);
     }
+
+    @Override
+    public int getIDForEntity(String entityID) {
+        return entitiesMaps.get(entityID);
+    }
 }
