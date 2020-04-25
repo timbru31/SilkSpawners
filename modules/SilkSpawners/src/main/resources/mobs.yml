@@ -218,8 +218,6 @@ creatures:
     - ocelot
     - oce
     - o
-    - cat
-    - kitty
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -510,6 +508,57 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Phantom
   iron_golem: *villager_golem
+  cat:
+    aliases:
+      - feline
+      - mog
+      - kitty
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Cat
+  fox:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Fox
+  panda:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Panda
+  trader_llama:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Trader Llama
+  pillager:
+    aliases:
+      - looter
+      - plunderer
+      - depredator
+      - raider
+      - scavenger
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Pillager
+  wandering_trader:
+    aliases:
+      - wanderer
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Wandering Trader
+  ravager:
+    aliases:
+      - devastator
+      - desolater
+      - desolator
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Ravager
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!

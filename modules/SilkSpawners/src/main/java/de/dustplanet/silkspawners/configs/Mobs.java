@@ -33,7 +33,6 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.creeper.enableCraftingSpawner", true);
         config.addDefault("creatures.creeper.enableSpawnEggOverride", true);
         config.addDefault("creatures.creeper.displayName", "Creeper");
-
         tempList = new ArrayList<>();
         // Skeleton
         tempList.add("s");
@@ -329,8 +328,6 @@ public class Mobs extends AbstractConfiguration {
         tempList.add("ocelot");
         tempList.add("oce");
         tempList.add("o");
-        tempList.add("cat");
-        tempList.add("kitty");
         config.addDefault("creatures.Ozelot.aliases", tempList);
         config.addDefault("creatures.Ozelot.enable", true);
         config.addDefault("creatures.Ozelot.enableCraftingSpawner", true);
@@ -708,6 +705,69 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.iron_golem.enableCraftingSpawner", true);
         config.addDefault("creatures.iron_golem.enableSpawnEggOverride", true);
         config.addDefault("creatures.iron_golem.displayName", "Iron Golem");
+        tempList = new ArrayList<>();
+        // Cat
+        tempList.add("feline");
+        tempList.add("mog");
+        tempList.add("kitty");
+        config.addDefault("creatures.cat.aliases", tempList);
+        config.addDefault("creatures.cat.enable", true);
+        config.addDefault("creatures.cat.enableCraftingSpawner", true);
+        config.addDefault("creatures.cat.enableSpawnEggOverride", true);
+        config.addDefault("creatures.cat.displayName", "Cat");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Fox
+        config.addDefault("creatures.fox.enable", true);
+        config.addDefault("creatures.fox.enableCraftingSpawner", true);
+        config.addDefault("creatures.fox.enableSpawnEggOverride", true);
+        config.addDefault("creatures.fox.displayName", "Fox");
+        config.options().copyDefaults(true);
+        // Panda
+        config.addDefault("creatures.panda.enable", true);
+        config.addDefault("creatures.panda.enableCraftingSpawner", true);
+        config.addDefault("creatures.panda.enableSpawnEggOverride", true);
+        config.addDefault("creatures.panda.displayName", "Panda");
+        config.options().copyDefaults(true);
+        // Trader Llama
+        config.addDefault("creatures.trader_llama.enable", true);
+        config.addDefault("creatures.trader_llama.enableCraftingSpawner", true);
+        config.addDefault("creatures.trader_llama.enableSpawnEggOverride", true);
+        config.addDefault("creatures.trader_llama.displayName", "Trader Llama");
+        config.options().copyDefaults(true);
+        // Pillager
+        tempList.add("looter");
+        tempList.add("plunderer");
+        tempList.add("depredator");
+        tempList.add("raider");
+        tempList.add("scavenger");
+        config.addDefault("creatures.pillager.aliases", tempList);
+        config.addDefault("creatures.pillager.enable", true);
+        config.addDefault("creatures.pillager.enableCraftingSpawner", true);
+        config.addDefault("creatures.pillager.enableSpawnEggOverride", true);
+        config.addDefault("creatures.pillager.displayName", "Pillager");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Wandering Trader
+        tempList.add("wanderer");
+        config.addDefault("creatures.wandering_trader.aliases", tempList);
+        config.addDefault("creatures.wandering_trader.enable", true);
+        config.addDefault("creatures.wandering_trader.enableCraftingSpawner", true);
+        config.addDefault("creatures.wandering_trader.enableSpawnEggOverride", true);
+        config.addDefault("creatures.wandering_trader.displayName", "Wandering Trader");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Ravager
+        tempList.add("devastator");
+        tempList.add("desolater");
+        tempList.add("desolator");
+        config.addDefault("creatures.ravager.aliases", tempList);
+        config.addDefault("creatures.ravager.enable", true);
+        config.addDefault("creatures.ravager.enableCraftingSpawner", true);
+        config.addDefault("creatures.ravager.enableSpawnEggOverride", true);
+        config.addDefault("creatures.ravager.displayName", "Ravager");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
