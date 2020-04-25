@@ -127,7 +127,11 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleGiveEgg(CommandSender sender, Player receiver, String mob, int amount) {
-
+        if (su.isUnknown(mob)) {
+            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
+                    .replace("%creature%", mob));
+            return;
+        }
         String entityID = su.getDisplayNameToMobID().get(mob);
         String creature = su.getCreatureName(entityID);
 
@@ -140,7 +144,7 @@ public class SpawnerCommand implements CommandExecutor {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(su.newEggItem(entityID, amount));
+            receiver.getInventory().addItem(su.newEggItem(entityID, amount, su.getCreatureEggName(entityID)));
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
@@ -167,8 +171,7 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleGiveSpawner(CommandSender sender, Player receiver, String mob, int amount) {
-
-        if (su.isUnkown(mob)) {
+        if (su.isUnknown(mob)) {
             su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                     .replace("%creature%", mob));
             return;
@@ -214,9 +217,8 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleChange(CommandSender sender, String newMob) {
-
         if (sender instanceof Player) {
-            if (su.isUnkown(newMob)) {
+            if (su.isUnknown(newMob)) {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                         .replace("%creature%", newMob));
                 return;
@@ -263,7 +265,6 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleBlockChange(Player player, Block block, String entityID, String mobName) {
-
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
@@ -289,7 +290,6 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleChangeSpawner(Player player, String entityID, String mobName, ItemStack itemInHand) {
-
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
@@ -316,7 +316,6 @@ public class SpawnerCommand implements CommandExecutor {
     }
 
     private void handleChangeEgg(Player player, String entityID, String mobName, ItemStack itemInHand) {
-
         if (!player.hasPermission("silkspawners.changetype." + mobName)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));

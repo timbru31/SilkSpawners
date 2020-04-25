@@ -187,7 +187,7 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(String entityID, int amount) {
+    public ItemStack newEggItem(String entityID, int amount, String displayName) {
         return new ItemStack(Material.MONSTER_EGG, amount);
     }
 

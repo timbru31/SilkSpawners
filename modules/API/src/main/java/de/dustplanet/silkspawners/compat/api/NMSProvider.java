@@ -38,7 +38,12 @@ public interface NMSProvider {
         return Bukkit.getOnlinePlayers();
     }
 
-    ItemStack newEggItem(String entityID, int amount);
+    @Deprecated
+    default ItemStack newEggItem(String entityID, int amount) {
+        return newEggItem(entityID, amount, null);
+    }
+
+    ItemStack newEggItem(String entityID, int amount, String displayName);
 
     @SuppressWarnings("unused")
     default String getVanillaEggNBTEntityID(ItemStack item) {

@@ -159,7 +159,7 @@ public class SilkSpawnersBlockListener implements Listener {
                     dropChance = plugin.config.getInt("eggDropChance", 100);
                 }
                 if (randomNumber < dropChance) {
-                    world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID, 1));
+                    world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID, 1, su.getCreatureEggName(entityID)));
                 }
             }
 

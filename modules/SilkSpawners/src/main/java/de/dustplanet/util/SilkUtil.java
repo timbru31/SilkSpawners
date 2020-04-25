@@ -289,12 +289,26 @@ public class SilkUtil {
     /**
      * Returns a new ItemStack of a spawn egg with the specified amount and mob.
      *
+     * @deprecated Use {@link SilkUtil#newEggItem(String, int, String)} instead.
      * @param entityID which mob should be spawned
      * @param amount the amount of spawn eggs
      * @return the ItemStack
      */
+    @Deprecated
     public ItemStack newEggItem(String entityID, int amount) {
         return nmsProvider.newEggItem(entityID, amount);
+    }
+
+    /**
+     * Returns a new ItemStack of a spawn egg with the specified amount and mob.
+     *
+     * @param entityID which mob should be spawned
+     * @param amount the amount of spawn eggs
+     * @param displayName the display name of the egg in case of unknown entities
+     * @return the ItemStack
+     */
+    public ItemStack newEggItem(String entityID, int amount, String displayName) {
+        return nmsProvider.newEggItem(entityID, amount, displayName);
     }
 
     // Create a tagged a mob spawner item with it's entity ID and custom amount
@@ -573,6 +587,17 @@ public class SilkUtil {
     }
 
     /**
+     * Get the creature name (display name) of an ID. Internal mob names are are like 'LavaSlime', this will return the in-game name like
+     * 'Magma Cube'
+     *
+     * @param entity the entity
+     * @return the displayname of the mob
+     */
+    public String getCreatureEggName(String entity) {
+        return getCreatureName(entity) + " Spawn Egg";
+    }
+
+    /**
      * Lists all enabled creatures to a CommandSender.
      *
      * @param sender CommandSender (player or console)
@@ -664,7 +689,7 @@ public class SilkUtil {
      * @param creatureString the mob name
      * @return the result, true of false
      */
-    public boolean isUnkown(String creatureString) {
+    public boolean isUnknown(String creatureString) {
         return !displayNameToMobID.containsKey(creatureString);
     }
 

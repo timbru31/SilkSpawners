@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -254,8 +255,18 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(String entityID, int amount) {
+    public ItemStack newEggItem(String entityID, int amount, String displayName) {
+        Material spawnEgg = Material.matchMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
+        if (spawnEgg != null) {
+            return new ItemStack(spawnEgg, amount);
+        }
+
         ItemStack item = new ItemStack(Material.LEGACY_MONSTER_EGG, amount);
+        if (displayName != null) {
+            ItemMeta itemMeta = item.getItemMeta();
+            itemMeta.setDisplayName(displayName);
+            item.setItemMeta(itemMeta);
+        }
         net.minecraft.server.v1_13_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);

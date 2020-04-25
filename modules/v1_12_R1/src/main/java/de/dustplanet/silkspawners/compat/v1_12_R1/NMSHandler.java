@@ -228,7 +228,7 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(String entity, int amount) {
+    public ItemStack newEggItem(String entity, int amount, String displayName) {
         ItemStack item = new ItemStack(Material.MONSTER_EGG, amount);
         net.minecraft.server.v1_12_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);

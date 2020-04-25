@@ -378,7 +378,9 @@ public class SilkSpawners extends JavaPlugin {
                     } else {
                         Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                         if (material == null) {
-                            getLogger().info("could not find egg material for " + entityID);
+                            if (verbose) {
+                                getLogger().info("could not find egg material for " + entityID);
+                            }
                             continue;
                         }
                         recipe.setIngredient('X', material);
