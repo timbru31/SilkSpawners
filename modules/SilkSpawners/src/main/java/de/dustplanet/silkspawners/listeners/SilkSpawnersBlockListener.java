@@ -41,10 +41,6 @@ public class SilkSpawnersBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         boolean isFakeEvent = !BlockBreakEvent.class.equals(event.getClass());
         if (isFakeEvent) {
             return;
