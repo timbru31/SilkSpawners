@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.compat.api;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.SortedMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +19,13 @@ public interface NMSProvider {
 
     void spawnEntity(World world, String entityID, double x, double y, double z);
 
-    List<String> rawEntityMap();
+    default List<String> rawEntityMap() {
+        return null;
+    }
+
+    default SortedMap<Integer, String> legacyRawEntityMap() {
+        return null;
+    }
 
     String getMobNameOfSpawner(BlockState blockState);
 

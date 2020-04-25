@@ -591,6 +591,7 @@ creatures:
   MinecartSpawner: &spawner_minecart
     enable: false
   spawner_minecart: *spawner_minecart
+  MinecartMobSpawner: *spawner_minecart
   LeashKnot: &leash_knot
     enable: false
   leash_knot: *leash_knot

@@ -1,11 +1,11 @@
 package de.dustplanet.silkspawners.compat.v1_7_R4;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -61,21 +61,26 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public List<String> rawEntityMap() {
-        List<String> entities = new ArrayList<>();
+    public SortedMap<Integer, String> legacyRawEntityMap() {
+        SortedMap<Integer, String> sortedMap = new TreeMap<>();
+        // Use reflection to dump native EntityTypes
+        // This bypasses Bukkit's wrappers, so it works with mods
         try {
+            // https://github.com/SpigotMC/mc-dev/blob/0ef88a6cbdeef0cb47bf66fd892b0ce2943e8e69/net/minecraft/server/EntityTypes.java#L32
+            // g.put(s, Integer.valueOf(i)); --> Name of ID
             Field field = EntityTypes.class.getDeclaredField("g");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
             Map<String, Integer> map = (Map<String, Integer>) field.get(null);
-            for (String entity : map.keySet()) {
-                entities.add(entity);
+            // For each entry in our name -- ID map but it into the sortedMap
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                sortedMap.put(entry.getValue(), entry.getKey());
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }
-        return entities;
+        return sortedMap;
     }
 
     @Override

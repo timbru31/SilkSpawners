@@ -1,11 +1,12 @@
 package de.dustplanet.silkspawners.compat.v1_12_R1;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -75,8 +76,10 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public List<String> rawEntityMap() {
-        List<String> entities = new ArrayList<>();
+    public SortedMap<Integer, String> legacyRawEntityMap() {
+        SortedMap<Integer, String> sortedMap = new TreeMap<>();
+        // Use reflection to dump native EntityTypes
+        // This bypasses Bukkit's wrappers, so it works with mods
         try {
             // TODO Needs 1.12 source
             Field field = EntityTypes.class.getDeclaredField("g");
@@ -102,7 +105,7 @@ public class NMSHandler implements NMSProvider {
 
                 try {
                     minecraftKey = registry.b(entity);
-                } catch (ClassCastException e) {
+                } catch (@SuppressWarnings("unused") ClassCastException e) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
                     Bukkit.getLogger()
                             .severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
@@ -115,13 +118,13 @@ public class NMSHandler implements NMSProvider {
                             .severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
                     continue;
                 }
-                entities.add(minecraftKey.getKey());
+                sortedMap.put(entityID, minecraftKey.getKey());
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }
-        return entities;
+        return sortedMap;
     }
 
     @Override

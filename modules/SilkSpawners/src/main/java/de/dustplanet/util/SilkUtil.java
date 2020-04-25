@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
@@ -634,6 +636,14 @@ public class SilkUtil {
      */
     public List<String> scanEntityMap() {
         List<String> entities = nmsProvider.rawEntityMap();
+        // Legacy support, this will add the IDs as aliaes
+        if (entities == null) {
+            SortedMap<Integer, String> legacyRawEntityMap = nmsProvider.legacyRawEntityMap();
+            entities = new ArrayList<>(legacyRawEntityMap.values());
+            for (Entry<Integer, String> entry : legacyRawEntityMap.entrySet()) {
+                displayNameToMobID.put(entry.getValue(), entry.getKey().toString());
+            }
+        }
         // Let's scan for added entities by e.g MCPC+
         for (EntityType type : EntityType.values()) {
             String name = type.getName();

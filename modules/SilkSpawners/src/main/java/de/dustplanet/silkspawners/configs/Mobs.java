@@ -787,6 +787,7 @@ public class Mobs extends AbstractConfiguration {
         // MinecartSpawner
         config.addDefault("creatures.MinecartSpawner.enable", false);
         config.addDefault("creatures.spawner_minecart.enable", false);
+        config.addDefault("creatures.MinecartMobSpawner.enable", false);
         // LeashKnot
         config.addDefault("creatures.LeashKnot.enable", false);
         config.addDefault("creatures.leash_know.enable", false);
