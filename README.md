@@ -62,8 +62,8 @@ eggDropChance: 100
 silkDropChance: 100
 
 # When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)
-# PIG (90) is Minecraft default (put NAMES or IDs here!)
-defaultCreature: 90
+# PIG (90) is Minecraft default (put NAMES or IDs (for Minecraft <1.13 here!)
+defaultCreature: pig
 
 # How far is the spawner reachable with your crosshair (disable with -1)
 spawnerCommandReachDistance: 6

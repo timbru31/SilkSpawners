@@ -34,10 +34,10 @@ public class Config extends AbstractConfiguration {
         config.addComment("eggDropChance", "", "# Percentage of dropping an egg when a spawner is mined");
         config.addDefault("silkDropChance", 100);
         config.addComment("silkDropChance", "", "# Percentage of dropping the spawner when mined");
-        config.addDefault("defaultCreature", 90);
+        config.addDefault("defaultCreature", "pig");
         config.addComment("defaultCreature", "",
                 "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)",
-                "# PIG (90) is Minecraft default (put NAMES or IDs here!)");
+                "PIG (90) is Minecraft default (put NAMES or IDs (for Minecraft <1.13 here!)");
         config.addDefault("spawnerCommandReachDistance", 6);
         config.addComment("spawnerCommandReachDistance", "", "# How far is the spawner reachable with your crosshair (disable with -1)");
         config.addDefault("minSilkTouchLevel", 1);
