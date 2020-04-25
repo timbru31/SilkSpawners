@@ -2,9 +2,11 @@ package de.dustplanet.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nullable;
@@ -57,6 +59,12 @@ public class SilkUtil {
      */
     @Getter
     private Map<String, String> displayNameToMobID = new ConcurrentHashMap<>();
+
+    /**
+     * List of enabled (and therefore) known entities.
+     */
+    @Getter
+    private List<String> knownEntities = new ArrayList<>();
 
     /**
      * Default (fallback) entityID, standard is the pig.
@@ -187,6 +195,9 @@ public class SilkUtil {
                 continue;
             }
 
+            // Add the known ID [we omit all disabled entities]
+            knownEntities.add(entityID);
+
             String displayName = plugin.getMobs().getString("creatures." + entityID + ".displayName");
             if (displayName == null) {
                 displayName = entityID;
@@ -197,14 +208,15 @@ public class SilkUtil {
             List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
             aliases.add(displayName.toLowerCase().replace(" ", ""));
             aliases.add(entityID.toLowerCase().replace(" ", ""));
+            Set<String> aliasSet = new HashSet<>(aliases);
 
-            for (String alias : aliases) {
+            for (String alias : aliasSet) {
                 displayNameToMobID.put(alias, entityID);
             }
 
             if (verbose) {
                 plugin.getLogger().info("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (display name: "
-                        + displayName + ", aliases: " + aliases + ")");
+                        + displayName + ", aliases: " + aliasSet + ")");
             }
         }
 
@@ -214,12 +226,9 @@ public class SilkUtil {
             String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase();
             // If we know the internal name
             if (displayNameToMobID.containsKey(defaultCreatureString)) {
-                // Get our entityID
-                String defaultEntityID = displayNameToMobID.get(defaultCreatureString);
-                // Change default
                 setDefaultEntityID(defaultEntityID);
                 if (verbose) {
-                    plugin.getLogger().info("Default monster spawner set to " + mobIDToDisplayName.get(defaultEntityID));
+                    plugin.getLogger().info("Default monster spawner set to " + defaultEntityID);
                 }
             } else {
                 // Unknown, fallback
@@ -574,7 +583,10 @@ public class SilkUtil {
     @SuppressWarnings("deprecation")
     @Nullable
     public String getCreatureName(String entity) {
-        String displayName = mobIDToDisplayName.get(entity);
+        String displayName = null;
+        if (mobIDToDisplayName != null) {
+            displayName = mobIDToDisplayName.get(entity);
+        }
         if (displayName == null) {
             EntityType entityType = EntityType.fromName(entity);
             if (entityType != null) {
@@ -630,7 +642,8 @@ public class SilkUtil {
             if (name == null || id == -1) {
                 continue;
             }
-            if (!entities.contains(name)) {
+            if (!entities.stream().anyMatch(name::equalsIgnoreCase)) {
+                System.err.println("adding " + name);
                 entities.add(name);
             }
         }
@@ -670,6 +683,7 @@ public class SilkUtil {
     public void clearAll() {
         displayNameToMobID.clear();
         mobIDToDisplayName.clear();
+        knownEntities.clear();
     }
 
     /**

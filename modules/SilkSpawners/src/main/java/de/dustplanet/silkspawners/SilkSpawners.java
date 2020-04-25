@@ -268,7 +268,7 @@ public class SilkSpawners extends JavaPlugin {
         }
 
         // For all our entities
-        for (String entityID : su.getMobIDToDisplayName().keySet()) {
+        for (String entityID : su.getKnownEntities()) {
             // If the mob is disabled, skip it
             if (!mobs.getBoolean("creatures." + entityID + ".enableCraftingSpawner", true)) {
                 if (verbose) {
@@ -443,7 +443,7 @@ public class SilkSpawners extends JavaPlugin {
         ShapedRecipe baseSpawnerRecipe = null;
         try {
             baseSpawnerRecipe = new ShapedRecipe(new NamespacedKey(this, "baseSpawner"), baseSpawnerItem);
-        } catch (Exception | Error e) {
+        } catch (@SuppressWarnings("unused") Exception | Error e) {
             // Legacy
             baseSpawnerRecipe = new ShapedRecipe(baseSpawnerItem);
         }

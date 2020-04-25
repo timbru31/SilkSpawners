@@ -336,8 +336,7 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Polar Bear
   polar_bear: *polar_bear
-  elder_guardian:
-    enable: true
+  elder_guardian: *guardian
   wither_skeleton:
     aliases:
       - witherskeleton

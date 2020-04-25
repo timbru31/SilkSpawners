@@ -76,7 +76,7 @@ public interface NMSProvider {
     @Deprecated
     default Material getSpawnEggMaterial() {
         Collection<Material> spawnEggs = this.getSpawnEggMaterials();
-        if (spawnEggs.size() == 1) {
+        if (spawnEggs.size() > 1) {
             throw new UnsupportedOperationException(
                     "Spawn egg is not determinable because there is more than one material, please use getSpawnEggMaterials() for v1.13+");
         }

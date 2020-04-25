@@ -37,7 +37,7 @@ public class Config extends AbstractConfiguration {
         config.addDefault("defaultCreature", "pig");
         config.addComment("defaultCreature", "",
                 "# When generic spawner items are placed, spawn this creature (e.g. from /give or other plugins)",
-                "PIG (90) is Minecraft default (put NAMES or IDs (for Minecraft <1.13 here!)");
+                "# PIG (90) is Minecraft default (put NAMES or IDs (for Minecraft <1.13 here!)");
         config.addDefault("spawnerCommandReachDistance", 6);
         config.addComment("spawnerCommandReachDistance", "", "# How far is the spawner reachable with your crosshair (disable with -1)");
         config.addDefault("minSilkTouchLevel", 1);
