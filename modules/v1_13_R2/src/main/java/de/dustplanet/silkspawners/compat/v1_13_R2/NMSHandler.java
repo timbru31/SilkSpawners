@@ -2,10 +2,13 @@ package de.dustplanet.silkspawners.compat.v1_13_R2;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -40,8 +43,9 @@ import net.minecraft.server.v1_13_R2.TileEntityMobSpawner;
 import net.minecraft.server.v1_13_R2.World;
 
 public class NMSHandler implements NMSProvider {
-
     private Field tileField;
+    private Collection<Material> spawnEggs = Arrays.stream(Material.values()).filter(material -> material.name().endsWith("_SPAWN_EGG"))
+            .collect(Collectors.toList());
 
     public NMSHandler() {
         try {
@@ -49,10 +53,9 @@ public class NMSHandler implements NMSProvider {
             tileField.setAccessible(true);
         } catch (SecurityException | NoSuchFieldException e) {
             try {
-                Class.forName("org.bukkit.craftbukkit.v1_13_R2.block.CraftBlockEntityState");
                 tileField = CraftBlockEntityState.class.getDeclaredField("snapshot");
                 tileField.setAccessible(true);
-            } catch (NoSuchFieldException | SecurityException | ClassNotFoundException e1) {
+            } catch (NoSuchFieldException | SecurityException e1) {
                 Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage() + " " + e1.getMessage());
                 e.printStackTrace();
                 e1.printStackTrace();
@@ -253,6 +256,11 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public ItemStack newEggItem(String entityID, int amount) {
+        Material spawnEgg = Material.matchMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
+        if (spawnEgg != null) {
+            return new ItemStack(spawnEgg, amount);
+        }
+
         ItemStack item = new ItemStack(Material.LEGACY_MONSTER_EGG, amount);
         net.minecraft.server.v1_13_R2.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
@@ -346,7 +354,7 @@ public class NMSHandler implements NMSProvider {
         ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
         ItemStack eggs;
-        if (itemInMainHand.getType() == Material.LEGACY_MONSTER_EGG) {
+        if (getSpawnEggMaterials().contains(itemInMainHand.getType())) {
             eggs = itemInMainHand;
             if (eggs.getAmount() == 1) {
                 player.getInventory().setItemInMainHand(null);
@@ -370,12 +378,12 @@ public class NMSHandler implements NMSProvider {
         PlayerInventory inv = player.getInventory();
         ItemStack mainHand = inv.getItemInMainHand();
         ItemStack offHand = inv.getItemInOffHand();
-        if ((mainHand.getType() == Material.LEGACY_MONSTER_EGG || mainHand.getType() == Material.SPAWNER)
-                && (offHand.getType() == Material.LEGACY_MONSTER_EGG || offHand.getType() == Material.SPAWNER)) {
+        if ((getSpawnEggMaterials().contains(mainHand.getType()) || mainHand.getType() == Material.SPAWNER)
+                && (getSpawnEggMaterials().contains(offHand.getType()) || offHand.getType() == Material.SPAWNER)) {
             return null; // not determinable
-        } else if (mainHand.getType() == Material.LEGACY_MONSTER_EGG || mainHand.getType() == Material.SPAWNER) {
+        } else if (getSpawnEggMaterials().contains(mainHand.getType()) || mainHand.getType() == Material.SPAWNER) {
             return mainHand;
-        } else if (offHand.getType() == Material.LEGACY_MONSTER_EGG || offHand.getType() == Material.SPAWNER) {
+        } else if (getSpawnEggMaterials().contains(offHand.getType()) || offHand.getType() == Material.SPAWNER) {
             return offHand;
         }
         return null;
@@ -386,12 +394,12 @@ public class NMSHandler implements NMSProvider {
         PlayerInventory inv = player.getInventory();
         ItemStack mainHand = inv.getItemInMainHand();
         ItemStack offHand = inv.getItemInOffHand();
-        if ((mainHand.getType() == Material.LEGACY_MONSTER_EGG || mainHand.getType() == Material.SPAWNER)
-                && (offHand.getType() == Material.LEGACY_MONSTER_EGG || offHand.getType() == Material.SPAWNER)) {
+        if ((getSpawnEggMaterials().contains(mainHand.getType()) || mainHand.getType() == Material.SPAWNER)
+                && (getSpawnEggMaterials().contains(offHand.getType()) || offHand.getType() == Material.SPAWNER)) {
             return; // not determinable
-        } else if (mainHand.getType() == Material.LEGACY_MONSTER_EGG || mainHand.getType() == Material.SPAWNER) {
+        } else if (getSpawnEggMaterials().contains(mainHand.getType()) || mainHand.getType() == Material.SPAWNER) {
             inv.setItemInMainHand(newItem);
-        } else if (offHand.getType() == Material.LEGACY_MONSTER_EGG || offHand.getType() == Material.SPAWNER) {
+        } else if (getSpawnEggMaterials().contains(offHand.getType()) || offHand.getType() == Material.SPAWNER) {
             inv.setItemInOffHand(newItem);
         }
     }
@@ -409,6 +417,11 @@ public class NMSHandler implements NMSProvider {
     @Override
     public Material getSpawnEggMaterial() {
         return Material.LEGACY_MONSTER_EGG;
+    }
+
+    @Override
+    public Collection<Material> getSpawnEggMaterials() {
+        return spawnEggs;
     }
 
 }

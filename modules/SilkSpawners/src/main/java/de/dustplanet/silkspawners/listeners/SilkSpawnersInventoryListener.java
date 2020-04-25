@@ -29,6 +29,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         su = util;
     }
 
+    @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
         if (event.getRecipe() == null || event.getRecipe().getResult() == null) {
@@ -42,7 +43,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         ItemStack result = event.getRecipe().getResult();
 
         for (ItemStack itemStack : event.getInventory().getContents()) {
-            if (itemStack.getType() == su.nmsProvider.getSpawnEggMaterial() && itemStack.getDurability() == 0) {
+            if (su.nmsProvider.getSpawnEggMaterials().contains(itemStack.getType()) && itemStack.getDurability() == 0) {
                 String entityID = su.getStoredEggEntityID(itemStack);
                 result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), result.getAmount(), true);
                 event.getInventory().setResult(result);

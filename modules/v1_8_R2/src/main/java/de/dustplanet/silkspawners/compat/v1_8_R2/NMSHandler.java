@@ -2,6 +2,8 @@ package de.dustplanet.silkspawners.compat.v1_8_R2;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -228,5 +230,10 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnerItemInHand(Player player, ItemStack newItem) {
         player.setItemInHand(newItem);
+    }
+
+    @Override
+    public Collection<Material> getSpawnEggMaterials() {
+        return Collections.singleton(Material.MONSTER_EGG);
     }
 }

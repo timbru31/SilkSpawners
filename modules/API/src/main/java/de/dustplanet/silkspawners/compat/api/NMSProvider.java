@@ -68,7 +68,15 @@ public interface NMSProvider {
         return Material.IRON_FENCE;
     }
 
+    @Deprecated
     default Material getSpawnEggMaterial() {
-        return Material.MONSTER_EGG;
+        Collection<Material> spawnEggs = this.getSpawnEggMaterials();
+        if (spawnEggs.size() == 1) {
+            throw new UnsupportedOperationException(
+                    "Spawn egg is not determinable because there is more than one material, please use getSpawnEggMaterials() for v1.13+");
+        }
+        return spawnEggs.iterator().next();
     }
+
+    Collection<Material> getSpawnEggMaterials();
 }

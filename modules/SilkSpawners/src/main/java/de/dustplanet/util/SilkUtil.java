@@ -516,7 +516,8 @@ public class SilkUtil {
             customName = "Monster Spawner";
         }
         // Please eggs or spawners
-        if (item == null || item.getType() != nmsProvider.getSpawnerMaterial() && item.getType() != nmsProvider.getSpawnEggMaterial()) {
+        if (item == null
+                || item.getType() != nmsProvider.getSpawnerMaterial() && !nmsProvider.getSpawnEggMaterials().contains(item.getType())) {
             return item;
         }
         ItemMeta meta = item.getItemMeta();
@@ -809,5 +810,15 @@ public class SilkUtil {
     public boolean isPluginEnabled(String _plugin) {
         Plugin pluginToCheck = plugin.getServer().getPluginManager().getPlugin(_plugin);
         return pluginToCheck != null && pluginToCheck.isEnabled();
+    }
+
+    /**
+     * Checks if there is only one spawn egg material. This means SilkSpawners is running pre Minecraft 1.13. Minecraft added own materials
+     * for all mobs in the 1.13 update. This effects for instance the egg crafting.
+     *
+     * @return the check result, true for pre 1.13 or false for 1.13 or newer
+     */
+    public boolean isLegacySpawnEggs() {
+        return nmsProvider.getSpawnEggMaterials().size() == 1;
     }
 }

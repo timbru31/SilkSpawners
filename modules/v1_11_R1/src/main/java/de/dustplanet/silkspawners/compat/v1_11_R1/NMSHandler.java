@@ -2,6 +2,8 @@ package de.dustplanet.silkspawners.compat.v1_11_R1;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -370,5 +372,10 @@ public class NMSHandler implements NMSProvider {
         } else if (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER) {
             inv.setItemInOffHand(newItem);
         }
+    }
+
+    @Override
+    public Collection<Material> getSpawnEggMaterials() {
+        return Collections.singleton(Material.MONSTER_EGG);
     }
 }

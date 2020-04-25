@@ -250,7 +250,7 @@ public class SpawnerCommand implements CommandExecutor {
 
             if (itemMaterial != null && itemMaterial == su.nmsProvider.getSpawnerMaterial()) {
                 handleChangeSpawner(player, entityID, mobName, itemInHand);
-            } else if (itemMaterial != null && itemMaterial == su.nmsProvider.getSpawnEggMaterial()) {
+            } else if (itemMaterial != null && su.nmsProvider.getSpawnEggMaterials().contains(itemMaterial)) {
                 handleChangeEgg(player, entityID, mobName, itemInHand);
             } else {
                 su.sendMessage(player,
