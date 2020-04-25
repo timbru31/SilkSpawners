@@ -26,9 +26,6 @@ import com.massivecraft.massivecore.ps.PS;
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerChangeEvent;
 import de.dustplanet.util.SilkUtil;
-import us.forseth11.feudal.core.Feudal;
-import us.forseth11.feudal.kingdoms.Kingdom;
-import us.forseth11.feudal.kingdoms.Land;
 
 /**
  * To show a chat message that a player is holding a mob spawner and it's type.
@@ -126,16 +123,6 @@ public class SilkSpawnersPlayerListener implements Listener {
                                     plugin.localization.getString("changingDeniedFactions")));
                             return;
                         }
-                    }
-                }
-                if (plugin.config.getBoolean("feudalSupport", false) && su.isPluginEnabled("Feudal")) {
-                    Land blockLand = new Land(block.getLocation());
-                    Kingdom blockKingdom = Feudal.getLandKingdom(blockLand);
-                    if (blockKingdom != null && !blockKingdom.isMember(player.getUniqueId().toString())) {
-                        event.setCancelled(true);
-                        su.sendMessage(player,
-                                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFeudal")));
-                        return;
                     }
                 }
 

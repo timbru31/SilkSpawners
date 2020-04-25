@@ -23,7 +23,6 @@ changedSpawner: '&2Pomyslnie zmieniono na spawner &e%creature% &2.'
  
 playerOffline: '&4Gracz jest niedostepny!'
 changingDeniedFactions: '&4Nie mozesz zmienic spawnerow innych graczy!'
-changindDeniedFeudal: '&4Nie mozesz zmienic spawnerow na terytorium innych graczy!'
 changingDeniedWorldGuard: '&4Zmiana spawnera zostala zabroniona przez ochrone WorldGuard.'
 getSpawnerType: '&2To jest spawner &e%creature% &2.'
 unknownArgument: '&4Nierozpoznana komenda. Wpisz &e/silkspawners help'

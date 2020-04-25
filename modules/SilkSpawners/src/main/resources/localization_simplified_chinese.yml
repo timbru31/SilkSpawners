@@ -26,7 +26,6 @@ changedSpawner: '&2已成功将刷怪笼更改为 &e%creature% 刷怪笼。'
  
 playerOffline: '&4很抱歉，此玩家不在线！'
 changingDeniedFactions: '&4您无法在其他人的领地里更改刷怪笼类型！'
-changingDeniedFeudal: '&4您无法在其他人的王国中更改刷怪笼类型！'
 changingDeniedWorldGuard: '&4刷怪笼类型修改被 WorldGuard 保护所拒绝。'
 getSpawnerType: '&2这是一个 &e%creature% 的刷怪笼&2.'
 unknownArgument: '&4未知参数。请输入 &e/ss help 获取帮助。'

@@ -22,7 +22,6 @@ changedSpawner: '&2Cambiato con successo lo spawner ad uno di &e%creature%'
  
 playerOffline: '&4Questo player non è online!'
 changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
-changingDeniedFeudal: '&4You are not allowed to change spawners in other peoples kingdom!'
 changingDeniedWorldGuard: '&4Cambio del tipo di spawner impedito dalla protezione di WorldGuard'
 getSpawnerType: '&2Questo è uno spawner di &e%creature%'
 unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'

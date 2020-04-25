@@ -121,8 +121,6 @@ public class Config extends AbstractConfiguration {
         config.addComment("vanillaBossBar", "", "# Configure displaying with 1.9 BossBarApi, time is in seconds");
         config.addDefault("factionsSupport", false);
         config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
-        config.addDefault("feudalSupport", false);
-        config.addComment("feudalSupport", "", "# Prevent that a spawner is changed via eggs in other kingdoms");
         config.addDefault("verboseConfig", false);
         config.addComment("verboseConfig", "", "# Puts more information out on startup");
         config.addDefault("useReflection", true);

@@ -150,15 +150,6 @@ public class SilkSpawners extends JavaPlugin {
                 saveConfig();
             }
         }
-        if (config.getBoolean("feudalSupport", false)) {
-            Plugin factionsPlugin = getServer().getPluginManager().getPlugin("Feudal");
-            if (factionsPlugin == null) {
-                getLogger().warning("Feudal support was enabled, but Feudal was not found.");
-                getLogger().warning("Disabling Feudal support in config.yml again");
-                config.set("feudalSupport", false);
-                saveConfig();
-            }
-        }
     }
 
     // If no config is found, copy the default one(s)!

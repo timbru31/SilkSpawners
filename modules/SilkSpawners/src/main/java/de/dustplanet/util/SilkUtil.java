@@ -130,7 +130,7 @@ public class SilkUtil {
      */
     private boolean setupNMSProvider() {
         String version = plugin.getNMSVersion();
-        
+
         // Rare cases might trigger API usage before SilkSpawners
         if (version == null) {
             String packageName = Bukkit.getServer().getClass().getPackage().getName();

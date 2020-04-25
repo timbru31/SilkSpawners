@@ -22,7 +22,6 @@ changedSpawner: '&2Canavar yaratıcısı başarı ile &e&creature%&2 olarak değ
  
 playerOffline: '&4Bu oyuncu çevrimdışı.'
 changingDeniedFactions: '&4Başka oyuncuların bölgesindeki yaratıcıları değiştirmeye yetkiniz yok!'
-changingDeniedFeudal: '&4Başka oyuncuların krallığındaki yaratıcıları değiştirmeye yetkiniz yok!'
 changingDeniedWorldGuard: '&4Canavar yaratıcısının değiştirilme işlemi WorldGuard tarafındna engellendi.'
 getSpawnerType: '&2Bu bir &e%creature%&2 yaratıcısı.'
 unknownArgument: '&4Tanımlanamayan argüman. Yardım için &e/silkspawners help&4 komutunu inceleyiniz.'

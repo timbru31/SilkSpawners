@@ -22,7 +22,6 @@ changedSpawner: '&2Changement avec succès du spawner en &e%creature% spawner.'
  
 playerOffline: '&4Désolé, ce joueur est hors-ligne'
 changingDeniedFactions: '&4Tu ne peux pas changer le spawner dans le claim d''une autre personne!'
-changindDeniedFeudal: '&4Tu ne peux pas changer le spawner dans le royaume d''une autre personne!'
 changingDeniedWorldGuard: '&4le changement du type de spawner a été refusé par WorldGuard.'
 getSpawnerType: '&2C''est un(e)&e%creature% spawner&2.'
 unknownArgument: '&4Erreur 404 !. Voir &e/silkspawners aide'
