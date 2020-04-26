@@ -77,7 +77,7 @@
     <dependency>
       <groupId>net.gravitydevelopment.updater</groupId>
       <artifactId>updater</artifactId>
-      <version>4.0.0</version>
+      <version>4.1.1</version>
     </dependency>
     <dependency>
       <groupId>me.confuser</groupId>
@@ -254,6 +254,7 @@
                   <include>de.dustplanet:SilkSpawners*</include>
                   <include>org.bstats:*</include>
                   <include>net.gravitydevelopment.updater:updater</include>
+                  <include>com.vdurmont:semver4j</include>
                 </includes>
                 <excludes>
                   <exclude>de.dustplanet.silkspawners:SilkSpawners-API</exclude>

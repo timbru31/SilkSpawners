@@ -99,10 +99,14 @@ public class SilkSpawners extends JavaPlugin {
             if (getDescription().getVersion().contains("SNAPSHOT")) {
                 getLogger().info("AutoUpdater is disabled because you are running a dev build!");
             } else {
-                // Updater https://bukkit.org/threads96681/
-                updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, true);
-                getLogger().info("AutoUpdater is enabled.");
-                getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
+                try {
+                    // Updater https://bukkit.org/threads96681/
+                    updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, true);
+                    getLogger().info("AutoUpdater is enabled.");
+                    getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
+                } catch (Exception e) {
+                    getLogger().info("Error while auto updating: " + e.getMessage());
+                }
             }
         } else {
             getLogger().info("AutoUpdater is disabled due to config setting.");
