@@ -298,7 +298,7 @@ Please follow the Sun Coding Guidelines, thanks!
 
 ## Usage statistics
 
-_stats images are returning soon!_
+[![Usage statistics](https://bstats.org/signatures/bukkit/SilkSpawners.svg)](https://bstats.org/plugin/bukkit/SilkSpawners/273)
 
 ## Data usage collection of bStats
 
