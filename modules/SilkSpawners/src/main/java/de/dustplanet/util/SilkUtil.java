@@ -592,7 +592,6 @@ public class SilkUtil {
      * @return the displayname of the mob
      */
     @SuppressWarnings("deprecation")
-    @Nullable
     public String getCreatureName(String entity) {
         String displayName = null;
         if (mobIDToDisplayName != null) {
@@ -610,7 +609,7 @@ public class SilkUtil {
                 displayName = entity;
             }
         }
-        return displayName;
+        return displayName != null ? displayName : "???";
     }
 
     /**
