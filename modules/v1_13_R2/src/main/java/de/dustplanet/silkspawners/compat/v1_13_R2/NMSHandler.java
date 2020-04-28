@@ -120,7 +120,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnersUnstackable() {
         try {
-            Item spawner = Item.getById(SPAWNER_ID);
+            Item spawner = IRegistry.ITEM.get(new MinecraftKey(NAMESPACED_SPAWNER_ID));
             Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
             maxStackSize.setAccessible(true);
             maxStackSize.set(spawner, 1);
@@ -308,12 +308,15 @@ public class NMSHandler implements NMSProvider {
         NBTTagCompound tag = itemStack.getTag();
 
         if (tag == null || !tag.hasKey("EntityTag")) {
-            return null;
-        }
-
-        tag = tag.getCompound("EntityTag");
-        if (tag.hasKey("id")) {
-            return tag.getString("id").replace("minecraft:", "");
+            MinecraftKey vanillaKey = IRegistry.ITEM.getKey(itemStack.getItem());
+            if (vanillaKey != null) {
+                return vanillaKey.getKey().replace("minecraft:", "").replace("_spawn_egg", "");
+            }
+        } else {
+            tag = tag.getCompound("EntityTag");
+            if (tag.hasKey("id")) {
+                return tag.getString("id").replace("minecraft:", "");
+            }
         }
         return null;
     }

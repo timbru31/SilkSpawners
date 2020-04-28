@@ -593,6 +593,9 @@ public class SilkUtil {
      */
     @SuppressWarnings("deprecation")
     public String getCreatureName(String entity) {
+        if (entity == null) {
+            return "???";
+        }
         String displayName = null;
         if (mobIDToDisplayName != null) {
             try {
@@ -609,7 +612,7 @@ public class SilkUtil {
                 displayName = entity;
             }
         }
-        return displayName != null ? displayName : "???";
+        return displayName;
     }
 
     /**
