@@ -739,6 +739,16 @@ public class SilkUtil {
     }
 
     /**
+     * Lookup if the mob is known.
+     *
+     * @param entityID the official internal name of the mob
+     * @return the result, true of false
+     */
+    public boolean isKnownEntityID(String entityID) {
+        return knownEntities.contains(entityID);
+    }
+
+    /**
      * Check if the given string is a number.
      *
      * @param number to check
