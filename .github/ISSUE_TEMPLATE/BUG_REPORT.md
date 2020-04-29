@@ -1,3 +1,8 @@
+---
+name: 🐛 - Bug report
+about: Something's broken and you want to report it
+---
+
 ## What steps will reproduce the problem?
 
 ## Expected output
