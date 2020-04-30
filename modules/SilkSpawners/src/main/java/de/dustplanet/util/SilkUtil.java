@@ -350,7 +350,7 @@ public class SilkUtil {
         ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount);
         ItemMeta meta = item.getItemMeta();
 
-        if (!spawnerName.equalsIgnoreCase("Monster Spawner")) {
+        if (!"Monster Spawner".equalsIgnoreCase(spawnerName)) {
             meta.setDisplayName(
                     ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(targetEntityID)));
         }

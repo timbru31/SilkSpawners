@@ -410,7 +410,8 @@ public class SilkSpawners extends JavaPlugin {
                     Material material = Material.matchMaterial(ingredients[1]);
                     // Failed!
                     if (material == null) {
-                        getLogger().info("shape material " + ingredients[1] + " of " + entityID + " matched null");
+                        getLogger()
+                                .info("shape material " + ingredients[1] + " of " + entityID + " matched null, falling back to IRON_BARS");
                         material = su.nmsProvider.getIronFenceMaterial();
                     }
                     recipe.setIngredient(character, material);
@@ -433,7 +434,16 @@ public class SilkSpawners extends JavaPlugin {
                 }
             } finally {
                 // Add it
-                getServer().addRecipe(recipe);
+                try {
+                    boolean recipeAdded = getServer().addRecipe(recipe);
+                    if (!recipeAdded && verbose) {
+                        getLogger().info("Unable to add recipe of " + entityID);
+                    }
+                } catch (IllegalStateException e) {
+                    if (verbose) {
+                        getLogger().info("Unable to add recipe of " + entityID + ": " + e.getMessage());
+                    }
+                }
             }
         }
     }
