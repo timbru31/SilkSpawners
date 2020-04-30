@@ -149,6 +149,13 @@ public class NMSHandler implements NMSProvider {
             return null;
         }
 
+        String prefixedEntity;
+        if (!entity.startsWith("minecraft:")) {
+            prefixedEntity = "minecraft:" + entity;
+        } else {
+            prefixedEntity = entity;
+        }
+
         net.minecraft.server.v1_13_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
@@ -172,33 +179,25 @@ public class NMSHandler implements NMSProvider {
             tag.set("BlockEntityTag", new NBTTagCompound());
         }
 
+        tag = tag.getCompound("BlockEntityTag");
+
         // EntityId - Deprecated in 1.9
-        tag.getCompound("BlockEntityTag").setString("EntityId", entity);
+        tag.setString("EntityId", entity);
+        tag.setString("id", TileEntityTypes.a(TileEntityTypes.j).getKey());
 
         // SpawnData
         if (!tag.hasKey("SpawnData")) {
             tag.set("SpawnData", new NBTTagCompound());
         }
-        tag.getCompound("SpawnData").setString("id", entity);
+        tag.getCompound("SpawnData").setString("id", prefixedEntity);
 
-        if (!tag.getCompound("BlockEntityTag").hasKey("SpawnData")) {
-            tag.getCompound("BlockEntityTag").set("SpawnData", new NBTTagCompound());
-        }
-        tag.getCompound("BlockEntityTag").getCompound("SpawnData").setString("id", entity);
-
-        if (!tag.getCompound("BlockEntityTag").hasKey("SpawnPotentials")) {
-            tag.getCompound("BlockEntityTag").set("SpawnPotentials", new NBTTagCompound());
+        if (!tag.hasKey("SpawnPotentials")) {
+            tag.set("SpawnPotentials", new NBTTagCompound());
         }
 
         // SpawnEgg data
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
-        }
-        String prefixedEntity;
-        if (!entity.startsWith("minecraft:")) {
-            prefixedEntity = "minecraft:" + entity;
-        } else {
-            prefixedEntity = entity;
         }
         tag.getCompound("EntityTag").setString("id", prefixedEntity);
 
