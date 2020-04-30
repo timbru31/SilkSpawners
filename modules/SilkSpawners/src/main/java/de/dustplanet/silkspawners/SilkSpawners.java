@@ -273,6 +273,7 @@ public class SilkSpawners extends JavaPlugin {
 
         // For all our entities
         for (String entityID : su.getKnownEntities()) {
+            boolean skip = false;
             // If the mob is disabled, skip it
             if (!mobs.getBoolean("creatures." + entityID + ".enableCraftingSpawner", true)) {
                 if (verbose) {
@@ -300,7 +301,7 @@ public class SilkSpawners extends JavaPlugin {
             ShapedRecipe recipe = null;
             try {
                 recipe = new ShapedRecipe(new NamespacedKey(this, entityID), spawnerItem);
-            } catch (Exception | Error e) {
+            } catch (@SuppressWarnings("unused") Exception | Error e) {
                 recipe = new ShapedRecipe(spawnerItem);
             }
 
@@ -355,6 +356,7 @@ public class SilkSpawners extends JavaPlugin {
                 } else {
                     // No list what we should use -> not adding
                     if (!config.contains("ingredients")) {
+                        skip = true;
                         continue;
                     }
                     ingredientsList = config.getStringList("ingredients");
@@ -362,6 +364,7 @@ public class SilkSpawners extends JavaPlugin {
 
                 // Security first
                 if (ingredientsList == null || ingredientsList.isEmpty()) {
+                    skip = true;
                     continue;
                 }
 
@@ -385,6 +388,7 @@ public class SilkSpawners extends JavaPlugin {
                             if (verbose) {
                                 getLogger().info("could not find egg material for " + entityID);
                             }
+                            skip = true;
                             continue;
                         }
                         recipe.setIngredient('X', material);
@@ -397,6 +401,7 @@ public class SilkSpawners extends JavaPlugin {
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
                         getLogger().info("ingredient length of " + entityID + " invalid: " + ingredients.length);
+                        skip = true;
                         continue;
                     }
                     // Maybe they put a string in here, so first position and uppercase
@@ -404,6 +409,7 @@ public class SilkSpawners extends JavaPlugin {
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(shape, character)) {
                         getLogger().info("shape of " + entityID + " does not contain " + character);
+                        skip = true;
                         continue;
                     }
                     // We try to get the material (ID or name)
@@ -428,6 +434,7 @@ public class SilkSpawners extends JavaPlugin {
                     Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                     if (material == null) {
                         getLogger().info("could not find egg material for " + entityID);
+                        skip = true;
                         continue;
                     }
                     recipe.setIngredient('X', material);
@@ -435,9 +442,11 @@ public class SilkSpawners extends JavaPlugin {
             } finally {
                 // Add it
                 try {
-                    boolean recipeAdded = getServer().addRecipe(recipe);
-                    if (!recipeAdded && verbose) {
-                        getLogger().info("Unable to add recipe of " + entityID);
+                    if (!skip) {
+                        boolean recipeAdded = getServer().addRecipe(recipe);
+                        if (verbose) {
+                            getLogger().info("Recipe of " + entityID + " added: " + recipeAdded);
+                        }
                     }
                 } catch (IllegalStateException e) {
                     if (verbose) {
@@ -473,6 +482,7 @@ public class SilkSpawners extends JavaPlugin {
 
         // Security first
         if (baseSpawnerIngredientsList != null && !baseSpawnerIngredientsList.isEmpty()) {
+            boolean skip = false;
             try {
                 List<String> baseSpawnerShape = Arrays.asList(baseSpawnerRecipe.getShape());
                 // We have an ingredient that is not in our shape. Ignore it then
@@ -488,6 +498,7 @@ public class SilkSpawners extends JavaPlugin {
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
                         getLogger().info("ingredient length of default invalid: " + ingredients.length);
+                        skip = true;
                         continue;
                     }
                     // Maybe they put a string in here, so first position and uppercase
@@ -495,6 +506,7 @@ public class SilkSpawners extends JavaPlugin {
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(baseSpawnerShape, character)) {
                         getLogger().info("shape of default does not contain " + character);
+                        skip = true;
                         continue;
                     }
                     // We try to get the material (ID or name)
@@ -516,7 +528,9 @@ public class SilkSpawners extends JavaPlugin {
                 baseSpawnerRecipe.setIngredient('B', su.nmsProvider.getSpawnEggMaterial());
             } finally {
                 // Add it
-                getServer().addRecipe(baseSpawnerRecipe);
+                if (!skip) {
+                    getServer().addRecipe(baseSpawnerRecipe);
+                }
             }
         }
     }
