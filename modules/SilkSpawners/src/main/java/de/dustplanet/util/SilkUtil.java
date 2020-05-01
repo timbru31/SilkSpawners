@@ -869,9 +869,9 @@ public class SilkUtil {
             RegionContainer regionContainer = instance.getPlatform().getRegionContainer();
             RegionQuery query = regionContainer.createQuery();
             return query.testBuild(BukkitAdapter.adapt(location), wg.wrapPlayer(player), Flags.BUILD);
-        } catch (@SuppressWarnings("unused") Exception e) {
+        } catch (@SuppressWarnings("unused") Exception | NoClassDefFoundError e) {
             try {
-                wg.getClass().getDeclaredMethod("canBuild", Player.class, Location.class).invoke(wg, player, location);
+                return (boolean) wg.getClass().getDeclaredMethod("canBuild", Player.class, Location.class).invoke(wg, player, location);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                     | SecurityException e1) {
                 e1.printStackTrace();

@@ -457,6 +457,7 @@ public class SilkSpawners extends JavaPlugin {
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void loadBaseEggRecipe() {
         // Add "base" recipe for eggs containing no durability (not from SilkSpawners)
         // 1.9 deprecated the durability and uses NBT tags
