@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
+import com.google.common.base.CaseFormat;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -213,6 +214,8 @@ public class SilkUtil {
             aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
             aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", ""));
             aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace("_", ""));
+            aliases.add(CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, entityID));
             if (bukkitEntity != null) {
                 aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", ""));
                 aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", "_"));
