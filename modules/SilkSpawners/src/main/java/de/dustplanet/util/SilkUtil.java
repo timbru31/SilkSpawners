@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -208,9 +209,14 @@ public class SilkUtil {
             mobIDToDisplayName.put(entityID, displayName);
 
             List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
-            aliases.add(displayName.toLowerCase().replace(" ", ""));
-            aliases.add(entityID.toLowerCase().replace(" ", ""));
-            aliases.add(entityID);
+            aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", ""));
+            aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", ""));
+            aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            if (bukkitEntity != null) {
+                aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", ""));
+                aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            }
             Set<String> aliasSet = new HashSet<>(aliases);
 
             for (String alias : aliasSet) {
