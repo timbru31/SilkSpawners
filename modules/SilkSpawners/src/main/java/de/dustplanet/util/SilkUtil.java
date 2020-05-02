@@ -210,8 +210,8 @@ public class SilkUtil {
 
             List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
             aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", ""));
-            aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", ""));
-            aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
+            aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", ""));
             aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
             if (bukkitEntity != null) {
                 aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", ""));
