@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
@@ -56,13 +56,13 @@ public class SilkUtil {
      * This HashMap is holding the internal Minecraft name of each mob and the display name of each mob.
      */
     @Getter
-    private Map<String, String> mobIDToDisplayName = new ConcurrentHashMap<>();
+    private Map<String, String> mobIDToDisplayName = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * This HashMap is holding the display name and aliases of each mob and the internal Minecraft name.
      */
     @Getter
-    private Map<String, String> displayNameToMobID = new ConcurrentHashMap<>();
+    private Map<String, String> displayNameToMobID = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * List of enabled (and therefore) known entities.
@@ -352,6 +352,7 @@ public class SilkUtil {
         if (targetEntityID == null) {
             targetEntityID = entityID;
         }
+
         String spawnerName = customName;
         if (customName == null || customName.isEmpty()) {
             spawnerName = "Monster Spawner";
@@ -660,7 +661,7 @@ public class SilkUtil {
      */
     public List<String> scanEntityMap() {
         List<String> entities = nmsProvider.rawEntityMap();
-        // Legacy support, this will add the IDs as aliaes
+        // Legacy support, this will add the IDs as aliases
         if (entities == null) {
             SortedMap<Integer, String> legacyRawEntityMap = nmsProvider.legacyRawEntityMap();
             entities = new ArrayList<>(legacyRawEntityMap.values());
