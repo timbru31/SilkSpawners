@@ -80,8 +80,6 @@ public class Config extends AbstractConfiguration {
         config.addComment("consumeEgg", "", "# Should the egg be consumed when the spawner is changed with it");
         config.addDefault("enableCreatureDefault", true);
         config.addComment("enableCreatureDefault", "", "# Fallback if the creature should be enabled, if not specified for the entity");
-        config.addDefault("ignoreCheckNumbers", false);
-        config.addComment("ignoreCheckNumbers", "", "# Should numbers be ignored (on eggs) and allow every number value?");
         config.addDefault("disableChangeTypeWithEgg", false);
         config.addComment("disableChangeTypeWithEgg", "",
                 "# Disable left click to change spawners, spawns a mob instead. Still blocks Vanilla right click behavior.");
