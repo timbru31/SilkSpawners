@@ -4,8 +4,8 @@
 [![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
 [![Build the plugin](https://github.com/timbru31/SilkSpawners/workflows/Build%20the%20plugin/badge.svg)](https://github.com/timbru31/SilkSpawners/actions?query=workflow%3A%22Build+the+plugin%22)
 
-[![BukkitDev](https://img.shields.io/badge/BukkitDev-v6.0.0-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
-[![SpigotMC](https://img.shields.io/badge/SpigotMC-v6.0.0-orange.svg)](https://www.spigotmc.org/resources/7811/)
+[![BukkitDev](https://img.shields.io/badge/BukkitDev-v6.0.1-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
+[![SpigotMC](https://img.shields.io/badge/SpigotMC-v6.0.1-orange.svg)](https://www.spigotmc.org/resources/7811/)
 
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
 
@@ -210,12 +210,12 @@ Aliases:
 |                  Command                  |                         Description                          |
 | :---------------------------------------: | :----------------------------------------------------------: |
 |                 /ss help                  |                   Displays the help menu.                    |
-|             /ss list&#124;all             |              Displays all available creatures.               |
-|            /ss view&#124;info             |        Displays information about the viewed spawner.        |
-|            /ss reload&#124;rl             |               Reloads the configuration files.               |
-|       /ss change&#124;set <newMob>        | Changes the spawner you are currently holding or viewing at. |
-| /ss give&#124;add <player> <mob> [amount] |  Gives a spawner or egg to the player. Amount is optional.   |
-|     /ss selfget&#124;i <mob> [amount]     |      Gives a spawner or egg to you. Amount is optional.      |
+|               /ss list\|all               |              Displays all available creatures.               |
+|              /ss view\|info               |        Displays information about the viewed spawner.        |
+|              /ss reload\|rl               |               Reloads the configuration files.               |
+|        /ss change\|set \<newMob\>         | Changes the spawner you are currently holding or viewing at. |
+| /ss give\|add \<player\> \<mob\> [amount] |  Gives a spawner or egg to the player. Amount is optional.   |
+|      /ss selfget\|i \<mob\> [amount]      |      Gives a spawner or egg to you. Amount is optional.      |
 
 ## Permissions
 
