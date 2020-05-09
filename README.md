@@ -287,7 +287,11 @@ Aliases:
 
 ## Support
 
-For support visit the [Bukkit](https://dev.bukkit.org/projects/silkspawners) page or open an [issue](https://github.com/timbru31/SilkSpawners/issues/new)
+For support visit the [Bukkit](https://dev.bukkit.org/projects/silkspawners) page, the [SpigotMC](https://www.spigotmc.org/threads/69882/) thread or ask on [Discord](https://discord.gg/EZbr6Ks)!
+
+## Reporting Bugs
+
+Please open an [issue](https://github.com/timbru31/SilkSpawners/issues/new) and make sure to follow the issue template!
 
 ## Pull Requests
 
