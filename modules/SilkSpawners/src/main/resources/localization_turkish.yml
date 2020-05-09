@@ -51,7 +51,7 @@ help: |-
   '&7------&6SilkSpawners v%version% Yardım Menüsü&7------'
   '&e/ss help &7- &2Yardım menüsünü gösterir.'
   '&e/ss list|all &7- &2Tüm uygun canavarları gösterir.'
-  '&e/ss view &7- &2Bakılan yaratıcının bilgilerini gösterir.'
+  '&e/ss view|info &7- &2Bakılan yaratıcının bilgilerini gösterir.'
   '&e/ss reload|rl &7- &2Ayar dosyalarının yeniden yüklenmesini sağlar.'
   '&e/ss change <canavar> &7- &2Tuttuğunuz veya baktığınız canavar yaratıcısının türünü değiştirir.'
   '&e/ss give|add <oyuncu> <canavar> [miktar] &7- &2Oyuncuya yaratıcı veya yumurta verir. (Miktar isteğe bağlıdır.)'

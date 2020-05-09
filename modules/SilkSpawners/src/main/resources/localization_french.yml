@@ -49,7 +49,7 @@ help: |-
   '&7------&6SilkSpawners v%version% Menu d''aide&7------'
   '&e/ss help &7- &2Affiche les menus'
   '&e/ss list|all &7- &2Affiche toutes les céatures'
-  '&e/ss view &7- &2Affiche les informations sur un spawner'
+  '&e/ss view|info &7- &2Affiche les informations sur un spawner'
   '&e/ss reload|rl &7- &2Reload les configurations'
   '&e/ss change <newMob> &7- &2Change le spawner que tu es actuellement en train de regarder'
   '&e/ss give|add <player> <mob> [amount] &7- &2Bonne un spawner ou des oeufs à un joueur. Nomtant optionnel'

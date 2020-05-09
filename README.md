@@ -211,7 +211,7 @@ Aliases:
 | :---------------------------------------: | :----------------------------------------------------------: |
 |                 /ss help                  |                   Displays the help menu.                    |
 |             /ss list&#124;all             |              Displays all available creatures.               |
-|                 /ss view                  |        Displays information about the viewed spawner.        |
+|            /ss view&#124;info             |        Displays information about the viewed spawner.        |
 |            /ss reload&#124;rl             |               Reloads the configuration files.               |
 |       /ss change&#124;set <newMob>        | Changes the spawner you are currently holding or viewing at. |
 | /ss give&#124;add <player> <mob> [amount] |  Gives a spawner or egg to the player. Amount is optional.   |

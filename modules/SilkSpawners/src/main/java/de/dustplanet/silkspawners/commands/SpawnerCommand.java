@@ -44,6 +44,7 @@ public class SpawnerCommand implements CommandExecutor {
                     case "rl":
                         handleReload(sender);
                         break;
+                    case "info":
                     case "view":
                         handleView(sender);
                         break;

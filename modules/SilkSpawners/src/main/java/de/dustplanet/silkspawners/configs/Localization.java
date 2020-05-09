@@ -66,7 +66,7 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("help",
                 "&7------&6SilkSpawners v%version% Help Menu&7------\n" + "&e/ss help &7- &2Displays the help menu.\n"
                         + "&e/ss list|all &7- &2Displays all available creatures.\n"
-                        + "&e/ss view &7- &2Displays information about the viewed spawner.\n"
+                        + "&e/ss view|info &7- &2Displays information about the viewed spawner.\n"
                         + "&e/ss reload|rl &7- &2Reloads the configuration files\n"
                         + "&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.\n"
                         + "&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional");

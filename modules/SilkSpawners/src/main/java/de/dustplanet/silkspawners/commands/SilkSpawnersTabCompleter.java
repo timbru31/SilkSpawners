@@ -19,7 +19,7 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SilkSpawnersTabCompleter implements TabCompleter {
-    private String[] commands = { "add", "all", "change", "give", "help", "list", "reload", "rl", "set", "view" };
+    private String[] commands = { "add", "all", "change", "give", "help", "list", "reload", "rl", "set", "view", "info" };
     private SilkUtil su;
 
     public SilkSpawnersTabCompleter(SilkUtil util) {

@@ -49,7 +49,7 @@ help: |-
   '&7------&6SilkSpawners v%version% Hilfe&7------'
   '&e/ss help &7- &2Zeigt diese Hilfe.'
   '&e/ss list|all &7- &2Zeigt alle Kreaturen.'
-  '&e/ss view &7- &2Zeigt informationen über den angeschauten Spawner.'
+  '&e/ss view|info &7- &2Zeigt informationen über den angeschauten Spawner.'
   '&e/ss reload|rl &7- &2Lädt die Konfiguration neu.'
   '&e/ss change <newMob> &7- &2Ändert den Spawner in der Hand oder in Sicht.'
   '&e/ss give|add <spieler> <mob> [anzahl] &7- &2Gibt dem Spieler ein Ei oder Spawner. Anzahl ist optional.'

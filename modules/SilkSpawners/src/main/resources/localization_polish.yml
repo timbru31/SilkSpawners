@@ -49,7 +49,7 @@ help: |-
   '&7------&6SilkSpawner v%version% Pomoc&7------'
   '&e/ss help &7- &2Wyswiela ta pomoc.'
   '&e/ss list|all &7- &2Wyswietla wszystkie dostepne potwory.'
-  '&e/ss view &7- &2Wyswietla informacje o spawnerze na ktory patrzysz.'
+  '&e/ss view|info &7- &2Wyswietla informacje o spawnerze na ktory patrzysz.'
   '&e/ss reload|rl &7- &2Przeladowanie pliku konfiguracyjnego.'
   '&e/ss change <newMob> &7- &2Zmiana rodzaju spawnera, ktory trzymasz lub na ktory patrzysz.'
   '&e/ss give|add <player> <mob> [amount] &7- &2Daj graczowi spawner lub jajko potworow. Amount jest opcjonalne'

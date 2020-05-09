@@ -50,7 +50,7 @@ help: |-
   '&7------&6Menu de Ajuda SilkSpawners v%version%7------'
   '&e/ss help &7- &2Mostra o menu de ajuda.'
   '&e/ss list|all &7- &2Mostra todas as criaturas disponíveis.'
-  '&e/ss view &7- &2Mostra informação sobre o spawner observado.'
+  '&e/ss view|info &7- &2Mostra informação sobre o spawner observado.'
   '&e/ss reload|rl &7- &2Recarrega os arquivos de configuração.'
   '&e/ss change <newMob> &7- &2Muda o gerador que você está olhando ou segurando.'
   '&e/ss give|add <player> <mob> [amount] &7- &2Dá um gerador ou ovo de geração a um jogador.Quantidade é opcional.'
