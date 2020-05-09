@@ -1,5 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
+import java.util.Locale;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -95,7 +97,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 }
 
                 // Mob
-                String mobName = su.getCreatureName(entityID).toLowerCase().replace(" ", "");
+                String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
 
                 if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
                     su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',

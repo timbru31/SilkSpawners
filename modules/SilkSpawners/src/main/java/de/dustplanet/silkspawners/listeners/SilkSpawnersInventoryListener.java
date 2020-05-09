@@ -1,5 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
+import java.util.Locale;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -73,7 +75,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         }
         String creatureName = su.getCreatureName(entityID);
 
-        String spawnerName = creatureName.toLowerCase().replace(" ", "");
+        String spawnerName = creatureName.toLowerCase(Locale.ENGLISH).replace(" ", "");
         if (!player.hasPermission("silkspawners.craft." + spawnerName)) {
             event.setCancelled(true);
             su.sendMessage(player,

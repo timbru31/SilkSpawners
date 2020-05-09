@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
@@ -174,6 +175,7 @@ public class SilkSpawners extends JavaPlugin {
         loadPermissions("craft", "Allows you to craft the specific spawner", PermissionDefault.FALSE);
         loadPermissions("place", "Allows you to place the specific spawner", PermissionDefault.FALSE);
         loadPermissions("silkdrop", "Allows you to use silk touch to acquire mob spawner items", PermissionDefault.FALSE);
+        loadPermissions("nosilk", "Allows you to use any tool to acquire mob spawner items", PermissionDefault.FALSE);
         loadPermissions("destroydrop", "Allows you to destroy mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)",
                 PermissionDefault.FALSE);
         loadPermissions("changetype", "Allows you to change the spawner type using /spawner [creature]", PermissionDefault.FALSE);
@@ -188,7 +190,7 @@ public class SilkSpawners extends JavaPlugin {
     private void loadPermissions(String permissionPart, String description, PermissionDefault permDefault) {
         HashMap<String, Boolean> childPermissions = new HashMap<>();
         for (String mobAlias : su.getDisplayNameToMobID().keySet()) {
-            mobAlias = mobAlias.toLowerCase().replace(" ", "");
+            mobAlias = mobAlias.toLowerCase(Locale.ENGLISH).replace(" ", "");
             childPermissions.put("silkspawners." + permissionPart + "." + mobAlias, true);
         }
         Permission perm = new Permission("silkspawners." + permissionPart + ".*", description, permDefault, childPermissions);

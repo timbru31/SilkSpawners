@@ -61,7 +61,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
     private ArrayList<String> addMobs(String mob) {
         ArrayList<String> results = new ArrayList<>();
         for (String displayName : su.getDisplayNameToMobID().keySet()) {
-            displayName = displayName.toLowerCase().replace(" ", "");
+            displayName = displayName.toLowerCase(Locale.ENGLISH).replace(" ", "");
             if (displayName.startsWith(mob)) {
                 results.add(displayName);
             }
@@ -72,7 +72,7 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
     private ArrayList<String> addPlayers(String playerString) {
         ArrayList<String> results = new ArrayList<>();
         for (Player player : su.nmsProvider.getOnlinePlayers()) {
-            String displayName = player.getName().toLowerCase().replace(" ", "");
+            String displayName = player.getName().toLowerCase(Locale.ENGLISH).replace(" ", "");
             if (displayName.startsWith(playerString)) {
                 results.add(player.getName());
             }

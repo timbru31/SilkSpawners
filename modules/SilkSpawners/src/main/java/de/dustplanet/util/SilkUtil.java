@@ -235,7 +235,7 @@ public class SilkUtil {
         // Should we use something else as the default?
         if (plugin.getConfig().contains("defaultCreature")) {
             // Lowercase is better to search
-            String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase();
+            String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase(Locale.ENGLISH);
             // If we know the internal name
             if (displayNameToMobID.containsKey(defaultCreatureString)) {
                 setDefaultEntityID(defaultEntityID);

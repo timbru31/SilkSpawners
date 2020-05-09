@@ -25,6 +25,7 @@ permissions:
       silkspawners.editshop: true
       silkspawners.use.*: true
       silkspawners.silkdrop.*: true
+      silkspawners.nosilk.*: true
       silkspawners.destroydrop.*: true
       silkspawners.changetype.*: true
       silkspawners.changetypewithegg.*: true

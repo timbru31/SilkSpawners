@@ -256,7 +256,9 @@ Aliases:
 |     silkspawners.destroydrop.\*     |  true   |     Allows you to destroy all mob spawners to acquire mob spawn eggs / iron bars / XP (as configured)     |
 | silkspawners.destroydrop._creature_ |  true   | Allows you to destroy mob a _creature_ spawner to acquire mob spawn eggs / iron bars / XP (as configured) |
 |      silkspawners.silkdrop.\*       |  true   |                       Allows you to use silk touch to acquire all mob spawner items                       |
-|  silkspawners.silkdrop._creature_   |  true   |                   Allows you to use silk touch to acquire a _creautre_ mob spawner item                   |
+|  silkspawners.silkdrop._creature_   |  true   |                   Allows you to use silk touch to acquire a _creature_ mob spawner item                   |
+|       silkspawners.nosilk.\*        |  false  |                        Allows you to use any tool to acquire all mob spawner items                        |
+|   silkspawners.nosilk._creature_    |  false  |                     Allows you to use any tool to acquire a _creature_ spawner items                      |
 
 #### Changing spawners
 
