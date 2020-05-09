@@ -1,12 +1,12 @@
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Succesvol &e%amount% %creature% spawn egg(s) &2aan jou inventory toegevoegd.'
 addedEggOtherPlayer: '&2Succesvol &e%amount% %creature% spawn egg(s) &2aan &e%player%&2''s inventory toegevoegd.'
 addedSpawner: '&2Succesvol &e%amount% %creature% spawner(s) &2aan jou inventory toegevoegd.'
 addedSpawnerOtherPlayer: '&2Succesvol &e%amount% %creature% spawner(s) &2aan &e%player%&2''s inventory toegevoegd.'
 noFreeSlot: '&4Er is geen slot vrij in je inventory!'
- 
+
 noPermission: '&4Je hebt niet de juiste permissie om dit commando uit te voeren!'
 noPermissionChangingEgg: '&4Je hebt niet de juiste permissie om spawn eggs te veranderen met /egg!'
 noPermissionChangingSpawner: '&4Je hebt niet de juiste permissie om spawners te veranderen met /spawner!'
@@ -16,10 +16,10 @@ noPermissionViewType: '&4Je hebt niet de juiste permissie om het type van de spa
 noPermissionChangingWithEggs: '&4Je hebt niet de juiste permissie om spawners te veranderen met spawn eggs!'
 noPermissionCraft: '&4Je hebt niet de juiste permissie om een &e%creature% spawner &4te craften!'
 noPermissionPlace: '&4Je hebt niet de juiste permissie om een creeper spawner &e%creature% spawner&4 te plaatsen!'
- 
+
 changedEgg: '&2Succesvol spawn egg veranderd naar: &e%creature% spawn egg.'
 changedSpawner: '&2Succesvol spawner veranderd naar: &e%creature% spawner.'
- 
+
 playerOffline: '&4Sorry, deze speler is niet online!!'
 changingDeniedFactions: '&4Het is niet toegestaan om spawners te veranderen in andermans terrein!'
 changingDeniedWorldGuard: '&4Het veranderen van de spawner is tegen gehouden door een WorldGuard Protectie!'
@@ -29,19 +29,19 @@ unknownCreature: '&4Het type: &e%creature% &4bestaat niet!'
 useNumbers: '&4Asjeblieft gebruik cijfers tussen nummer 1 en 64!'
 noConsole: '&4De console kan dit commando niet gebruiken!'
 configsReloaded: '&4De config is &2succesvol &4geladen !'
- 
+
 spawnerBroken: '&2%creature% &espawner gemined.'
 spawnerPlaced: '&2%creature% &espawner geplaatst.'
 placingDefault: '&eStandaard spawner &4geplaatst. (De spawner is ongeldig of uitgeschakeld)!'
- 
+
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
 informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%'
- 
+
 spawningDenied: '&4Het plaatsen van &e%creature% &4is verboden!'
 spawning: '&2Spawning &e%creature%.'
 noSpawnerHere: '&4Een spawner kan niet geplaats worden hier, omdat het block daar boven een block staat!'
- 
+
 lookAtSpawner: '&4Je moet de spawner recht aan kijken!'
 spawnerNotDeterminable: '&4Je hebtr geen spawer of spawn egg in je hand of een spawner en spawn egg in allebeide handen. Maak een leeg asjeblieft!'
 help: |-

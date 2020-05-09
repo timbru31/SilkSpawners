@@ -16,15 +16,16 @@ public class Mobs extends AbstractConfiguration {
     }
 
     private void loadDefaultMobs() {
-        config.options().header(
-                "creatures: key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html");
+        config.addComment("creatures",
+                "# The creatures key is official creature type name (mobID), case-sensitive, from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html");
         ArrayList<String> tempList = new ArrayList<>();
         // Creeper
         tempList.add("c");
         tempList.add("creep");
         tempList.add("cataclysm");
         config.addDefault("creatures.Creeper.aliases", tempList);
-        config.addComment("creatures.Creeper", "", " # Vanilla mobs, from https://minecraft.gamepedia.com/Data_values/Entity_IDs");
+        config.addComment("creatures.Creeper", "",
+                "# Vanilla mobs, from https://minecraft.gamepedia.com/Java_Edition_data_values#Entities for 1.13+ and https://minecraft.gamepedia.com/Java_Edition_data_values/Pre-flattening/Entity_IDs for up to 1.12");
         config.addDefault("creatures.Creeper.enable", true);
         config.addDefault("creatures.Creeper.enableCraftingSpawner", true);
         config.addDefault("creatures.Creeper.enableSpawnEggOverride", true);

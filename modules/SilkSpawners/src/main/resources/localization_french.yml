@@ -1,12 +1,12 @@
 # Cette ligne affecte le nouveau nom des spawners, pour desactivé ça, change le message 'retour' des spawners
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Ajouté avec succès &e%amount% %creature% spawn oeuf(s) &2Dans ton inventaire.'
 addedEggOtherPlayer: '&2Ajouté &e%amount% %creature% spawn oeuf(s) &2Dans l''inventaire de &e%player%&2.'
 addedSpawner: '&2Ajouté &e%amount% %creature% spawner(s) &2dans ton inventaire.'
 addedSpawnerOtherPlayer: '&2Ajouté &e%amount% %creature% spawner(s) &2dans l''inventaire de &e%player%&2.'
 noFreeSlot: '&4Il n''y a pas de place libre dans ton inventaire!'
- 
+
 noPermission: '&4tu n''as pas la permission d''utiliser cette commande!'
 noPermissionChangingEgg: '&4tu n''as pas la permission de changer les oeufs de spawn !'
 noPermissionChangingSpawner: '&4tu n''as pas la permission de changer les spawners !'
@@ -16,10 +16,10 @@ noPermissionViewType: '&4tu n''as pas de voir le type de ce spawner !'
 noPermissionChangingWithEggs: '&4Tu n''as pas la permission de changer les spawners avec des oeufs'
 noPermissionCraft: '&4Tu n''as pas la permission de craft un(e) &e%creature% &4spawner!'
 noPermissionPlace: '&4Tu n''as pas la permission de placer un(e) &e%creature% &4spawner !'
- 
+
 changedEgg: '&2Changement avec succès du spawner en &e%creature% spawn egg.'
 changedSpawner: '&2Changement avec succès du spawner en &e%creature% spawner.'
- 
+
 playerOffline: '&4Désolé, ce joueur est hors-ligne'
 changingDeniedFactions: '&4Tu ne peux pas changer le spawner dans le claim d''une autre personne!'
 changingDeniedWorldGuard: '&4le changement du type de spawner a été refusé par WorldGuard.'
@@ -29,19 +29,19 @@ unknownCreature: '&4Créature non reconnu &e%creature%&4.'
 useNumbers: '&4S''il vous plait, utiliser un nombre entre 1 et 64!'
 noConsole: '&4La console ne peut pas utiliser cette commande!'
 configsReloaded: '&2Config reload avec succès!'
- 
+
 spawnerBroken: '&2%creature% &eSpawner cassé.'
 spawnerPlaced: '&2%creature% &espawner placé.'
 placingDefault: '&ePlacer un spawner par défaut(soit le spawner est invalide soit il est desactivé)'
- 
+
 informationOfSpawner1: -- Spawner --
 informationOfSpawner2: '-- Type: %creature% --'
 informationOfSpawnerBar: 'Spawner, Type: &e%creature%'
- 
+
 spawningDenied: '&4Spawn de &e%creature%&4refusé!'
 spawning: '&2Spawn de &e%creature%s'
 noSpawnerHere: '&4Un spawner ne peut pas etre placé ici, parce que le bloc au dessus est bloqué!'
- 
+
 lookAtSpawner: '&4Tu dois regarder directement le spawner.'
 spawnerNotDeterminable: '&4Tu n''as ni de sapwner ni d''oeuf dans ta main.'
 

@@ -15,9 +15,9 @@ public class Localization extends AbstractConfiguration {
     }
 
     private void loadDefaultLocalization() {
-        config.options()
-                .header("This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
         config.addDefault("spawnerName", "&e%creature% &fSpawner");
+        config.addComment("spawnerName",
+                "# This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner");
         config.addDefault("addedEgg", "'&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.");
         config.addComment("addedEgg", "");
         config.addDefault("addedEggOtherPlayer", "&2Added &e%amount% %creature% spawn egg(s) &2to &e%player%&2''s inventory.");

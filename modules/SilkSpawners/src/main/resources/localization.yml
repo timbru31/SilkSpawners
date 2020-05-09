@@ -1,12 +1,12 @@
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Successfully added &e%amount% %creature% spawn egg(s) &2to your inventory.'
 addedEggOtherPlayer: '&2Added &e%amount% %creature% spawn egg(s) &2to &e%player%&2''s inventory.'
 addedSpawner: '&2Added &e%amount% %creature% spawner(s) &2to your inventory.'
 addedSpawnerOtherPlayer: '&2Added &e%amount% %creature% spawner(s) &2to &e%player%&2''s inventory.'
 noFreeSlot: '&4There is no free slot in the inventory!'
- 
+
 noPermission: '&4You do not have the permission to use this command!'
 noPermissionChangingEgg: '&4You do not have permission to change spawn eggs!'
 noPermissionChangingSpawner: '&4You do not have permission to change spawners!'
@@ -16,10 +16,10 @@ noPermissionViewType: '&4You do not have the permission to view the type of this
 noPermissionChangingWithEggs: '&4You do not have permission to change spawners with spawn eggs!'
 noPermissionCraft: '&4You do not have the permission to craft a(n) &e%creature% &4spawner!'
 noPermissionPlace: '&4You do not have the permission to place a(n) &e%creature% &4spawner!'
- 
+
 changedEgg: '&2Successfully changed the spawning egg to a(n) &e%creature% spawn egg.'
 changedSpawner: '&2Successfully changed the spawner to a(n) &e%creature% spawner.'
- 
+
 playerOffline: '&4Sorry this player is offline!'
 changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection.'
@@ -29,22 +29,22 @@ unknownCreature: '&4Unrecognized creature &e%creature%&4.'
 useNumbers: '&4Please use a numeric number between 1 and 64!'
 noConsole: '&4The console can not use this command!'
 configsReloaded: '&2Successfully reloaded the configs!'
- 
+
 spawnerBroken: '&2%creature% &espawner broken.'
 spawnerPlaced: '&2%creature% &espawner placed.'
 placingDefault: '&ePlacing default spawner (either this spawner is invalid or disabled)'
- 
+
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
 informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f'
- 
+
 spawningDenied: '&4Spawning of &e%creature% &4denied!'
 spawning: '&2Spawning &e%creature%'
 noSpawnerHere: '&4A spawner can not be placed here, because the block above is blocked!'
- 
+
 lookAtSpawner: '&4You must be looking directly at a spawner.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
- 
+
 help: |-
   '&7------&6SilkSpawners v%version% Help Menu&7------'
   '&e/ss help &7- &2Displays the help menu.'

@@ -1,12 +1,12 @@
 # Denne linjen påvirker den nye navnendringen av Spawnere, for å SLÅ AV dette, forandre den til "Monster Spawner".
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Du har nå lagt til &e%amount% %creature% spawn egg &2til din Inventory!'
 addedEggOtherPlayer: '&2La til &e%amount% %creature% spawn egg &2til &e%player% &2sin inventory'
 addedSpawner: '&2La til &e%amount% %creature% spawner &2til din inventory'
 addedSpawnerOtherPlayer: '&2La til &e%amount% %creature% Spawner &2til &e%player% &2sin inventory'
 noFreeSlot: '&4Det er ikke ledig plass i din inventory!'
- 
+
 noPermission: '&4Du har ikke lov til å bruke denne kommandoen!'
 noPermissionChangingEgg: '&4Du har ikke tillatelse til å bytte spawner egg med /egg'
 noPermissionChangingSpawner: '&4Du har ikke tillatelse til å bytte spawner type med /spawner'
@@ -16,10 +16,10 @@ noPermissionViewType: '&4Du har ikke lov til å se hvilken spawner type dette er
 noPermissionChangingWithEggs: '&4Du har ikke lov til å bytte spawner type med spawner egg!'
 noPermissionCraft: '&4Du har ikke tillatelse til å crafte en &e%creature% &4Spawner!'
 noPermissionPlace: '&4Du har ikke tillatelse til å plassere en &e%creature% &4spawner!'
- 
+
 changedEgg: '&2Du har nå endret egget til å bli ett &e%creature% spawn egg!'
 changedSpawner: '&2Du har nå endret Spawneren til en &e%creature% spawner'
- 
+
 playerOffline: '&4Beklager denne brukeren er avlogget!'
 changingDeniedFactions: '&4Du kan ikke endre Spawner typen i en annen Factions territorie!'
 changingDeniedWorldGuard: '&4WorldGuard lar deg ikke forandre denne Spawneren!'
@@ -29,22 +29,22 @@ unknownCreature: '&4Ukjent vesen &e%creature%'
 useNumbers: '&4Værsåsnill. Velg et nummer mellom 1 and 64!'
 noConsole: '&4Consolen kan ikke bruke denne kommandoen!'
 configsReloaded: '&2Du har nå lastet inn ny data fra din konfigurasjon!'
- 
+
 spawnerBroken: '&2%creature% &espawner ødelagt'
 spawnerPlaced: '&2%creature% &espawner plassert'
 placingDefault: '&ePlasserer vanlig spawner (Spawneren er ødelagt eller bugget!)'
- 
+
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Type: %creature% --'
 informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%'
- 
+
 spawningDenied: '&4Spawning av &e%creature% &4avvist!'
 spawning: '&2Spawner en &e%creature%'
 noSpawnerHere: '&4En Spawner kan ikke bli plassert her, fordi blokken over den er blokkert!'
- 
+
 lookAtSpawner: '&4Du må se direkte på en spawner når du gjør dette.'
 spawnerNotDeterminable: '&4Du har enten ingen spawner/egg i hånden, eller så har du i begge hendene. Prøv igjen med bare èn.'
- 
+
 help: |-
   '&7------&6SilkSpawners v%version% Help Menu&7------'
   '&e/ss help &7- &2Viser menyen for hjelp.'

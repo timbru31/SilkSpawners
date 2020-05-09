@@ -12,5 +12,5 @@ indent_style = space
 [*.java]
 indent_size = 4
 
-[{*.md,*.yml}]
+[*.md]
 trim_trailing_whitespace = false

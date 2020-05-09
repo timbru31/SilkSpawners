@@ -19,9 +19,9 @@ public class Config extends AbstractConfiguration {
     }
 
     private void loadDefaultConfig() {
-        config.options().header("See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration");
         config.addDefault("autoUpdater", true);
-        config.addComment("autoUpdater", "", "# Should the plugin automatically update if an update is available?");
+        config.addComment("autoUpdater", "# See documentation at https://dev.bukkit.org/projects/silkspawners/pages/configuration", "",
+                "# Should the plugin automatically update if an update is available?");
         config.addDefault("permissionExplode", false);
         config.addComment("permissionExplode", "", "# Should a permission be required when a spawner explodes by TNT to achieve a drop");
         config.addDefault("useWorldGuard", true);

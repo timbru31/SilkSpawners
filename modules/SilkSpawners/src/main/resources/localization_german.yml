@@ -1,12 +1,12 @@
 # Diese Zeile bezieht sich auf den Item Namen, zum Ausschalten bearbeiten zu Monster Spawner
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Erfolgreich &e%amount% %creature% Ei(er) &2zu deinem Inventar hinzugefügt'
 addedEggOtherPlayer: '&2Erfolgreich &e%amount% %creature% Ei(er) &2zu &e%player%&2s Inventar hinzugefügt'
 addedSpawner: '&2Erfolgreich &e%amount% %creature% Spawner &2zu deinem Inventar hinzugefügt'
 addedSpawnerOtherPlayer: '&2Erfolgreich &e%amount% %creature% Spawner &2zu &e%player%&2s Inventar hinzugefügt'
 noFreeSlot: '&4Es ist kein Platz im Inventar frei!'
- 
+
 noPermission: '&4Du hast nicht die Berechtigung für dieses Kommando'
 noPermissionChangingEgg: '&4Du hast nicht die Berechtigung um Eier mit /egg zu ändern!'
 noPermissionChangingSpawner: '&4Du hast nicht die Berechtigung um Spawner mit /spawner zu ändern'
@@ -16,10 +16,10 @@ noPermissionViewType: '&4Du hast nicht die Berechtiung um den Typ dieser Kreatur
 noPermissionChangingWithEggs: '&4Du hast nicht die Berechtigung Spawner mit Eiern zu verändern!'
 noPermissionCraft: '&4Du hast nicht die Berechtigung um einen &e%creature% &4Spawner zu craften!'
 noPermissionPlace: '&4Du hast nicht die Berechtigung um einen &e%creature% &4Spawner zu setzen!'
- 
+
 changedEgg: '&2Erfolgreich das Spawn Ei zu einem &e%creature% Ei &2geändert'
 changedSpawner: '&2Erfolgreich den Spawner zu einem &e%creature% Spawner &2geändert'
- 
+
 playerOffline: '&4Leider ist dieser Spieler offline!'
 changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Ändern der Kreatur durch WorldGuard Region nicht erlaubt!'
@@ -29,22 +29,22 @@ unknownCreature: '&4Unbekannte Kreatur &e%creature%'
 useNumbers: '&4Bitte nutze eine Zahl zwischen 1 und 64!'
 noConsole: '&4Die Konsole kann dieses Kommando nicht benutzen!'
 configsReloaded: '&2Konfiguration erfolgreich neu geladen!'
- 
+
 spawnerBroken: '&2%creature% &eSpawner abgebaut'
 spawnerPlaced: '&2%creature% &eSpawner platziert'
 placingDefault: '&eSetze einen Standard Spawner (entweder ist diese Kreatur nicht bekannt oder ausgeschaltet)'
- 
+
 informationOfSpawner1: '-- Monster Spawner --'
 informationOfSpawner2: '-- Typ: %creature% --'
 informationOfSpawnerBar: 'Monster Spawner, Typ: &e%creature%'
- 
+
 spawningDenied: '&4Spawnen von &e%creature% &4nicht erlaubt!'
 spawning: '&2Spawne ein(en) &e%creature%'
 noSpawnerHere: '&4Ein Spawner kann hier nicht aufgestellt werden, da der Block oberhalb nicht frei ist!'
- 
+
 lookAtSpawner: '&4Du musst den Spawner direkt anschauen'
 spawnerNotDeterminable: '&4Du hast entweder keinen Spawner oder ein Ei in deiner Hand, oder in beiden Händen etwas. Bitte mache eine leer!'
- 
+
 help: |-
   '&7------&6SilkSpawners v%version% Hilfe&7------'
   '&e/ss help &7- &2Zeigt diese Hilfe.'

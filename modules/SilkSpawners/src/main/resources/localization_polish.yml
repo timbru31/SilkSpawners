@@ -1,13 +1,13 @@
 # This line affects the new naming of spawners, to DISABLE this, change the message back to Monster Spawner
 # Spolszczenie by 8bitow
 spawnerName: '&e%creature% &fSpawner'
- 
+
 addedEgg: '&2Dodano &e%amount% %creature% jajek potworow &2do twojego ekwipunku.'
 addedEggOtherPlayer: '&2Dodano &e%amount% %creature% jajek potworow &2do ekwipunku &e%player%&2.'
 addedSpawner: '&2Dodano &e%amount% %creature% spawner(ow) &2do twojego ekwipunku.'
-addedSpawnerOtherPlayer: '&2Dodano &e%amount% %creature% spawner(ow) &2do ekwipunku%player%&2'.'
+addedSpawnerOtherPlayer: '&2Dodano &e%amount% %creature% spawner(ow) &2do ekwipunku %player%&2.'
 noFreeSlot: '&4Nie masz wolnego miejsca w ekwipunku!'
- 
+
 noPermission: '&4Nie masz uprawnien do uzywania tej komendy!'
 noPermissionChangingEgg: '&4Nie masz uprawnien do zmiany jajek potworow!'
 noPermissionChangingSpawner: '&4Nie masz uprawnien do zmiany spawnerow!'
@@ -17,10 +17,10 @@ noPermissionViewType: '&4Nie masz uprawnien do obejrzenia typu potworow tego spa
 noPermissionChangingWithEggs: '&4Nie masz uprawnien do zmiany spawnera z jajkami potworow!'
 noPermissionCraft: '&4Nie masz uprawnien do wytworzenia &4spawnera &e%creature% &4!'
 noPermissionPlace: '&4Nie masz uprawnien do postawienia spawnera &e%creature% &4w tym miejscu!'
- 
+
 changedEgg: '&2SPomyslnie zmieniono na jajko &e%creature% &2.'
 changedSpawner: '&2Pomyslnie zmieniono na spawner &e%creature% &2.'
- 
+
 playerOffline: '&4Gracz jest niedostepny!'
 changingDeniedFactions: '&4Nie mozesz zmienic spawnerow innych graczy!'
 changingDeniedWorldGuard: '&4Zmiana spawnera zostala zabroniona przez ochrone WorldGuard.'
@@ -30,23 +30,24 @@ unknownCreature: '&4Nierozpoznany typ potwora &e%creature%&4.'
 useNumbers: '&4Prosze uzyj numerow pomiedzy 1 a 64!'
 noConsole: '&4Nie mozesz uzyc tej komendy na konsoli!'
 configsReloaded: '&2Pomyslnie przeladowano konfiguracje!'
- 
+
 spawnerBroken: '&eSpawner &2%creature% &ezostal zniszczony.'
 spawnerPlaced: '&eSpawner &2%creature% &ezostal postawiony.'
 placingDefault: '&eMiejsce domyslnego spawnera (spawner jest nieprawidlowy lub wylaczony)'
- 
+
 informationOfSpawner1: -- Spawner Potworow --
 informationOfSpawner2: '-- Typ: %creature% --'
 informationOfSpawnerBar: 'Spawner Potworow, Typ: &e%creature%'
- 
+
 spawningDenied: '&4Spawnowanie potworow &e%creature% &4zabronione!'
 spawning: '&2Spawnowanie &e%creature%'
 noSpawnerHere: '&4Nie mozna tu umiescic spawnera, poniewaz ten blok jest zablokowany!'
- 
+
 lookAtSpawner: '&4Musisz patrzec prosto na spawner.'
-spawnerNotDeterminable: '&4Nie masz spawnera lub jajka w reku lub masz w obu dloniach. Zostaw jedna reke pusta.
+spawnerNotDeterminable: '&4Nie masz spawnera lub jajka w reku lub masz w obu dloniach. Zostaw jedna reke pusta.'
+
 help: |-
-  '&7------&6SilkSpawner v%version% Pomoc&7------'
+  '&7------&6SilkSpawners v%version% Pomoc&7------'
   '&e/ss help &7- &2Wyswiela ta pomoc.'
   '&e/ss list|all &7- &2Wyswietla wszystkie dostepne potwory.'
   '&e/ss view|info &7- &2Wyswietla informacje o spawnerze na ktory patrzysz.'
