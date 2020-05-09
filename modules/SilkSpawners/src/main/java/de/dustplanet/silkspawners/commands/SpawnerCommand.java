@@ -59,6 +59,10 @@ public class SpawnerCommand implements CommandExecutor {
                     case "set":
                         handleChange(sender, args[1]);
                         break;
+                    case "selfget":
+                    case "i":
+                        handleGive(sender, sender.getName(), args[1], null);
+                        break;
                     default:
                         handleUnknownArgument(sender);
                         break;
@@ -69,6 +73,10 @@ public class SpawnerCommand implements CommandExecutor {
                     case "give":
                     case "add":
                         handleGive(sender, args[1], args[2].toLowerCase(), null);
+                        break;
+                    case "selfget":
+                    case "i":
+                        handleGive(sender, sender.getName(), args[1], args[2]);
                         break;
                     default:
                         handleUnknownArgument(sender);

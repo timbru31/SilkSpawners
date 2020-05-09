@@ -57,3 +57,4 @@ help: |-
   '&e/ss reload|rl &7- &2重载配置文件。'
   '&e/ss change <新生物> &7- &2更改您正拿着或看向的刷怪笼类型。'
   '&e/ss give|add <玩家> <怪物> [数量] &7- &2给予玩家刷怪笼或怪物蛋。数量为可选项。'
+  '&e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. Amount is optional.'

@@ -53,3 +53,4 @@ help: |-
   '&e/ss reload|rl &7- &2Lädt die Konfiguration neu.'
   '&e/ss change <newMob> &7- &2Ändert den Spawner in der Hand oder in Sicht.'
   '&e/ss give|add <spieler> <mob> [anzahl] &7- &2Gibt dem Spieler ein Ei oder Spawner. Anzahl ist optional.'
+  '&e/ss selfget|i <mob> [amount] &7- &2Gibt dir ein Ei oder Spawner. Anzahl ist optional.'

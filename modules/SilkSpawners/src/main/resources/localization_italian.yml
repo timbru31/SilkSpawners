@@ -52,4 +52,5 @@ help: |-
   '&e/ss view|info &7- &2Displays information about the viewed spawner.'
   '&e/ss reload|rl &7- &2Reloads the configuration files.'
   '&e/ss change <newMob> &7- &2Changes the spawner you are currently holding or viewing at.'
-  '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional'
+  '&e/ss give|add <player> <mob> [amount] &7- &2Gives a spawner or egg to the player. Amount is optional.'
+  '&e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. Amount is optional.'

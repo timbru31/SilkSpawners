@@ -53,3 +53,4 @@ help: |-
   '&e/ss reload|rl &7- &2Last inn konfigurasjonen på nytt.'
   '&e/ss change <newMob> &7- &2Forandrer Spawneren du holder/ser på.'
   '&e/ss give|add <player> <mob> [amount] &7- &2Gir en Spawner/Egg til en spiller. Antall er valgfritt.'
+  '&e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. Amount is optional.'

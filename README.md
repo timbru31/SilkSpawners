@@ -215,6 +215,7 @@ Aliases:
 |            /ss reload&#124;rl             |               Reloads the configuration files.               |
 |       /ss change&#124;set <newMob>        | Changes the spawner you are currently holding or viewing at. |
 | /ss give&#124;add <player> <mob> [amount] |  Gives a spawner or egg to the player. Amount is optional.   |
+|     /ss selfget&#124;i <mob> [amount]     |      Gives a spawner or egg to you. Amount is optional.      |
 
 ## Permissions
 

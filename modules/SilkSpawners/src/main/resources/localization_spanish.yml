@@ -59,4 +59,5 @@ help: |-
   '&e/ss view|info &7- &2Mostrar informacion acerca del generador ya visto.'
   '&e/ss reload|rl &7- &2Recargar las filas de configuracion.'
   '&e/ss change <entidad> &7- &2Cambia el generador que estas agarrando o que estas mirando.'
-  '&e/ss give|add <jugador> <entidad> [monto] &7- &2Obtener generador o huevo o darselo a un jugador en especifico. Monto es opcional'
+  '&e/ss give|add <jugador> <entidad> [monto] &7- &2Obtener generador o huevo o darselo a un jugador en especifico. Monto es opcional.'
+  '&e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. Amount is optional.'

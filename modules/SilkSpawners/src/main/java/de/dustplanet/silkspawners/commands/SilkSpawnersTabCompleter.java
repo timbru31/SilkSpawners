@@ -32,14 +32,17 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
         if (args.length == 1) {
             String command = args[0].toLowerCase(Locale.ENGLISH);
             return addCommands(command);
-        } else if (args.length == 2 && (args[0].equalsIgnoreCase("change") || args[0].equalsIgnoreCase("set"))) {
+        } else if (args.length == 2 && ("change".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
             String mob = args[1].toLowerCase(Locale.ENGLISH);
             results.addAll(addMobs(mob));
-        } else if (args.length == 2 && (args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("add"))) {
+        } else if (args.length == 2 && ("give".equalsIgnoreCase(args[0]) || "add".equalsIgnoreCase(args[0]))) {
             String player = args[1].toLowerCase(Locale.ENGLISH);
             results.addAll(addPlayers(player));
-        } else if (args.length == 3 && (args[0].equalsIgnoreCase("give") || args[0].equalsIgnoreCase("add"))) {
+        } else if (args.length == 3 && ("give".equalsIgnoreCase(args[0]) || "add".equalsIgnoreCase(args[0]))) {
             String mob = args[2].toLowerCase(Locale.ENGLISH);
+            results.addAll(addMobs(mob));
+        } else if (args.length == 2 && ("selfget".equalsIgnoreCase(args[0]) || "i".equalsIgnoreCase(args[0]))) {
+            String mob = args[1].toLowerCase(Locale.ENGLISH);
             results.addAll(addMobs(mob));
         }
         return results;
