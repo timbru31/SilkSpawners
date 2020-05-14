@@ -57,4 +57,15 @@
       </plugin>
     </plugins>
   </build>
+  
+  <scm>
+    <url>https://github.com/timbru31/SilkSpawners</url>
+    <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
+    <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
+  </scm>
+
+  <ciManagement>
+    <url>https://ci.dustplanet.de/job/SilkSpawners</url>
+    <system>jenkins</system>
+  </ciManagement>
 </project>
