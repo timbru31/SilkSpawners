@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -66,6 +67,7 @@ public class NMSHandler implements NMSProvider {
         }
     }
 
+    @SuppressWarnings("resource")
     @Override
     public void spawnEntity(org.bukkit.World w, String entityID, double x, double y, double z) {
         NBTTagCompound tag = new NBTTagCompound();
@@ -132,11 +134,13 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
+        // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
+        String safeMobID = mobID.replace(' ', '_').toLowerCase(Locale.ENGLISH);
         CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {
             TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-            tile.getSpawner().setMobName(IRegistry.ENTITY_TYPE.get(new MinecraftKey(mobID)));
+            tile.getSpawner().setMobName(IRegistry.ENTITY_TYPE.get(new MinecraftKey(safeMobID)));
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
@@ -162,13 +166,7 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getTag();
-
-        // Create tag if necessary
-        if (tag == null) {
-            tag = new NBTTagCompound();
-            itemStack.setTag(tag);
-        }
+        NBTTagCompound tag = itemStack.getOrCreateTag();
 
         // Check for SilkSpawners key
         if (!tag.hasKey("SilkSpawners")) {
@@ -260,6 +258,7 @@ public class NMSHandler implements NMSProvider {
         return block;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ItemStack newEggItem(String entityID, int amount, String displayName) {
         Material spawnEgg = Material.matchMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
@@ -276,12 +275,7 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
         CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getTag();
-
-        if (tag == null) {
-            tag = new NBTTagCompound();
-            itemStack.setTag(tag);
-        }
+        NBTTagCompound tag = itemStack.getOrCreateTag();
 
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
@@ -418,6 +412,7 @@ public class NMSHandler implements NMSProvider {
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public Material getSpawnEggMaterial() {
         return Material.LEGACY_MONSTER_EGG;
