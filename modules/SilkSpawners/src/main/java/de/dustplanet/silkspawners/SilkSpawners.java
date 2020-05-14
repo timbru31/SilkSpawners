@@ -538,6 +538,7 @@ public class SilkSpawners extends JavaPlugin {
         }
     }
 
+    @SuppressWarnings("static-method")
     private boolean shapeContainsIngredient(List<String> shape, char c) {
         boolean match = false;
         for (String recipePart : shape) {

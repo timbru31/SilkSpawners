@@ -208,7 +208,7 @@ public class CommentedConfiguration extends YamlConfiguration {
             }
 
             // Write the string to the config file
-            if (!stringToFile(newContents, file)) {
+            if (!writeStringToFile(newContents, file)) {
                 saved = false;
             }
         }
@@ -245,15 +245,17 @@ public class CommentedConfiguration extends YamlConfiguration {
     /**
      * Pass a file and it will return it's contents as a string.
      *
-     * @param file - File to read.
+     * @param fileToConvert - File to read.
      * @return Contents of file. String will be empty in case of any errors.
      */
-    public String convertFileToString(File file) {
-        if (file != null && file.exists() && file.canRead() && !file.isDirectory()) {
+    @SuppressWarnings("static-method")
+    public String convertFileToString(File fileToConvert) {
+        if (fileToConvert != null && fileToConvert.exists() && fileToConvert.canRead() && !fileToConvert.isDirectory()) {
             char[] buffer = new char[1024];
             String s = "";
             try (Writer writer = new StringWriter();
-                    Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));) {
+                    Reader reader = new BufferedReader(
+                            new InputStreamReader(new FileInputStream(fileToConvert), StandardCharsets.UTF_8));) {
                 int n;
                 while ((n = reader.read(buffer)) != -1) {
                     writer.write(buffer, 0, n);
@@ -272,11 +274,12 @@ public class CommentedConfiguration extends YamlConfiguration {
      * Writes the contents of a string to a file.
      *
      * @param source - String to write.
-     * @param file - File to write to.
+     * @param fileToWriteTo - File to write to.
      * @return True on success.
      */
-    public boolean stringToFile(String source, File file) {
-        try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)) {
+    @SuppressWarnings("static-method")
+    public boolean writeStringToFile(String source, File fileToWriteTo) {
+        try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fileToWriteTo), StandardCharsets.UTF_8)) {
             out.write(source);
             return true;
         } catch (IOException e) {

@@ -73,6 +73,7 @@ public class SilkUtil {
     /**
      * Default (fallback) entityID, standard is the pig.
      */
+    @SuppressWarnings("deprecation")
     private String defaultEntityID = EntityType.PIG.getName();
 
     /**
@@ -181,6 +182,7 @@ public class SilkUtil {
             plugin.getLogger().info("Scanning the mobs");
         }
         for (String entityID : entities) {
+            @SuppressWarnings("deprecation")
             EntityType bukkitEntity = EntityType.fromName(entityID);
             Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
 
@@ -461,6 +463,7 @@ public class SilkUtil {
      * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
+    @SuppressWarnings("deprecation")
     public boolean isRecognizedMob(String mobID) {
         return EntityType.fromName(mobID) != null;
     }
@@ -471,6 +474,7 @@ public class SilkUtil {
      * @param block the spawner block
      * @return the entity ID
      */
+    @SuppressWarnings("deprecation")
     @Nullable
     public String getSpawnerEntityID(Block block) {
         BlockState blockState = block.getState();
@@ -506,7 +510,7 @@ public class SilkUtil {
         if (isUsingReflection()) {
             String mobID = displayNameToMobID.get(entity);
             if (mobID == null) {
-                mobID = getCreatureName(defaultEntityID);
+                mobID = displayNameToMobID.get(defaultEntityID);
             }
 
             if (nmsProvider.setMobNameOfSpawner(blockState, mobID)) {
@@ -671,7 +675,9 @@ public class SilkUtil {
         }
         // Let's scan for added entities by e.g MCPC+
         for (EntityType type : EntityType.values()) {
+            @SuppressWarnings("deprecation")
             String name = type.getName();
+            @SuppressWarnings("deprecation")
             short id = type.getTypeId();
             // If name is not defined or ID -1 --> skip this bad entity
             if (name == null || id == -1) {
