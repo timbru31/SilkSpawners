@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.dustplanet</groupId>
-  <artifactId>SilkSpawners-parent</artifactId>
+  <artifactId>silkSpawners-parent</artifactId>
   <packaging>pom</packaging>
   <version>6.1.1-SNAPSHOT</version>
   <name>SilkSpawners Parent</name>
@@ -85,4 +85,15 @@
     <url>https://ci.dustplanet.de/job/SilkSpawners</url>
     <system>jenkins</system>
   </ciManagement>
+  
+  <distributionManagement>
+    <snapshotRepository>
+      <id>dustplanet</id>
+      <url>https://repo.dustplanet.de/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+    <repository>
+      <id>dustplanet</id>
+      <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
+    </repository>
+  </distributionManagement>
 </project>
