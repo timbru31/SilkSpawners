@@ -3,12 +3,12 @@
   <artifactId>SilkSpawners-v1_13_R2</artifactId>
   <packaging>jar</packaging>
   <name>SilkSpawners for v1_13_R2</name>
-  <version>6.1.0</version>
+  <version>6.1.1-SNAPSHOT</version>
 
   <parent>
     <groupId>de.dustplanet</groupId>
     <artifactId>SilkSpawners-parent</artifactId>
-    <version>6.1.0</version>
+    <version>6.1.1-SNAPSHOT</version>
     <relativePath>../../</relativePath>
   </parent>
 
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-API</artifactId>
-      <version>6.1.0</version>
+      <version>6.1.1-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
   </dependencies>
