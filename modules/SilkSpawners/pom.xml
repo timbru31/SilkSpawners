@@ -1,11 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.dustplanet</groupId>
   <artifactId>SilkSpawners</artifactId>
   <packaging>jar</packaging>
-  <version>6.0.2-SNAPSHOT</version>
+  <version>6.1.0</version>
   <name>SilkSpawners</name>
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -120,79 +118,79 @@
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R1</artifactId>
-      <version>v1_8_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R2</artifactId>
-      <version>v1_8_R2</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_8_R3</artifactId>
-      <version>v1_8_R3</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_9_R1</artifactId>
-      <version>v1_9_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_9_R2</artifactId>
-      <version>v1_9_R2</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_10_R1</artifactId>
-      <version>v1_10_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_11_R1</artifactId>
-      <version>v1_11_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_12_R1</artifactId>
-      <version>v1_12_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_13_R1</artifactId>
-      <version>v1_13_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_13_R2</artifactId>
-      <version>v1_13_R2</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_14_R1</artifactId>
-      <version>v1_14_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-v1_15_R1</artifactId>
-      <version>v1_15_R1</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>SilkSpawners-API</artifactId>
-      <version>API</version>
+      <version>6.1.0</version>
       <type>jar</type>
     </dependency>
   </dependencies>
@@ -282,6 +280,7 @@
     <url>https://github.com/timbru31/SilkSpawners</url>
     <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
     <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
+    <tag>SilkSpawners-6.1.0</tag>
   </scm>
 
   <ciManagement>
