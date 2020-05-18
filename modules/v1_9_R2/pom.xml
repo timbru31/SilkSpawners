@@ -1,13 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>SilkSpawners-v1_9_R2</artifactId>
+  <artifactId>silkspawners-v1_9_R2</artifactId>
   <packaging>jar</packaging>
   <name>SilkSpawners for v1_9_R2</name>
   <version>6.1.1-SNAPSHOT</version>
 
   <parent>
     <groupId>de.dustplanet</groupId>
-    <artifactId>SilkSpawners-parent</artifactId>
+    <artifactId>silkspawners-parent</artifactId>
     <version>6.1.1-SNAPSHOT</version>
     <relativePath>../../</relativePath>
   </parent>
@@ -27,7 +27,7 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
-      <artifactId>SilkSpawners-API</artifactId>
+      <artifactId>silkspawners-API</artifactId>
       <version>6.1.1-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
