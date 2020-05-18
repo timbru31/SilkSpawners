@@ -287,4 +287,15 @@
     <url>https://ci.dustplanet.de/job/SilkSpawners</url>
     <system>jenkins</system>
   </ciManagement>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>dustplanet</id>
+      <url>https://repo.dustplanet.de/artifactory/libs-snapshot-local</url>
+    </snapshotRepository>
+    <repository>
+      <id>dustplanet</id>
+      <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
+    </repository>
+  </distributionManagement>
 </project>
