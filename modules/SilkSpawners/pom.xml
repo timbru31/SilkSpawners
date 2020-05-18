@@ -196,7 +196,7 @@
   </dependencies>
 
   <build>
-    <finalName>${project.artifactId}</finalName>
+    <finalName>${project.name}</finalName>
     <sourceDirectory>src/main/java</sourceDirectory>
     <directory>target</directory>
 
