@@ -124,6 +124,9 @@ creatures:
     - magma
     - m
     - mc
+    - lavaslime
+    - lava_slime
+    - lava
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -229,6 +232,8 @@ creatures:
     - ironman
     - iron
     - ig
+    - villager_golem
+    - villagergolem
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true

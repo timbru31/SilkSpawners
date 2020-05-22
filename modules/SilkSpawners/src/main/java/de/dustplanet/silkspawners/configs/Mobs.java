@@ -193,6 +193,9 @@ public class Mobs extends AbstractConfiguration {
         tempList.add("magma");
         tempList.add("m");
         tempList.add("mc");
+        tempList.add("lava_slime");
+        tempList.add("lavaslime");
+        tempList.add("lava");
         config.addDefault("creatures.LavaSlime.aliases", tempList);
         config.addDefault("creatures.LavaSlime.enable", true);
         config.addDefault("creatures.LavaSlime.enableCraftingSpawner", true);
@@ -701,6 +704,8 @@ public class Mobs extends AbstractConfiguration {
         tempList.add("ironman");
         tempList.add("iron");
         tempList.add("ig");
+        tempList.add("villager_golem");
+        tempList.add("villagergolem");
         config.addDefault("creatures.iron_golem.aliases", tempList);
         config.addDefault("creatures.iron_golem.enable", true);
         config.addDefault("creatures.iron_golem.enableCraftingSpawner", true);
