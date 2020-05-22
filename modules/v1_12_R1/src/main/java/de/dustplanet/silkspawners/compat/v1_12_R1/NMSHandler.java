@@ -30,6 +30,8 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.google.common.base.CaseFormat;
+
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_12_R1.Entity;
 import net.minecraft.server.v1_12_R1.EntityTypes;
@@ -151,7 +153,8 @@ public class NMSHandler implements NMSProvider {
     @Override
     public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
         // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
-        String safeMobID = mobID.replace(' ', '_').toLowerCase(Locale.ENGLISH);
+        String safeMobID = caseFormatOf(mobID.replace(" ", "_")).to(CaseFormat.LOWER_UNDERSCORE, mobID.replace(" ", "_"))
+                .toLowerCase(Locale.ENGLISH);
         CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {

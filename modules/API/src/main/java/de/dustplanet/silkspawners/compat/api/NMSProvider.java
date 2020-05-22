@@ -3,6 +3,7 @@ package de.dustplanet.silkspawners.compat.api;
 import java.util.Collection;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,8 +14,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
-public interface NMSProvider {
+import com.google.common.base.CaseFormat;
 
+public interface NMSProvider {
+    static final Pattern LOWER_CAMEL_REGEX = Pattern.compile("([a-z]+[A-Z]+\\w+)+");
+    static final Pattern UPPER_CAMEL_REGEX = Pattern.compile("([A-Z]+[a-z]+\\w+)+");
     public static final int SPAWNER_ID = 52;
     public static final String NAMESPACED_SPAWNER_ID = "spawner";
 
@@ -96,5 +100,32 @@ public interface NMSProvider {
     // Only required for MC 1.8
     default int getIDForEntity(@SuppressWarnings("unused") String entityID) {
         return 0;
+    }
+
+    default CaseFormat caseFormatOf(String s) {
+        if (s.contains("_")) {
+            if (s.toUpperCase().equals(s)) {
+                return CaseFormat.UPPER_UNDERSCORE;
+            }
+            if (s.toLowerCase().equals(s)) {
+                return CaseFormat.LOWER_UNDERSCORE;
+            }
+        } else if (s.contains("-")) {
+            if (s.toLowerCase().equals(s)) {
+                return CaseFormat.LOWER_HYPHEN;
+            }
+        } else {
+            if (Character.isLowerCase(s.charAt(0))) {
+                if (LOWER_CAMEL_REGEX.matcher(s).matches()) {
+                    return CaseFormat.LOWER_CAMEL;
+                }
+            } else {
+                if (UPPER_CAMEL_REGEX.matcher(s).matches()) {
+                    return CaseFormat.UPPER_CAMEL;
+                }
+            }
+        }
+
+        return CaseFormat.LOWER_UNDERSCORE;
     }
 }

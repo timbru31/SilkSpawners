@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -23,6 +22,8 @@ import org.bukkit.craftbukkit.v1_8_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
+
+import com.google.common.base.CaseFormat;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_8_R1.Entity;
@@ -108,7 +109,7 @@ public class NMSHandler implements NMSProvider {
     @Override
     public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
         // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
-        String safeMobID = mobID.replace(' ', '_').toLowerCase(Locale.ENGLISH);
+        String safeMobID = caseFormatOf(mobID.replace(" ", "_")).to(CaseFormat.UPPER_CAMEL, mobID.replace(" ", "_"));
         CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {
