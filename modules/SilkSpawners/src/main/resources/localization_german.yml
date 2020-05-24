@@ -20,7 +20,7 @@ noPermissionPlace: '&4Du hast nicht die Berechtigung um einen &e%creature% &4Spa
 changedEgg: '&2Erfolgreich das Spawn Ei zu einem &e%creature% Ei &2geändert'
 changedSpawner: '&2Erfolgreich den Spawner zu einem &e%creature% Spawner &2geändert'
 
-playerOffline: '&4Leider ist dieser Spieler offline!'
+playerOffline: '&4Leider ist dieser Spieler offline oder hat noch nie auf diesem Server gespielt!'
 changingDeniedFactions: '&4Du bist nicht berechtigt in anderen Territorien Spawner zu platzieren oder zu ändern!'
 changingDeniedWorldGuard: '&4Ändern der Kreatur durch WorldGuard Region nicht erlaubt!'
 getSpawnerType: '&2Dies ist ein &e%creature% Spawner'

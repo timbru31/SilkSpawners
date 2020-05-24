@@ -15,11 +15,13 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.craftbukkit.v1_13_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_13_R2.block.CraftBlockEntityState;
 import org.bukkit.craftbukkit.v1_13_R2.block.CraftCreatureSpawner;
@@ -33,14 +35,19 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.base.CaseFormat;
+import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
+import net.minecraft.server.v1_13_R2.DimensionManager;
 import net.minecraft.server.v1_13_R2.Entity;
+import net.minecraft.server.v1_13_R2.EntityPlayer;
 import net.minecraft.server.v1_13_R2.EntityTypes;
 import net.minecraft.server.v1_13_R2.IRegistry;
 import net.minecraft.server.v1_13_R2.Item;
 import net.minecraft.server.v1_13_R2.MinecraftKey;
+import net.minecraft.server.v1_13_R2.MinecraftServer;
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
+import net.minecraft.server.v1_13_R2.PlayerInteractManager;
 import net.minecraft.server.v1_13_R2.TileEntityMobSpawner;
 import net.minecraft.server.v1_13_R2.TileEntityTypes;
 import net.minecraft.server.v1_13_R2.World;
@@ -418,6 +425,26 @@ public class NMSHandler implements NMSProvider {
     @Override
     public Collection<Material> getSpawnEggMaterials() {
         return spawnEggs;
+    }
+
+    @SuppressWarnings("resource")
+    @Override
+    public Player loadPlayer(OfflinePlayer offline) {
+        if (!offline.hasPlayedBefore()) {
+            return null;
+        }
+
+        GameProfile profile = new GameProfile(offline.getUniqueId(),
+                offline.getName() != null ? offline.getName() : offline.getUniqueId().toString());
+        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(DimensionManager.OVERWORLD), profile,
+                new PlayerInteractManager(server.getWorldServer(DimensionManager.OVERWORLD)));
+
+        Player target = entity.getBukkitEntity();
+        if (target != null) {
+            target.loadData();
+        }
+        return target;
     }
 
 }

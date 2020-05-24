@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -128,4 +129,6 @@ public interface NMSProvider {
 
         return CaseFormat.LOWER_UNDERSCORE;
     }
+
+    Player loadPlayer(OfflinePlayer offline);
 }

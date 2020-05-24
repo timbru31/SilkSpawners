@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.commands;
 
 import java.util.Locale;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -103,8 +104,10 @@ public class SpawnerCommand implements CommandExecutor {
         return true;
     }
 
+    @SuppressWarnings("deprecation")
     private void handleGive(CommandSender sender, String receiver, String mob, String amountString) {
         int amount = plugin.config.getInt("defaultAmountGive", 1);
+        boolean saveData = false;
 
         // Check given amount
         if (amountString != null && !amountString.isEmpty()) {
@@ -119,8 +122,12 @@ public class SpawnerCommand implements CommandExecutor {
         Player player = su.nmsProvider.getPlayer(receiver);
         // Online check
         if (player == null) {
-            su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("playerOffline")));
-            return;
+            player = this.su.nmsProvider.loadPlayer(Bukkit.getOfflinePlayer(receiver));
+            if (player == null) {
+                su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("playerOffline")));
+                return;
+            }
+            saveData = true;
         }
 
         // Check if it's an egg or not
@@ -131,13 +138,13 @@ public class SpawnerCommand implements CommandExecutor {
         }
 
         if (isEgg) {
-            handleGiveEgg(sender, player, egg, amount);
+            handleGiveEgg(sender, player, egg, amount, saveData);
         } else {
-            handleGiveSpawner(sender, player, mob, amount);
+            handleGiveSpawner(sender, player, mob, amount, saveData);
         }
     }
 
-    private void handleGiveEgg(CommandSender sender, Player receiver, String mob, int amount) {
+    private void handleGiveEgg(CommandSender sender, Player receiver, String mob, int amount, boolean saveData) {
         if (su.isUnknown(mob)) {
             su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                     .replace("%creature%", mob));
@@ -156,6 +163,9 @@ public class SpawnerCommand implements CommandExecutor {
                 return;
             }
             receiver.getInventory().addItem(su.newEggItem(entityID, amount, su.getCreatureEggName(entityID)));
+            if (saveData) {
+                receiver.saveData();
+            }
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {
@@ -181,7 +191,7 @@ public class SpawnerCommand implements CommandExecutor {
 
     }
 
-    private void handleGiveSpawner(CommandSender sender, Player receiver, String mob, int amount) {
+    private void handleGiveSpawner(CommandSender sender, Player receiver, String mob, int amount, boolean saveData) {
         if (su.isUnknown(mob)) {
             su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("unknownCreature"))
                     .replace("%creature%", mob));
@@ -201,6 +211,9 @@ public class SpawnerCommand implements CommandExecutor {
                 return;
             }
             receiver.getInventory().addItem(su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, false));
+            if (saveData) {
+                receiver.saveData();
+            }
             if (sender instanceof Player) {
                 Player pSender = (Player) sender;
                 if (pSender.getUniqueId() == receiver.getUniqueId()) {

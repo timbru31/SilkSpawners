@@ -37,7 +37,7 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("changedEgg", "&2Successfully changed the spawning egg to a(n) &e%creature% spawn egg.");
         config.addComment("changedEgg", "");
         config.addDefault("changedSpawner", "&2Successfully changed the spawner to a(n) &e%creature% spawner.");
-        config.addDefault("playerOffline", "&4Sorry this player is offline!");
+        config.addDefault("playerOffline", "&4Sorry this player is offline or has not played before!");
         config.addComment("playerOffline", "");
         config.addDefault("changingDeniedFactions", "&4You are not allowed to change or place spawners in other peoples territory!");
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");

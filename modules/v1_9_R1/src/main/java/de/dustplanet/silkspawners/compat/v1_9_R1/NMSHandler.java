@@ -13,11 +13,13 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
+import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
@@ -29,13 +31,17 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.google.common.base.CaseFormat;
+import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.server.v1_9_R1.Entity;
+import net.minecraft.server.v1_9_R1.EntityPlayer;
 import net.minecraft.server.v1_9_R1.EntityTypes;
 import net.minecraft.server.v1_9_R1.Item;
+import net.minecraft.server.v1_9_R1.MinecraftServer;
 import net.minecraft.server.v1_9_R1.NBTTagCompound;
 import net.minecraft.server.v1_9_R1.NBTTagList;
+import net.minecraft.server.v1_9_R1.PlayerInteractManager;
 import net.minecraft.server.v1_9_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_9_R1.World;
 
@@ -402,5 +408,24 @@ public class NMSHandler implements NMSProvider {
     @Override
     public Material getIronFenceMaterial() {
         return Material.IRON_FENCE;
+    }
+
+    @Override
+    public Player loadPlayer(OfflinePlayer offline) {
+        if (!offline.hasPlayedBefore()) {
+            return null;
+        }
+
+        GameProfile profile = new GameProfile(offline.getUniqueId(),
+                offline.getName() != null ? offline.getName() : offline.getUniqueId().toString());
+        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), profile,
+                new PlayerInteractManager(server.getWorldServer(0)));
+
+        Player target = entity.getBukkitEntity();
+        if (target != null) {
+            target.loadData();
+        }
+        return target;
     }
 }
