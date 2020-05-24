@@ -673,14 +673,15 @@ public class SilkUtil {
                 displayNameToMobID.put(entry.getKey().toString(), entry.getValue());
             }
         }
+        if (entities.isEmpty()) {
+            plugin.getLogger().warning(
+                    "Warning, no mobs were found via reflection! This usually means another plugin messed up Minecraft's entity registry. Please report this! This is NOT a SilkSpawners bug");
+        }
         // Let's scan for added entities by e.g MCPC+
         for (EntityType type : EntityType.values()) {
             @SuppressWarnings("deprecation")
             String name = type.getName();
-            @SuppressWarnings("deprecation")
-            short id = type.getTypeId();
-            // If name is not defined or ID -1 --> skip this bad entity
-            if (name == null || id == -1) {
+            if (name == null) {
                 continue;
             }
             if (!entities.stream().anyMatch(name::equalsIgnoreCase)) {
