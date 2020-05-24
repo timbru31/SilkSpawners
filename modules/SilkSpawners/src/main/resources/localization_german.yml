@@ -21,7 +21,7 @@ changedEgg: '&2Erfolgreich das Spawn Ei zu einem &e%creature% Ei &2geändert'
 changedSpawner: '&2Erfolgreich den Spawner zu einem &e%creature% Spawner &2geändert'
 
 playerOffline: '&4Leider ist dieser Spieler offline!'
-changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
+changingDeniedFactions: '&4Du bist nicht berechtigt in anderen Territorien Spawner zu platzieren oder zu ändern!'
 changingDeniedWorldGuard: '&4Ändern der Kreatur durch WorldGuard Region nicht erlaubt!'
 getSpawnerType: '&2Dies ist ein &e%creature% Spawner'
 unknownArgument: '&4Unbekanntes Argument. Hilfe? &e/silkspawners help'

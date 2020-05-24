@@ -137,7 +137,7 @@ vanillaBossBar:
   # Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID
   style: SOLID
 
-# Prevent that a spawner is changed via eggs in other territories
+# Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID
 factionsSupport: false
 
 # Puts more information out on startup

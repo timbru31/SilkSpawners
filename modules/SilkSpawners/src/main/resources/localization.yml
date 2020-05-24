@@ -21,7 +21,7 @@ changedEgg: '&2Successfully changed the spawning egg to a(n) &e%creature% spawn 
 changedSpawner: '&2Successfully changed the spawner to a(n) &e%creature% spawner.'
 
 playerOffline: '&4Sorry this player is offline!'
-changingDeniedFactions: '&4You are not allowed to change spawners in other peoples territory!'
+changingDeniedFactions: '&4You are not allowed to change or place spawners in other peoples territory!'
 changingDeniedWorldGuard: '&4Changing spawner type denied by WorldGuard protection.'
 getSpawnerType: '&2This is a(n) &e%creature% spawner&2.'
 unknownArgument: '&4Unrecognized argument. See &e/silkspawners help'

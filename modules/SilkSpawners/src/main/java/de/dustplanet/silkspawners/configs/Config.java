@@ -118,7 +118,8 @@ public class Config extends AbstractConfiguration {
         config.addComment("vanillaBossBar.style", "", "# Valid styles are SEGMENTED_10, SEGMENTED_12, SEGMENTED_20, SEGMENTED_6, SOLID");
         config.addComment("vanillaBossBar", "", "# Configure displaying with 1.9 BossBarApi, time is in seconds");
         config.addDefault("factionsSupport", false);
-        config.addComment("factionsSupport", "", "# Prevent that a spawner is changed via eggs in other territories");
+        config.addComment("factionsSupport", "",
+                "# Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID");
         config.addDefault("verboseConfig", false);
         config.addComment("verboseConfig", "", "# Puts more information out on startup");
         config.addDefault("useReflection", true);

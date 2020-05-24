@@ -39,7 +39,7 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("changedSpawner", "&2Successfully changed the spawner to a(n) &e%creature% spawner.");
         config.addDefault("playerOffline", "&4Sorry this player is offline!");
         config.addComment("playerOffline", "");
-        config.addDefault("changingDeniedFactions", "&4You are not allowed to change spawners in other peoples territory!");
+        config.addDefault("changingDeniedFactions", "&4You are not allowed to change or place spawners in other peoples territory!");
         config.addDefault("changingDeniedWorldGuard", "&4Changing spawner type denied by WorldGuard protection.");
         config.addDefault("getSpawnerType", "&2This is a(n) &e%creature% spawner&2.");
         config.addDefault("unknownArgument", "&4Unrecognized argument. See &e/silkspawners help");

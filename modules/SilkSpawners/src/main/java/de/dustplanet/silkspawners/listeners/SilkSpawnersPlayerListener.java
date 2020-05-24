@@ -81,6 +81,8 @@ public class SilkSpawnersPlayerListener implements Listener {
         if (item != null && su.nmsProvider.getSpawnEggMaterials().contains(item.getType())) {
             // Get the entityID
             String entityID = su.getStoredEggEntityID(item);
+            boolean disableChangeTypeWithEgg = plugin.config.getBoolean("disableChangeTypeWithEgg", false);
+
             // Clicked spawner with monster egg to change type
             if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
                 Action action = event.getAction();
@@ -88,75 +90,63 @@ public class SilkSpawnersPlayerListener implements Listener {
                     return;
                 }
 
-                if (action != Action.RIGHT_CLICK_BLOCK && plugin.config.getBoolean("disableChangeTypeWithEgg", false)) {
-                    return;
-                }
-
-                if (!su.canBuildHere(player, block.getLocation())) {
-                    return;
-                }
-
-                // Mob
-                String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
-
-                if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
-                    su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                            plugin.localization.getString("noPermissionChangingWithEggs")));
-                    event.setCancelled(true);
-                    return;
-                }
-
-                if (plugin.config.getBoolean("factionsSupport", false) && su.isPluginEnabled("Factions")) {
-                    try {
-                        MPlayer mp = MPlayer.get(player);
-                        Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
-                        if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
-                            event.setCancelled(true);
-                            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                                    plugin.localization.getString("changingDeniedFactions")));
-                            return;
-                        }
-                    } catch (@SuppressWarnings("unused") NoClassDefFoundError e) {
-                        // Try for legacy 1.6 factions, e.g. FactionsUUID
-                        FPlayers fPlayers = FPlayers.getInstance();
-                        FPlayer fPlayer = fPlayers.getByPlayer(player);
-                        Board board = Board.getInstance();
-                        com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
-                        if (!blockFaction.isWilderness() && !fPlayer.isInOwnTerritory()) {
-                            event.setCancelled(true);
-                            su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                                    plugin.localization.getString("changingDeniedFactions")));
-                            return;
-                        }
+                if (!disableChangeTypeWithEgg) {
+                    if (!su.canBuildHere(player, block.getLocation())) {
+                        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
+                                plugin.localization.getString("changingDeniedWorldGuard")));
+                        return;
                     }
-                }
 
-                // Call the event and maybe change things!
-                SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
-                        su.getSpawnerEntityID(block), 1);
-                plugin.getServer().getPluginManager().callEvent(changeEvent);
-                // See if we need to stop
-                if (changeEvent.isCancelled()) {
+                    if (!checkIfFactionsPermitsBlockInteractions(player, block)) {
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    // Mob
+                    String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
+
+                    if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
+                        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
+                                plugin.localization.getString("noPermissionChangingWithEggs")));
+                        event.setCancelled(true);
+                        return;
+                    }
+
+                    // Call the event and maybe change things!
+                    SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
+                            su.getSpawnerEntityID(block), 1);
+                    plugin.getServer().getPluginManager().callEvent(changeEvent);
+                    // See if we need to stop
+                    if (changeEvent.isCancelled()) {
+                        event.setCancelled(true);
+                        return;
+                    }
+                    // Get the new ID (might be changed)
+                    entityID = changeEvent.getEntityID();
+
+                    su.setSpawnerType(block, entityID, player,
+                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
+                    su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
+                            .replace("%creature%", su.getCreatureName(entityID)));
+
+                    // Consume egg
+                    if (plugin.config.getBoolean("consumeEgg", true)) {
+                        su.nmsProvider.reduceEggs(player);
+                        // Prevent normal eggs reducing
+                        event.setCancelled(true);
+                    }
+                } else {
                     event.setCancelled(true);
-                    return;
                 }
-                // Get the new ID (might be changed)
-                entityID = changeEvent.getEntityID();
-
-                su.setSpawnerType(block, entityID, player,
-                        ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
-                su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
-                        .replace("%creature%", su.getCreatureName(entityID)));
-
-                // Consume egg
-                if (plugin.config.getBoolean("consumeEgg", true)) {
-                    su.nmsProvider.reduceEggs(player);
-                    // Prevent normal eggs reducing
-                    event.setCancelled(true);
-                }
-                // Normal spawning
-            } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
+            }
+            // Normal spawning
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
                 if (plugin.config.getBoolean("spawnEggToSpawner", false)) {
+                    if (!checkIfFactionsPermitsBlockInteractions(player, block)) {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     Block targetBlock = block.getRelative(BlockFace.UP);
                     // Check if block above is air
                     if (targetBlock.getType() == Material.AIR) {
@@ -214,5 +204,31 @@ public class SilkSpawnersPlayerListener implements Listener {
                 }
             }
         }
+    }
+
+    public boolean checkIfFactionsPermitsBlockInteractions(Player player, Block block) {
+        if (plugin.config.getBoolean("factionsSupport", false) && su.isPluginEnabled("Factions")) {
+            try {
+                MPlayer mp = MPlayer.get(player);
+                Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
+                if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
+                    su.sendMessage(player,
+                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                    return false;
+                }
+            } catch (@SuppressWarnings("unused") NoClassDefFoundError e) {
+                // Try for legacy 1.6 factions, e.g. FactionsUUID
+                FPlayers fPlayers = FPlayers.getInstance();
+                FPlayer fPlayer = fPlayers.getByPlayer(player);
+                Board board = Board.getInstance();
+                com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
+                if (!blockFaction.isWilderness() && !fPlayer.isInOwnTerritory()) {
+                    su.sendMessage(player,
+                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }
