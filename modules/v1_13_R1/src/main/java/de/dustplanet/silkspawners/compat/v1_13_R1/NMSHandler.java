@@ -4,9 +4,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -89,15 +89,13 @@ public class NMSHandler implements NMSProvider {
     public List<String> rawEntityMap() {
         List<String> entities = new ArrayList<>();
         try {
-            Field mapField = RegistryMaterials.class.getDeclaredField("b");
-            mapField.setAccessible(true);
             RegistryMaterials<MinecraftKey, EntityTypes<?>> registry = EntityTypes.REGISTRY;
-            @SuppressWarnings("unchecked")
-            Map<EntityTypes<?>, MinecraftKey> map = (Map<EntityTypes<?>, MinecraftKey>) mapField.get(registry);
-            for (MinecraftKey minecraftKey : map.values()) {
-                entities.add(minecraftKey.getKey());
+            Iterator<EntityTypes<?>> iterator = registry.iterator();
+            while (iterator.hasNext()) {
+                EntityTypes<?> next = iterator.next();
+                entities.add(EntityTypes.getName(next).getKey());
             }
-        } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+        } catch (SecurityException | IllegalArgumentException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }

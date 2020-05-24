@@ -42,8 +42,6 @@ import net.minecraft.server.v1_15_R1.IRegistry;
 import net.minecraft.server.v1_15_R1.Item;
 import net.minecraft.server.v1_15_R1.MinecraftKey;
 import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.RegistryID;
-import net.minecraft.server.v1_15_R1.RegistryMaterials;
 import net.minecraft.server.v1_15_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_15_R1.TileEntityTypes;
 import net.minecraft.server.v1_15_R1.World;
@@ -91,17 +89,13 @@ public class NMSHandler implements NMSProvider {
     public List<String> rawEntityMap() {
         List<String> entities = new ArrayList<>();
         try {
-            Field mapField = RegistryMaterials.class.getDeclaredField("b");
-            mapField.setAccessible(true);
             IRegistry<EntityTypes<?>> entityTypeRegistry = IRegistry.ENTITY_TYPE;
-            @SuppressWarnings("unchecked")
-            RegistryID<EntityTypes<?>> registryID = (RegistryID<EntityTypes<?>>) mapField.get(entityTypeRegistry);
-            Iterator<EntityTypes<?>> iterator = registryID.iterator();
+            Iterator<EntityTypes<?>> iterator = entityTypeRegistry.iterator();
             while (iterator.hasNext()) {
                 EntityTypes<?> next = iterator.next();
                 entities.add(EntityTypes.getName(next).getKey());
             }
-        } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+        } catch (SecurityException | IllegalArgumentException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
             e.printStackTrace();
         }
