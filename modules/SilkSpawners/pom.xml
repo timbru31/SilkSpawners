@@ -23,10 +23,6 @@
       <url>https://repo.codemc.org/repository/maven-public</url>
     </repository>
     <repository>
-      <id>dustplanet</id>
-      <url>https://repo.dustplanet.de/artifactory/private</url>
-    </repository>
-    <repository>
       <id>dustplanet-releases</id>
       <url>https://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
@@ -102,7 +98,7 @@
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>Factions</artifactId>
-      <version>1.6.9.5-U0.5.12</version>
+      <version>1.6.9.5-U0.5.13</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
