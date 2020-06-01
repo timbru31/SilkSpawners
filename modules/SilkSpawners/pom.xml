@@ -273,8 +273,61 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>8.33</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <configLocation>https://dustplanet.de/checkstyle.xml</configLocation>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.0.0</version>
+        <configuration>
+          <effort>Max</effort>
+          <threshold>Low</threshold>
+          <failOnError>true</failOnError>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.10.1</version>
+            </plugin>
+            <plugin>
+              <groupId>com.mebigfatguy.sb-contrib</groupId>
+              <artifactId>sb-contrib</artifactId>
+              <version>7.4.7</version>
+            </plugin>
+          </plugins>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <targetJdk>1.8</targetJdk>
+          <rulesets>
+            <ruleset>https://dustplanet.de/pmd.xml</ruleset>
+          </rulesets>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <scm>
     <url>https://github.com/timbru31/SilkSpawners</url>
