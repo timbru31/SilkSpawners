@@ -118,23 +118,23 @@
         </configuration>
       </plugin>
     </plugins>
-    
-    <reporting>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-pmd-plugin</artifactId>
-          <version>3.13.0</version>
-          <configuration>
-            <targetJdk>1.8</targetJdk>
-            <rulesets>
-              <ruleset>https://dustplanet.de/pmd.xml</ruleset>
-            </rulesets>
-          </configuration>
-        </plugin>
-      </plugins>
-    </reporting>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <targetJdk>1.8</targetJdk>
+          <rulesets>
+            <ruleset>https://dustplanet.de/pmd.xml</ruleset>
+          </rulesets>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
   <scm>
     <url>https://github.com/timbru31/SilkSpawners</url>
