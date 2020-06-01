@@ -1,6 +1,6 @@
 name: Build the plugin
 
-on: [push, pull_request]
+on: push
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
           java -version
           mvn --version
       - name: Build with Maven
-        run: mvn -s conf/settings.xml "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B -V clean package
+        run: mvn -s conf/settings.xml "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
         env:
           CI_USER: ${{ secrets.CI_USER }}
           CI_PASSWORD: ${{ secrets.CI_PASSWORD }}
