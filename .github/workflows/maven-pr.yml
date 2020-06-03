@@ -27,10 +27,12 @@ jobs:
           mvn --version
 
       - name: Build CraftBukkit versions
+        # See https://issues.apache.org/jira/browse/MDEP-568 and https://github.com/apache/maven-dependency-plugin/pull/2
         run: |
+          mvn com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=de.dustplanet -B || rm -r ~/.m2/repository/org/
           mkdir -p BuildTools
           cd BuildTools
-          wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+          wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.15.2-R0.1-SNAPSHOT/craftbukkit-1.15.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.14.4-R0.1-SNAPSHOT/craftbukkit-1.14.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13.2-R0.1-SNAPSHOT/craftbukkit-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
