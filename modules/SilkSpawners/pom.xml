@@ -27,10 +27,6 @@
       <url>https://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
     <repository>
-      <id>dustplanet-snapshots</id>
-      <url>https://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
-    </repository>
-    <repository>
       <id>dustplanet-libs</id>
       <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
     </repository>
