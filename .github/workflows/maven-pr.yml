@@ -1,0 +1,50 @@
+name: Build the plugin
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Set up Java 8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+
+      - name: Version information
+        run: |
+          java -version
+          mvn --version
+
+      - name: Build CraftBukkit versions
+        # See https://issues.apache.org/jira/browse/MDEP-568 and https://github.com/apache/maven-dependency-plugin/pull/2
+        run: |
+          mvn com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=de.dustplanet -B || rm -r ~/.m2/repository/org/
+          mkdir -p BuildTools
+          cd BuildTools
+          wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.15.2-R0.1-SNAPSHOT/craftbukkit-1.15.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.14.4-R0.1-SNAPSHOT/craftbukkit-1.14.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13.2-R0.1-SNAPSHOT/craftbukkit-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13-R0.1-SNAPSHOT/craftbukkit-1.13-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.12.2-R0.1-SNAPSHOT/craftbukkit-1.12.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.12.2
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.11.2-R0.1-SNAPSHOT/craftbukkit-1.11.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.11.2
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.10.2-R0.1-SNAPSHOT/craftbukkit-1.10.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.10.2
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.9.4-R0.1-SNAPSHOT/craftbukkit-1.9.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.4
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.9.2-R0.1-SNAPSHOT/craftbukkit-1.9.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.2
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8.8-R0.1-SNAPSHOT/craftbukkit-1.8.8-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.8
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8.3-R0.1-SNAPSHOT/craftbukkit-1.8.3-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.3
+          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8-R0.1-SNAPSHOT/craftbukkit-1.8-R0.1-SNAPSHOT.jar  ] || java -jar BuildTools.jar --rev 1.8
+
+      - name: Build with Maven
+        run: mvn "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package

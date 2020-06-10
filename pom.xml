@@ -35,12 +35,12 @@
     <module>modules/v1_15_R1</module>
     <module>modules/SilkSpawners</module>
   </modules>
-  
+
   <dependencies>
     <dependency>
       <groupId>com.github.spotbugs</groupId>
       <artifactId>spotbugs-annotations</artifactId>
-      <version>4.0.3</version>
+      <version>4.0.4</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -116,6 +116,11 @@
             </plugin>
           </plugins>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.2</version>
       </plugin>
     </plugins>
   </build>

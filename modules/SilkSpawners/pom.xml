@@ -27,10 +27,6 @@
       <url>https://repo.dustplanet.de/artifactory/ext-release-local</url>
     </repository>
     <repository>
-      <id>dustplanet-snapshots</id>
-      <url>https://repo.dustplanet.de/artifactory/ext-snapshot-local</url>
-    </repository>
-    <repository>
       <id>dustplanet-libs</id>
       <url>https://repo.dustplanet.de/artifactory/libs-release-local</url>
     </repository>
@@ -235,7 +231,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.3</version>
+        <version>3.2.4</version>
         <executions>
           <execution>
             <phase>package</phase>
