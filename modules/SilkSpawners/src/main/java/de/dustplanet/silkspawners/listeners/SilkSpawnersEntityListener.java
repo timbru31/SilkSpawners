@@ -24,43 +24,43 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SilkSpawnersEntityListener implements Listener {
-    private SilkSpawners plugin;
-    private SilkUtil su;
-    private Random rnd;
+    private final SilkSpawners plugin;
+    private final SilkUtil su;
+    private final Random rnd;
 
-    public SilkSpawnersEntityListener(SilkSpawners instance, SilkUtil util) {
+    public SilkSpawnersEntityListener(final SilkSpawners instance, final SilkUtil util) {
         plugin = instance;
         su = util;
         rnd = new Random();
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onEntiyExplode(EntityExplodeEvent event) {
+    public void onEntiyExplode(final EntityExplodeEvent event) {
         /*
          * Skip if entity is not known or null or EnderDragon calls or this event explosionChance is 0
          */
-        Entity entity = event.getEntity();
+        final Entity entity = event.getEntity();
         if (event.getEntity() == null || entity instanceof EnderDragon || plugin.config.getInt("explosionDropChance", 30) == 0) {
             return;
         }
 
         boolean drop = true;
         if (plugin.config.getBoolean("permissionExplode", false) && entity instanceof TNTPrimed) {
-            Entity igniter = ((TNTPrimed) entity).getSource();
+            final Entity igniter = ((TNTPrimed) entity).getSource();
             if (igniter != null && igniter instanceof Player) {
-                Player sourcePlayer = (Player) igniter;
+                final Player sourcePlayer = (Player) igniter;
                 drop = sourcePlayer.hasPermission("silkspawners.explodedrop");
             }
         }
 
         // Check if a spawner block is on the list
         if (drop) {
-            for (Block block : event.blockList()) {
+            for (final Block block : event.blockList()) {
                 // We have a spawner
                 if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
                     // Roll the dice
-                    int randomNumber = rnd.nextInt(100);
-                    String entityID = su.getSpawnerEntityID(block);
+                    final int randomNumber = rnd.nextInt(100);
+                    final String entityID = su.getSpawnerEntityID(block);
                     // Check if we should drop a block
                     int dropChance = 0;
                     if (plugin.mobs.contains("creatures." + entityID + ".explosionDropChance")) {
@@ -69,7 +69,7 @@ public class SilkSpawnersEntityListener implements Listener {
                         dropChance = plugin.config.getInt("explosionDropChance", 100);
                     }
                     if (randomNumber < dropChance) {
-                        World world = block.getWorld();
+                        final World world = block.getWorld();
                         world.dropItemNaturally(block.getLocation(),
                                 su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), 1, false));
                     }

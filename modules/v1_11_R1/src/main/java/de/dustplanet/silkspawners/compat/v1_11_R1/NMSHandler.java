@@ -62,12 +62,12 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void spawnEntity(org.bukkit.World w, String entityID, double x, double y, double z) {
-        NBTTagCompound tag = new NBTTagCompound();
+    public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z) {
+        final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("id", entityID);
 
-        World world = ((CraftWorld) w).getHandle();
-        Entity entity = EntityTypes.a(tag, world);
+        final World world = ((CraftWorld) w).getHandle();
+        final Entity entity = EntityTypes.a(tag, world);
         if (entity == null) {
             Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
             return;
@@ -79,26 +79,26 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public SortedMap<Integer, String> legacyRawEntityMap() {
-        SortedMap<Integer, String> sortedMap = new TreeMap<>();
+        final SortedMap<Integer, String> sortedMap = new TreeMap<>();
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
             // TODO Needs 1.11 source
-            Field field = EntityTypes.class.getDeclaredField("g");
-            Field field2 = EntityTypes.class.getDeclaredField("b");
+            final Field field = EntityTypes.class.getDeclaredField("g");
+            final Field field2 = EntityTypes.class.getDeclaredField("b");
             field.setAccessible(true);
             @SuppressWarnings("unchecked")
-            List<String> list = (List<String>) field.get(null);
+            final List<String> list = (List<String>) field.get(null);
             @SuppressWarnings("unchecked")
-            RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2
+            final RegistryMaterials<MinecraftKey, Class<? extends Entity>> registry = (RegistryMaterials<MinecraftKey, Class<? extends Entity>>) field2
                     .get(null);
             // For each entry in our name -- ID map but it into the sortedMap
             for (int entityID = 0; entityID < list.size(); entityID++) {
-                String displayName = list.get(entityID);
+                final String displayName = list.get(entityID);
                 if (displayName == null) {
                     continue;
                 }
-                Class<? extends Entity> entity = registry.getId(entityID);
+                final Class<? extends Entity> entity = registry.getId(entityID);
                 if (entity == null) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is null, entityID: " + entityID);
                     continue;
@@ -107,7 +107,7 @@ public class NMSHandler implements NMSProvider {
 
                 try {
                     minecraftKey = registry.b(entity);
-                } catch (@SuppressWarnings("unused") ClassCastException e) {
+                } catch (@SuppressWarnings("unused") final ClassCastException e) {
                     Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entityID: " + entityID);
                     Bukkit.getLogger()
                             .severe("[SilkSpawners] Failed to dump entity map: entity is invalid, entity: " + entity.getSimpleName());
@@ -120,7 +120,7 @@ public class NMSHandler implements NMSProvider {
                             .severe("[SilkSpawners] Failed to dump entity map: minecraftKey is null, entity: " + entity.getSimpleName());
                     continue;
                 }
-                String a = minecraftKey.a();
+                final String a = minecraftKey.a();
                 sortedMap.put(entityID, a);
             }
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
@@ -131,14 +131,14 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public String getMobNameOfSpawner(BlockState blockState) {
+    public String getMobNameOfSpawner(final BlockState blockState) {
         // Get our spawner;
-        CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
+        final CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
         // Get the mob ID ourselves if we can
         try {
-            TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
+            final TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             // Get the name from the field of our spawner
-            MinecraftKey minecraftKey = tile.getSpawner().getMobName();
+            final MinecraftKey minecraftKey = tile.getSpawner().getMobName();
             return minecraftKey != null ? minecraftKey.b() : "";
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
@@ -153,14 +153,14 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public boolean setMobNameOfSpawner(BlockState blockState, String mobID) {
+    public boolean setMobNameOfSpawner(final BlockState blockState, final String mobID) {
         // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
-        String safeMobID = caseFormatOf(mobID.replace(" ", "_")).to(CaseFormat.LOWER_UNDERSCORE, mobID.replace(" ", "_"))
+        final String safeMobID = caseFormatOf(mobID.replace(" ", "_")).to(CaseFormat.LOWER_UNDERSCORE, mobID.replace(" ", "_"))
                 .toLowerCase(Locale.ENGLISH);
-        CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
+        final CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {
-            TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
+            final TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
             tile.getSpawner().setMobName(new MinecraftKey(safeMobID));
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -171,14 +171,14 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack setNBTEntityID(ItemStack item, String entity) {
+    public ItemStack setNBTEntityID(final ItemStack item, final String entity) {
         if (item == null || entity == null || entity.isEmpty()) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
             return null;
         }
 
         net.minecraft.server.v1_11_R1.ItemStack itemStack = null;
-        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
 
@@ -228,11 +228,11 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     @Nullable
-    public String getSilkSpawnersNBTEntityID(ItemStack item) {
+    public String getSilkSpawnersNBTEntityID(final ItemStack item) {
         net.minecraft.server.v1_11_R1.ItemStack itemStack = null;
-        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getTag();
+        final NBTTagCompound tag = itemStack.getTag();
 
         if (tag == null || !tag.hasKey("SilkSpawners")) {
             return null;
@@ -242,9 +242,9 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     @Nullable
-    public String getVanillaNBTEntityID(ItemStack item) {
+    public String getVanillaNBTEntityID(final ItemStack item) {
         net.minecraft.server.v1_11_R1.ItemStack itemStack = null;
-        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
 
@@ -272,8 +272,8 @@ public class NMSHandler implements NMSProvider {
      * @return the found block or null
      */
     @Override
-    public Block getSpawnerFacing(Player player, int distance) {
-        Block block = player.getTargetBlock((Set<Material>) null, distance);
+    public Block getSpawnerFacing(final Player player, final int distance) {
+        final Block block = player.getTargetBlock((Set<Material>) null, distance);
         if (block == null || block.getType() != Material.MOB_SPAWNER) {
             return null;
         }
@@ -281,10 +281,10 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack newEggItem(String entityID, int amount, String displayName) {
-        ItemStack item = new ItemStack(Material.MONSTER_EGG, amount);
+    public ItemStack newEggItem(final String entityID, final int amount, final String displayName) {
+        final ItemStack item = new ItemStack(Material.MONSTER_EGG, amount);
         net.minecraft.server.v1_11_R1.ItemStack itemStack = null;
-        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
 
@@ -293,6 +293,12 @@ public class NMSHandler implements NMSProvider {
             tag = new NBTTagCompound();
             itemStack.setTag(tag);
         }
+
+        if (!tag.hasKey("SilkSpawners")) {
+            tag.set("SilkSpawners", new NBTTagCompound());
+        }
+
+        tag.getCompound("SilkSpawners").setString("entity", entityID);
 
         if (!tag.hasKey("EntityTag")) {
             tag.set("EntityTag", new NBTTagCompound());
@@ -310,9 +316,9 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public String getVanillaEggNBTEntityID(ItemStack item) {
+    public String getVanillaEggNBTEntityID(final ItemStack item) {
         net.minecraft.server.v1_11_R1.ItemStack itemStack = null;
-        CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         NBTTagCompound tag = itemStack.getTag();
 
@@ -328,9 +334,10 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
-        BarColor color = BarColor.valueOf(colorName.toUpperCase());
-        BarStyle style = BarStyle.valueOf(styleName.toUpperCase());
+    public void displayBossBar(final String title, final String colorName, final String styleName, final Player player, final Plugin plugin,
+            final int period) {
+        final BarColor color = BarColor.valueOf(colorName.toUpperCase());
+        final BarStyle style = BarStyle.valueOf(styleName.toUpperCase());
         final BossBar bar = Bukkit.createBossBar(title, color, style);
         bar.addPlayer(player);
         bar.setVisible(true);
@@ -338,8 +345,8 @@ public class NMSHandler implements NMSProvider {
         new BukkitRunnable() {
             @Override
             public void run() {
-                double progress = bar.getProgress();
-                double newProgress = progress - interval;
+                final double progress = bar.getProgress();
+                final double newProgress = progress - interval;
                 if (progress <= 0.0 || newProgress <= 0.0) {
                     bar.setVisible(false);
                     bar.removeAll();
@@ -352,13 +359,13 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public Player getPlayer(String playerUUIDOrName) {
+    public Player getPlayer(final String playerUUIDOrName) {
         try {
             // Try if the String could be an UUID
-            UUID playerUUID = UUID.fromString(playerUUIDOrName);
+            final UUID playerUUID = UUID.fromString(playerUUIDOrName);
             return Bukkit.getPlayer(playerUUID);
-        } catch (@SuppressWarnings("unused") IllegalArgumentException e) {
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+        } catch (@SuppressWarnings("unused") final IllegalArgumentException e) {
+            for (final Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 if (onlinePlayer.getName().equalsIgnoreCase(playerUUIDOrName)) {
                     return onlinePlayer;
                 }
@@ -368,14 +375,14 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack getItemInHand(Player player) {
+    public ItemStack getItemInHand(final Player player) {
         return player.getInventory().getItemInMainHand();
     }
 
     @Override
-    public void reduceEggs(Player player) {
-        ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
-        ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
+    public void reduceEggs(final Player player) {
+        final ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+        final ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
         ItemStack eggs;
         if (itemInMainHand.getType() == Material.MONSTER_EGG) {
             eggs = itemInMainHand;
@@ -401,10 +408,10 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public ItemStack getSpawnerItemInHand(Player player) {
-        PlayerInventory inv = player.getInventory();
-        ItemStack mainHand = inv.getItemInMainHand();
-        ItemStack offHand = inv.getItemInOffHand();
+    public ItemStack getSpawnerItemInHand(final Player player) {
+        final PlayerInventory inv = player.getInventory();
+        final ItemStack mainHand = inv.getItemInMainHand();
+        final ItemStack offHand = inv.getItemInOffHand();
         if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
                 && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
             return null; // not determinable
@@ -417,10 +424,10 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void setSpawnerItemInHand(Player player, ItemStack newItem) {
-        PlayerInventory inv = player.getInventory();
-        ItemStack mainHand = inv.getItemInMainHand();
-        ItemStack offHand = inv.getItemInOffHand();
+    public void setSpawnerItemInHand(final Player player, final ItemStack newItem) {
+        final PlayerInventory inv = player.getInventory();
+        final ItemStack mainHand = inv.getItemInMainHand();
+        final ItemStack offHand = inv.getItemInOffHand();
         if ((mainHand.getType() == Material.MONSTER_EGG || mainHand.getType() == Material.MOB_SPAWNER)
                 && (offHand.getType() == Material.MONSTER_EGG || offHand.getType() == Material.MOB_SPAWNER)) {
             return; // not determinable
@@ -447,18 +454,18 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public Player loadPlayer(OfflinePlayer offline) {
+    public Player loadPlayer(final OfflinePlayer offline) {
         if (!offline.hasPlayedBefore()) {
             return null;
         }
 
-        GameProfile profile = new GameProfile(offline.getUniqueId(),
+        final GameProfile profile = new GameProfile(offline.getUniqueId(),
                 offline.getName() != null ? offline.getName() : offline.getUniqueId().toString());
-        MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), profile,
+        final MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
+        final EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(0), profile,
                 new PlayerInteractManager(server.getWorldServer(0)));
 
-        Player target = entity.getBukkitEntity();
+        final Player target = entity.getBukkitEntity();
         if (target != null) {
             target.loadData();
         }

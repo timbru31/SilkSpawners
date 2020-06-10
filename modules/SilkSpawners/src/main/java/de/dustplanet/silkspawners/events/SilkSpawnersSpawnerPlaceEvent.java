@@ -26,7 +26,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     /**
      * Player who triggered the event.
      */
-    private Player player;
+    private final Player player;
 
     /**
      * new entity ID.
@@ -36,7 +36,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     /**
      * Block involved.
      */
-    private Block block;
+    private final Block block;
 
     /**
      * Spawner involved.
@@ -50,7 +50,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
      * @param block is allowed to be null
      * @param entityID new entity ID
      */
-    public SilkSpawnersSpawnerPlaceEvent(Player player, Block block, String entityID) {
+    public SilkSpawnersSpawnerPlaceEvent(final Player player, final Block block, final String entityID) {
         this.player = player;
         this.block = block;
         if (block != null) {
@@ -75,7 +75,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
      * @param cancel whether the event should be cancelled or not
      */
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 
@@ -125,7 +125,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
      * @param entityID the new entity ID
      */
     @Override
-    public void setEntityID(String entityID) {
+    public void setEntityID(final String entityID) {
         this.entityID = entityID;
     }
 

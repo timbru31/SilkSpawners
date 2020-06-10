@@ -23,17 +23,17 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SilkSpawnersInventoryListener implements Listener {
-    private SilkSpawners plugin;
-    private SilkUtil su;
+    private final SilkSpawners plugin;
+    private final SilkUtil su;
 
-    public SilkSpawnersInventoryListener(SilkSpawners instance, SilkUtil util) {
+    public SilkSpawnersInventoryListener(final SilkSpawners instance, final SilkUtil util) {
         plugin = instance;
         su = util;
     }
 
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPrepareItemCraftEvent(PrepareItemCraftEvent event) {
+    public void onPrepareItemCraftEvent(final PrepareItemCraftEvent event) {
         if (event.getRecipe() == null || event.getRecipe().getResult() == null) {
             return;
         }
@@ -44,9 +44,9 @@ public class SilkSpawnersInventoryListener implements Listener {
 
         ItemStack result = event.getRecipe().getResult();
 
-        for (ItemStack itemStack : event.getInventory().getContents()) {
+        for (final ItemStack itemStack : event.getInventory().getContents()) {
             if (su.nmsProvider.getSpawnEggMaterials().contains(itemStack.getType()) && itemStack.getDurability() == 0) {
-                String entityID = su.getStoredEggEntityID(itemStack);
+                final String entityID = su.getStoredEggEntityID(itemStack);
                 result = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), result.getAmount(), true);
                 event.getInventory().setResult(result);
             }
@@ -54,7 +54,7 @@ public class SilkSpawnersInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onItemCraft(CraftItemEvent event) {
+    public void onItemCraft(final CraftItemEvent event) {
         if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
@@ -67,15 +67,15 @@ public class SilkSpawnersInventoryListener implements Listener {
             return;
         }
 
-        Player player = (Player) event.getWhoClicked();
+        final Player player = (Player) event.getWhoClicked();
 
         String entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
         if (entityID == null) {
             entityID = su.getDefaultEntityID();
         }
-        String creatureName = su.getCreatureName(entityID);
+        final String creatureName = su.getCreatureName(entityID);
 
-        String spawnerName = creatureName.toLowerCase(Locale.ENGLISH).replace(" ", "");
+        final String spawnerName = creatureName.toLowerCase(Locale.ENGLISH).replace(" ", "");
         if (!player.hasPermission("silkspawners.craft." + spawnerName)) {
             event.setCancelled(true);
             su.sendMessage(player,
@@ -88,7 +88,7 @@ public class SilkSpawnersInventoryListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onInventoryClick(InventoryClickEvent event) {
+    public void onInventoryClick(final InventoryClickEvent event) {
         if (event == null || event.getCurrentItem() == null || event.getWhoClicked() == null) {
             return;
         }
@@ -101,14 +101,14 @@ public class SilkSpawnersInventoryListener implements Listener {
             return;
         }
 
-        Player player = (Player) event.getWhoClicked();
+        final Player player = (Player) event.getWhoClicked();
 
         String entityID = su.getStoredSpawnerItemEntityID(event.getCurrentItem());
 
         if (entityID == null) {
             entityID = su.getDefaultEntityID();
         }
-        String creatureName = su.getCreatureName(entityID);
+        final String creatureName = su.getCreatureName(entityID);
 
         if (plugin.config.getBoolean("notifyOnClick") && player.hasPermission("silkspawners.info")) {
             su.notify(player, creatureName);

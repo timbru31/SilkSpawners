@@ -27,7 +27,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     /**
      * Player who triggered the event.
      */
-    private Player player;
+    private final Player player;
 
     /**
      * new entity ID.
@@ -42,7 +42,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
     /**
      * Block involved.
      */
-    private Block block;
+    private final Block block;
 
     /**
      * Spawner involved.
@@ -63,7 +63,8 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * @param oldEntityID of the spawner
      * @param amount of items being changed
      */
-    public SilkSpawnersSpawnerChangeEvent(Player player, Block block, String entityID, String oldEntityID, int amount) {
+    public SilkSpawnersSpawnerChangeEvent(final Player player, final Block block, final String entityID, final String oldEntityID,
+            final int amount) {
         this.player = player;
         this.block = block;
         if (block != null) {
@@ -90,7 +91,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * @param cancel whether the event should be cancelled or not
      */
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 
@@ -140,7 +141,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      * @param entityID the new entity ID
      */
     @Override
-    public void setEntityID(String entityID) {
+    public void setEntityID(final String entityID) {
         this.entityID = entityID;
     }
 
@@ -167,7 +168,7 @@ public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable
      *
      * @param amount of the ItemStack
      */
-    public void setAmount(int amount) {
+    public void setAmount(final int amount) {
         this.amount = amount;
     }
 

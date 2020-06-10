@@ -29,13 +29,13 @@ import org.yaml.snakeyaml.representer.Representer;
  * @author xGhOsTkiLLeRx
  */
 public class CommentedConfiguration extends YamlConfiguration {
-    private HashMap<String, String> comments;
-    private File file;
+    private final HashMap<String, String> comments;
+    private final File file;
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
     private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
 
-    public CommentedConfiguration(File file) {
+    public CommentedConfiguration(final File file) {
         super();
         comments = new HashMap<>();
         this.file = file;
@@ -75,7 +75,7 @@ public class CommentedConfiguration extends YamlConfiguration {
         // Save the config just like normal
         try {
             super.save(file);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             saved = false;
             System.out.println("Failed to save the file: " + e.getMessage());
             e.printStackTrace();
@@ -84,7 +84,7 @@ public class CommentedConfiguration extends YamlConfiguration {
         // if there's comments to add and it saved fine, we need to add comments
         if (!comments.isEmpty() && saved) {
             // String array of each line in the config file
-            String[] yamlContents = convertFileToString(file).split("[" + System.lineSeparator() + "]");
+            final String[] yamlContents = convertFileToString(file).split("[" + System.lineSeparator() + "]");
 
             // This will hold the newly formatted line
             String newContents = "";
@@ -138,12 +138,12 @@ public class CommentedConfiguration extends YamlConfiguration {
                             // Path is shallower, calculate current depth from
                             // whitespace (whitespace / 2) and subtract that
                             // many levels from the currentPath
-                            int newDepth = whiteSpace / 2;
+                            final int newDepth = whiteSpace / 2;
                             for (int i = 0; i < depth - newDepth; i++) {
                                 currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf('.')), "");
                             }
                             // Grab the index of the final period
-                            int lastIndex = currentPath.lastIndexOf('.');
+                            final int lastIndex = currentPath.lastIndexOf('.');
                             if (lastIndex < 0) {
                                 // if there isn't a final period, set the
                                 // current path to nothing because we're at root
@@ -161,7 +161,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                         } else {
                             // Path is same depth, replace the last path node
                             // name to the current node name
-                            int lastIndex = currentPath.lastIndexOf('.');
+                            final int lastIndex = currentPath.lastIndexOf('.');
                             if (lastIndex < 0) {
                                 // if there isn't a final period, set the
                                 // current path to nothing because we're at root
@@ -221,8 +221,8 @@ public class CommentedConfiguration extends YamlConfiguration {
      * @param path - Configuration path to add comment.
      * @param commentLines - Comments to add. One String per line.
      */
-    public void addComment(String path, String... commentLines) {
-        StringBuilder commentstring = new StringBuilder();
+    public void addComment(final String path, final String... commentLines) {
+        final StringBuilder commentstring = new StringBuilder();
         String leadingSpaces = "";
         for (int n = 0; n < path.length(); n++) {
             if (path.charAt(n) == '.') {
@@ -249,9 +249,9 @@ public class CommentedConfiguration extends YamlConfiguration {
      * @return Contents of file. String will be empty in case of any errors.
      */
     @SuppressWarnings("static-method")
-    public String convertFileToString(File fileToConvert) {
+    public String convertFileToString(final File fileToConvert) {
         if (fileToConvert != null && fileToConvert.exists() && fileToConvert.canRead() && !fileToConvert.isDirectory()) {
-            char[] buffer = new char[1024];
+            final char[] buffer = new char[1024];
             String s = "";
             try (Writer writer = new StringWriter();
                     Reader reader = new BufferedReader(
@@ -261,7 +261,7 @@ public class CommentedConfiguration extends YamlConfiguration {
                     writer.write(buffer, 0, n);
                 }
                 s = writer.toString();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 System.out.println("Failed to convert the file to a string: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -278,11 +278,11 @@ public class CommentedConfiguration extends YamlConfiguration {
      * @return True on success.
      */
     @SuppressWarnings("static-method")
-    public boolean writeStringToFile(String source, File fileToWriteTo) {
+    public boolean writeStringToFile(final String source, final File fileToWriteTo) {
         try (OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(fileToWriteTo), StandardCharsets.UTF_8)) {
             out.write(source);
             return true;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.out.println("Failed to convert the string to a file: " + e.getMessage());
             e.printStackTrace();
             return false;

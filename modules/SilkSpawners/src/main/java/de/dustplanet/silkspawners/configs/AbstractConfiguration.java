@@ -11,7 +11,7 @@ import de.dustplanet.util.CommentedConfiguration;
 public abstract class AbstractConfiguration {
     protected CommentedConfiguration config;
 
-    public AbstractConfiguration(CommentedConfiguration config) {
+    public AbstractConfiguration(final CommentedConfiguration config) {
         if (config == null) {
             throw new IllegalArgumentException("given config is null");
         }

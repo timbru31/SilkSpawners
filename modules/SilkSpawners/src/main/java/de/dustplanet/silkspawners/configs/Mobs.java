@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import de.dustplanet.util.CommentedConfiguration;
 
 public class Mobs extends AbstractConfiguration {
-    public Mobs(CommentedConfiguration config) {
+    public Mobs(final CommentedConfiguration config) {
         super(config);
     }
 

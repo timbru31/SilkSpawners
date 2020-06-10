@@ -4,7 +4,7 @@ import de.dustplanet.util.CommentedConfiguration;
 
 public class Localization extends AbstractConfiguration {
 
-    public Localization(CommentedConfiguration config) {
+    public Localization(final CommentedConfiguration config) {
         super(config);
     }
 

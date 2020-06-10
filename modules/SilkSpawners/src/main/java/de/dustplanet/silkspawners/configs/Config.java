@@ -8,7 +8,7 @@ import de.dustplanet.util.CommentedConfiguration;
 
 public class Config extends AbstractConfiguration {
 
-    public Config(CommentedConfiguration config) {
+    public Config(final CommentedConfiguration config) {
         super(config);
     }
 

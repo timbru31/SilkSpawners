@@ -27,7 +27,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
     /**
      * Player who triggered the event.
      */
-    private Player player;
+    private final Player player;
 
     /**
      * new Entity.
@@ -37,7 +37,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
     /**
      * Block involved.
      */
-    private Block block;
+    private final Block block;
 
     /**
      * Spawner involved.
@@ -56,7 +56,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      * @param block is allowed to be null
      * @param entityID new entity ID
      */
-    public SilkSpawnersSpawnerBreakEvent(Player player, Block block, String entityID) {
+    public SilkSpawnersSpawnerBreakEvent(final Player player, final Block block, final String entityID) {
         this.player = player;
         this.block = block;
         if (block != null) {
@@ -81,7 +81,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      * @param cancel whether the event should be cancelled or not
      */
     @Override
-    public void setCancelled(boolean cancel) {
+    public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
     }
 
@@ -131,7 +131,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      * @param entityID the new entity ID
      */
     @Override
-    public void setEntityID(String entityID) {
+    public void setEntityID(final String entityID) {
         this.entityID = entityID;
     }
 
@@ -149,7 +149,7 @@ public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable,
      *
      * @param drop the ItemStack to drop
      */
-    public void setDrop(ItemStack drop) {
+    public void setDrop(final ItemStack drop) {
         this.drop = drop;
     }
 

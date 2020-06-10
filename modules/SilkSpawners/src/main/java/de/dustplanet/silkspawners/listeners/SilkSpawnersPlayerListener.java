@@ -37,16 +37,16 @@ import de.dustplanet.util.SilkUtil;
  */
 
 public class SilkSpawnersPlayerListener implements Listener {
-    private SilkSpawners plugin;
-    private SilkUtil su;
+    private final SilkSpawners plugin;
+    private final SilkUtil su;
 
-    public SilkSpawnersPlayerListener(SilkSpawners instance, SilkUtil util) {
+    public SilkSpawnersPlayerListener(final SilkSpawners instance, final SilkUtil util) {
         plugin = instance;
         su = util;
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerHoldItem(PlayerItemHeldEvent event) {
+    public void onPlayerHoldItem(final PlayerItemHeldEvent event) {
         // Check if we should notify the player. The second condition is the
         // permission and that the slot isn't null and the item is a mob spawner
         if (event.getPlayer().getInventory().getItem(event.getNewSlot()) != null
@@ -60,32 +60,32 @@ public class SilkSpawnersPlayerListener implements Listener {
                 entityID = su.getDefaultEntityID();
             }
             // Get the name from the entityID
-            String spawnerName = su.getCreatureName(entityID);
-            Player player = event.getPlayer();
+            final String spawnerName = su.getCreatureName(entityID);
+            final Player player = event.getPlayer();
             su.notify(player, spawnerName);
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerInteract(PlayerInteractEvent event) {
+    public void onPlayerInteract(final PlayerInteractEvent event) {
         if (!event.hasItem() || !event.hasBlock()) {
             return;
         }
-        ItemStack item = event.getItem();
-        Block block = event.getClickedBlock();
+        final ItemStack item = event.getItem();
+        final Block block = event.getClickedBlock();
         if (block == null) {
             return;
         }
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
         // If we use a spawn egg
         if (item != null && su.nmsProvider.getSpawnEggMaterials().contains(item.getType())) {
             // Get the entityID
             String entityID = su.getStoredEggEntityID(item);
-            boolean disableChangeTypeWithEgg = plugin.config.getBoolean("disableChangeTypeWithEgg", false);
+            final boolean disableChangeTypeWithEgg = plugin.config.getBoolean("disableChangeTypeWithEgg", false);
 
             // Clicked spawner with monster egg to change type
             if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
-                Action action = event.getAction();
+                final Action action = event.getAction();
                 if (action != Action.LEFT_CLICK_BLOCK && action != Action.RIGHT_CLICK_BLOCK) {
                     return;
                 }
@@ -103,7 +103,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     }
 
                     // Mob
-                    String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
+                    final String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
 
                     if (!player.hasPermission("silkspawners.changetypewithegg." + mobName)) {
                         su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
@@ -113,7 +113,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     }
 
                     // Call the event and maybe change things!
-                    SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
+                    final SilkSpawnersSpawnerChangeEvent changeEvent = new SilkSpawnersSpawnerChangeEvent(player, block, entityID,
                             su.getSpawnerEntityID(block), 1);
                     plugin.getServer().getPluginManager().callEvent(changeEvent);
                     // See if we need to stop
@@ -147,7 +147,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                         return;
                     }
 
-                    Block targetBlock = block.getRelative(BlockFace.UP);
+                    final Block targetBlock = block.getRelative(BlockFace.UP);
                     // Check if block above is air
                     if (targetBlock.getType() == Material.AIR) {
                         targetBlock.setType(su.nmsProvider.getSpawnerMaterial());
@@ -189,10 +189,10 @@ public class SilkSpawnersPlayerListener implements Listener {
                                     .replace("%creature%", su.getCreatureName(entityID)));
 
                     // Spawn on top of targeted block
-                    Location location = block.getLocation().add(0, 1, 0);
-                    double x = location.getX();
-                    double y = location.getY();
-                    double z = location.getZ();
+                    final Location location = block.getLocation().add(0, 1, 0);
+                    final double x = location.getX();
+                    final double y = location.getY();
+                    final double z = location.getZ();
 
                     // We can spawn using the direct method from EntityTypes
                     su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z);
@@ -206,22 +206,22 @@ public class SilkSpawnersPlayerListener implements Listener {
         }
     }
 
-    public boolean checkIfFactionsPermitsBlockInteractions(Player player, Block block) {
+    public boolean checkIfFactionsPermitsBlockInteractions(final Player player, final Block block) {
         if (plugin.config.getBoolean("factionsSupport", false) && su.isPluginEnabled("Factions")) {
             try {
-                MPlayer mp = MPlayer.get(player);
-                Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
+                final MPlayer mp = MPlayer.get(player);
+                final Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
                 if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
                     su.sendMessage(player,
                             ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
                     return false;
                 }
-            } catch (@SuppressWarnings("unused") NoClassDefFoundError e) {
+            } catch (@SuppressWarnings("unused") final NoClassDefFoundError e) {
                 // Try for legacy 1.6 factions, e.g. FactionsUUID
-                FPlayers fPlayers = FPlayers.getInstance();
-                FPlayer fPlayer = fPlayers.getByPlayer(player);
-                Board board = Board.getInstance();
-                com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
+                final FPlayers fPlayers = FPlayers.getInstance();
+                final FPlayer fPlayer = fPlayers.getByPlayer(player);
+                final Board board = Board.getInstance();
+                final com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
                 if (!blockFaction.isWilderness() && !fPlayer.isInOwnTerritory()) {
                     su.sendMessage(player,
                             ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));

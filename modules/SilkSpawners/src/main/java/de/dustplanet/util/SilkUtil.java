@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.logging.Level;
 
 import javax.annotation.Nullable;
 
@@ -56,19 +57,19 @@ public class SilkUtil {
      * This HashMap is holding the internal Minecraft name of each mob and the display name of each mob.
      */
     @Getter
-    private Map<String, String> mobIDToDisplayName = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final Map<String, String> mobIDToDisplayName = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * This HashMap is holding the display name and aliases of each mob and the internal Minecraft name.
      */
     @Getter
-    private Map<String, String> displayNameToMobID = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+    private final Map<String, String> displayNameToMobID = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     /**
      * List of enabled (and therefore) known entities.
      */
     @Getter
-    private List<String> knownEntities = new ArrayList<>();
+    private final List<String> knownEntities = new ArrayList<>();
 
     /**
      * Default (fallback) entityID, standard is the pig.
@@ -96,7 +97,7 @@ public class SilkUtil {
     /**
      * SilkSpawners instance.
      */
-    private SilkSpawners plugin;
+    private final SilkSpawners plugin;
 
     /**
      * NMSHandler instance.
@@ -115,7 +116,7 @@ public class SilkUtil {
         }
         plugin = instance;
         getWorldGuard();
-        boolean nmsProviderFound = setupNMSProvider();
+        final boolean nmsProviderFound = setupNMSProvider();
         if (nmsProviderFound) {
             load();
         }
@@ -127,7 +128,7 @@ public class SilkUtil {
      * @return SilkUtil instance
      */
     public static SilkUtil hookIntoSilkSpanwers() {
-        SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
+        final SilkSpawners plugin = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
         if (plugin == null || plugin.getConfig() == null) {
             Bukkit.getLogger()
                     .severe("SilkSpawners is not yet ready, have you called SilkUtil.hookIntoSilkSpanwers() before your onEnable()?");
@@ -146,7 +147,7 @@ public class SilkUtil {
 
         // Rare cases might trigger API usage before SilkSpawners
         if (version == null) {
-            String packageName = Bukkit.getServer().getClass().getPackage().getName();
+            final String packageName = Bukkit.getServer().getClass().getPackage().getName();
             version = (packageName.substring(packageName.lastIndexOf('.') + 1));
         }
 
@@ -174,17 +175,17 @@ public class SilkUtil {
      */
     public void load() {
         // Should we display more information
-        boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
+        final boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
 
         // Scan the entities
-        List<String> entities = scanEntityMap();
+        final List<String> entities = scanEntityMap();
         if (verbose) {
             plugin.getLogger().info("Scanning the mobs");
         }
-        for (String entityID : entities) {
+        for (final String entityID : entities) {
             @SuppressWarnings("deprecation")
-            EntityType bukkitEntity = EntityType.fromName(entityID);
-            Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
+            final EntityType bukkitEntity = EntityType.fromName(entityID);
+            final Class<? extends Entity> bukkitEntityClass = bukkitEntity == null ? null : bukkitEntity.getEntityClass();
 
             boolean enable = plugin.getConfig().getBoolean("enableCreatureDefault", true);
             if (!plugin.getMobs().contains("creatures." + entityID)) {
@@ -211,7 +212,7 @@ public class SilkUtil {
 
             mobIDToDisplayName.put(entityID, displayName);
 
-            List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
+            final List<String> aliases = plugin.getMobs().getStringList("creatures." + entityID + ".aliases");
             aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", ""));
             aliases.add(displayName.toLowerCase(Locale.ENGLISH).replace(" ", "_"));
             aliases.add(entityID.toLowerCase(Locale.ENGLISH).replace(" ", ""));
@@ -222,9 +223,9 @@ public class SilkUtil {
                 aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", ""));
                 aliases.add(bukkitEntity.name().toLowerCase(Locale.ENGLISH).replace(" ", "_"));
             }
-            Set<String> aliasSet = new HashSet<>(aliases);
+            final Set<String> aliasSet = new HashSet<>(aliases);
 
-            for (String alias : aliasSet) {
+            for (final String alias : aliasSet) {
                 displayNameToMobID.put(alias, entityID);
             }
 
@@ -237,7 +238,7 @@ public class SilkUtil {
         // Should we use something else as the default?
         if (plugin.getConfig().contains("defaultCreature")) {
             // Lowercase is better to search
-            String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase(Locale.ENGLISH);
+            final String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase(Locale.ENGLISH);
             // If we know the internal name
             if (displayNameToMobID.containsKey(defaultCreatureString)) {
                 setDefaultEntityID(defaultEntityID);
@@ -278,7 +279,7 @@ public class SilkUtil {
      *
      * @param defaultEntityID short value of the default mob
      */
-    public void setDefaultEntityID(String defaultEntityID) {
+    public void setDefaultEntityID(final String defaultEntityID) {
         this.defaultEntityID = defaultEntityID;
     }
 
@@ -296,7 +297,7 @@ public class SilkUtil {
      *
      * @param useReflection true or false
      */
-    public void setUseReflection(boolean useReflection) {
+    public void setUseReflection(final boolean useReflection) {
         this.useReflection = useReflection;
     }
 
@@ -318,7 +319,7 @@ public class SilkUtil {
      * @return the ItemStack
      */
     @Deprecated
-    public ItemStack newEggItem(String entityID, int amount) {
+    public ItemStack newEggItem(final String entityID, final int amount) {
         return nmsProvider.newEggItem(entityID, amount);
     }
 
@@ -330,7 +331,7 @@ public class SilkUtil {
      * @param displayName the display name of the egg in case of unknown entities
      * @return the ItemStack
      */
-    public ItemStack newEggItem(String entityID, int amount, String displayName) {
+    public ItemStack newEggItem(final String entityID, final int amount, final String displayName) {
         return nmsProvider.newEggItem(entityID, amount, displayName);
     }
 
@@ -344,11 +345,11 @@ public class SilkUtil {
      * @param forceLore whether the lore tag should be forces
      * @return the ItemStack with the configured options
      */
-    public ItemStack newSpawnerItem(String entityID, String customName, int amount, boolean forceLore) {
+    public ItemStack newSpawnerItem(final String entityID, final String customName, final int amount, final boolean forceLore) {
         String targetEntityID = null;
         try {
             targetEntityID = displayNameToMobID.get(entityID);
-        } catch (@SuppressWarnings("unused") NullPointerException e) {
+        } catch (@SuppressWarnings("unused") final NullPointerException e) {
             targetEntityID = entityID;
         }
         if (targetEntityID == null) {
@@ -359,8 +360,8 @@ public class SilkUtil {
         if (customName == null || customName.isEmpty()) {
             spawnerName = "Monster Spawner";
         }
-        ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount);
-        ItemMeta meta = item.getItemMeta();
+        final ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount);
+        final ItemMeta meta = item.getItemMeta();
 
         if (!"Monster Spawner".equalsIgnoreCase(spawnerName)) {
             meta.setDisplayName(
@@ -368,7 +369,7 @@ public class SilkUtil {
         }
 
         if ((forceLore || !isUsingReflection()) && plugin.getConfig().getBoolean("useMetadata", true)) {
-            ArrayList<String> lore = new ArrayList<>();
+            final ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + targetEntityID);
             meta.setLore(lore);
         }
@@ -384,7 +385,7 @@ public class SilkUtil {
      * @return the entityID
      */
     @Nullable
-    public String getStoredEggEntityID(ItemStack item) {
+    public String getStoredEggEntityID(final ItemStack item) {
         String entityID = null;
         if (isUsingReflection()) {
             // Now try reflection for NBT tag
@@ -399,7 +400,7 @@ public class SilkUtil {
         }
         // If we still haven't found our entityID, then check for item lore or name
         if (item.hasItemMeta()) {
-            String metaEntityID = searchItemMeta(item.getItemMeta());
+            final String metaEntityID = searchItemMeta(item.getItemMeta());
             if (metaEntityID != null) {
                 return metaEntityID;
             }
@@ -414,7 +415,7 @@ public class SilkUtil {
      * @return the entity
      */
     @Nullable
-    public String getStoredSpawnerItemEntityID(ItemStack item) {
+    public String getStoredSpawnerItemEntityID(final ItemStack item) {
         if (isUsingReflection()) {
             String entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
             if (entityID != null) {
@@ -426,7 +427,7 @@ public class SilkUtil {
             }
         }
         if (item.hasItemMeta()) {
-            String metaEntityID = searchItemMeta(item.getItemMeta());
+            final String metaEntityID = searchItemMeta(item.getItemMeta());
             if (metaEntityID != null) {
                 return metaEntityID;
             }
@@ -441,14 +442,14 @@ public class SilkUtil {
      * @return entityID if found or null
      */
     @Nullable
-    public String searchItemMeta(ItemMeta meta) {
-        String entityID = null;
+    public String searchItemMeta(final ItemMeta meta) {
+        final String entityID = null;
         if (plugin.getConfig().getBoolean("useMetadata", true) && meta.hasLore() && !meta.getLore().isEmpty()) {
-            for (String entityIDString : meta.getLore()) {
+            for (final String entityIDString : meta.getLore()) {
                 if (!entityIDString.contains("entityID")) {
                     continue;
                 }
-                String[] entityIDArray = entityIDString.split(":");
+                final String[] entityIDArray = entityIDString.split(":");
                 if (entityIDArray.length == 2) {
                     return displayNameToMobID.get(entityIDArray[1]);
                 }
@@ -464,7 +465,7 @@ public class SilkUtil {
      * @return the result, true or false
      */
     @SuppressWarnings("deprecation")
-    public boolean isRecognizedMob(String mobID) {
+    public boolean isRecognizedMob(final String mobID) {
         return EntityType.fromName(mobID) != null;
     }
 
@@ -476,8 +477,8 @@ public class SilkUtil {
      */
     @SuppressWarnings("deprecation")
     @Nullable
-    public String getSpawnerEntityID(Block block) {
-        BlockState blockState = block.getState();
+    public String getSpawnerEntityID(final Block block) {
+        final BlockState blockState = block.getState();
         if (!(blockState instanceof CreatureSpawner)) {
             plugin.getLogger().warning("getSpawnerEntityID called on non-spawner block: " + block);
             return null;
@@ -487,7 +488,7 @@ public class SilkUtil {
             return nmsProvider.getMobNameOfSpawner(blockState);
         }
 
-        CreatureSpawner spawner = (CreatureSpawner) blockState;
+        final CreatureSpawner spawner = (CreatureSpawner) blockState;
         if (spawner.getSpawnedType() != null) {
             return spawner.getSpawnedType().getName();
         }
@@ -500,8 +501,8 @@ public class SilkUtil {
      * @param block MonsterSpawner
      * @param entity the wanted entity
      */
-    public void setSpawnerEntityID(Block block, String entity) {
-        BlockState blockState = block.getState();
+    public void setSpawnerEntityID(final Block block, final String entity) {
+        final BlockState blockState = block.getState();
         if (!(blockState instanceof CreatureSpawner)) {
             plugin.getLogger().warning("setSpawnerEntityID called on non-spawner block: " + block);
             return;
@@ -520,7 +521,7 @@ public class SilkUtil {
         }
 
         @SuppressWarnings("deprecation")
-        EntityType ct = EntityType.fromName(entity);
+        final EntityType ct = EntityType.fromName(entity);
         if (ct == null) {
             throw new IllegalArgumentException("Failed to find creature type for " + entity);
         }
@@ -537,7 +538,7 @@ public class SilkUtil {
      * @param messageDenied the message which is shown, when the player can't build here see {@link #canBuildHere(Player, Location)}
      * @return whether the operation was successful or not
      */
-    public boolean setSpawnerType(Block block, String entityID, Player player, String messageDenied) {
+    public boolean setSpawnerType(final Block block, final String entityID, final Player player, final String messageDenied) {
         // Changing denied by WorldGuard?
         if (!canBuildHere(player, block.getLocation())) {
             sendMessage(player, messageDenied);
@@ -556,7 +557,7 @@ public class SilkUtil {
      * @param customName if a custom name should be used (null for none)
      * @return the updated ItemStack
      */
-    public ItemStack setSpawnerType(ItemStack item, String entityID, String customName) {
+    public ItemStack setSpawnerType(final ItemStack item, String entityID, String customName) {
         entityID = displayNameToMobID.get(entityID);
 
         // Ensure that the name is correct
@@ -568,7 +569,7 @@ public class SilkUtil {
                 || item.getType() != nmsProvider.getSpawnerMaterial() && !nmsProvider.getSpawnEggMaterials().contains(item.getType())) {
             return item;
         }
-        ItemMeta meta = item.getItemMeta();
+        final ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
         if (item.getType() == nmsProvider.getSpawnerMaterial() && !customName.equalsIgnoreCase("Monster Spawner")) {
             meta.setDisplayName(
@@ -577,15 +578,15 @@ public class SilkUtil {
 
         // 1.8 broke durability, workaround is the lore
         if (!isUsingReflection() && plugin.getConfig().getBoolean("useMetadata", true)) {
-            ArrayList<String> lore = new ArrayList<>();
+            final ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + entityID);
             meta.setLore(lore);
         }
 
         // Does the item (e.g. crafted) as a lore and we set the NBT tag? Remove it
         if (isUsingReflection() && meta.hasLore()) {
-            List<String> lore = meta.getLore();
-            Iterator<String> it = lore.iterator();
+            final List<String> lore = meta.getLore();
+            final Iterator<String> it = lore.iterator();
             while (it.hasNext()) {
                 if (it.next().contains("entityID")) {
                     it.remove();
@@ -606,7 +607,7 @@ public class SilkUtil {
      * @return the displayname of the mob
      */
     @SuppressWarnings("deprecation")
-    public String getCreatureName(String entity) {
+    public String getCreatureName(final String entity) {
         if (entity == null) {
             return "???";
         }
@@ -614,12 +615,12 @@ public class SilkUtil {
         if (mobIDToDisplayName != null) {
             try {
                 displayName = mobIDToDisplayName.get(entity);
-            } catch (@SuppressWarnings("unused") NullPointerException e) {
+            } catch (@SuppressWarnings("unused") final NullPointerException e) {
                 // Ignore
             }
         }
         if (displayName == null) {
-            EntityType entityType = EntityType.fromName(entity);
+            final EntityType entityType = EntityType.fromName(entity);
             if (entityType != null) {
                 displayName = entityType.getName();
             } else {
@@ -636,7 +637,7 @@ public class SilkUtil {
      * @param entity the entity
      * @return the displayname of the mob
      */
-    public String getCreatureEggName(String entity) {
+    public String getCreatureEggName(final String entity) {
         return getCreatureName(entity) + " Spawn Egg";
     }
 
@@ -645,9 +646,9 @@ public class SilkUtil {
      *
      * @param sender CommandSender (player or console)
      */
-    public void showAllCreatures(CommandSender sender) {
+    public void showAllCreatures(final CommandSender sender) {
         // For each entry in the list
-        StringBuilder builder = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         for (String displayName : displayNameToMobID.keySet()) {
             displayName = displayName.replace(" ", "");
             builder.append(displayName + ", ");
@@ -667,9 +668,9 @@ public class SilkUtil {
         List<String> entities = nmsProvider.rawEntityMap();
         // Legacy support, this will add the IDs as aliases
         if (entities == null) {
-            SortedMap<Integer, String> legacyRawEntityMap = nmsProvider.legacyRawEntityMap();
+            final SortedMap<Integer, String> legacyRawEntityMap = nmsProvider.legacyRawEntityMap();
             entities = new ArrayList<>(legacyRawEntityMap.values());
-            for (Entry<Integer, String> entry : legacyRawEntityMap.entrySet()) {
+            for (final Entry<Integer, String> entry : legacyRawEntityMap.entrySet()) {
                 displayNameToMobID.put(entry.getKey().toString(), entry.getValue());
             }
         }
@@ -678,9 +679,9 @@ public class SilkUtil {
                     "Warning, no mobs were found via reflection! This usually means another plugin messed up Minecraft's entity registry. Please report this! This is NOT a SilkSpawners bug");
         }
         // Let's scan for added entities by e.g MCPC+
-        for (EntityType type : EntityType.values()) {
+        for (final EntityType type : EntityType.values()) {
             @SuppressWarnings("deprecation")
-            String name = type.getName();
+            final String name = type.getName();
             if (name == null) {
                 continue;
             }
@@ -698,17 +699,17 @@ public class SilkUtil {
      * @param spawnerName the creature name
      */
     @SuppressWarnings("deprecation")
-    public void notify(Player player, String spawnerName) {
+    public void notify(final Player player, final String spawnerName) {
         if (isBarAPI()) {
-            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+            final String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
             BarAPI.setMessage(player, shortInfo, plugin.getConfig().getInt("barAPI.displayTime", 3));
         } else if (isVanillaBossBar()) {
-            String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+            final String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
                     plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
-            String barColor = plugin.getConfig().getString("vanillaBossBar.color", "RED");
-            String barStyle = plugin.getConfig().getString("vanillaBossBar.style", "SOLID");
-            int barTime = plugin.getConfig().getInt("vanillaBossBar.displayTime", 3);
+            final String barColor = plugin.getConfig().getString("vanillaBossBar.color", "RED");
+            final String barStyle = plugin.getConfig().getString("vanillaBossBar.style", "SOLID");
+            final int barTime = plugin.getConfig().getInt("vanillaBossBar.displayTime", 3);
             nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
             sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
@@ -734,7 +735,7 @@ public class SilkUtil {
      * @return result, true or false
      */
     @SuppressWarnings("static-method")
-    public boolean isEgg(String creatureString) {
+    public boolean isEgg(final String creatureString) {
         return creatureString.endsWith("egg");
     }
 
@@ -744,7 +745,7 @@ public class SilkUtil {
      * @param creatureString the mob name
      * @return the result, true of false
      */
-    public boolean isUnknown(String creatureString) {
+    public boolean isUnknown(final String creatureString) {
         return !displayNameToMobID.containsKey(creatureString);
     }
 
@@ -754,7 +755,7 @@ public class SilkUtil {
      * @param creatureString the mob name
      * @return the result, true of false
      */
-    public boolean isKnown(String creatureString) {
+    public boolean isKnown(final String creatureString) {
         return displayNameToMobID.containsKey(creatureString);
     }
 
@@ -764,7 +765,7 @@ public class SilkUtil {
      * @param entityID the official internal name of the mob
      * @return the result, true of false
      */
-    public boolean isKnownEntityID(String entityID) {
+    public boolean isKnownEntityID(final String entityID) {
         return knownEntities.contains(entityID);
     }
 
@@ -775,10 +776,10 @@ public class SilkUtil {
      * @return number or not found -1
      */
     @SuppressWarnings("static-method")
-    public short getNumber(String number) {
+    public short getNumber(final String number) {
         try {
             return Short.valueOf(number);
-        } catch (@SuppressWarnings("unused") NumberFormatException e) {
+        } catch (@SuppressWarnings("unused") final NumberFormatException e) {
             return -1;
         }
     }
@@ -790,27 +791,33 @@ public class SilkUtil {
      * @param tool ItemStack to check
      * @return the result if the tool hasSilkTouch
      */
-    public boolean isValidItemAndHasSilkTouch(ItemStack tool) {
+    public boolean isValidItemAndHasSilkTouch(final ItemStack tool) {
         // No silk touch fists..
         if (tool == null) {
             return false;
         }
 
         boolean toolAllowed = false;
-        Material toolType = tool.getType();
-        List<String> allowedTools = plugin.getConfig().getStringList("allowedTools");
-        for (String allowedTool : allowedTools) {
+        final boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
+        final Material toolType = tool.getType();
+        final List<String> allowedTools = plugin.getConfig().getStringList("allowedTools");
+        for (final String allowedTool : allowedTools) {
             if (toolType == Material.matchMaterial(allowedTool)) {
                 toolAllowed = true;
                 break;
             }
         }
         if (!toolAllowed) {
+            if (verbose) {
+                plugin.getLogger().log(Level.INFO, "Tool not allowed:", tool.getType());
+            }
             return false;
         }
 
-        int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
-        // Always have it
+        final int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
+        if (verbose) {
+            plugin.getLogger().log(Level.INFO, "minLevel is {0}", minLevel);
+        }
         if (minLevel == 0) {
             return true;
         }
@@ -820,10 +827,15 @@ public class SilkUtil {
         // but is kept here for clarity, and in case Bukkit allows level-0
         // enchantments like vanilla
         if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
+            plugin.getLogger().info("Tool has no SilkTouch enchantment.");
             return false;
         }
         // Return if the level is enough
-        return tool.getEnchantmentLevel(Enchantment.SILK_TOUCH) >= minLevel;
+        final int enchantmentLevel = tool.getEnchantmentLevel(Enchantment.SILK_TOUCH);
+        if (verbose) {
+            plugin.getLogger().log(Level.INFO, "Stored enchantment level is {0}", enchantmentLevel);
+        }
+        return enchantmentLevel >= minLevel;
     }
 
     /**
@@ -832,7 +844,7 @@ public class SilkUtil {
      * @param mobName the internal name the spawner name is wanted for
      * @return the found string
      */
-    public String getCustomSpawnerName(String mobName) {
+    public String getCustomSpawnerName(final String mobName) {
         if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
             return ChatColor.translateAlternateColorCodes('&',
                     plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
@@ -847,7 +859,7 @@ public class SilkUtil {
      * @param messages message with support for newlines
      */
     @SuppressWarnings("static-method")
-    public void sendMessage(CommandSender receiver, String messages) {
+    public void sendMessage(final CommandSender receiver, final String messages) {
         receiver.sendMessage(messages.split("\n"));
     }
 
@@ -861,7 +873,7 @@ public class SilkUtil {
             plugin.getLogger().info("WorldGuard support is disabled due to config setting");
             return;
         }
-        Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
+        final Plugin worldGuard = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
         if (worldGuard == null || !(worldGuard instanceof WorldGuardPlugin)) {
             plugin.getLogger().info("WorldGuard was not found and support is disabled");
             return;
@@ -877,14 +889,14 @@ public class SilkUtil {
      * @param location the location to check
      * @return the result, true or false
      */
-    public boolean canBuildHere(Player player, Location location) {
+    public boolean canBuildHere(final Player player, final Location location) {
         if (wg == null) {
             return true;
         }
         try {
-            WorldGuard instance = WorldGuard.getInstance();
-            RegionContainer regionContainer = instance.getPlatform().getRegionContainer();
-            RegionQuery query = regionContainer.createQuery();
+            final WorldGuard instance = WorldGuard.getInstance();
+            final RegionContainer regionContainer = instance.getPlatform().getRegionContainer();
+            final RegionQuery query = regionContainer.createQuery();
             return query.testBuild(BukkitAdapter.adapt(location), wg.wrapPlayer(player), Flags.BUILD);
         } catch (@SuppressWarnings("unused") Exception | NoClassDefFoundError e) {
             try {
@@ -897,8 +909,8 @@ public class SilkUtil {
         }
     }
 
-    public boolean isPluginEnabled(String _plugin) {
-        Plugin pluginToCheck = plugin.getServer().getPluginManager().getPlugin(_plugin);
+    public boolean isPluginEnabled(final String _plugin) {
+        final Plugin pluginToCheck = plugin.getServer().getPluginManager().getPlugin(_plugin);
         return pluginToCheck != null && pluginToCheck.isEnabled();
     }
 
