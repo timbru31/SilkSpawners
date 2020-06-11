@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -309,5 +310,13 @@ public class NMSHandler implements NMSProvider {
             target.loadData();
         }
         return target;
+    }
+
+    @Override
+    public String getVanillaEggNBTEntityID(final ItemStack item) {
+        final short numericalEntityID = item.getDurability();
+        final Optional<String> mobEntry = entitiesMaps.entrySet().stream().filter(entry -> entry.getValue() == numericalEntityID)
+                .findFirst().map(Map.Entry::getKey);
+        return mobEntry.orElse(null);
     }
 }

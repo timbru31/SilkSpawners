@@ -52,19 +52,17 @@ public interface NMSProvider {
     }
 
     @Deprecated
-    default ItemStack newEggItem(String entityID, int amount) {
+    default ItemStack newEggItem(final String entityID, final int amount) {
         return newEggItem(entityID, amount, null);
     }
 
     ItemStack newEggItem(String entityID, int amount, String displayName);
 
-    @SuppressWarnings("unused")
-    default String getVanillaEggNBTEntityID(ItemStack item) {
-        return null;
-    }
+    String getVanillaEggNBTEntityID(ItemStack item);
 
     @SuppressWarnings("unused")
-    default void displayBossBar(String title, String colorName, String styleName, Player player, Plugin plugin, int period) {
+    default void displayBossBar(final String title, final String colorName, final String styleName, final Player player,
+            final Plugin plugin, final int period) {
         return;
     }
 
@@ -88,7 +86,7 @@ public interface NMSProvider {
 
     @Deprecated
     default Material getSpawnEggMaterial() {
-        Collection<Material> spawnEggs = this.getSpawnEggMaterials();
+        final Collection<Material> spawnEggs = this.getSpawnEggMaterials();
         if (spawnEggs.size() > 1) {
             throw new UnsupportedOperationException(
                     "Spawn egg is not determinable because there is more than one material, please use getSpawnEggMaterials() for v1.13+");
@@ -99,11 +97,11 @@ public interface NMSProvider {
     Collection<Material> getSpawnEggMaterials();
 
     // Only required for MC 1.8
-    default int getIDForEntity(@SuppressWarnings("unused") String entityID) {
+    default int getIDForEntity(@SuppressWarnings("unused") final String entityID) {
         return 0;
     }
 
-    default CaseFormat caseFormatOf(String s) {
+    default CaseFormat caseFormatOf(final String s) {
         if (s.contains("_")) {
             if (s.toUpperCase().equals(s)) {
                 return CaseFormat.UPPER_UNDERSCORE;
