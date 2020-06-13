@@ -418,11 +418,11 @@ public class SilkUtil {
     public String getStoredSpawnerItemEntityID(final ItemStack item) {
         if (isUsingReflection()) {
             String entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
-            if (entityID != null) {
+            if (entityID != null && !entityID.isEmpty()) {
                 return entityID;
             }
             entityID = nmsProvider.getVanillaNBTEntityID(item);
-            if (entityID != null) {
+            if (entityID != null && !entityID.isEmpty()) {
                 return entityID;
             }
         }

@@ -50,6 +50,7 @@ import net.minecraft.server.v1_12_R1.World;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
+    private final SortedMap<Integer, String> sortedMap = new TreeMap<>();
 
     public NMSHandler() {
         try {
@@ -86,7 +87,6 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public SortedMap<Integer, String> legacyRawEntityMap() {
-        final SortedMap<Integer, String> sortedMap = new TreeMap<>();
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
@@ -241,7 +241,17 @@ public class NMSHandler implements NMSProvider {
         if (tag == null || !tag.hasKey("SilkSpawners")) {
             return null;
         }
-        return tag.getCompound("SilkSpawners").getString("entity");
+
+        final NBTTagCompound silkSpawnersTag = tag.getCompound("SilkSpawners");
+        if (silkSpawnersTag.hasKey("entity")) {
+            return silkSpawnersTag.getString("entity");
+        }
+
+        if (silkSpawnersTag.hasKey("entityID")) {
+            return getEntityFromNumericalID(silkSpawnersTag.getShort("entityID"));
+        }
+
+        return null;
     }
 
     @Override
@@ -472,5 +482,10 @@ public class NMSHandler implements NMSProvider {
             target.loadData();
         }
         return target;
+    }
+
+    @Nullable
+    private String getEntityFromNumericalID(final int numericalEntityID) {
+        return sortedMap.get(numericalEntityID);
     }
 }

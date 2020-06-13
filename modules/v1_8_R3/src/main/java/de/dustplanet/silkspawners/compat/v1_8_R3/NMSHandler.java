@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -42,6 +41,7 @@ import net.minecraft.server.v1_8_R3.World;
 public class NMSHandler implements NMSProvider {
     private Field tileField;
     private final SortedMap<String, Integer> entitiesMaps = new TreeMap<>();
+    private final SortedMap<Integer, String> sortedMap = new TreeMap<>();
 
     public NMSHandler() {
         try {
@@ -72,7 +72,6 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public SortedMap<Integer, String> legacyRawEntityMap() {
-        final SortedMap<Integer, String> sortedMap = new TreeMap<>();
         // Use reflection to dump native EntityTypes
         // This bypasses Bukkit's wrappers, so it works with mods
         try {
@@ -172,7 +171,17 @@ public class NMSHandler implements NMSProvider {
         if (tag == null || !tag.hasKey("SilkSpawners")) {
             return null;
         }
-        return tag.getCompound("SilkSpawners").getString("entity");
+
+        final NBTTagCompound silkSpawnersTag = tag.getCompound("SilkSpawners");
+        if (silkSpawnersTag.hasKey("entity")) {
+            return silkSpawnersTag.getString("entity");
+        }
+
+        if (silkSpawnersTag.hasKey("entityID")) {
+            return getEntityFromNumericalID(silkSpawnersTag.getShort("entityID"));
+        }
+
+        return null;
     }
 
     @Override
@@ -318,8 +327,11 @@ public class NMSHandler implements NMSProvider {
     @Override
     public String getVanillaEggNBTEntityID(final ItemStack item) {
         final short numericalEntityID = item.getDurability();
-        final Optional<String> mobEntry = entitiesMaps.entrySet().stream().filter(entry -> entry.getValue() == numericalEntityID)
-                .findFirst().map(Map.Entry::getKey);
-        return mobEntry.orElse(null);
+        return getEntityFromNumericalID(numericalEntityID);
+    }
+
+    @Nullable
+    private String getEntityFromNumericalID(final int numericalEntityID) {
+        return sortedMap.get(numericalEntityID);
     }
 }
