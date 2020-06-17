@@ -25,6 +25,7 @@ import org.bukkit.craftbukkit.v1_13_R2.CraftServer;
 import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
 import org.bukkit.craftbukkit.v1_13_R2.block.CraftBlockEntityState;
 import org.bukkit.craftbukkit.v1_13_R2.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_13_R2.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -47,6 +48,7 @@ import net.minecraft.server.v1_13_R2.Item;
 import net.minecraft.server.v1_13_R2.MinecraftKey;
 import net.minecraft.server.v1_13_R2.MinecraftServer;
 import net.minecraft.server.v1_13_R2.NBTTagCompound;
+import net.minecraft.server.v1_13_R2.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_13_R2.PlayerInteractManager;
 import net.minecraft.server.v1_13_R2.TileEntityMobSpawner;
 import net.minecraft.server.v1_13_R2.TileEntityTypes;
@@ -75,7 +77,8 @@ public class NMSHandler implements NMSProvider {
 
     @SuppressWarnings("resource")
     @Override
-    public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z) {
+    public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z,
+            final Player player) {
         final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("id", entityID);
 
@@ -87,8 +90,11 @@ public class NMSHandler implements NMSProvider {
             return;
         }
 
-        entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
+        final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
+        entity.setPositionRotation(x, y, z, yaw, 0);
         world.addEntity(entity, SpawnReason.SPAWNER_EGG);
+        final PacketPlayOutEntityHeadRotation rotation = new PacketPlayOutEntityHeadRotation(entity, (byte) yaw);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(rotation);
     }
 
     @Override

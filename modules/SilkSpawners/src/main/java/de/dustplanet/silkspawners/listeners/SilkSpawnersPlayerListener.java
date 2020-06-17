@@ -188,14 +188,15 @@ public class SilkSpawnersPlayerListener implements Listener {
                                             plugin.localization.getString("spawning").replace("%ID%", entityID))
                                     .replace("%creature%", su.getCreatureName(entityID)));
 
-                    // Spawn on top of targeted block
-                    final Location location = block.getLocation().add(0, 1, 0);
+                    // Spawn on top of targeted block and center the mob
+                    final Location location = block.getLocation();
+                    location.add(block.getLocation().getBlockX() > 0 ? 0.5 : -0.5, 1, block.getLocation().getBlockZ() > 0 ? 0.5 : -0.5);
                     final double x = location.getX();
                     final double y = location.getY();
                     final double z = location.getZ();
 
                     // We can spawn using the direct method from EntityTypes
-                    su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z);
+                    su.nmsProvider.spawnEntity(player.getWorld(), entityID, x, y, z, player);
 
                     su.nmsProvider.reduceEggs(player);
 

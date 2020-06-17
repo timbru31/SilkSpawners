@@ -22,6 +22,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.v1_9_R1.CraftServer;
 import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_9_R1.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -41,6 +42,7 @@ import net.minecraft.server.v1_9_R1.Item;
 import net.minecraft.server.v1_9_R1.MinecraftServer;
 import net.minecraft.server.v1_9_R1.NBTTagCompound;
 import net.minecraft.server.v1_9_R1.NBTTagList;
+import net.minecraft.server.v1_9_R1.PacketPlayOutEntityHeadRotation;
 import net.minecraft.server.v1_9_R1.PlayerInteractManager;
 import net.minecraft.server.v1_9_R1.TileEntityMobSpawner;
 import net.minecraft.server.v1_9_R1.World;
@@ -60,7 +62,8 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
-    public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z) {
+    public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z,
+            final Player player) {
         final NBTTagCompound tag = new NBTTagCompound();
         tag.setString("id", entityID);
 
@@ -72,8 +75,11 @@ public class NMSHandler implements NMSProvider {
             return;
         }
 
-        entity.setPositionRotation(x, y, z, world.random.nextFloat() * 360.0f, 0.0f);
+        final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
+        entity.setPositionRotation(x, y, z, yaw, 0);
         world.addEntity(entity, SpawnReason.SPAWNER_EGG);
+        final PacketPlayOutEntityHeadRotation rotation = new PacketPlayOutEntityHeadRotation(entity, (byte) yaw);
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(rotation);
     }
 
     @Override
