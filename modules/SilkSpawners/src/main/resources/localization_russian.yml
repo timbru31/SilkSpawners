@@ -1,0 +1,57 @@
+# перевод выполнил sheloweek (EV.Jack)
+# "Эта строка влияет на название спавнера, что бы отключить это измените сообщение обратно на Monster Spawner."
+spawnerName: '&e%Monster% &fSpawner'
+
+addedEgg: '&aУспешно додбавлено &e%amount% %creature% яйцо призыва &aв ваш инвентарь.'
+addedEggOtherPlayer: '&aЯйцо призыва &e%amount% %creature% Добавлено &aв инвентарь игрока &e%player%&2 .'
+addedSpawner: '&a%amount% %creature% &aСпавнер добавлен в ваш инвентарь'
+addedSpawnerOtherPlayer: '&a%amount% %creature% спавнер добавлен в инвентарь игрока &e%player%&2'
+noFreeSlot: '&cВ вашем инвенторе недостаточно места!'
+
+noPermission: '&4У вас нет прав на исспользование этой команды!'
+noPermissionChangingEgg: '&4У вас нет прав на замену яйца!'
+noPermissionChangingSpawner: '&4У вас нет прав на замену спавнера!'
+noPermissionFreeEgg: '&4У вас нет разрешения на создание пустого Яйца!'
+noPermissionFreeSpawner: '&4У вас нет прав на создание пустого спавнера!'
+noPermissionViewType: '&4У вас нет прав на просмотр типа этого спавнера!'
+noPermissionChangingWithEggs: '&4У ввс нет прав на смену спавнера с яйцом призыва!'
+noPermissionCraft: '&4У вас нет прав на создание a(n) &e%creature% &4spawner!'
+noPermissionPlace: '&4У вас нет прав на размещение a(n) &e%creature% &4spawner!'
+
+changedEgg: '&aВы успешно сменили яйцо призыва на a(n) &e%creature% яйцо призыва.'
+changedSpawner: '&aВы успешно сменили спавнер на a(n) &e%creature% созданный.'
+
+playerOffline: '&aДанный игрок не в сети!'
+changingDeniedFactions: '&cВы не можете изменить спавнер на территории дургих игроков!'
+changingDeniedWorldGuard: '&4Изменение типа спавнера запрещено защитой WorldGuard'
+getSpawnerType: '&aЭто a(n) &e%creature% спавнер&2.'
+unknownArgument: '&cНеизвестная команда. Обратитесь в /ss help'
+unknownCreature: '&cНеизвестное существо &e%creature%&4.'
+useNumbers: '&aПожалуйста используйте число от 1 до 64!'
+noConsole: '&4Консоль не может использовать эту команду!'
+configsReloaded: '&aУспешная перезагрузка конфига!'
+
+spawnerBroken: '&2%creature% &aСпавнер сломан'
+spawnerPlaced: '&2%creature% &aСпавнер размещен.'
+placingDefault: '&cУстановка спавнера по умолчанию (Этот спавнер недействителен или отключен)'
+
+informationOfSpawner1: '-- Monster Spawner --'
+informationOfSpawner2: '-- Type: %creature% --'
+informationOfSpawnerBar: 'Monster Spawner, Type: &e%creature%&f'
+
+spawningDenied: '&cПоявляющееся существо &e%creature% &cотключено!'
+spawning: '&2Spawning &e%creature%'
+noSpawnerHere: '&4Спавнер не может быть размещен здесь, потому чот блок выше заблокирован!'
+
+lookAtSpawner: '&cВы должны смотреть прямо на спавнер!'
+spawnerNotDeterminable: '&cУ вас отсутствует спавнер или яйцо призыва. Или спавнер, или яйцо призыва находятся сразу в двух руках. Пожалуйста сделайте одну руку пустой'
+
+help: |-
+  '&7------&6SilkSpawners v%version% Help Menu&7------'
+  '&e/ss help &7- &aПоказать это меню.'
+  '&e/ss list|all &7- &aОтобразить всех доступных существ.'
+  '&e/ss view|info &7- &aВывод информации о просматриваемом спавнере.'
+  '&e/ss reload|rl &7- &aПерезагрузка конфиг файла'
+  '&e/ss change <newMob> &7- &aИзменить спавнер на который вы сейчас смотрите или держите в руках'
+  '&e/ss give|add <player> <mob> [кол-во] &7- &aПередать спавнер или яйцо призыва игроку. Количество не является обязательным'
+  '&e/ss selfget|i <mob> [кол-во] &7- &aДаёт вам спавнер или яйцо. Количество не является обязательным.'
