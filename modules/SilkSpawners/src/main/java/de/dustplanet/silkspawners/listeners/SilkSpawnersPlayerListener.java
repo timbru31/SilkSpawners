@@ -190,7 +190,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                     // Spawn on top of targeted block and center the mob
                     final Location location = block.getLocation();
-                    location.add(block.getLocation().getBlockX() > 0 ? 0.5 : -0.5, 1, block.getLocation().getBlockZ() > 0 ? 0.5 : -0.5);
+                    location.add(0.5, 1, 0.5);
                     final double x = location.getX();
                     final double y = location.getY();
                     final double z = location.getZ();
