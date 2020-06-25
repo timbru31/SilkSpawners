@@ -13,7 +13,6 @@ import java.util.Locale;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -237,19 +236,6 @@ public class SilkSpawners extends JavaPlugin {
 
         mobs = new CommentedConfiguration(mobsFile);
         new Mobs(mobs).loadConfig();
-
-        // We need to migrate the old mobs from config.yml to mobs.yml
-        if (config.contains("creatures")) {
-            getLogger().info("Found entries of creatures in the config.yml, will migrate them into the mobs.yml!");
-            final ConfigurationSection creatures = config.getConfigurationSection("creatures");
-            // Remove from config and save
-            config.set("creatures", null);
-            config.save();
-            // Set updated list
-            mobs.set("creatures", creatures);
-            mobs.save();
-            getLogger().info("Successfully migrated the creatures into the mobs.yml!");
-        }
     }
 
     private void loadConfig() {
