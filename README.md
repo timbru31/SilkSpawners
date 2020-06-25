@@ -28,7 +28,7 @@ This CraftBukkit plugin adds a way to obtain the spawner with the corresponding 
 - Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-- Support for multiple Minecraft versions, from 1.8.X to 1.15.2
+- Support for multiple Minecraft versions, from 1.8.X to 1.16.1
 
 _Third party features, all of them can be disabled_
 
@@ -305,8 +305,9 @@ Please follow the Sun Coding Guidelines, thanks!
 Unfortunately, I can't give access to https://repo.dustplanet.de/artifactory/private due to the DMCA of CraftBukkit and the prohibiton to distribute those binaries. To successfully build SilkSpawners using Maven, you must first run Spigot's BuildTools for several versions in order to compile each module - this will populate the local `.m2` cache of yours.
 
 ```sh
-java -jar BuildTools.jar --rev 1.15.2
-java -jar BuildTools.jar --rev 1.14.4
+java -jar BuildTools.jar --rev 1.16.1
+java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
+java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
 java -jar BuildTools.jar --rev 1.13.2
 java -jar BuildTools.jar --rev 1.13
 java -jar BuildTools.jar --rev 1.12.2
