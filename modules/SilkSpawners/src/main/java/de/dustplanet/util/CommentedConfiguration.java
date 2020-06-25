@@ -18,6 +18,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.file.YamlConstructor;
 import org.bukkit.configuration.file.YamlRepresenter;
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.representer.Representer;
 
@@ -26,17 +27,20 @@ import org.yaml.snakeyaml.representer.Representer;
  *
  * @author dumptruckman
  * @author ElgarL (updated version used by Towny)
- * @author xGhOsTkiLLeRx
+ * @author timbru31
  */
 public class CommentedConfiguration extends YamlConfiguration {
     private final HashMap<String, String> comments;
     private final File file;
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
-    private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+    private final Yaml yaml;
 
     public CommentedConfiguration(final File file) {
         super();
+        final LoaderOptions loaderOptions = new LoaderOptions();
+        loaderOptions.setMaxAliasesForCollections(100);
+        yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions, loaderOptions);
         comments = new HashMap<>();
         this.file = file;
     }

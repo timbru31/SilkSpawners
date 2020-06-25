@@ -39,9 +39,9 @@
       <version>1.18.12</version>
     </dependency>
     <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>bukkit</artifactId>
-      <version>1.15.2-R0.1-SNAPSHOT</version>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-api</artifactId>
+      <version>1.16.1-R0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.sk89q</groupId>
@@ -176,6 +176,12 @@
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_15_R1</artifactId>
+      <version>6.2.1-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
+      <artifactId>silkspawners-v1_16_R1</artifactId>
       <version>6.2.1-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
