@@ -3,7 +3,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>silkspawners</artifactId>
   <packaging>jar</packaging>
-  <version>6.2.1-SNAPSHOT</version>
+  <version>6.3.0</version>
   <name>SilkSpawners</name>
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
   <description>Pickup, place and customize Monster Spawners</description>
@@ -110,85 +110,85 @@
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_8_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_8_R2</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_8_R3</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_9_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_9_R2</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_10_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_11_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_12_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_13_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_13_R2</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_14_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_15_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_16_R1</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-API</artifactId>
-      <version>6.2.1-SNAPSHOT</version>
+      <version>6.3.0</version>
       <type>jar</type>
     </dependency>
   </dependencies>
@@ -331,7 +331,7 @@
     <url>https://github.com/timbru31/SilkSpawners</url>
     <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
     <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>silkspawners-6.3.0</tag>
   </scm>
 
   <ciManagement>
