@@ -34,13 +34,17 @@ public class CommentedConfiguration extends YamlConfiguration {
     private final File file;
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
-    private final Yaml yaml;
+    private Yaml yaml;
 
     public CommentedConfiguration(final File file) {
         super();
-        final LoaderOptions loaderOptions = new LoaderOptions();
-        loaderOptions.setMaxAliasesForCollections(100);
-        yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions, loaderOptions);
+        try {
+            final LoaderOptions loaderOptions = new LoaderOptions();
+            loaderOptions.setMaxAliasesForCollections(100);
+            yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions, loaderOptions);
+        } catch (@SuppressWarnings("unused") final NoSuchMethodError | NoClassDefFoundError e) {
+            yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+        }
         comments = new HashMap<>();
         this.file = file;
     }
