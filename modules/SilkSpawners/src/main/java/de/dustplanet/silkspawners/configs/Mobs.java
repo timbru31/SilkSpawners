@@ -129,6 +129,11 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.zombie_pigman.enableCraftingSpawner", true);
         config.addDefault("creatures.zombie_pigman.enableSpawnEggOverride", true);
         config.addDefault("creatures.zombie_pigman.displayName", "Zombie Pigman");
+        config.addDefault("creatures.zombified_piglin.aliases", tempList);
+        config.addDefault("creatures.zombified_piglin.enable", true);
+        config.addDefault("creatures.zombified_piglin.enableCraftingSpawner", true);
+        config.addDefault("creatures.zombified_piglin.enableSpawnEggOverride", true);
+        config.addDefault("creatures.zombified_piglin.displayName", "Zombified Piglin");
         tempList = new ArrayList<>();
         // Enderman
         tempList.add("e");
@@ -327,6 +332,11 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.snowman.enableCraftingSpawner", true);
         config.addDefault("creatures.snowman.enableSpawnEggOverride", true);
         config.addDefault("creatures.snowman.displayName", "Snow Golem");
+        config.addDefault("creatures.snow_golem.aliases", tempList);
+        config.addDefault("creatures.snow_golem.enable", true);
+        config.addDefault("creatures.snow_golem.enableCraftingSpawner", true);
+        config.addDefault("creatures.snow_golem.enableSpawnEggOverride", true);
+        config.addDefault("creatures.snow_golem.displayName", "Snow Golem");
         tempList = new ArrayList<>();
         // Ozelot (Ocelot)
         tempList.add("ocelot");
@@ -782,6 +792,44 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.bee.enableSpawnEggOverride", true);
         config.addDefault("creatures.bee.displayName", "Bee");
         config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Hoglin
+        tempList.add("hoglin");
+        config.addDefault("creatures.hoglin.aliases", tempList);
+        config.addDefault("creatures.hoglin.enable", true);
+        config.addDefault("creatures.hoglin.enableCraftingSpawner", true);
+        config.addDefault("creatures.hoglin.enableSpawnEggOverride", true);
+        config.addDefault("creatures.hoglin.displayName", "Hoglin");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Zoglin
+        tempList.add("zoglin");
+        config.addDefault("creatures.zoglin.aliases", tempList);
+        config.addDefault("creatures.zoglin.enable", true);
+        config.addDefault("creatures.zoglin.enableCraftingSpawner", true);
+        config.addDefault("creatures.zoglin.enableSpawnEggOverride", true);
+        config.addDefault("creatures.zoglin.displayName", "Zoglin");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Piglin
+        tempList.add("piglin");
+        config.addDefault("creatures.piglin.aliases", tempList);
+        config.addDefault("creatures.piglin.enable", true);
+        config.addDefault("creatures.piglin.enableCraftingSpawner", true);
+        config.addDefault("creatures.piglin.enableSpawnEggOverride", true);
+        config.addDefault("creatures.piglin.displayName", "Piglin");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Strider
+        tempList.add("strider");
+        tempList.add("runner");
+        config.addDefault("creatures.strider.aliases", tempList);
+        config.addDefault("creatures.strider.enable", true);
+        config.addDefault("creatures.strider.enableCraftingSpawner", true);
+        config.addDefault("creatures.strider.enableSpawnEggOverride", true);
+        config.addDefault("creatures.strider.displayName", "Strider");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
@@ -809,6 +857,7 @@ public class Mobs extends AbstractConfiguration {
         // ThrownEnderpearl
         config.addDefault("creatures.ThrownEnderpearl.enable", false);
         config.addDefault("creatures.enderpearl.enable", false);
+        config.addDefault("creatures.ender_pearl.enable", false);
         // EyeOfEnderSignal
         config.addDefault("creatures.EyeOfEnderSignal.enable", false);
         config.addDefault("creatures.eye_of_ender_signal.enable", false);
@@ -864,7 +913,7 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.MinecartMobSpawner.enable", false);
         // LeashKnot
         config.addDefault("creatures.LeashKnot.enable", false);
-        config.addDefault("creatures.leash_know.enable", false);
+        config.addDefault("creatures.leash_knot.enable", false);
         // MinecartCommandBlock
         config.addDefault("creatures.MinecartCommandBlock.enable", false);
         config.addDefault("creatures.commandblock_minecart.enable", false);
