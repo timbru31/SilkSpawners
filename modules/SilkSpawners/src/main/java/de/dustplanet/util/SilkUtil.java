@@ -827,7 +827,9 @@ public class SilkUtil {
         // but is kept here for clarity, and in case Bukkit allows level-0
         // enchantments like vanilla
         if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
-            plugin.getLogger().info("Tool has no SilkTouch enchantment.");
+            if (verbose) {
+                plugin.getLogger().info("Tool has no SilkTouch enchantment.");
+            }
             return false;
         }
         // Return if the level is enough
