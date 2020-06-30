@@ -155,6 +155,7 @@ allowedTools:
   - IRON_PICKAXE
   - GOLD_PICKAXE
   - DIAMOND_PICKAXE
+  - NETHERITE_PICKAXE
 
 # Amount of spawners or eggs given to a player when the argument is omitted
 defaultAmountGive: 1

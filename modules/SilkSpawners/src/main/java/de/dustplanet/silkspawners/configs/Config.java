@@ -99,6 +99,7 @@ public class Config extends AbstractConfiguration {
         temp.add("GOLD_PICKAXE");
         temp.add("GOLDEN_PICKAXE");
         temp.add(Material.DIAMOND_PICKAXE.toString());
+        temp.add("NETHERITE_PICKAXE");
         config.addDefault("allowedTools", temp);
         config.addComment("allowedTools", "", "# Allowed set of tools which can mine a spawner. IDs are supported, too");
         config.addDefault("defaultAmountGive", 1);
