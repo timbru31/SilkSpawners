@@ -830,6 +830,17 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.strider.displayName", "Strider");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Piglin Brute
+        tempList.add("piglin_brute");
+        tempList.add("piglinbrute");
+        tempList.add("brute");
+        config.addDefault("creatures.piglin_brute.aliases", tempList);
+        config.addDefault("creatures.piglin_brute.enable", true);
+        config.addDefault("creatures.piglin_brute.enableCraftingSpawner", true);
+        config.addDefault("creatures.piglin_brute.enableSpawnEggOverride", true);
+        config.addDefault("creatures.piglin_brute.displayName", "Piglin Brute");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item

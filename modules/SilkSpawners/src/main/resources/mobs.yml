@@ -772,6 +772,15 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Strider
+  piglin_brute:
+    aliases:
+    - piglin_brute
+    - piglinbrute
+    - brute
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Piglin Brute
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
