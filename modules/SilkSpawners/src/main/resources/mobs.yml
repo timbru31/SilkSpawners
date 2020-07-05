@@ -291,6 +291,9 @@ creatures:
     aliases: &id021
     - mc
     - mcow
+    - mushroomcow
+    - mushroom_cow
+    - mushroom
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true

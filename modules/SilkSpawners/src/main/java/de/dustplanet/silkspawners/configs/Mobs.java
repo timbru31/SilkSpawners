@@ -309,6 +309,9 @@ public class Mobs extends AbstractConfiguration {
         // MushroomCow
         tempList.add("mc");
         tempList.add("mcow");
+        tempList.add("mushroomcow");
+        tempList.add("mushroom_cow");
+        tempList.add("mushroom");
         config.addDefault("creatures.MushroomCow.aliases", tempList);
         config.addDefault("creatures.MushroomCow.enable", true);
         config.addDefault("creatures.MushroomCow.enableCraftingSpawner", true);
