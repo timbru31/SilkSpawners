@@ -119,6 +119,10 @@ public class Mobs extends AbstractConfiguration {
         tempList.add("zombiepigman");
         tempList.add("pg");
         tempList.add("zp");
+        tempList.add("pig_man");
+        tempList.add("pig_zombie");
+        tempList.add("pigzombie");
+        tempList.add("zombie_pigman");
         config.addDefault("creatures.PigZombie.aliases", tempList);
         config.addDefault("creatures.PigZombie.displayName", "Zombie Pigman");
         config.addDefault("creatures.PigZombie.enable", true);

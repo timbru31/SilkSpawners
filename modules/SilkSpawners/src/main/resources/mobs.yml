@@ -100,6 +100,10 @@ creatures:
     - zombiepigman
     - pg
     - zp
+    - pig_man
+    - pig_zombie
+    - pigzombie
+    - zombie_pigman
     displayName: Zombie Pigman
     enable: true
     enableCraftingSpawner: true
