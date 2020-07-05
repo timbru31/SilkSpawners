@@ -485,6 +485,8 @@ public class Mobs extends AbstractConfiguration {
         tempList = new ArrayList<>();
         // Shulker
         tempList.add("shulk");
+        tempList.add("shelllurker");
+        tempList.add("shell_lurker");
         config.addDefault("creatures.Shulker.aliases", tempList);
         config.addDefault("creatures.Shulker.enable", true);
         config.addDefault("creatures.Shulker.enableCraftingSpawner", true);

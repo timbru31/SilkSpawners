@@ -468,6 +468,8 @@ creatures:
   Shulker:
     aliases: &id033
     - shulk
+    - shelllurker
+    - shell_lurker
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
