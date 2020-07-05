@@ -329,6 +329,9 @@ public class Mobs extends AbstractConfiguration {
         tempList.add("sg");
         tempList.add("sm");
         tempList.add("snowmen");
+        tempList.add("snowman");
+        tempList.add("snow_golem");
+        tempList.add("snow_man");
         config.addDefault("creatures.SnowMan.aliases", tempList);
         config.addDefault("creatures.SnowMan.enable", true);
         config.addDefault("creatures.SnowMan.enableCraftingSpawner", true);

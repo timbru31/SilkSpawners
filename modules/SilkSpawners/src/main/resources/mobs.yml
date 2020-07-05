@@ -311,6 +311,9 @@ creatures:
     - sg
     - sm
     - snowmen
+    - snowman
+    - snow_golem
+    - snow_man
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
