@@ -154,10 +154,8 @@ public class SpawnerCommand implements CommandExecutor {
         final String entityID = su.getDisplayNameToMobID().get(mob);
         final String creature = su.getCreatureName(entityID);
 
-        final String mobName = creature.toLowerCase(Locale.ENGLISH).replace(" ", "");
-
         // Add egg
-        if (sender.hasPermission("silkspawners.freeitemegg." + mobName)) {
+        if (su.hasPermission(sender, "silkspawners.freeitemegg.", entityID)) {
             // Have space in inventory
             if (receiver.getInventory().firstEmpty() == -1) {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
@@ -202,11 +200,9 @@ public class SpawnerCommand implements CommandExecutor {
 
         final String entityID = su.getDisplayNameToMobID().get(mob);
         final String creature = su.getCreatureName(entityID);
-        // Filter spaces (like Zombie Pigman)
-        final String mobName = creature.toLowerCase(Locale.ENGLISH).replace(" ", "");
 
         // Add spawner
-        if (sender.hasPermission("silkspawners.freeitem." + mobName)) {
+        if (su.hasPermission(sender, "silkspawners.freeitem.", entityID)) {
             // Have space in inventory
             if (receiver.getInventory().firstEmpty() == -1) {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
@@ -251,9 +247,6 @@ public class SpawnerCommand implements CommandExecutor {
             }
 
             final String entityID = su.getDisplayNameToMobID().get(newMob);
-            final String creature = su.getCreatureName(entityID);
-            // Filter spaces (like Zombie Pigman)
-            final String mobName = creature.toLowerCase(Locale.ENGLISH).replace(" ", "");
 
             final Player player = (Player) sender;
 
@@ -263,7 +256,7 @@ public class SpawnerCommand implements CommandExecutor {
                 // Get the block
                 final Block block = su.nmsProvider.getSpawnerFacing(player, distance);
                 if (block != null) {
-                    handleBlockChange(player, block, entityID, mobName);
+                    handleBlockChange(player, block, entityID);
                     return;
                 }
             }
@@ -277,9 +270,9 @@ public class SpawnerCommand implements CommandExecutor {
             }
 
             if (itemMaterial != null && itemMaterial == su.nmsProvider.getSpawnerMaterial()) {
-                handleChangeSpawner(player, entityID, mobName, itemInHand);
+                handleChangeSpawner(player, entityID, itemInHand);
             } else if (itemMaterial != null && su.nmsProvider.getSpawnEggMaterials().contains(itemMaterial)) {
-                handleChangeEgg(player, entityID, mobName, itemInHand);
+                handleChangeEgg(player, entityID, itemInHand);
             } else {
                 su.sendMessage(player,
                         ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerNotDeterminable")));
@@ -290,8 +283,8 @@ public class SpawnerCommand implements CommandExecutor {
 
     }
 
-    private void handleBlockChange(final Player player, final Block block, final String entityID, final String mobName) {
-        if (!player.hasPermission("silkspawners.changetype." + mobName)) {
+    private void handleBlockChange(final Player player, final Block block, final String entityID) {
+        if (!su.hasPermission(player, "silkspawners.changetype.", entityID)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
             return;
@@ -315,8 +308,8 @@ public class SpawnerCommand implements CommandExecutor {
 
     }
 
-    private void handleChangeSpawner(final Player player, final String entityID, final String mobName, final ItemStack itemInHand) {
-        if (!player.hasPermission("silkspawners.changetype." + mobName)) {
+    private void handleChangeSpawner(final Player player, final String entityID, final ItemStack itemInHand) {
+        if (!su.hasPermission(player, "silkspawners.changetype.", entityID)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingSpawner")));
             return;
@@ -341,8 +334,8 @@ public class SpawnerCommand implements CommandExecutor {
 
     }
 
-    private void handleChangeEgg(final Player player, final String entityID, final String mobName, final ItemStack itemInHand) {
-        if (!player.hasPermission("silkspawners.changetype." + mobName)) {
+    private void handleChangeEgg(final Player player, final String entityID, final ItemStack itemInHand) {
+        if (!su.hasPermission(player, "silkspawners.changetype.", entityID)) {
             su.sendMessage(player,
                     ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noPermissionChangingEgg")));
             return;

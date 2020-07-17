@@ -29,6 +29,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.permissions.Permissible;
 import org.bukkit.plugin.Plugin;
 
 import com.google.common.base.CaseFormat;
@@ -924,5 +925,29 @@ public class SilkUtil {
      */
     public boolean isLegacySpawnEggs() {
         return nmsProvider.getSpawnEggMaterials().size() == 1;
+    }
+
+    /**
+     * Helper methods to check if a player has any of the aliases permissions for a given mobID.
+     *
+     * @param permissible - the permissible to check the permission for
+     * @param basePermission - the basis permission without the specific mob
+     * @param entityID - the internal mob ID (not display name)
+     * @return the permission check result, true if the player has got the permission, false otherwise
+     */
+    public boolean hasPermission(final Permissible permissible, final String basePermission, final String entityID) {
+        if (entityID == null || entityID.isEmpty() || permissible == null || basePermission == null || basePermission.isEmpty()) {
+            return false;
+        }
+
+        final String correctedBasePermission = basePermission.endsWith(".") ? basePermission : basePermission + ".";
+        for (final Entry<String, String> entry : displayNameToMobID.entrySet()) {
+            final String currentEntityID = entry.getValue();
+            if (currentEntityID.equalsIgnoreCase(entityID)
+                    && permissible.hasPermission(correctedBasePermission + entry.getKey().toLowerCase(Locale.ENGLISH).replace(" ", ""))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

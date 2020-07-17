@@ -76,7 +76,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         final String creatureName = su.getCreatureName(entityID);
 
         final String spawnerName = creatureName.toLowerCase(Locale.ENGLISH).replace(" ", "");
-        if (!player.hasPermission("silkspawners.craft." + spawnerName)) {
+        if (!su.hasPermission(player, "silkspawners.craft.", entityID)) {
             event.setCancelled(true);
             su.sendMessage(player,
                     ChatColor

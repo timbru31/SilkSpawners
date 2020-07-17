@@ -1,7 +1,6 @@
 package de.dustplanet.silkspawners.listeners;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Random;
 
 import org.bukkit.ChatColor;
@@ -77,8 +76,6 @@ public class SilkSpawnersBlockListener implements Listener {
 
         final World world = player.getWorld();
 
-        final String mobName = su.getCreatureName(entityID).toLowerCase(Locale.ENGLISH).replace(" ", "");
-
         if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) {
             return;
         }
@@ -91,7 +88,8 @@ public class SilkSpawnersBlockListener implements Listener {
             mined = block.getMetadata("mined").get(0).asBoolean();
         }
 
-        if (player.hasPermission("silkspawners.silkdrop." + mobName) || player.hasPermission("silkspawners.destroydrop." + mobName)) {
+        if (su.hasPermission(player, "silkspawners.silkdrop.", entityID)
+                || su.hasPermission(player, "silkspawners.destroydrop.", entityID)) {
             final int addXP = plugin.config.getInt("destroyDropXP");
             // If we have more than 0 XP, drop them
             // either we drop XP for destroy and silktouch or only when
@@ -108,8 +106,8 @@ public class SilkSpawnersBlockListener implements Listener {
         int randomNumber = rnd.nextInt(100);
         int dropChance = 0;
 
-        if ((validToolAndSilkTouch && player.hasPermission("silkspawners.silkdrop." + mobName))
-                || player.hasPermission("silkspawners.nosilk." + mobName)) {
+        if ((validToolAndSilkTouch && su.hasPermission(player, "silkspawners.silkdrop.", entityID))
+                || su.hasPermission(player, "silkspawners.nosilk.", entityID)) {
             if (plugin.mobs.contains("creatures." + entityID + ".silkDropChance")) {
                 dropChance = plugin.mobs.getInt("creatures." + entityID + ".silkDropChance", 100);
             } else {
@@ -148,7 +146,7 @@ public class SilkSpawnersBlockListener implements Listener {
             return;
         }
 
-        if (player.hasPermission("silkspawners.destroydrop." + mobName)) {
+        if (su.hasPermission(player, "silkspawners.destroydrop.", entityID)) {
             if (plugin.config.getBoolean("destroyDropEgg", false)) {
                 randomNumber = rnd.nextInt(100);
                 if (plugin.mobs.contains("creatures." + entityID + ".eggDropChance")) {
@@ -214,9 +212,8 @@ public class SilkSpawnersBlockListener implements Listener {
         entityID = placeEvent.getEntityID();
 
         final String creatureName = su.getCreatureName(entityID);
-        final String spawnerName = creatureName.toLowerCase(Locale.ENGLISH).replace(" ", "");
 
-        if (!player.hasPermission("silkspawners.place." + spawnerName)) {
+        if (!su.hasPermission(player, "silkspawners.place.", entityID)) {
             event.setCancelled(true);
             su.sendMessage(player,
                     ChatColor
