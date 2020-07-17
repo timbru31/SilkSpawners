@@ -424,7 +424,7 @@ public class SilkUtil {
             }
             entityID = nmsProvider.getVanillaNBTEntityID(item);
             if (entityID != null && !entityID.isEmpty()) {
-                return entityID;
+                return entityID.replace("minecraft:", "");
             }
         }
         if (item.hasItemMeta()) {
