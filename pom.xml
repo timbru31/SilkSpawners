@@ -34,6 +34,7 @@
     <module>modules/v1_14_R1</module>
     <module>modules/v1_15_R1</module>
     <module>modules/v1_16_R1</module>
+    <module>modules/v1_16_R2</module>
     <module>modules/SilkSpawners</module>
   </modules>
 

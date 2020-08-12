@@ -28,7 +28,7 @@ This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to ob
 - Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-- Support for multiple Minecraft versions, from 1.8.X to 1.16.1
+- Support for multiple Minecraft versions, from 1.8.X to 1.16.2
 
 _Third party features, all of them can be disabled_
 
@@ -306,6 +306,7 @@ Please follow the Sun Coding Guidelines, thanks!
 Unfortunately, I can't give access to https://repo.dustplanet.de/artifactory/private due to the DMCA of CraftBukkit and the prohibiton to distribute those binaries. To successfully build SilkSpawners using Maven, you must first run Spigot's BuildTools for several versions in order to compile each module - this will populate the local `.m2` cache of yours.
 
 ```sh
+java -jar BuildTools.jar --rev 1.16.2
 java -jar BuildTools.jar --rev 1.16.1
 java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
 java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
@@ -349,7 +350,7 @@ The file `./plugins/bStats/config.yml` contains an option to _opt-out_.
 
 ## Donation
 
-[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif "Donation via PayPal")](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T9TEV7Q88B9M2)
+[![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif 'Donation via PayPal')](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=T9TEV7Q88B9M2)
 
-![BitCoin](https://dustplanet.de/wp-content/uploads/2015/01/bitcoin-logo-plain.png "Donation via BitCoins")  
+![BitCoin](https://dustplanet.de/wp-content/uploads/2015/01/bitcoin-logo-plain.png 'Donation via BitCoins')  
 1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C
