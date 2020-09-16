@@ -173,6 +173,8 @@ public class SilkSpawnersBlockListener implements Listener {
             return;
         }
 
+        plugin.getLogger().log(Level.FINE, "Player has destroydrop permission {0}",
+                su.hasPermission(player, "silkspawners.destroydrop.", entityID));
         if (su.hasPermission(player, "silkspawners.destroydrop.", entityID)) {
             plugin.getLogger().fine("Player has destroydrop, checking spawn eggs and iron bars drops");
 
