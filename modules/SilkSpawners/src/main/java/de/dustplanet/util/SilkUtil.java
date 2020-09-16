@@ -121,6 +121,12 @@ public class SilkUtil {
         if (nmsProviderFound) {
             load();
         }
+
+        final boolean verboseMode = plugin.getConfig().getBoolean("verboseMode", false);
+        if (verboseMode) {
+            DebugLogHandler.attachDebugLogger(instance);
+            instance.getLogger().setLevel(Level.FINE);
+        }
     }
 
     /**
@@ -175,14 +181,9 @@ public class SilkUtil {
      * Loads the defaults
      */
     public void load() {
-        // Should we display more information
-        final boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
-
         // Scan the entities
         final List<String> entities = scanEntityMap();
-        if (verbose) {
-            plugin.getLogger().info("Scanning the mobs");
-        }
+        plugin.getLogger().fine("Scanning the mobs");
         for (final String entityID : entities) {
             @SuppressWarnings("deprecation")
             final EntityType bukkitEntity = EntityType.fromName(entityID);
@@ -197,9 +198,7 @@ public class SilkUtil {
                 enable = plugin.getMobs().getBoolean("creatures." + entityID + ".enable", enable);
             }
             if (!enable) {
-                if (verbose) {
-                    plugin.getLogger().info("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (disabled)");
-                }
+                plugin.getLogger().fine("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (disabled)");
                 continue;
             }
 
@@ -230,10 +229,8 @@ public class SilkUtil {
                 displayNameToMobID.put(alias, entityID);
             }
 
-            if (verbose) {
-                plugin.getLogger().info("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (display name: "
-                        + displayName + ", aliases: " + aliasSet + ")");
-            }
+            plugin.getLogger().fine("Entity " + entityID + " = " + bukkitEntity + "[" + bukkitEntityClass + "] (display name: "
+                    + displayName + ", aliases: " + aliasSet + ")");
         }
 
         // Should we use something else as the default?
@@ -243,9 +240,7 @@ public class SilkUtil {
             // If we know the internal name
             if (displayNameToMobID.containsKey(defaultCreatureString)) {
                 setDefaultEntityID(defaultEntityID);
-                if (verbose) {
-                    plugin.getLogger().info("Default monster spawner set to " + defaultEntityID);
-                }
+                plugin.getLogger().fine("Default monster spawner set to " + defaultEntityID);
             } else {
                 // Unknown, fallback
                 plugin.getLogger().warning("Invalid creature type: " + defaultCreatureString + ", default monster spawner fallback to PIG");
@@ -257,9 +252,7 @@ public class SilkUtil {
             setUseReflection(false);
         }
 
-        if (verbose) {
-            plugin.getLogger().info("Reflection is " + isUsingReflection());
-        }
+        plugin.getLogger().fine("Reflection is " + isUsingReflection());
 
         if (plugin.getConfig().getBoolean("spawnersUnstackable", false)) {
             nmsProvider.setSpawnersUnstackable();
@@ -486,11 +479,13 @@ public class SilkUtil {
         }
 
         if (isUsingReflection()) {
+            plugin.getLogger().fine("Using reflection to get mob name of the block");
             return nmsProvider.getMobNameOfSpawner(blockState);
         }
 
         final CreatureSpawner spawner = (CreatureSpawner) blockState;
         if (spawner.getSpawnedType() != null) {
+            plugin.getLogger().fine("Using Bukkit fallback to get the mob name of the block");
             return spawner.getSpawnedType().getName();
         }
         return null;
@@ -799,7 +794,6 @@ public class SilkUtil {
         }
 
         boolean toolAllowed = false;
-        final boolean verbose = plugin.getConfig().getBoolean("verboseConfig", false);
         final Material toolType = tool.getType();
         final List<String> allowedTools = plugin.getConfig().getStringList("allowedTools");
         for (final String allowedTool : allowedTools) {
@@ -809,16 +803,12 @@ public class SilkUtil {
             }
         }
         if (!toolAllowed) {
-            if (verbose) {
-                plugin.getLogger().log(Level.INFO, "Tool not allowed: {0}", tool.getType());
-            }
+            plugin.getLogger().log(Level.FINE, "Tool not allowed: {0}", tool.getType());
             return false;
         }
 
         final int minLevel = plugin.getConfig().getInt("minSilkTouchLevel", 1);
-        if (verbose) {
-            plugin.getLogger().log(Level.INFO, "minLevel is {0}", minLevel);
-        }
+        plugin.getLogger().log(Level.FINE, "minLevel is {0}", minLevel);
         if (minLevel == 0) {
             return true;
         }
@@ -828,16 +818,12 @@ public class SilkUtil {
         // but is kept here for clarity, and in case Bukkit allows level-0
         // enchantments like vanilla
         if (!tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
-            if (verbose) {
-                plugin.getLogger().info("Tool has no SilkTouch enchantment.");
-            }
+            plugin.getLogger().fine("Tool has no SilkTouch enchantment.");
             return false;
         }
         // Return if the level is enough
         final int enchantmentLevel = tool.getEnchantmentLevel(Enchantment.SILK_TOUCH);
-        if (verbose) {
-            plugin.getLogger().log(Level.INFO, "Stored enchantment level is {0}", enchantmentLevel);
-        }
+        plugin.getLogger().log(Level.FINE, "Stored enchantment level is {0}", enchantmentLevel);
         return enchantmentLevel >= minLevel;
     }
 

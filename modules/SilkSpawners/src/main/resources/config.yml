@@ -79,7 +79,7 @@ recipeAmount: 1
 # You can put IDs or the NAME here (please uppercase)
 # Add it for each custom ingredient you add, too!
 ingredients:
-- A,IRON_FENCE
+  - A,IRON_FENCE
 
 # Should spawners be unstackable
 spawnersUnstackable: false
@@ -104,14 +104,14 @@ spawnEggOverrideSpawnDefault: true
 
 # Allowed set of tools which can mine a spawner. IDs are supported, too
 allowedTools:
-- WOOD_PICKAXE
-- WOODEN_PICKAXE
-- STONE_PICKAXE
-- IRON_PICKAXE
-- GOLD_PICKAXE
-- GOLDEN_PICKAXE
-- DIAMOND_PICKAXE
-- NETHERITE_PICKAXE
+  - WOOD_PICKAXE
+  - WOODEN_PICKAXE
+  - STONE_PICKAXE
+  - IRON_PICKAXE
+  - GOLD_PICKAXE
+  - GOLDEN_PICKAXE
+  - DIAMOND_PICKAXE
+  - NETHERITE_PICKAXE
 
 # Amount of spawners or eggs given to a player when the argument is omitted
 defaultAmountGive: 1
@@ -141,8 +141,8 @@ vanillaBossBar:
 # Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID
 factionsSupport: false
 
-# Puts more information out on startup
-verboseConfig: false
+# Puts more information out on startup and interactions, such as block placement and breaking
+verboseMode: false
 
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true

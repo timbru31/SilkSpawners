@@ -185,8 +185,8 @@ vanillaBossBar:
 # Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID
 factionsSupport: false
 
-# Puts more information out on startup
-verboseConfig: false
+# Puts more information out on startup and interactions, such as block placement and breaking
+verboseMode: false
 
 # Internal stuff, do NOT change unless advised - the plugin might break otherwise
 useReflection: true

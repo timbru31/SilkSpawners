@@ -254,11 +254,7 @@ public class SilkSpawners extends JavaPlugin {
     // Add the recipes
     @SuppressWarnings("deprecation")
     private void loadRecipes() {
-        final boolean verbose = config.getBoolean("verboseConfig", false);
-
-        if (verbose) {
-            getLogger().info("Loading custom recipes");
-        }
+        getLogger().fine("Loading custom recipes");
 
         final boolean legacySpawnEggs = su.isLegacySpawnEggs();
         if (legacySpawnEggs) {
@@ -270,9 +266,7 @@ public class SilkSpawners extends JavaPlugin {
             boolean skip = false;
             // If the mob is disabled, skip it
             if (!mobs.getBoolean("creatures." + entityID + ".enableCraftingSpawner", true)) {
-                if (verbose) {
-                    getLogger().info("Skipping crafting recipe for " + entityID + " per config");
-                }
+                getLogger().fine("Skipping crafting recipe for " + entityID + " per config");
                 continue;
             }
 
@@ -286,10 +280,8 @@ public class SilkSpawners extends JavaPlugin {
                 amount = config.getInt("recipeAmount", 1);
             }
 
-            // Debug output
-            if (verbose) {
-                getLogger().info("Amount of " + entityID + ": " + amount);
-            }
+            getLogger().fine("Amount of " + entityID + ": " + amount);
+
             // Output is a spawner of this type with a custom amount
             final ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, true);
             ShapedRecipe recipe = null;
@@ -332,13 +324,10 @@ public class SilkSpawners extends JavaPlugin {
                     bottom = config.getString("recipeBottom", "AAA");
                 }
 
-                // Debug output
-                if (verbose) {
-                    getLogger().info("Shape of " + entityID + ":");
-                    getLogger().info(top);
-                    getLogger().info(middle);
-                    getLogger().info(bottom);
-                }
+                getLogger().fine("Shape of " + entityID + ":");
+                getLogger().fine(top);
+                getLogger().fine(middle);
+                getLogger().fine(bottom);
 
                 // Set the shape
                 recipe.shape(top, middle, bottom);
@@ -362,26 +351,20 @@ public class SilkSpawners extends JavaPlugin {
                     continue;
                 }
 
-                // Debug output
-                if (verbose) {
-                    getLogger().info("Ingredients of " + entityID + ":");
-                    getLogger().info(ingredientsList.toString());
-                }
+                getLogger().fine("Ingredients of " + entityID + ":");
+                getLogger().fine(ingredientsList.toString());
 
                 final List<String> shape = Arrays.asList(recipe.getShape());
                 // We have an ingredient that is not in our shape. Ignore it then
                 if (shapeContainsIngredient(shape, 'X')) {
-                    if (verbose) {
-                        getLogger().info("shape of " + entityID + " contains X");
-                    }
+                    getLogger().fine("shape of " + entityID + " contains X");
+
                     if (legacySpawnEggs) {
                         recipe.setIngredient('X', su.nmsProvider.getSpawnEggMaterial(), su.nmsProvider.getIDForEntity(entityID));
                     } else {
                         final Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                         if (material == null) {
-                            if (verbose) {
-                                getLogger().info("could not find egg material for " + entityID);
-                            }
+                            getLogger().fine("could not find egg material for " + entityID);
                             skip = true;
                             continue;
                         }
@@ -438,14 +421,10 @@ public class SilkSpawners extends JavaPlugin {
                 try {
                     if (!skip) {
                         final boolean recipeAdded = getServer().addRecipe(recipe);
-                        if (verbose) {
-                            getLogger().info("Recipe of " + entityID + " added: " + recipeAdded);
-                        }
+                        getLogger().fine("Recipe of " + entityID + " added: " + recipeAdded);
                     }
                 } catch (final IllegalStateException e) {
-                    if (verbose) {
-                        getLogger().info("Unable to add recipe of " + entityID + ": " + e.getMessage());
-                    }
+                    getLogger().fine("Unable to add recipe of " + entityID + ": " + e.getMessage());
                 }
             }
         }

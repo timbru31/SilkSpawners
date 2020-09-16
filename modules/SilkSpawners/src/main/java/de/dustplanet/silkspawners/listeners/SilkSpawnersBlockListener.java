@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.listeners;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -41,8 +42,10 @@ public class SilkSpawnersBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockBreak(final BlockBreakEvent event) {
+        plugin.getLogger().fine("Handling a block break event");
         final boolean isFakeEvent = !BlockBreakEvent.class.equals(event.getClass());
         if (isFakeEvent) {
+            plugin.getLogger().fine("Skipping block break event because the event is fake");
             return;
         }
 
@@ -50,23 +53,28 @@ public class SilkSpawnersBlockListener implements Listener {
         final Player player = event.getPlayer();
 
         if (block.getType() != su.nmsProvider.getSpawnerMaterial()) {
+            plugin.getLogger().fine("Skipping block break event because the block is not a spawner");
             return;
         }
 
         if (!su.canBuildHere(player, block.getLocation())) {
+            plugin.getLogger().fine("Skipping block break event because the player can't build here");
             return;
         }
 
         String entityID = su.getSpawnerEntityID(block);
+        plugin.getLogger().log(Level.FINE, "The stored entity of the block is {0}", entityID);
 
         final SilkSpawnersSpawnerBreakEvent breakEvent = new SilkSpawnersSpawnerBreakEvent(player, block, entityID);
         plugin.getServer().getPluginManager().callEvent(breakEvent);
         if (breakEvent.isCancelled()) {
+            plugin.getLogger().fine("Skipping block break event because the the SilkSpawnersBreakEvent was cancelled");
             event.setCancelled(true);
             return;
         }
 
         entityID = su.getDisplayNameToMobID().get(breakEvent.getEntityID());
+        plugin.getLogger().log(Level.FINE, "The stored entity of the block is {0}", entityID);
 
         plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken"))
                 .replace("%creature%", su.getCreatureName(entityID)));
@@ -77,6 +85,7 @@ public class SilkSpawnersBlockListener implements Listener {
         final World world = player.getWorld();
 
         if (plugin.config.getBoolean("noDropsCreative", true) && player.getGameMode() == GameMode.CREATIVE) {
+            plugin.getLogger().fine("Skipping block break event because the game mode is creative and noDropsCreative is true");
             return;
         }
 
@@ -86,6 +95,7 @@ public class SilkSpawnersBlockListener implements Listener {
 
         if (plugin.config.getBoolean("preventXPFarming", true) && block.hasMetadata("mined")) {
             mined = block.getMetadata("mined").get(0).asBoolean();
+            plugin.getLogger().fine("Checking mined flag of the block");
         }
 
         if (su.hasPermission(player, "silkspawners.silkdrop.", entityID)
@@ -99,6 +109,7 @@ public class SilkSpawnersBlockListener implements Listener {
                 // check if we should flag spawners
                 if (plugin.config.getBoolean("preventXPFarming", true)) {
                     block.setMetadata("mined", new FixedMetadataValue(plugin, true));
+                    plugin.getLogger().fine("Setting mined flag of the placed block");
                 }
             }
         }
@@ -108,13 +119,20 @@ public class SilkSpawnersBlockListener implements Listener {
 
         if ((validToolAndSilkTouch && su.hasPermission(player, "silkspawners.silkdrop.", entityID))
                 || su.hasPermission(player, "silkspawners.nosilk.", entityID)) {
+            plugin.getLogger().log(Level.FINE, "Player has silkdrop permission {0}",
+                    su.hasPermission(player, "silkspawners.silkdrop.", entityID));
+            plugin.getLogger().log(Level.FINE, "Player has nosilk permission {0}",
+                    su.hasPermission(player, "silkspawners.nosilk.", entityID));
             if (plugin.mobs.contains("creatures." + entityID + ".silkDropChance")) {
                 dropChance = plugin.mobs.getInt("creatures." + entityID + ".silkDropChance", 100);
             } else {
                 dropChance = plugin.config.getInt("silkDropChance", 100);
             }
 
+            plugin.getLogger().log(Level.FINE, "Drop chance is {0}", dropChance);
+
             if (randomNumber < dropChance) {
+                plugin.getLogger().fine("Dice rolled, proceed");
                 final ItemStack breakEventDrop = breakEvent.getDrop();
                 ItemStack spawnerItemStack = null;
                 if (breakEventDrop != null) {
@@ -132,14 +150,23 @@ public class SilkSpawnersBlockListener implements Listener {
                     plugin.getLogger().warning("Skipping dropping of spawner, since item is null");
                     return;
                 }
+                plugin.getLogger().log(Level.FINE, "Dropping {0} of {1} ",
+                        new Object[] { spawnerItemStack.getAmount(), spawnerItemStack.getType() });
+
                 if (plugin.getConfig().getBoolean("dropSpawnerToInventory", false)) {
+                    plugin.getLogger().fine("Dropping into the inventory");
+
                     final HashMap<Integer, ItemStack> additionalItems = player.getInventory().addItem(spawnerItemStack);
                     if (!additionalItems.isEmpty()) {
+                        plugin.getLogger().fine("Inventory is full, dropping the rest naturally on the ground");
+
                         for (final ItemStack itemStack : additionalItems.values()) {
                             world.dropItemNaturally(block.getLocation(), itemStack);
                         }
                     }
                 } else {
+                    plugin.getLogger().fine("Dropping naturally on the ground");
+
                     world.dropItemNaturally(block.getLocation(), spawnerItemStack);
                 }
             }
@@ -147,6 +174,8 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         if (su.hasPermission(player, "silkspawners.destroydrop.", entityID)) {
+            plugin.getLogger().fine("Player has destroydrop, checking spawn eggs and iron bars drops");
+
             if (plugin.config.getBoolean("destroyDropEgg", false)) {
                 randomNumber = rnd.nextInt(100);
                 if (plugin.mobs.contains("creatures." + entityID + ".eggDropChance")) {
@@ -154,7 +183,11 @@ public class SilkSpawnersBlockListener implements Listener {
                 } else {
                     dropChance = plugin.config.getInt("eggDropChance", 100);
                 }
+                plugin.getLogger().log(Level.FINE, "Spawn egg drop chance is", dropChance);
+
                 if (randomNumber < dropChance) {
+                    plugin.getLogger().fine("Dropping a spawn egg on the ground");
+
                     world.dropItemNaturally(block.getLocation(), su.newEggItem(entityID, 1, su.getCreatureEggName(entityID)));
                 }
             }
@@ -167,7 +200,9 @@ public class SilkSpawnersBlockListener implements Listener {
                 } else {
                     dropChance = plugin.config.getInt("destroyDropChance", 100);
                 }
+                plugin.getLogger().log(Level.FINE, "Iron bars drop chance is", dropChance);
                 if (randomNumber < dropChance) {
+                    plugin.getLogger().fine("Dropping a iron bars on the ground");
                     world.dropItem(block.getLocation(), new ItemStack(su.nmsProvider.getIronFenceMaterial(), dropBars));
                 }
             }
@@ -176,40 +211,49 @@ public class SilkSpawnersBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBlockPlace(final BlockPlaceEvent event) {
+        plugin.getLogger().fine("Handling a block place event");
         if (event.isCancelled()) {
+            plugin.getLogger().fine("Returning because the event is already cancelled");
             return;
         }
 
         final boolean isFakeEvent = !BlockPlaceEvent.class.equals(event.getClass());
         if (isFakeEvent) {
+            plugin.getLogger().fine("Skipping block place event because the event is fake");
             return;
         }
 
         final Block blockPlaced = event.getBlockPlaced();
         if (blockPlaced.getType() != su.nmsProvider.getSpawnerMaterial()) {
+            plugin.getLogger().fine("Skipping block place event because the placed block is not a spawner");
             return;
         }
         final Player player = event.getPlayer();
         if (!su.canBuildHere(player, blockPlaced.getLocation())) {
+            plugin.getLogger().fine("Skipping block break event because the player can't build here");
             return;
         }
         final ItemStack item = event.getItemInHand();
         String entityID = su.getStoredSpawnerItemEntityID(item);
+        plugin.getLogger().log(Level.FINE, "The stored entity of the item is {0}", entityID);
         boolean defaultID = false;
         if (entityID == null) {
             defaultID = true;
             entityID = su.getDefaultEntityID();
+            plugin.getLogger().fine("Stored entity was null, setting default");
         }
 
         final SilkSpawnersSpawnerPlaceEvent placeEvent = new SilkSpawnersSpawnerPlaceEvent(player, blockPlaced, entityID);
         plugin.getServer().getPluginManager().callEvent(placeEvent);
 
         if (placeEvent.isCancelled()) {
+            plugin.getLogger().fine("Skipping block place event because the SilkSpawnersPlaceEvent was cancelled");
             event.setCancelled(true);
             return;
         }
 
         entityID = placeEvent.getEntityID();
+        plugin.getLogger().log(Level.FINE, "The stored entity of the item is {0}", entityID);
 
         final String creatureName = su.getCreatureName(entityID);
 
@@ -220,6 +264,8 @@ public class SilkSpawnersBlockListener implements Listener {
                             .translateAlternateColorCodes('\u0026',
                                     plugin.localization.getString("noPermissionPlace").replace("%ID%", entityID))
                             .replace("%creature%", creatureName));
+            plugin.getLogger().fine("Skipping block place event because the player is missing the permission");
+
             return;
         }
 
@@ -231,5 +277,6 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         su.setSpawnerEntityID(blockPlaced, entityID);
+        plugin.getLogger().log(Level.FINE, "Changing placed down item entity ID to {0}", entityID);
     }
 }
