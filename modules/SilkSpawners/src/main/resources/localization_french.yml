@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2Ajout de &e%amount% oeuf(s) d''apparition de %creature% 
 addedSpawner: '&2Ajout de &e%amount% générateur(s) à %creature% &2dans ton inventaire.'
 addedSpawnerOtherPlayer: '&2Ajout de &e%amount% générateur(s) à %creature% &2dans l''inventaire de &e%player%&2.'
 noFreeSlot: '&4Il n''y a pas de place libre dans votre inventaire!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Vous n''avez pas la permission d''utiliser cette commande!'
 noPermissionChangingEgg: '&4Vous n''avez pas la permission de changer les oeufs d''apparition!'

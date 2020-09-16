@@ -121,8 +121,12 @@ public class Config extends AbstractConfiguration {
         config.addDefault("factionsSupport", false);
         config.addComment("factionsSupport", "",
                 "# Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID");
+        config.addDefault("spillSpawnersFromCommands", false);
+        config.addComment("spillSpawnersFromCommands", "",
+                "# If the inventory of a player is full, drop spawners/eggs from /ss give on the ground");
         config.addDefault("verboseMode", false);
-        config.addComment("verboseMode", "", "# Puts more information out on startup and interactions, such as block placement and breaking");
+        config.addComment("verboseMode", "",
+                "# Puts more information out on startup and interactions, such as block placement and breaking");
         config.addDefault("useReflection", true);
         config.addComment("useReflection", "", "# Internal stuff, do NOT change unless advised - the plugin might break otherwise");
         config.addDefault("testMCVersion", true);

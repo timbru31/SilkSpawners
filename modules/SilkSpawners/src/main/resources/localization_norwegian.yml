@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2La til &e%amount% %creature% spawn egg &2til &e%player% 
 addedSpawner: '&2La til &e%amount% %creature% spawner &2til din inventory'
 addedSpawnerOtherPlayer: '&2La til &e%amount% %creature% Spawner &2til &e%player% &2sin inventory'
 noFreeSlot: '&4Det er ikke ledig plass i din inventory!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Du har ikke lov til å bruke denne kommandoen!'
 noPermissionChangingEgg: '&4Du har ikke tillatelse til å bytte spawner egg med /egg'

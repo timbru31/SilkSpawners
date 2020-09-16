@@ -24,6 +24,7 @@ public class Localization extends AbstractConfiguration {
         config.addDefault("addedSpawner", "&2Added &e%amount% %creature% spawner(s) &2to your inventory.");
         config.addDefault("addedSpawnerOtherPlayer", "&2Added &e%amount% %creature% spawner(s) &2to &e%player%&2''s inventory.");
         config.addDefault("noFreeSlot", "&4There is no free slot in the inventory!");
+        config.addDefault("noFreeSlotDroppedGround", "&4There is no free slot in the inventory. &eDropping items on the ground instead!");
         config.addDefault("noPermission", "&4You do not have the permission to use this command!");
         config.addComment("noPermission", "");
         config.addDefault("noPermissionChangingEgg", "&4You do not have permission to change spawning eggs!");

@@ -7,6 +7,7 @@ addedEggOtherPlayer: '&aЯйцо призыва &e%amount% %creature% Добав
 addedSpawner: '&a%amount% %creature% &aСпавнер добавлен в ваш инвентарь'
 addedSpawnerOtherPlayer: '&a%amount% %creature% спавнер добавлен в инвентарь игрока &e%player%&2'
 noFreeSlot: '&cВ вашем инвенторе недостаточно места!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4У вас нет прав на исспользование этой команды!'
 noPermissionChangingEgg: '&4У вас нет прав на замену яйца!'

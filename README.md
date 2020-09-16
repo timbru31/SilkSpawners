@@ -185,6 +185,9 @@ vanillaBossBar:
 # Prevent that a spawner is changed via eggs in other territories. Supported are Factions, Faction3 and FactionsUUID
 factionsSupport: false
 
+# If the inventory of a player is full, drop spawners/eggs from /ss give on the ground
+spillSpawnersFromCommands: false
+
 # Puts more information out on startup and interactions, such as block placement and breaking
 verboseMode: false
 

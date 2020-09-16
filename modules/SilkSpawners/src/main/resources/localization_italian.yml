@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2Aggiunto un uovo di &e%creature% &2all''inventario di &e
 addedSpawner: '&2Aggiunto uno spawner di &e%creature% &2al tuo inventario'
 addedSpawnerOtherPlayer: '&2Aggiunto uno spawner di &e%creature% &2all''inventario di %player%'
 noFreeSlot: '&4There is no free slot in the inventory!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Non hai il permesso di usare questo comando'
 noPermissionChangingEgg: '&4Non hai il permesso di cambiare le uova con /egg'

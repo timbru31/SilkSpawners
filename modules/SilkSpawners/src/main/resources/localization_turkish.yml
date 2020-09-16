@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&e%amount% &2adet &e%creature% &2yumurtası &e%player%&2 i
 addedSpawner: '&e%amount% &2adet &e%creature% &2yaratıcısı çantanıza eklendi.'
 addedSpawnerOtherPlayer: '&e%amount% &2adet &e%creature% &2yaratıcısı &e%player%&2 isimli oyuncunun çantanıza eklendi.'
 noFreeSlot: '&4Çantada bunun için yeterli alan yok!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Bu komutu kullanmaya yetkiniz yok!'
 noPermissionChangingEgg: '&4Canavar yumurtalarını değiştirmeye yetkiniz yok!'

@@ -10,6 +10,7 @@ addedEggOtherPlayer: '&2已添加 &e%amount% 个 %creature% 怪物蛋&2至 &e%pl
 addedSpawner: '&2已添加 &e%amount% 个 %creature% 的刷怪笼&2至您的背包。'
 addedSpawnerOtherPlayer: '&2已添加 &e%amount% 个 %creature% 的刷怪笼&2至 &e%player%&2的背包。'
 noFreeSlot: '&4背包空位不足！'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4您没有使用此命令的权限！'
 noPermissionChangingEgg: '&4您没有更改怪物蛋的权限！'

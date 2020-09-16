@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2Succesvol &e%amount% %creature% spawn egg(s) &2aan &e%pl
 addedSpawner: '&2Succesvol &e%amount% %creature% spawner(s) &2aan jou inventory toegevoegd.'
 addedSpawnerOtherPlayer: '&2Succesvol &e%amount% %creature% spawner(s) &2aan &e%player%&2''s inventory toegevoegd.'
 noFreeSlot: '&4Er is geen slot vrij in je inventory!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Je hebt niet de juiste permissie om dit commando uit te voeren!'
 noPermissionChangingEgg: '&4Je hebt niet de juiste permissie om spawn eggs te veranderen met /egg!'

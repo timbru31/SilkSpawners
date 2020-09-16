@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2Erfolgreich &e%amount% %creature% Ei(er) &2zu &e%player%
 addedSpawner: '&2Erfolgreich &e%amount% %creature% Spawner &2zu deinem Inventar hinzugefügt'
 addedSpawnerOtherPlayer: '&2Erfolgreich &e%amount% %creature% Spawner &2zu &e%player%&2s Inventar hinzugefügt'
 noFreeSlot: '&4Es ist kein Platz im Inventar frei!'
+noFreeSlotDroppedGround: '&4Es ist kein Platz im Inventar frei. &eDie Items werden stattdessen auf dem Boden gedroppt!'
 
 noPermission: '&4Du hast nicht die Berechtigung für dieses Kommando'
 noPermissionChangingEgg: '&4Du hast nicht die Berechtigung um Eier mit /egg zu ändern!'

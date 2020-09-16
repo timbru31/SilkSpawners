@@ -5,6 +5,7 @@ import java.util.Locale;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -156,12 +157,19 @@ public class SpawnerCommand implements CommandExecutor {
 
         // Add egg
         if (su.hasPermission(sender, "silkspawners.freeitemegg.", entityID)) {
-            // Have space in inventory
+            final ItemStack eggItemStack = su.newEggItem(entityID, amount, su.getCreatureEggName(entityID));
             if (receiver.getInventory().firstEmpty() == -1) {
+                if (plugin.getConfig().getBoolean("spillSpawnersFromCommands", false)) {
+                    final World world = receiver.getWorld();
+                    world.dropItemNaturally(receiver.getLocation(), eggItemStack);
+                    su.sendMessage(sender,
+                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlotDroppedGround")));
+                    return;
+                }
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(su.newEggItem(entityID, amount, su.getCreatureEggName(entityID)));
+            receiver.getInventory().addItem(eggItemStack);
             if (saveData) {
                 receiver.saveData();
             }
@@ -203,12 +211,19 @@ public class SpawnerCommand implements CommandExecutor {
 
         // Add spawner
         if (su.hasPermission(sender, "silkspawners.freeitem.", entityID)) {
-            // Have space in inventory
+            final ItemStack spawnerItemStack = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, false);
             if (receiver.getInventory().firstEmpty() == -1) {
+                if (plugin.getConfig().getBoolean("spillSpawnersFromCommands", false)) {
+                    final World world = receiver.getWorld();
+                    world.dropItemNaturally(receiver.getLocation(), spawnerItemStack);
+                    su.sendMessage(sender,
+                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlotDroppedGround")));
+                    return;
+                }
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, false));
+            receiver.getInventory().addItem(spawnerItemStack);
             if (saveData) {
                 receiver.saveData();
             }

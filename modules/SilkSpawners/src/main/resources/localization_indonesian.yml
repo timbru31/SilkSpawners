@@ -6,6 +6,7 @@ addedEggOtherPlayer: '&2Menambahkan sebuah &e%creature% spawn egg &2kepada &e%pl
 addedSpawner: '&2Added a &e%creature% spawner &2to your inventory'
 addedSpawnerOtherPlayer: '&2Added a &e%creature% spawner &2to &e%player%&2''s inventory'
 noFreeSlot: '&4There is no free slot in the inventory!'
+noFreeSlotDroppedGround: '&4There is no free slot in the inventory. &eDropping items on the ground instead!'
 
 noPermission: '&4Kamu tidak diperbolehkan untuk menggunakan perintah ini'
 noPermissionChangingEgg: '&4Kamu tidak diperbolehkan untuk mengganti spawn egg menggunakan /egg'
