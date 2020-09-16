@@ -144,7 +144,7 @@ public class SilkUtil {
      * @return true if a valid NMSHandler could be found, false for not
      */
     private boolean setupNMSProvider() {
-        String version = plugin.getNMSVersion();
+        String version = plugin.getNmsVersion();
 
         // Rare cases might trigger API usage before SilkSpawners
         if (version == null) {
@@ -810,7 +810,7 @@ public class SilkUtil {
         }
         if (!toolAllowed) {
             if (verbose) {
-                plugin.getLogger().log(Level.INFO, "Tool not allowed:", tool.getType());
+                plugin.getLogger().log(Level.INFO, "Tool not allowed: {0}", tool.getType());
             }
             return false;
         }

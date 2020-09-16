@@ -13,6 +13,7 @@ import java.util.Locale;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -32,6 +33,8 @@ import de.dustplanet.silkspawners.listeners.SilkSpawnersInventoryListener;
 import de.dustplanet.silkspawners.listeners.SilkSpawnersPlayerListener;
 import de.dustplanet.util.CommentedConfiguration;
 import de.dustplanet.util.SilkUtil;
+import lombok.Getter;
+import lombok.Setter;
 import net.gravitydevelopment.updater.Updater;
 
 /**
@@ -44,6 +47,8 @@ import net.gravitydevelopment.updater.Updater;
 public class SilkSpawners extends JavaPlugin {
     private SilkUtil su;
     private Updater updater;
+    @Getter
+    @Setter
     private String nmsVersion;
     private static final int PLUGIN_ID = 35_890;
     private static final int BSTATS_PLUGIN_ID = 273;
@@ -51,6 +56,7 @@ public class SilkSpawners extends JavaPlugin {
             "v1_11_R1", "v1_12_R1", "v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2" };
     public CommentedConfiguration config;
     public CommentedConfiguration localization;
+    @Getter
     public CommentedConfiguration mobs;
 
     @Override
@@ -70,16 +76,16 @@ public class SilkSpawners extends JavaPlugin {
         final String packageName = getServer().getClass().getPackage().getName();
         // org.bukkit.craftbukkit.version
         // Get the last element of the package
-        setNMSVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
+        setNmsVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
 
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
-            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(getNMSVersion())) {
+            if (!Arrays.asList(COMPATIBLE_MINECRAFT_VERSIONS).contains(getNmsVersion())) {
                 getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
                 getLogger().info("Please check your versions to make sure they match!");
                 getLogger().info("Disabling now!");
                 getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
-                getLogger().info("Your version is: " + getNMSVersion());
+                getLogger().info("Your version is: " + getNmsVersion());
                 getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
                 shutdown();
                 return;
@@ -567,15 +573,14 @@ public class SilkSpawners extends JavaPlugin {
         setEnabled(false);
     }
 
-    public CommentedConfiguration getMobs() {
-        return mobs;
+    @Override
+    public void reloadConfig() {
+        reloadConfigs();
     }
 
-    public String getNMSVersion() {
-        return nmsVersion;
+    @Override
+    public FileConfiguration getConfig() {
+        return config;
     }
 
-    public void setNMSVersion(final String nmsVersion) {
-        this.nmsVersion = nmsVersion;
-    }
 }
