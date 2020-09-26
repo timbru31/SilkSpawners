@@ -1,18 +1,21 @@
 package de.dustplanet.silkspawners.events;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.inventory.ItemStack;
 
 /**
- * Event called when a spawner is placed by SilkSpawners.
+ * Event called when a spawner is exploded and drop chances are handled by SilkSpawners.
  *
  * @author timbru31
  */
-public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable, ISilkSpawnersEvent {
+public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellable, ISilkSpawnersEvent {
     /**
      * Handlers list.
      */
@@ -24,14 +27,20 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     private boolean cancelled;
 
     /**
-     * Player who triggered the event.
+     * Player who triggered the event. Possibly null
      */
+    @Nullable
     private final Player player;
 
     /**
-     * new entity ID.
+     * new Entity.
      */
     private String entityID;
+
+    /**
+     * the current dropChance
+     */
+    private int dropChance;
 
     /**
      * Block involved.
@@ -44,15 +53,22 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     private CreatureSpawner spawner;
 
     /**
+     * Overridden ItemStack that should instead be dropped.
+     */
+    private ItemStack drop;
+
+    /**
      * Constructor of the event.
      *
-     * @param player who issues the event
+     * @param player who issues the event, can be null
      * @param block is allowed to be null
      * @param entityID new entity ID
+     * @param dropChance the current dropChance
      */
-    public SilkSpawnersSpawnerPlaceEvent(final Player player, final Block block, final String entityID) {
+    public SilkSpawnersSpawnerExplodeEvent(@Nullable final Player player, final Block block, final String entityID, final int dropChance) {
         this.player = player;
         this.block = block;
+        this.dropChance = dropChance;
         if (block != null) {
             this.spawner = (CreatureSpawner) block.getState();
         }
@@ -112,7 +128,7 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     /**
      * Get the entity ID (mob to spawn) from this event.
      *
-     * @return the entity
+     * @return the entity ID
      */
     @Override
     public String getEntityID() {
@@ -127,6 +143,42 @@ public class SilkSpawnersSpawnerPlaceEvent extends Event implements Cancellable,
     @Override
     public void setEntityID(final String entityID) {
         this.entityID = entityID;
+    }
+
+    /**
+     * Gets the overridden ItemStack.
+     *
+     * @return the overridden ItemStack to drop if set or null
+     */
+    public ItemStack getDrop() {
+        return drop;
+    }
+
+    /**
+     * Sets the ItemStack to drop.
+     *
+     * @param drop the ItemStack to drop
+     */
+    public void setDrop(final ItemStack drop) {
+        this.drop = drop;
+    }
+
+    /**
+     * Gets the current drop chance.
+     *
+     * @return the drop chance
+     */
+    public int getDropChance() {
+        return dropChance;
+    }
+
+    /**
+     * Sets the new drop chance in percent.
+     *
+     * @param dropChance the overriden drop chance
+     */
+    public void setDropChance(final int dropChance) {
+        this.dropChance = dropChance;
     }
 
     /**

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Event called when a spawner is broken by SilkSpawners.
  *
- * @author xGhOsTkiLLeRx
+ * @author timbru31
  */
 public class SilkSpawnersSpawnerBreakEvent extends Event implements Cancellable, ISilkSpawnersEvent {
     /**

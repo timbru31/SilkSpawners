@@ -10,8 +10,7 @@ import org.bukkit.event.HandlerList;
 /**
  * Event called when a spawner is changed by SilkSpawners.
  *
- * @author (former) mushroomhostage
- * @author xGhOsTkiLLeRx
+ * @author timbru31.
  */
 public class SilkSpawnersSpawnerChangeEvent extends Event implements Cancellable, ISilkSpawnersEvent {
     /**

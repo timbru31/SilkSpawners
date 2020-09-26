@@ -1,6 +1,7 @@
 package de.dustplanet.silkspawners.listeners;
 
 import java.util.Random;
+import java.util.logging.Level;
 
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -12,8 +13,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.inventory.ItemStack;
 
 import de.dustplanet.silkspawners.SilkSpawners;
+import de.dustplanet.silkspawners.events.SilkSpawnersSpawnerExplodeEvent;
 import de.dustplanet.util.SilkUtil;
 
 /**
@@ -44,34 +47,62 @@ public class SilkSpawnersEntityListener implements Listener {
             return;
         }
 
-        boolean drop = true;
+        Player sourcePlayer = null;
         if (plugin.config.getBoolean("permissionExplode", false) && entity instanceof TNTPrimed) {
+            plugin.getLogger().fine("Checking for explosion permissing because igniter was TNT");
             final Entity igniter = ((TNTPrimed) entity).getSource();
             if (igniter != null && igniter instanceof Player) {
-                final Player sourcePlayer = (Player) igniter;
-                drop = sourcePlayer.hasPermission("silkspawners.explodedrop");
+                sourcePlayer = (Player) igniter;
+                plugin.getLogger().log(Level.FINE, "Player has destroydrop permission {0}",
+                        sourcePlayer.hasPermission("silkspawners.explodedrop"));
+                if (!sourcePlayer.hasPermission("silkspawners.explodedrop")) {
+                    return;
+                }
             }
         }
 
-        // Check if a spawner block is on the list
-        if (drop) {
-            for (final Block block : event.blockList()) {
-                // We have a spawner
-                if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
-                    // Roll the dice
-                    final int randomNumber = rnd.nextInt(100);
-                    final String entityID = su.getSpawnerEntityID(block);
-                    // Check if we should drop a block
-                    int dropChance = 0;
-                    if (plugin.mobs.contains("creatures." + entityID + ".explosionDropChance")) {
-                        dropChance = plugin.mobs.getInt("creatures." + entityID + ".explosionDropChance", 100);
+        for (final Block block : event.blockList()) {
+            if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
+                plugin.getLogger().log(Level.FINE, "Calculating exploded spawner at {0}, {1}, {2}",
+                        new Object[] { block.getX(), block.getY(), block.getZ() });
+
+                final int randomNumber = rnd.nextInt(100);
+                String entityID = su.getSpawnerEntityID(block);
+                plugin.getLogger().log(Level.FINE, "Current entityID is {0}", entityID);
+
+                int dropChance = 0;
+                if (plugin.mobs.contains("creatures." + entityID + ".explosionDropChance")) {
+                    dropChance = plugin.mobs.getInt("creatures." + entityID + ".explosionDropChance", 100);
+                } else {
+                    dropChance = plugin.config.getInt("explosionDropChance", 100);
+                }
+                plugin.getLogger().log(Level.FINE, "Current drop chance is {0}", dropChance);
+                final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(sourcePlayer, block, entityID,
+                        dropChance);
+                plugin.getServer().getPluginManager().callEvent(explodeEvent);
+                if (explodeEvent.isCancelled()) {
+                    plugin.getLogger().fine("Skipping entity explode event because the the SilkSpawnersSpawnerExplodeEvent was cancelled");
+                    event.setCancelled(true);
+                    return;
+                }
+
+                entityID = explodeEvent.getEntityID();
+                plugin.getLogger().log(Level.FINE, "New entityID is {0}", entityID);
+                dropChance = explodeEvent.getDropChance();
+                plugin.getLogger().log(Level.FINE, "New drop chance is {0}", dropChance);
+                if (randomNumber < dropChance) {
+                    final ItemStack explodeEventDrop = explodeEvent.getDrop();
+                    ItemStack drops = null;
+                    if (explodeEventDrop != null) {
+                        plugin.getLogger().log(Level.FINE, "Setting custom drop: {0}x, {1}",
+                                new Object[] { explodeEventDrop.getAmount(), explodeEventDrop.getType() });
+                        drops = explodeEventDrop;
                     } else {
-                        dropChance = plugin.config.getInt("explosionDropChance", 100);
+                        drops = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), 1, false);
                     }
-                    if (randomNumber < dropChance) {
+                    if (drops != null) {
                         final World world = block.getWorld();
-                        world.dropItemNaturally(block.getLocation(),
-                                su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), 1, false));
+                        world.dropItemNaturally(block.getLocation(), drops);
                     }
                 }
             }
