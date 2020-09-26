@@ -458,7 +458,7 @@ public class SilkUtil {
      * @param mobID the name (String) of the mob
      * @return the result, true or false
      */
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "static-method" })
     public boolean isRecognizedMob(final String mobID) {
         return EntityType.fromName(mobID) != null;
     }

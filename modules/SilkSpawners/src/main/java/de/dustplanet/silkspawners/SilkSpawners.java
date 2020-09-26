@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
@@ -84,8 +85,8 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("This version of the plugin is NOT compatible with your Minecraft version!");
                 getLogger().info("Please check your versions to make sure they match!");
                 getLogger().info("Disabling now!");
-                getLogger().info("Compatible versions are: " + Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
-                getLogger().info("Your version is: " + getNmsVersion());
+                getLogger().log(Level.INFO, "Compatible versions are: {0}", Arrays.toString(COMPATIBLE_MINECRAFT_VERSIONS));
+                getLogger().log(Level.INFO, "Your version is: {0}", getNmsVersion());
                 getLogger().info("You can disable this check by setting testMCVersion to false in the config!");
                 shutdown();
                 return;
@@ -109,9 +110,9 @@ public class SilkSpawners extends JavaPlugin {
                     // Updater https://bukkit.org/threads96681/
                     updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, true);
                     getLogger().info("AutoUpdater is enabled.");
-                    getLogger().info("Result from AutoUpdater is: " + updater.getResult().name());
+                    getLogger().log(Level.INFO, "Result from AutoUpdater is: {0}", updater.getResult().name());
                 } catch (final Exception e) {
-                    getLogger().info("Error while auto updating: " + e.getMessage());
+                    getLogger().log(Level.INFO, "Error while auto updating:", e);
                 }
             }
         } else {
@@ -171,8 +172,7 @@ public class SilkSpawners extends JavaPlugin {
                 out.write(buf, 0, len);
             }
         } catch (final IOException e) {
-            getLogger().warning("Failed to copy the default config! (I/O)");
-            e.printStackTrace();
+            getLogger().log(Level.WARNING, "Failed to copy the default config! (I/O)", e);
         }
     }
 
@@ -202,7 +202,7 @@ public class SilkSpawners extends JavaPlugin {
         try {
             getServer().getPluginManager().addPermission(perm);
         } catch (@SuppressWarnings("unused") final IllegalArgumentException e) {
-            getLogger().info("Permission " + perm.getName() + " is already registered. Skipping...");
+            getLogger().log(Level.INFO, "Permission {0} is already registered. Skipping...", perm.getName());
         }
     }
 
@@ -266,7 +266,7 @@ public class SilkSpawners extends JavaPlugin {
             boolean skip = false;
             // If the mob is disabled, skip it
             if (!mobs.getBoolean("creatures." + entityID + ".enableCraftingSpawner", true)) {
-                getLogger().fine("Skipping crafting recipe for " + entityID + " per config");
+                getLogger().log(Level.FINE, "Skipping crafting recipe for {0} per config", entityID);
                 continue;
             }
 
@@ -280,7 +280,7 @@ public class SilkSpawners extends JavaPlugin {
                 amount = config.getInt("recipeAmount", 1);
             }
 
-            getLogger().fine("Amount of " + entityID + ": " + amount);
+            getLogger().log(Level.FINE, "Amount of {0}: {1}", new Object[] { entityID, amount });
 
             // Output is a spawner of this type with a custom amount
             final ItemStack spawnerItem = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, true);
@@ -324,7 +324,7 @@ public class SilkSpawners extends JavaPlugin {
                     bottom = config.getString("recipeBottom", "AAA");
                 }
 
-                getLogger().fine("Shape of " + entityID + ":");
+                getLogger().log(Level.FINE, "Shape of {0}:", entityID);
                 getLogger().fine(top);
                 getLogger().fine(middle);
                 getLogger().fine(bottom);
@@ -351,20 +351,20 @@ public class SilkSpawners extends JavaPlugin {
                     continue;
                 }
 
-                getLogger().fine("Ingredients of " + entityID + ":");
+                getLogger().log(Level.FINE, "Ingredients of {0}:", entityID);
                 getLogger().fine(ingredientsList.toString());
 
                 final List<String> shape = Arrays.asList(recipe.getShape());
                 // We have an ingredient that is not in our shape. Ignore it then
                 if (shapeContainsIngredient(shape, 'X')) {
-                    getLogger().fine("shape of " + entityID + " contains X");
+                    getLogger().log(Level.FINE, "shape of {0} contains X", entityID);
 
                     if (legacySpawnEggs) {
                         recipe.setIngredient('X', su.nmsProvider.getSpawnEggMaterial(), su.nmsProvider.getIDForEntity(entityID));
                     } else {
                         final Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                         if (material == null) {
-                            getLogger().fine("could not find egg material for " + entityID);
+                            getLogger().log(Level.FINE, "could not find egg material for {0}", entityID);
                             skip = true;
                             continue;
                         }
@@ -377,7 +377,7 @@ public class SilkSpawners extends JavaPlugin {
                     final String[] ingredients = ingredient.split(",");
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
-                        getLogger().info("ingredient length of " + entityID + " invalid: " + ingredients.length);
+                        getLogger().log(Level.INFO, "ingredient length of {0} invalid: {1}", new Object[] { entityID, ingredients.length });
                         skip = true;
                         continue;
                     }
@@ -385,7 +385,7 @@ public class SilkSpawners extends JavaPlugin {
                     final char character = ingredients[0].toUpperCase().charAt(0);
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(shape, character)) {
-                        getLogger().info("shape of " + entityID + " does not contain " + character);
+                        getLogger().log(Level.INFO, "shape of {0} does not contain {1}", new Object[] { entityID, character });
                         skip = true;
                         continue;
                     }
@@ -393,16 +393,16 @@ public class SilkSpawners extends JavaPlugin {
                     Material material = Material.matchMaterial(ingredients[1]);
                     // Failed!
                     if (material == null) {
-                        getLogger()
-                                .info("shape material " + ingredients[1] + " of " + entityID + " matched null, falling back to IRON_BARS");
+                        getLogger().log(Level.INFO, "shape material {0} of {1} matched null, falling back to IRON_BARS",
+                                new Object[] { ingredients[1], entityID });
                         material = su.nmsProvider.getIronFenceMaterial();
                     }
                     recipe.setIngredient(character, material);
                 }
             } catch (final IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
-                getLogger().warning("Could not add the recipe of " + entityID + "!");
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Could not add the recipe of {0}!", entityID);
+                getLogger().log(Level.WARNING, "Error:", e);
                 recipe.shape(new String[] { "AAA", "ABA", "AAA" });
                 recipe.setIngredient('A', su.nmsProvider.getIronFenceMaterial());
                 if (legacySpawnEggs) {
@@ -410,7 +410,7 @@ public class SilkSpawners extends JavaPlugin {
                 } else {
                     final Material material = Material.getMaterial(entityID.toUpperCase() + "_SPAWN_EGG");
                     if (material == null) {
-                        getLogger().info("could not find egg material for " + entityID);
+                        getLogger().log(Level.INFO, "Could not find egg material for {0}", entityID);
                         skip = true;
                         continue;
                     }
@@ -421,10 +421,11 @@ public class SilkSpawners extends JavaPlugin {
                 try {
                     if (!skip) {
                         final boolean recipeAdded = getServer().addRecipe(recipe);
-                        getLogger().fine("Recipe of " + entityID + " added: " + recipeAdded);
+                        getLogger().log(Level.FINE, "Recipe of {0} added: {1}", new Object[] { entityID, recipeAdded });
                     }
-                } catch (final IllegalStateException e) {
-                    getLogger().fine("Unable to add recipe of " + entityID + ": " + e.getMessage());
+                } catch (final IllegalStateException | NullPointerException e) {
+                    getLogger().log(Level.INFO, "Unable to add recipe of {0}", entityID);
+                    getLogger().log(Level.INFO, "Error:", e);
                 }
             }
         }
@@ -471,7 +472,7 @@ public class SilkSpawners extends JavaPlugin {
                     final String[] ingredients = ingredient.split(",");
                     // if our array is not exactly of the size 2, something is wrong
                     if (ingredients.length != 2) {
-                        getLogger().info("ingredient length of default invalid: " + ingredients.length);
+                        getLogger().log(Level.INFO, "ingredient length of default invalid: {0}", ingredients.length);
                         skip = true;
                         continue;
                     }
@@ -479,7 +480,7 @@ public class SilkSpawners extends JavaPlugin {
                     final char character = ingredients[0].toUpperCase().charAt(0);
                     // We have an ingredient that is not in our shape. Ignore it then
                     if (!shapeContainsIngredient(baseSpawnerShape, character)) {
-                        getLogger().info("shape of default does not contain " + character);
+                        getLogger().log(Level.INFO, "shape of default does not contain {0}", character);
                         skip = true;
                         continue;
                     }
@@ -487,15 +488,14 @@ public class SilkSpawners extends JavaPlugin {
                     Material material = Material.matchMaterial(ingredients[1]);
                     // Failed!
                     if (material == null) {
-                        getLogger().info("shape material " + ingredients[1] + " of default spawner matched null");
+                        getLogger().log(Level.INFO, "shape material {0} of default spawner matched null", ingredients[1]);
                         material = su.nmsProvider.getIronFenceMaterial();
                     }
                     baseSpawnerRecipe.setIngredient(character, material);
                 }
             } catch (final IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
-                getLogger().warning("Could not add the default recipe!");
-                e.printStackTrace();
+                getLogger().log(Level.WARNING, "Could not add the default recipe!", e);
                 baseSpawnerRecipe.shape(new String[] { "AAA", "ABA", "AAA" });
                 baseSpawnerRecipe.setIngredient('A', su.nmsProvider.getIronFenceMaterial());
                 // Use the right egg!

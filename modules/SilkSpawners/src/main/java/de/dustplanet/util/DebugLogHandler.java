@@ -4,6 +4,8 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
+import org.bukkit.plugin.Plugin;
+
 /**
  * Copyright 2019 dumptruckman
  *
@@ -21,7 +23,6 @@ import java.util.logging.LogRecord;
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-import org.bukkit.plugin.Plugin;
 
 /**
  * A logger handler for a bukkit plugin that will cause messages below {@link Level#INFO} to be logged normally when the plugin's logger is
@@ -30,10 +31,21 @@ import org.bukkit.plugin.Plugin;
  * To enable logging of messages below {@link Level#INFO}, the plugin's logger must be set to an appropriately lower level. For example, to
  * log all message levels: <code>plugin.getLogger().setLevel(Level.ALL);</code>
  */
-public class DebugLogHandler extends Handler {
-
+public final class DebugLogHandler extends Handler {
     private static final String DEFAULT_DEBUG_PREFIX_FORMAT = "[%1$s-%2$s] %3$s";
     private static final String DEFAULT_DEBUG_LOG_PREFIX = "DEBUG";
+    private final Plugin plugin;
+    private final String pluginName;
+
+    private DebugLogHandler(final Plugin plugin) {
+        this.plugin = plugin;
+        final String prefix = plugin.getDescription().getPrefix();
+        if (prefix != null) {
+            this.pluginName = prefix;
+        } else {
+            this.pluginName = plugin.getDescription().getName();
+        }
+    }
 
     /**
      * Attaches a DebugLogHandler to the given plugin's logger.
@@ -42,15 +54,6 @@ public class DebugLogHandler extends Handler {
      */
     public static void attachDebugLogger(final Plugin plugin) {
         plugin.getLogger().addHandler(new DebugLogHandler(plugin));
-    }
-
-    private final Plugin plugin;
-    private final String pluginName;
-
-    private DebugLogHandler(final Plugin plugin) {
-        this.plugin = plugin;
-        final String prefix = plugin.getDescription().getPrefix();
-        this.pluginName = prefix != null ? prefix : plugin.getDescription().getName();
     }
 
     @Override
@@ -65,9 +68,11 @@ public class DebugLogHandler extends Handler {
 
     @Override
     public void flush() {
+        // Silence is golden
     }
 
     @Override
     public void close() throws SecurityException {
+        // Silence is golden
     }
 }
