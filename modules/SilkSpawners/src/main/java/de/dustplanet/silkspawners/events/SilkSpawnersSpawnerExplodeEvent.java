@@ -11,7 +11,8 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Event called when a spawner is exploded and drop chances are handled by SilkSpawners.
+ * Event called when a spawner is exploded and drop chances are handled by SilkSpawners. One can cancel the whole EntityExplodeEvent or just
+ * the drop of the spawner.
  *
  * @author timbru31
  */
@@ -25,6 +26,11 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
      * Boolean state if the event is cancelled.
      */
     private boolean cancelled;
+
+    /**
+     * Boolean state if the complete parent EntityExplodeEvent is cancelled.
+     */
+    private boolean allCancelled;
 
     /**
      * Player who triggered the event. Possibly null
@@ -93,6 +99,24 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     @Override
     public void setCancelled(final boolean cancel) {
         this.cancelled = cancel;
+    }
+
+    /**
+     * Determine if the parent event is cancelled or not.
+     *
+     * @return yes or no
+     */
+    public boolean isAllCancelled() {
+        return this.allCancelled;
+    }
+
+    /**
+     * Cancels the event.
+     *
+     * @param cancel whether the parent event should be cancelled or not
+     */
+    public void setAllCancelled(final boolean allCancel) {
+        this.allCancelled = allCancel;
     }
 
     /**

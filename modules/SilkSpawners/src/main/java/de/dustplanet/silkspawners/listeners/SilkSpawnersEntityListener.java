@@ -1,5 +1,6 @@
 package de.dustplanet.silkspawners.listeners;
 
+import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Level;
 
@@ -61,7 +62,8 @@ public class SilkSpawnersEntityListener implements Listener {
             }
         }
 
-        for (final Block block : event.blockList()) {
+        for (final Iterator<Block> iterator = event.blockList().iterator(); iterator.hasNext();) {
+            final Block block = iterator.next();
             if (block.getType() == su.nmsProvider.getSpawnerMaterial()) {
                 plugin.getLogger().log(Level.FINE, "Calculating exploded spawner at {0}, {1}, {2}",
                         new Object[] { block.getX(), block.getY(), block.getZ() });
@@ -80,10 +82,18 @@ public class SilkSpawnersEntityListener implements Listener {
                 final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(sourcePlayer, block, entityID,
                         dropChance);
                 plugin.getServer().getPluginManager().callEvent(explodeEvent);
-                if (explodeEvent.isCancelled()) {
-                    plugin.getLogger().fine("Skipping entity explode event because the the SilkSpawnersSpawnerExplodeEvent was cancelled");
+                if (explodeEvent.isAllCancelled()) {
+                    plugin.getLogger()
+                            .fine("Skipping entity explode event because the the SilkSpawnersSpawnerExplodeEvent has all cancelled");
                     event.setCancelled(true);
                     return;
+                }
+
+                if (explodeEvent.isCancelled()) {
+                    plugin.getLogger()
+                            .fine("Skipping block destruction and drops because the the SilkSpawnersSpawnerExplodeEvent was cancelled");
+                    iterator.remove();
+                    continue;
                 }
 
                 entityID = explodeEvent.getEntityID();
