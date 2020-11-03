@@ -33,6 +33,7 @@ jobs:
           mkdir -p BuildTools
           cd BuildTools
           wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.4-R0.1-SNAPSHOT/spigot-1.16.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.4
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.3-R0.1-SNAPSHOT/spigot-1.16.3-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.3
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.1-R0.1-SNAPSHOT/spigot-1.16.1-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.1
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.15.2-R0.1-SNAPSHOT/craftbukkit-1.15.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
