@@ -4,8 +4,8 @@
 [![Build Status](https://travis-ci.org/timbru31/SilkSpawners.svg?branch=master)](https://travis-ci.org/timbru31/SilkSpawners)
 [![Build the plugin](https://github.com/timbru31/SilkSpawners/workflows/Build%20the%20plugin/badge.svg)](https://github.com/timbru31/SilkSpawners/actions?query=workflow%3A%22Build+the+plugin%22)
 
-[![BukkitDev](https://img.shields.io/badge/BukkitDev-v6.4.0-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
-[![SpigotMC](https://img.shields.io/badge/SpigotMC-v6.4.0-orange.svg)](https://www.spigotmc.org/resources/7811/)
+[![BukkitDev](https://img.shields.io/badge/BukkitDev-v6.5.0-orange.svg)](https://dev.bukkit.org/projects/silkspawners/)
+[![SpigotMC](https://img.shields.io/badge/SpigotMC-v6.5.0-orange.svg)](https://www.spigotmc.org/resources/7811/)
 
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](LICENSE.md)
 
