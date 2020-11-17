@@ -108,9 +108,11 @@ public class SilkSpawners extends JavaPlugin {
             } else {
                 try {
                     // Updater https://bukkit.org/threads96681/
-                    updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, true);
-                    getLogger().info("AutoUpdater is enabled.");
-                    getLogger().log(Level.INFO, "Result from AutoUpdater is: {0}", updater.getResult().name());
+                    updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, updaterResult -> {
+                        getLogger().log(Level.INFO, "Result from AutoUpdater is: {0}", updaterResult.getResult());
+                    }, true);
+                    getLogger().info("AutoUpdater is enabled and now running.");
+
                 } catch (final Exception e) {
                     getLogger().log(Level.INFO, "Error while auto updating:", e);
                 }
