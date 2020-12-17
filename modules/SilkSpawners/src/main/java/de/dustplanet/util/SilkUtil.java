@@ -849,6 +849,10 @@ public class SilkUtil {
      */
     @SuppressWarnings("static-method")
     public void sendMessage(final CommandSender receiver, final String messages) {
+        // TODO: Use Apache Commons
+        if (receiver == null || messages == null || messages.isEmpty()) {
+            return;
+        }
         receiver.sendMessage(messages.split("\n"));
     }
 
