@@ -60,14 +60,8 @@ public final class DebugLogHandler extends Handler {
     public void publish(final LogRecord record) {
         if (plugin.getLogger().getLevel().intValue() <= record.getLevel().intValue()
                 && record.getLevel().intValue() < Level.INFO.intValue()) {
-            String message;
-            try {
-                message = record.getMessage().substring(pluginName.length() + 3);
-            } catch (@SuppressWarnings("unused") final IndexOutOfBoundsException e) {
-                message = record.getMessage();
-            }
             record.setLevel(Level.INFO);
-            record.setMessage(String.format(DEFAULT_DEBUG_PREFIX_FORMAT, pluginName, DEFAULT_DEBUG_LOG_PREFIX, message));
+            record.setMessage(String.format(DEFAULT_DEBUG_PREFIX_FORMAT, pluginName, DEFAULT_DEBUG_LOG_PREFIX, record.getMessage()));
         }
     }
 
