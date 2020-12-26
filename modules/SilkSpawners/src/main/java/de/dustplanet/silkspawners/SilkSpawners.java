@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 
+import org.apache.commons.lang.StringUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -47,7 +48,6 @@ import net.gravitydevelopment.updater.Updater;
 
 public class SilkSpawners extends JavaPlugin {
     private SilkUtil su;
-    private Updater updater;
     @Getter
     @Setter
     private String nmsVersion;
@@ -107,8 +107,7 @@ public class SilkSpawners extends JavaPlugin {
                 getLogger().info("AutoUpdater is disabled because you are running a dev build!");
             } else {
                 try {
-                    // Updater https://bukkit.org/threads96681/
-                    updater = new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, updaterResult -> {
+                    new Updater(this, PLUGIN_ID, getFile(), Updater.UpdateType.DEFAULT, updaterResult -> {
                         getLogger().log(Level.INFO, "Result from AutoUpdater is: {0}", updaterResult.getResult());
                     }, true);
                     getLogger().info("AutoUpdater is enabled and now running.");
@@ -528,10 +527,14 @@ public class SilkSpawners extends JavaPlugin {
         return match;
     }
 
-    // If the user has the permission, message
+    /**
+     * Sends a message to the player if the 'silkspawners.info' permission is granted. Empty messages are ignored and not are not sent.
+     *
+     * @param player the player to message
+     * @param message the message to send
+     */
     public void informPlayer(final Player player, final String message) {
-        // Ignore empty messages
-        if (message == null || message.isEmpty()) {
+        if (StringUtils.isBlank(message)) {
             return;
         }
         if (player.hasPermission("silkspawners.info")) {

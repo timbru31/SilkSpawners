@@ -2,6 +2,7 @@ package de.dustplanet.silkspawners.commands;
 
 import java.util.Locale;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -111,7 +112,7 @@ public class SpawnerCommand implements CommandExecutor {
         boolean saveData = false;
 
         // Check given amount
-        if (amountString != null && !amountString.isEmpty()) {
+        if (StringUtils.isNotBlank(amountString)) {
             amount = su.getNumber(amountString);
             if (amount == -1) {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("useNumbers")));

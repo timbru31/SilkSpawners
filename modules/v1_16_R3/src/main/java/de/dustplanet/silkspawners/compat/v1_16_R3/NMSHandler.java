@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -160,7 +161,7 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public ItemStack setNBTEntityID(final ItemStack item, final String entity) {
-        if (item == null || entity == null || entity.isEmpty()) {
+        if (item == null || StringUtils.isBlank(entity)) {
             Bukkit.getLogger().warning("[SilkSpawners] Skipping invalid spawner to set NBT data on.");
             return null;
         }

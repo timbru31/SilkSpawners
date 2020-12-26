@@ -15,6 +15,7 @@ import java.util.logging.Level;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -110,17 +111,18 @@ public class SilkUtil {
      *
      * @param instance SilkSpawners instance
      */
-    public SilkUtil(SilkSpawners instance) {
+    public SilkUtil(final SilkSpawners instance) {
+        SilkSpawners correctedInstance = instance;
         if (instance == null) {
             Bukkit.getLogger().severe("SilkSpawners - Nag API user: Don't initialize SilkUtil without a SilkSpawners instance!");
-            instance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
+            correctedInstance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
         }
-        plugin = instance;
+        plugin = correctedInstance;
 
         final boolean verboseMode = plugin.getConfig().getBoolean("verboseMode", false);
         if (verboseMode) {
-            DebugLogHandler.attachDebugLogger(instance);
-            instance.getLogger().setLevel(Level.FINE);
+            DebugLogHandler.attachDebugLogger(plugin);
+            plugin.getLogger().setLevel(Level.FINE);
         }
 
         getWorldGuard();
@@ -353,7 +355,7 @@ public class SilkUtil {
         }
 
         String spawnerName = customName;
-        if (customName == null || customName.isEmpty()) {
+        if (StringUtils.isBlank(spawnerName)) {
             spawnerName = "Monster Spawner";
         }
         final ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount);
@@ -414,11 +416,11 @@ public class SilkUtil {
     public String getStoredSpawnerItemEntityID(final ItemStack item) {
         if (isUsingReflection()) {
             String entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
-            if (entityID != null && !entityID.isEmpty()) {
+            if (StringUtils.isNotBlank(entityID)) {
                 return entityID;
             }
             entityID = nmsProvider.getVanillaNBTEntityID(item);
-            if (entityID != null && !entityID.isEmpty()) {
+            if (StringUtils.isNotBlank(entityID)) {
                 return entityID.replace("minecraft:", "");
             }
         }
@@ -555,12 +557,11 @@ public class SilkUtil {
      * @param customName if a custom name should be used (null for none)
      * @return the updated ItemStack
      */
-    public ItemStack setSpawnerType(final ItemStack item, String entityID, String customName) {
-        entityID = displayNameToMobID.get(entityID);
-
-        // Ensure that the name is correct
-        if (customName == null || customName.isEmpty()) {
-            customName = "Monster Spawner";
+    public ItemStack setSpawnerType(final ItemStack item, final String entityID, final String customName) {
+        final String correctedEntityID = displayNameToMobID.get(entityID);
+        String correctedCustomName = customName;
+        if (StringUtils.isBlank(customName)) {
+            correctedCustomName = "Monster Spawner";
         }
         // Please eggs or spawners
         if (item == null
@@ -569,15 +570,15 @@ public class SilkUtil {
         }
         final ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
-        if (item.getType() == nmsProvider.getSpawnerMaterial() && !customName.equalsIgnoreCase("Monster Spawner")) {
-            meta.setDisplayName(
-                    ChatColor.translateAlternateColorCodes('\u0026', customName).replace("%creature%", getCreatureName(entityID)));
+        if (item.getType() == nmsProvider.getSpawnerMaterial() && !correctedCustomName.equalsIgnoreCase("Monster Spawner")) {
+            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', correctedCustomName).replace("%creature%",
+                    getCreatureName(correctedEntityID)));
         }
 
         // 1.8 broke durability, workaround is the lore
         if (!isUsingReflection() && plugin.getConfig().getBoolean("useMetadata", true)) {
             final ArrayList<String> lore = new ArrayList<>();
-            lore.add("entityID:" + entityID);
+            lore.add("entityID:" + correctedEntityID);
             meta.setLore(lore);
         }
 
@@ -594,7 +595,7 @@ public class SilkUtil {
         }
         item.setItemMeta(meta);
 
-        return nmsProvider.setNBTEntityID(item, entityID);
+        return nmsProvider.setNBTEntityID(item, correctedEntityID);
     }
 
     /**
@@ -851,8 +852,7 @@ public class SilkUtil {
      */
     @SuppressWarnings("static-method")
     public void sendMessage(final CommandSender receiver, final String messages) {
-        // TODO: Use Apache Commons
-        if (receiver == null || messages == null || messages.isEmpty()) {
+        if (receiver == null || StringUtils.isBlank(messages)) {
             return;
         }
         receiver.sendMessage(messages.split("\n"));
@@ -928,7 +928,7 @@ public class SilkUtil {
      * @return the permission check result, true if the player has got the permission, false otherwise
      */
     public boolean hasPermission(final Permissible permissible, final String basePermission, final String entityID) {
-        if (entityID == null || entityID.isEmpty() || permissible == null || basePermission == null || basePermission.isEmpty()) {
+        if (StringUtils.isBlank(entityID) || permissible == null || StringUtils.isBlank(basePermission)) {
             return false;
         }
 
