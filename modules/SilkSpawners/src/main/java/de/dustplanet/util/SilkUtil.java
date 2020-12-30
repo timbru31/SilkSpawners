@@ -929,17 +929,27 @@ public class SilkUtil {
      */
     public boolean hasPermission(final Permissible permissible, final String basePermission, final String entityID) {
         if (StringUtils.isBlank(entityID) || permissible == null || StringUtils.isBlank(basePermission)) {
+            plugin.getLogger().fine("permission check is false because the given input is invalid");
             return false;
         }
 
+        plugin.getLogger().log(Level.FINE, "Checking if player has permission {0} for entityID {1}",
+                new Object[] { basePermission, entityID });
         final String correctedBasePermission = basePermission.endsWith(".") ? basePermission : basePermission + ".";
         for (final Entry<String, String> entry : displayNameToMobID.entrySet()) {
             final String currentEntityID = entry.getValue();
-            if (currentEntityID.equalsIgnoreCase(entityID)
-                    && permissible.hasPermission(correctedBasePermission + entry.getKey().toLowerCase(Locale.ENGLISH).replace(" ", ""))) {
-                return true;
+            if (currentEntityID.equalsIgnoreCase(entityID)) {
+                plugin.getLogger().log(Level.FINE, "Found matching entityID from set: {0}, key is {1}",
+                        new Object[] { currentEntityID, entry.getKey() });
+                final boolean hasPermission = permissible
+                        .hasPermission(correctedBasePermission + entry.getKey().toLowerCase(Locale.ENGLISH).replace(" ", ""));
+                plugin.getLogger().log(Level.FINE, "hasPermission result is {0}", hasPermission);
+                if (hasPermission) {
+                    return true;
+                }
             }
         }
+        plugin.getLogger().fine("Permission not found or not granted, result is false");
         return false;
     }
 }
