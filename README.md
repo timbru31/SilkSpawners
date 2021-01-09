@@ -358,3 +358,8 @@ The file `./plugins/bStats/config.yml` contains an option to _opt-out_.
 
 ![BitCoin](https://dustplanet.de/wp-content/uploads/2015/01/bitcoin-logo-plain.png "Donation via BitCoins")  
 1NnrRgdy7CfiYN63vKHiypSi3MSctCP55C
+
+## Support
+
+In addition to reporting bugs here on GitHub you can join my Discord and ask your questions right away!
+[![Discord support](https://discordapp.com/api/guilds/387315912283521027/widget.png?style=banner2)](https://discord.gg/mae6xxZFZr)
