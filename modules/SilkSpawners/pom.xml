@@ -127,12 +127,6 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
-      <artifactId>silkspawners-v1_9_R1</artifactId>
-      <version>6.5.1-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_9_R2</artifactId>
       <version>6.5.1-SNAPSHOT</version>
       <type>jar</type>
@@ -152,12 +146,6 @@
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_12_R1</artifactId>
-      <version>6.5.1-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
-      <artifactId>silkspawners-v1_13_R1</artifactId>
       <version>6.5.1-SNAPSHOT</version>
       <type>jar</type>
     </dependency>

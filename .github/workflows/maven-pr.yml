@@ -39,12 +39,10 @@ jobs:
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.15.2-R0.1-SNAPSHOT/craftbukkit-1.15.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.14.4-R0.1-SNAPSHOT/craftbukkit-1.14.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13.2-R0.1-SNAPSHOT/craftbukkit-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13-R0.1-SNAPSHOT/craftbukkit-1.13-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.12.2-R0.1-SNAPSHOT/craftbukkit-1.12.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.12.2
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.11.2-R0.1-SNAPSHOT/craftbukkit-1.11.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.11.2
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.10.2-R0.1-SNAPSHOT/craftbukkit-1.10.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.10.2
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.9.4-R0.1-SNAPSHOT/craftbukkit-1.9.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.4
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.9.2-R0.1-SNAPSHOT/craftbukkit-1.9.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.2
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8.8-R0.1-SNAPSHOT/craftbukkit-1.8.8-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.8
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8.3-R0.1-SNAPSHOT/craftbukkit-1.8.3-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.3
           [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8-R0.1-SNAPSHOT/craftbukkit-1.8-R0.1-SNAPSHOT.jar  ] || java -jar BuildTools.jar --rev 1.8
