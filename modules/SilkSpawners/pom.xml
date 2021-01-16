@@ -115,12 +115,6 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
-      <artifactId>silkspawners-v1_8_R2</artifactId>
-      <version>6.5.1-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_8_R3</artifactId>
       <version>6.5.1-SNAPSHOT</version>
       <type>jar</type>

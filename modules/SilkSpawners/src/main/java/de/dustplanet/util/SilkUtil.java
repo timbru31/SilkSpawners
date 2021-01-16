@@ -575,7 +575,6 @@ public class SilkUtil {
                     getCreatureName(correctedEntityID)));
         }
 
-        // 1.8 broke durability, workaround is the lore
         if (!isUsingReflection() && plugin.getConfig().getBoolean("useMetadata", true)) {
             final ArrayList<String> lore = new ArrayList<>();
             lore.add("entityID:" + correctedEntityID);
