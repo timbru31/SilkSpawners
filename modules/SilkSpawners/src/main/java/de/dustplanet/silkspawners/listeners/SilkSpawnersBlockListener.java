@@ -45,7 +45,7 @@ public class SilkSpawnersBlockListener implements Listener {
         plugin.getLogger().fine("Handling a block break event");
         final boolean isFakeEvent = !BlockBreakEvent.class.equals(event.getClass());
         if (isFakeEvent) {
-            plugin.getLogger().fine("Skipping block break event because the event is fake");
+            plugin.getLogger().log(Level.FINE, "Skipping block break event because the event is fake: {0}", event.getClass().getName());
             return;
         }
 
@@ -53,7 +53,8 @@ public class SilkSpawnersBlockListener implements Listener {
         final Player player = event.getPlayer();
 
         if (block.getType() != su.nmsProvider.getSpawnerMaterial()) {
-            plugin.getLogger().fine("Skipping block break event because the block is not a spawner");
+            plugin.getLogger().log(Level.FINE, "Skipping block break event because the block is not a spawner: {0}",
+                    block.getType().name());
             return;
         }
 
