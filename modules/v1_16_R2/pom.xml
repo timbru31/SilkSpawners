@@ -18,7 +18,7 @@
       <version>1.16.3-R0.1-SNAPSHOT</version>
       <exclusions>
         <exclusion>
-          <groupId>org.spigotmc</groupId>
+          <groupId>io.papermc</groupId>
           <artifactId>minecraft-server</artifactId>
         </exclusion>
       </exclusions>
