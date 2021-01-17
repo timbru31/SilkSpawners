@@ -16,6 +16,12 @@
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot</artifactId>
       <version>1.9.4-R0.1-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>minecraft-server</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>

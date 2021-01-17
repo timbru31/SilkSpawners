@@ -16,6 +16,12 @@
       <groupId>com.destroystokyo.paper</groupId>
       <artifactId>paper</artifactId>
       <version>1.16.5-R0.1-SNAPSHOT</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.spigotmc</groupId>
+          <artifactId>minecraft-server</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
