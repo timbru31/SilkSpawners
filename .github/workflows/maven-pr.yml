@@ -26,25 +26,59 @@ jobs:
           java -version
           mvn --version
 
-      - name: Build CraftBukkit versions
+      - name: Build Spigot and Paper versions
         # See https://issues.apache.org/jira/browse/MDEP-568 and https://github.com/apache/maven-dependency-plugin/pull/2
         run: |
           mvn com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=de.dustplanet -B || rm -r ~/.m2/repository/org/
           mkdir -p BuildTools
           cd BuildTools
           wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.5-R0.1-SNAPSHOT/spigot-1.16.5-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.5
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.3-R0.1-SNAPSHOT/spigot-1.16.3-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.3
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.16.1-R0.1-SNAPSHOT/spigot-1.16.1-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.16.1
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.15.2-R0.1-SNAPSHOT/craftbukkit-1.15.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.15.2 --compile craftbukkit
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.14.4-R0.1-SNAPSHOT/craftbukkit-1.14.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.14.4 --compile craftbukkit
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.13.2-R0.1-SNAPSHOT/craftbukkit-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.12.2-R0.1-SNAPSHOT/craftbukkit-1.12.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.12.2
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.11.2-R0.1-SNAPSHOT/craftbukkit-1.11.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.11.2
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.10.2-R0.1-SNAPSHOT/craftbukkit-1.10.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.10.2
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.9.4-R0.1-SNAPSHOT/craftbukkit-1.9.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.4
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8.8-R0.1-SNAPSHOT/craftbukkit-1.8.8-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.8
-          [ -f ~/.m2/repository/org/bukkit/craftbukkit/1.8-R0.1-SNAPSHOT/craftbukkit-1.8-R0.1-SNAPSHOT.jar  ] || java -jar BuildTools.jar --rev 1.8
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.14.4-R0.1-SNAPSHOT/spigot-1.14.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.14.4
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.13.2-R0.1-SNAPSHOT/spigot-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.12.2-R0.1-SNAPSHOT/spigot-1.12.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.12.2
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.11.2-R0.1-SNAPSHOT/spigot-1.11.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.11.2
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.10.2-R0.1-SNAPSHOT/spigot-1.10.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.10.2
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.9.4-R0.1-SNAPSHOT/spigot-1.9.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.4
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.8.8-R0.1-SNAPSHOT/spigot-1.8.8-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.8
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.8-R0.1-SNAPSHOT/spigot-1.8-R0.1-SNAPSHOT.jar  ] || java -jar BuildTools.jar --rev 1.8
+          cd ..
+
+          git clone https://github.com/PaperMC/Paper.git
+          cd Paper
+
+          if [ ! -f ~/.m2/repository/com/destroystokyo/paper/paper/1.16.5-R0.1-SNAPSHOT/paper-1.16.5-R0.1-SNAPSHOT.jar ]; then
+            ./paper jar
+          fi
+
+          if [ ! -f ~/.m2/repository/com/destroystokyo/paper/paper/1.16.3-R0.1-SNAPSHOT/paper-1.16.3-R0.1-SNAPSHOT.jar ]; then
+            git checkout 4bcebab1675d88d144d2896734f4a940345f76c2
+            git clean -xfd
+            git submodule foreach --recursive git clean -xfd
+            git reset --hard
+            git submodule foreach --recursive git reset --hard
+            git submodule update --init --recursive
+            ./paper jar
+          fi
+
+          if [ ! -f ~/.m2/repository/com/destroystokyo/paper/paper/1.16.1-R0.1-SNAPSHOT/paper-1.16.1-R0.1-SNAPSHOT.jar ]; then
+            git checkout 627f4b8561115d40d6a39587d1ad94b0104f7e14
+            git clean -xfd
+            git submodule foreach --recursive git clean -xfd
+            git reset --hard
+            git submodule foreach --recursive git reset --hard
+            git submodule update --init --recursive
+            ./paper jar
+          fi
+
+          if [ ! -f ~/.m2/repository/com/destroystokyo/paper/paper/1.15.2-R0.1-SNAPSHOT/paper-1.15.2-R0.1-SNAPSHOT.jar ]; then
+            git checkout ver/1.15.2
+            git clean -xfd
+            git submodule foreach --recursive git clean -xfd
+            git reset --hard
+            git submodule foreach --recursive git reset --hard
+            git submodule update --init --recursive
+            ./paper jar
+          fi
 
       - name: Build with Maven
-        run: mvn "-Dhttps.protocols=TLSv1,TLSv1.1,TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
+        run: mvn "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package

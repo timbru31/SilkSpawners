@@ -3,7 +3,6 @@
   <artifactId>silkspawners-v1_11_R1</artifactId>
   <packaging>jar</packaging>
   <name>SilkSpawners for v1_11_R1</name>
-  <version>6.5.1-SNAPSHOT</version>
 
   <parent>
     <groupId>de.dustplanet</groupId>
@@ -14,22 +13,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit</artifactId>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot</artifactId>
       <version>1.11.2-R0.1-SNAPSHOT</version>
-      <type>jar</type>
-      <exclusions>
-        <exclusion>
-          <groupId>org.spigotmc</groupId>
-          <artifactId>minecraft-server</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-API</artifactId>
       <version>6.5.1-SNAPSHOT</version>
-      <type>jar</type>
     </dependency>
   </dependencies>
 </project>

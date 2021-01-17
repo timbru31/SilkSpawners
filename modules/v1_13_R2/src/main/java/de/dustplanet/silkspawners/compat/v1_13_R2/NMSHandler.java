@@ -35,6 +35,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.spigotmc.SpigotWorldConfig;
 
 import com.google.common.base.CaseFormat;
 import com.mojang.authlib.GameProfile;
@@ -54,6 +55,7 @@ import net.minecraft.server.v1_13_R2.PlayerInteractManager;
 import net.minecraft.server.v1_13_R2.TileEntityMobSpawner;
 import net.minecraft.server.v1_13_R2.TileEntityTypes;
 import net.minecraft.server.v1_13_R2.World;
+import net.minecraft.server.v1_13_R2.WorldServer;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -73,6 +75,19 @@ public class NMSHandler implements NMSProvider {
                 e.printStackTrace();
                 e1.printStackTrace();
             }
+        }
+
+        @SuppressWarnings("resource")
+        final WorldServer handle = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
+
+        try {
+            final SpigotWorldConfig spigotConfig = handle.spigotConfig;
+            if (spigotConfig.nerfSpawnerMobs) {
+                Bukkit.getLogger().warning(
+                        "[SilkSpawners] Warning! \"nerf-spawner-mobs\" is set to true in the spigot.yml! Spawned mobs WON'T HAVE ANY AI!");
+            }
+        } catch (@SuppressWarnings("unused") final NoSuchFieldError e) {
+            // Silence
         }
     }
 
