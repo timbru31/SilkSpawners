@@ -244,8 +244,8 @@
                   <shadedPattern>de.dustplanet.util</shadedPattern>
                 </relocation>
                 <relocation>
-                  <pattern>org.bstats.bukkit</pattern>
-                  <shadedPattern>de.dustplanet.util</shadedPattern>
+                  <pattern>org.bstats</pattern>
+                  <shadedPattern>de.dustplanet.util.stats</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
