@@ -42,6 +42,7 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     /**
      * Entity that caused the explosion
      */
+    @Nullable
     private final Entity entity;
 
     /**
@@ -72,12 +73,13 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     /**
      * Constructor of the event.
      *
+     * @param entity that caused the explosion
      * @param player who issues the event, can be null
      * @param block is allowed to be null
      * @param entityID new entity ID
      * @param dropChance the current dropChance
      */
-    public SilkSpawnersSpawnerExplodeEvent(Entity entity, @Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+    public SilkSpawnersSpawnerExplodeEvent(@Nullable Entity entity, @Nullable final Player player, final Block block, final String entityID, final int dropChance) {
         this.entity = entity;
         this.player = player;
         this.block = block;
@@ -86,6 +88,18 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
             this.spawner = (CreatureSpawner) block.getState();
         }
         this.entityID = entityID;
+    }
+
+    /**
+     * Constructor of the event.
+     *
+     * @param player who issues the event, can be null
+     * @param block is allowed to be null
+     * @param entityID new entity ID
+     * @param dropChance the current dropChance
+     */
+    public SilkSpawnersSpawnerExplodeEvent(@Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+        this(null, player, block, entityID, dropChance);
     }
 
     /**
@@ -130,6 +144,7 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
      * Returns entity that caused the explosion
      * @return Entity that caused the explosion
      */
+    @Nullable
     public Entity getEntity() {
         return entity;
     }
