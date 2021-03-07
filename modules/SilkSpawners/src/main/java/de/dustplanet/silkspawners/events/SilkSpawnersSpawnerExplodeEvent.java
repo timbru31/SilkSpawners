@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -39,6 +40,11 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     private final Player player;
 
     /**
+     * Entity that caused the explosion
+     */
+    private final Entity entity;
+
+    /**
      * new Entity.
      */
     private String entityID;
@@ -71,7 +77,8 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
      * @param entityID new entity ID
      * @param dropChance the current dropChance
      */
-    public SilkSpawnersSpawnerExplodeEvent(@Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+    public SilkSpawnersSpawnerExplodeEvent(Entity entity, @Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+        this.entity = entity;
         this.player = player;
         this.block = block;
         this.dropChance = dropChance;
@@ -117,6 +124,14 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
      */
     public void setAllCancelled(final boolean allCancel) {
         this.allCancelled = allCancel;
+    }
+
+    /**
+     * Returns entity that caused the explosion
+     * @return Entity that caused the explosion
+     */
+    public Entity getEntity() {
+        return entity;
     }
 
     /**
