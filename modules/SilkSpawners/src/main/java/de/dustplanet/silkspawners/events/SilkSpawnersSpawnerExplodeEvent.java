@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -39,6 +40,12 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     private final Player player;
 
     /**
+     * Entity that caused the explosion.
+     */
+    @Nullable
+    private final Entity entity;
+
+    /**
      * new Entity.
      */
     private String entityID;
@@ -66,12 +73,14 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
     /**
      * Constructor of the event.
      *
+     * @param entity that caused the explosion
      * @param player who issues the event, can be null
      * @param block is allowed to be null
      * @param entityID new entity ID
      * @param dropChance the current dropChance
      */
-    public SilkSpawnersSpawnerExplodeEvent(@Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+    public SilkSpawnersSpawnerExplodeEvent(@Nullable Entity entity, @Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+        this.entity = entity;
         this.player = player;
         this.block = block;
         this.dropChance = dropChance;
@@ -79,6 +88,20 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
             this.spawner = (CreatureSpawner) block.getState();
         }
         this.entityID = entityID;
+    }
+
+    /**
+     * Constructor of the event.
+     *
+     * @deprecated Use {@link SilkSpawnersSpawnerExplodeEvent#SilkSpawnersSpawnerExplodeEvent(Entity, Player, Block, String int)} instead.
+     * @param player who issues the event, can be null
+     * @param block is allowed to be null
+     * @param entityID new entity ID
+     * @param dropChance the current dropChance
+     */
+    @Deprecated
+    public SilkSpawnersSpawnerExplodeEvent(@Nullable final Player player, final Block block, final String entityID, final int dropChance) {
+        this(null, player, block, entityID, dropChance);
     }
 
     /**
@@ -117,6 +140,15 @@ public class SilkSpawnersSpawnerExplodeEvent extends Event implements Cancellabl
      */
     public void setAllCancelled(final boolean allCancel) {
         this.allCancelled = allCancel;
+    }
+
+    /**
+     * Returns the entity that caused the explosion.
+     * @return the entity that caused the explosion
+     */
+    @Nullable
+    public Entity getEntity() {
+        return entity;
     }
 
     /**

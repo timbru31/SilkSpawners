@@ -79,7 +79,7 @@ public class SilkSpawnersEntityListener implements Listener {
                     dropChance = plugin.config.getInt("explosionDropChance", 100);
                 }
                 plugin.getLogger().log(Level.FINE, "Current drop chance is {0}", dropChance);
-                final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(sourcePlayer, block, entityID,
+                final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(entity, sourcePlayer, block, entityID,
                         dropChance);
                 plugin.getServer().getPluginManager().callEvent(explodeEvent);
                 if (explodeEvent.isAllCancelled()) {
