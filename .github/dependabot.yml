@@ -1,0 +1,24 @@
+version: 2
+registries:
+  maven-repository-repo-dustplanet-de:
+    type: maven-repository
+    url: https://repo.dustplanet.de
+    username: jenkins
+    password: "${{secrets.MAVEN_REPOSITORY_REPO_DUSTPLANET_DE_PASSWORD}}"
+
+updates:
+- package-ecosystem: maven
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "08:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: com.massivecraft:Factions
+    versions:
+    - 1.6.9.5-2.6.8-STABLE
+  - dependency-name: com.puppycrawl.tools:checkstyle
+    versions:
+    - 8.41.1
+  registries:
+  - maven-repository-repo-dustplanet-de
