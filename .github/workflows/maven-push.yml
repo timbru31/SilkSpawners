@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        java: [8, 11, 15]
+        java: [8, 11, 16]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,7 +30,7 @@ jobs:
           java -version
           mvn --version
       - name: Build with Maven
-        run: mvn -s conf/settings.xml "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
+        run: mvn -s conf/settings.xml -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" -D"https.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
         env:
           CI_USER: ${{ secrets.CI_USER }}
           CI_PASSWORD: ${{ secrets.CI_PASSWORD }}
