@@ -81,4 +81,4 @@ jobs:
           fi
 
       - name: Build with Maven
-        run: mvn "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
+        run: mvn -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
