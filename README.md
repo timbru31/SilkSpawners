@@ -27,7 +27,7 @@ This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to ob
 - Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-- Support for multiple Minecraft versions, from 1.8 to 1.16.5
+- Support for multiple Minecraft versions, from 1.8 to 1.17
 
 _Third party features, all of them can be disabled_
 
@@ -311,6 +311,7 @@ Unfortunately, I can't give access to https://repo.dustplanet.de/artifactory/pri
 mkdir -p BuildTools
 cd BuildTools
 wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+java -jar BuildTools.jar --rev 1.17 --remapped
 java -jar BuildTools.jar --rev 1.14.4
 java -jar BuildTools.jar --rev 1.13.2
 java -jar BuildTools.jar --rev 1.12.2
@@ -321,7 +322,7 @@ java -jar BuildTools.jar --rev 1.8.8
 java -jar BuildTools.jar --rev 1.8
 ```
 
-For Minecraft 1.15 and newer, Paper is required to be present:
+For Minecraft 1.15 and newer, Paper is required to be present (there is currently an execption for 1.17):
 
 ```sh
 git clone https://github.com/PaperMC/Paper.git
