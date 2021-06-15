@@ -64,6 +64,10 @@ public class NMSHandler implements NMSProvider {
             .filter(material -> material.name().endsWith("_SPAWN_EGG")).collect(Collectors.toList());
 
     public NMSHandler() {
+        this(true);
+    }
+
+    public NMSHandler(final boolean checkForNerfFlags) {
         try {
             tileField = CraftCreatureSpawner.class.getDeclaredField("snapshot");
             tileField.setAccessible(true);
@@ -78,17 +82,19 @@ public class NMSHandler implements NMSProvider {
             }
         }
 
-        @SuppressWarnings("resource")
-        final WorldServer handle = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
+        if (checkForNerfFlags) {
+            @SuppressWarnings("resource")
+            final WorldServer handle = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
 
-        try {
-            final SpigotWorldConfig spigotConfig = handle.spigotConfig;
-            if (spigotConfig.nerfSpawnerMobs) {
-                Bukkit.getLogger().warning(
-                        "[SilkSpawners] Warning! \"nerf-spawner-mobs\" is set to true in the spigot.yml! Spawned mobs WON'T HAVE ANY AI!");
+            try {
+                final SpigotWorldConfig spigotConfig = handle.spigotConfig;
+                if (spigotConfig.nerfSpawnerMobs) {
+                    Bukkit.getLogger().warning(
+                            "[SilkSpawners] Warning! \"nerf-spawner-mobs\" is set to true in the spigot.yml! Spawned mobs WON'T HAVE ANY AI!");
+                }
+            } catch (@SuppressWarnings("unused") final NoSuchFieldError e) {
+                // Silence
             }
-        } catch (@SuppressWarnings("unused") final NoSuchFieldError e) {
-            // Silence
         }
     }
 

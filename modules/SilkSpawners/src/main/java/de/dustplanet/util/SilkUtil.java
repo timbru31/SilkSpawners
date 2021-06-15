@@ -24,6 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -162,10 +163,16 @@ public class SilkUtil {
             version = (packageName.substring(packageName.lastIndexOf('.') + 1));
         }
 
+        final FileConfiguration config = plugin.getConfig();
+        boolean checkForNerfFlags = true;
+        if (config != null) {
+            checkForNerfFlags = config.getBoolean("checkForNerfFlags", true);
+        }
+
         try {
             final Class<?> clazz = Class.forName("de.dustplanet.silkspawners.compat." + version + ".NMSHandler");
             if (NMSProvider.class.isAssignableFrom(clazz)) {
-                nmsProvider = (NMSProvider) clazz.getConstructor().newInstance();
+                nmsProvider = (NMSProvider) clazz.getConstructor(Boolean.TYPE).newInstance(checkForNerfFlags);
                 plugin.getLogger().info("Loading support for " + version);
                 return true;
             }

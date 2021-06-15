@@ -187,6 +187,9 @@ factionsSupport: false
 # If the inventory of a player is full, drop spawners/eggs from /ss give on the ground
 spillSpawnersFromCommands: false
 
+# Check for spigot.yml and paper.yml flags that conflict with SilkSpawners
+checkForNerfFlags: true
+
 # Puts more information out on startup and interactions, such as block placement and breaking
 verboseMode: false
 
