@@ -44,11 +44,14 @@ import com.mojang.authlib.GameProfile;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -116,11 +119,11 @@ public class NMSHandler implements NMSProvider {
         }
 
         final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
-        entity.get().setPos(x, y, z);
-        entity.get().setXRot(yaw);
+        entity.get().moveTo(x, y, z, yaw, 0);
         world.addEntity(entity.get(), SpawnReason.SPAWNER_EGG);
-        final ClientboundRotateHeadPacket rotation = new ClientboundRotateHeadPacket(entity.get(), (byte) yaw);
-        ((CraftPlayer) player).getHandle().connection.send(rotation);
+        final Packet<ClientGamePacketListener> rotationPacket = new ClientboundRotateHeadPacket(entity.get(), (byte) yaw);
+        final ServerPlayerConnection connection = ((CraftPlayer) player).getHandle().connection;
+        connection.send(rotationPacket);
     }
 
     @Override
