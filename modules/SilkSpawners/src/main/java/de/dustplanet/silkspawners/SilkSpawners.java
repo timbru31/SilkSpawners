@@ -99,7 +99,7 @@ public class SilkSpawners extends JavaPlugin {
 
         loadPermissions();
 
-        loadConfig();
+        loadRecipes();
 
         // Check if we should enable the auto Updater & have no snapshot (dev build)
         if (config.getBoolean("autoUpdater", true)) {
@@ -245,16 +245,13 @@ public class SilkSpawners extends JavaPlugin {
         new Mobs(mobs).loadConfig();
     }
 
-    private void loadConfig() {
-        // Enable craftable spawners?
-        if (config.getBoolean("craftableSpawners", false)) {
-            loadRecipes();
-        }
-    }
-
     // Add the recipes
     @SuppressWarnings("deprecation")
     private void loadRecipes() {
+        if (!config.getBoolean("craftableSpawners", false)) {
+            return;
+        }
+
         getLogger().fine("Loading custom recipes");
 
         final boolean legacySpawnEggs = su.isLegacySpawnEggs();
@@ -545,7 +542,7 @@ public class SilkSpawners extends JavaPlugin {
     public void reloadConfigs() {
         config.load();
         config.save();
-        loadConfig();
+        loadRecipes();
         su.load();
         mobs.load();
         mobs.save();
