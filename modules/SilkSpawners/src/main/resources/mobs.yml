@@ -793,6 +793,32 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Piglin Brute
+  axolotl:
+    aliases:
+    - mudpuppy
+    - mud_puppy
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Axolotl
+  glow_squid:
+    - glowsq
+    - glowsquid
+    - gsquid
+    - octopus
+    - goctopus
+    - glowoctopus
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Glow Squid
+  goat:
+    aliases:
+    - capra
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Goat
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -961,4 +987,6 @@ creatures:
   fishing_bobber:
     enable: false
   trident:
+    enable: false
+  glow_item_frame:
     enable: false

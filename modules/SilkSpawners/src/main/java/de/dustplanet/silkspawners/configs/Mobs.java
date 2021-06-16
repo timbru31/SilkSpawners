@@ -853,6 +853,39 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.piglin_brute.displayName", "Piglin Brute");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Axolotl
+        tempList.add("mudpuppy");
+        tempList.add("mud_puppy");
+        config.addDefault("creatures.axolotl.aliases", tempList);
+        config.addDefault("creatures.axolotl.enable", true);
+        config.addDefault("creatures.axolotl.enableCraftingSpawner", true);
+        config.addDefault("creatures.axolotl.enableSpawnEggOverride", true);
+        config.addDefault("creatures.axolotl.displayName", "Axolotl");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Glow Squid
+        tempList.add("glowsq");
+        tempList.add("glowsquid");
+        tempList.add("gsquid");
+        tempList.add("octopus");
+        tempList.add("goctopus");
+        tempList.add("glowoctopus");
+        config.addDefault("creatures.glow_squid.aliases", tempList);
+        config.addDefault("creatures.glow_squid.enable", true);
+        config.addDefault("creatures.glow_squid.enableCraftingSpawner", true);
+        config.addDefault("creatures.glow_squid.enableSpawnEggOverride", true);
+        config.addDefault("creatures.glow_squid.displayName", "Glow Squid");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Goat
+        tempList.add("capra");
+        config.addDefault("creatures.goat.aliases", tempList);
+        config.addDefault("creatures.goat.enable", true);
+        config.addDefault("creatures.goat.enableCraftingSpawner", true);
+        config.addDefault("creatures.goat.enableSpawnEggOverride", true);
+        config.addDefault("creatures.goat.displayName", "Goat");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
@@ -987,5 +1020,7 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.fishing_bobber.enable", false);
         // trident
         config.addDefault("creatures.trident.enable", false);
+        // glow_item_frame
+        config.addDefault("creatures.glow_item_frame.enable", false);
     }
 }
