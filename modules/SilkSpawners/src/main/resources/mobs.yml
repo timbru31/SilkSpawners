@@ -802,6 +802,7 @@ creatures:
     enableSpawnEggOverride: true
     displayName: Axolotl
   glow_squid:
+    aliases:
     - glowsq
     - glowsquid
     - gsquid
