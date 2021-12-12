@@ -67,10 +67,10 @@ recipeBottom: AAA
 recipeAmount: 1
 
 # Custom example:
-#recipeTop: 'A A'
-#recipeMiddle: 'BXA'
-#recipeBottom: 'C D'
-#ingredients:
+# recipeTop: 'A A'
+# recipeMiddle: 'BXA'
+# recipeBottom: 'C D'
+# ingredients:
 #  - 'A,IRON_FENCE'
 #  - 'B,DIRT'
 #  - 'C,2'
