@@ -1,0 +1,5 @@
+extends: default
+
+rules:
+  line-length: 120
+  document-start: false
