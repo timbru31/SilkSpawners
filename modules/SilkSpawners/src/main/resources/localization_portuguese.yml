@@ -45,7 +45,9 @@ spawning: '&2Gerando &e%creature%'
 noSpawnerHere: '&4Um gerador não pode ser colocado aqui porque o bloco acima está bloqueado!'
 
 lookAtSpawner: '&4Você deve estar olhando diretamente para o gerador.'
-spawnerNotDeterminable: '&4Você ou não tem um gerador ou ovo em sua mão ou tem um gerador ou ovo em ambas mãos. Remova um da mão secundária!'
+spawnerNotDeterminable: >-
+  &4Você ou não tem um gerador ou ovo em sua mão ou tem um gerador ou ovo em ambas mãos.
+  Remova um da mão secundária!
 
 help: |-
   '&7------&6Menu de Ajuda SilkSpawners v%version%7------'
