@@ -332,6 +332,12 @@ For Minecraft 1.15 and newer, Paper is required to be present (there is currentl
 git clone https://github.com/PaperMC/Paper.git
 cd Paper
 # 1.16.5 (v1_16_R3)
+git checkout ver/1.16.5
+git clean -xfd
+git submodule foreach --recursive git clean -xfd
+git reset --hard
+git submodule foreach --recursive git reset --hard
+git submodule update --init --recursive
 ./paper jar
 
 # 1.16.3 (v1_16_R2)
