@@ -2,7 +2,7 @@
 # Taken from https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/entity/EntityType.html
 creatures:
 
-  # Vanilla mobs, taken from https://minecraft.gamepedia.com/Java_Edition_data_values#Entities for 1.13+ 
+  # Vanilla mobs, taken from https://minecraft.gamepedia.com/Java_Edition_data_values#Entities for 1.13+
   # and https://minecraft.gamepedia.com/Java_Edition_data_values/Pre-flattening/Entity_IDs for up to 1.12
   Creeper:
     aliases: &id001
@@ -73,7 +73,7 @@ creatures:
     displayName: Zombie
   Slime:
     aliases: &id006
-     - sl
+      - sl
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -85,8 +85,8 @@ creatures:
     displayName: Slime
   Ghast:
     aliases: &id007
-     - g
-     - ghost
+      - g
+      - ghost
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -534,7 +534,7 @@ creatures:
     displayName: Husk
   zombie_villager:
     aliases:
-     - zombievillager
+      - zombievillager
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -565,7 +565,7 @@ creatures:
     displayName: Mule
   evocation_illager:
     aliases:
-     - evoker
+      - evoker
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -638,7 +638,7 @@ creatures:
     displayName: Evoker
   illusioner:
     aliases:
-     - illusion
+      - illusion
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -736,7 +736,7 @@ creatures:
     displayName: Pillager
   wandering_trader:
     aliases:
-     - wanderer
+      - wanderer
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -759,7 +759,7 @@ creatures:
     displayName: Bee
   hoglin:
     aliases:
-     - hoglin
+      - hoglin
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -773,7 +773,7 @@ creatures:
     displayName: Zoglin
   piglin:
     aliases:
-     - piglin
+      - piglin
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
@@ -817,7 +817,7 @@ creatures:
     displayName: Glow Squid
   goat:
     aliases:
-     - capra
+      - capra
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
