@@ -1,4 +1,5 @@
-# Bu satır Canavar Yaratıcıları için yeni isim belirlemek için kullanılır. Bunu iptal etmek için, mesajı Canavar Yaratıcısı olarak değiştiriniz.
+# Bu satır Canavar Yaratıcıları için yeni isim belirlemek için kullanılır.
+# Bunu iptal etmek için, mesajı Canavar Yaratıcısı olarak değiştiriniz.
 spawnerName: '&e%creature% &fYaratıcı'
 
 addedEgg: '&e%amount% &2adet &e%creature% &2yumurtası çantanıza eklendi.'
@@ -46,7 +47,9 @@ noSpawnerHere: '&4Bu yaratıcı buraya yerleştirilemez çünkü üzerindeki blo
 lookAtSpawner: '&4Direkt olarak yaratıcıya bakmalısınız.'
 # Buradaki cümlenin tam bir Türkçe karşılığı yok, tam olarak nasıl çevireceğimden emin olamadım.
 # Direkt olarak chicken translate dediğimiz yani cümlede ne yazıyorsa direkt yazdığı gibi çevirmeye çalıştım.
-spawnerNotDeterminable: '&4Elinizde bir canavar yaratıcısı veya yumurtası yok veya bir elinizde yumurta diğer elinizde yaratıcı yok. Lütfen birini boşaltınız!'
+spawnerNotDeterminable: >-
+  &4Elinizde bir canavar yaratıcısı veya yumurtası yok veya bir elinizde yumurta diğer elinizde yaratıcı yok.
+  Lütfen birini boşaltınız!
 
 help: |-
   '&7------&6SilkSpawners v%version% Yardım Menüsü&7------'
