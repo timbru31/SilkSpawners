@@ -1,0 +1,13 @@
+name: Lint the YML files
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Runs the YML file checker
+        run: yamllint ./modules/SilkSpawners/src/main/resources
