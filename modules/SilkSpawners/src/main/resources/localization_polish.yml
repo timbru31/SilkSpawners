@@ -46,11 +46,11 @@ noSpawnerHere: '&4Nie można tu umieścić spawnera, ponieważ ten blok jest zab
 lookAtSpawner: '&4Musisz patrzeć prosto na spawner.'
 spawnerNotDeterminable: '&4Nie masz spawnera lub jajka w ręku lub masz w obu dłoniach. Zostaw jedną rękę pustą.'
 help: |-
-  '&7------&6SilkSpawners v%version% Pomoc&7------'
-  '&e/ss help &7- &2Wyświetla pomoc.'
-  '&e/ss list|all &7- &2Wyświetla wszystkie dostępne potwory.'
-  '&e/ss view|info &7- &2Wyświetla informacje o spawnerze na ktory patrzysz.'
-  '&e/ss reload|rl &7- &2Przeładowanie pliku konfiguracyjnego.'
-  '&e/ss change <nowyMob> &7- &2Zmiana rodzaju spawnera, który trzymasz lub na który patrzysz.'
-  '&e/ss give|add <gracz> <mob> [ilość] &7- &2Daje graczowi spawner lub jajko potworów. Ilość jest opcjonalna'
-  '&e/ss selfget|i <mob> [ilość] &7- &2Daje ci spawner lub jajko potworów. Ilość jest opcjonalna.'
+  &7------&6SilkSpawners v%version% Pomoc&7------
+  &e/ss help &7- &2Wyświetla pomoc.
+  &e/ss list|all &7- &2Wyświetla wszystkie dostępne potwory.
+  &e/ss view|info &7- &2Wyświetla informacje o spawnerze na ktory patrzysz.
+  &e/ss reload|rl &7- &2Przeładowanie pliku konfiguracyjnego.
+  &e/ss change <nowyMob> &7- &2Zmiana rodzaju spawnera, który trzymasz lub na który patrzysz.
+  &e/ss give|add <gracz> <mob> [ilość] &7- &2Daje graczowi spawner lub jajko potworów. Ilość jest opcjonalna
+  &e/ss selfget|i <mob> [ilość] &7- &2Daje ci spawner lub jajko potworów. Ilość jest opcjonalna.

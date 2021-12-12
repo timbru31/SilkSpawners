@@ -49,11 +49,11 @@ spawnerNotDeterminable: >-
   Maak een leeg asjeblieft!
 
 help: |-
-  '&7------&6SilkSpawners v%version% Help Menu&7------'
-  '&e/ss help &7- &22Laat het Het help menu zien.'
-  '&e/ss list|all &7- &22Laat alle beschikbaare schepsels zien.'
-  '&e/ss view &7- &2Geeft informatie over de spawner die je recht aankijkt.'
-  '&e/ss reload|rl &7- &2Herlaad de configuratie files.'
-  '&e/ss change <newMob> &7- &2Veranderd de spawner die je nu vast hebt of bekijkt.'
-  '&e/ss give|add <player> <mob> [amount] &7- &2Geeft een spawner of een spawn egg aan de speler. De hoeveelheid is kiesbaar.'
-  '&e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. De hoeveelheid is kiesbaar.'
+  &7------&6SilkSpawners v%version% Help Menu&7------
+  &e/ss help &7- &22Laat het Het help menu zien.
+  &e/ss list|all &7- &22Laat alle beschikbaare schepsels zien.
+  &e/ss view &7- &2Geeft informatie over de spawner die je recht aankijkt.
+  &e/ss reload|rl &7- &2Herlaad de configuratie files.
+  &e/ss change <newMob> &7- &2Veranderd de spawner die je nu vast hebt of bekijkt.
+  &e/ss give|add <player> <mob> [amount] &7- &2Geeft een spawner of een spawn egg aan de speler. De hoeveelheid is kiesbaar.
+  &e/ss selfget|i <mob> [amount] &7- &2Gives a spawner or egg to you. De hoeveelheid is kiesbaar.

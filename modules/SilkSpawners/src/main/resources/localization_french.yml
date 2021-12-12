@@ -47,11 +47,11 @@ lookAtSpawner: '&4Vous devez regarder directement le générateur.'
 spawnerNotDeterminable: '&4Vous n''avez ni générateur ni oeuf dans votre main.'
 
 help: |-
-  '&7------&6SilkSpawners v%version% Menu d''aide&7------'
-  '&e/ss help &7- &2Afficher les menus d''aide.'
-  '&e/ss list|all &7- &2Afficher toutes les créatures disponibles.'
-  '&e/ss view|info &7- &2Afficher les informations sur le générateur regardé.'
-  '&e/ss reload|rl &7- &2Recharger les configurations.'
-  '&e/ss change <newMob> &7- &2Changer le générateur que vous tenez en main ou êtes actuellement en train de regarder.'
-  '&e/ss give|add <player> <mob> [amount] &7- &2Donner un générateur ou un oeuf à un joueur. Le montant est optionnel.'
-  '&e/ss selfget|i <mob> [amount] &7- &2Se donner un générateur ou un oeuf à soi-même. Le montant est optionnel.'
+  &7------&6SilkSpawners v%version% Menu d''aide&7------
+  &e/ss help &7- &2Afficher les menus d''aide.
+  &e/ss list|all &7- &2Afficher toutes les créatures disponibles.
+  &e/ss view|info &7- &2Afficher les informations sur le générateur regardé.
+  &e/ss reload|rl &7- &2Recharger les configurations.
+  &e/ss change <newMob> &7- &2Changer le générateur que vous tenez en main ou êtes actuellement en train de regarder.
+  &e/ss give|add <player> <mob> [amount] &7- &2Donner un générateur ou un oeuf à un joueur. Le montant est optionnel.
+  &e/ss selfget|i <mob> [amount] &7- &2Se donner un générateur ou un oeuf à soi-même. Le montant est optionnel.
