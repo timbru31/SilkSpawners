@@ -30,6 +30,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * @author timbru31
  */
 public class CommentedConfiguration extends YamlConfiguration {
+    private static final String BLANK_FILE = "{}\n";
     private final HashMap<String, String> comments;
     private final File file;
     private final DumperOptions yamlOptions = new DumperOptions();
@@ -58,7 +59,7 @@ public class CommentedConfiguration extends YamlConfiguration {
 
         String dump = yaml.dump(getValues(false));
 
-        if (dump.equals(BLANK_CONFIG)) {
+        if (BLANK_FILE.equals(dump)) {
             dump = "";
         }
 
