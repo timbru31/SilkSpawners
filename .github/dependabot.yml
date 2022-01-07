@@ -1,10 +1,18 @@
-# To get started with Dependabot version updates, you'll need to specify which 
-# package ecosystems to update and where the package manifests are located
-# Plse see he documentation for all configuration options
-# https:/help.github.com/githb/administering-repository/configuration-options-for-dependency-updates
-
 version: 2
+registries:
+  maven-repository-repo-dustplanet-de:
+    type: maven-repository
+    url: https://repo.dustplanet.de
+    username: "${{secrets.CI_USER}}"
+    password: "${{secrets.CI_PASSWORD}}"
+
 updates:
+- package-ecosystem: "maven"
+  directory: "/"
+  schedule:
+    interval: daily
+  registries:
+  - maven-repository-repo-dustplanet-de
 - package-ecosystem: "github-actions"
   directory: "/"
   schedule:
