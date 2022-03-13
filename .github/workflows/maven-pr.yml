@@ -21,6 +21,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 11
+          cache: 'maven'
 
       - name: Version information
         run: |
@@ -47,6 +48,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 17
+          cache: 'maven'
 
       - name: Build Spigot versions with JDK 17
         run: |
