@@ -28,9 +28,7 @@ jobs:
           mvn --version
 
       - name: Build Spigot versions with JDK 11
-        # See https://issues.apache.org/jira/browse/MDEP-568 and https://github.com/apache/maven-dependency-plugin/pull/2
         run: |
-          mvn com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=de.dustplanet -B || rm -r ~/.m2/repository/org/
           mkdir -p BuildTools
           cd BuildTools
           wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
@@ -51,13 +49,10 @@ jobs:
           java-version: 17
 
       - name: Build Spigot versions with JDK 17
-        # See https://issues.apache.org/jira/browse/MDEP-568 and https://github.com/apache/maven-dependency-plugin/pull/2
         run: |
-          mvn com.offbytwo.maven.plugins:maven-dependency-plugin:3.1.1.MDEP568:go-offline -DexcludeGroupIds=de.dustplanet -B || rm -r ~/.m2/repository/org/
           cd BuildTools
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.18.2-R0.1-SNAPSHOT/spigot-1.18.2-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.18.2 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.18.1-R0.1-SNAPSHOT/spigot-1.18.1-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.18.1 --remapped
-
 
       - name: Build with Maven
         run: mvn -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
