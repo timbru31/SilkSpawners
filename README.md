@@ -27,7 +27,7 @@ This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to ob
 - Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
-- Support for multiple Minecraft versions, from 1.8 to 1.18.1
+- Support for multiple Minecraft versions, from 1.8 to 1.18.2
 
 _Third party features, all of them can be disabled_
 
