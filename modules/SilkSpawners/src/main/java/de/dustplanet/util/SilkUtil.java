@@ -654,9 +654,13 @@ public class SilkUtil {
     public void showAllCreatures(final CommandSender sender) {
         // For each entry in the list
         final StringBuilder builder = new StringBuilder();
-        for (String displayName : displayNameToMobID.keySet()) {
+        for (Entry<String, String> entityType : displayNameToMobID.entrySet()) {
+            String displayName = entityType.getKey();
+            String entityId = entityType.getValue();
             displayName = displayName.replace(" ", "");
-            builder.append(displayName + ", ");
+            if (hasPermission(sender, "silkspawners.changetype.", entityId)) {
+                builder.append(displayName + ", ");
+            }
         }
         // Strip last comma out
         String message = builder.toString();
