@@ -13,12 +13,12 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.destroystokyo.paper</groupId>
-      <artifactId>paper</artifactId>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot</artifactId>
       <version>1.16.3-R0.1-SNAPSHOT</version>
       <exclusions>
         <exclusion>
-          <groupId>io.papermc</groupId>
+          <groupId>org.spigotmc</groupId>
           <artifactId>minecraft-server</artifactId>
         </exclusion>
       </exclusions>

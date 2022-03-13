@@ -38,7 +38,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.spigotmc.SpigotWorldConfig;
 
-import com.destroystokyo.paper.PaperWorldConfig;
 import com.google.common.base.CaseFormat;
 import com.mojang.authlib.GameProfile;
 
@@ -98,12 +97,17 @@ public class NMSHandler implements NMSProvider {
             }
 
             try {
-                final PaperWorldConfig paperConfig = handle.paperConfig;
-                if (!paperConfig.ironGolemsCanSpawnInAir) {
+                final Field paperConfigField = World.class.getDeclaredField("paperConfig");
+                paperConfigField.setAccessible(true);
+
+                final Field ironGolemsCanSpawnInAirField = paperConfigField.getType().getDeclaredField("ironGolemsCanSpawnInAir");
+                ironGolemsCanSpawnInAirField.setAccessible(true);
+                if (!ironGolemsCanSpawnInAirField.getBoolean(paperConfigField.get(handle))) {
                     Bukkit.getLogger().warning(
                             "[SilkSpawners] Warning! \"iron-golems-can-spawn-in-air\" is set to false in the paper.yml! Iron Golem farms might not work!");
                 }
-            } catch (@SuppressWarnings("unused") final NoSuchFieldError e) {
+            } catch (@SuppressWarnings("unused") final NoSuchFieldError | IllegalArgumentException | IllegalAccessException
+                    | NoSuchFieldException | SecurityException e) {
                 // Silence
             }
         }
