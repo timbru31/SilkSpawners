@@ -33,6 +33,7 @@ permissions:
       silkspawners.freeitemegg.*: true
       silkspawners.craft.*: true
       silkspawners.place.*: true
+      silkspawners.list.*: true
     default: false
   silkspawners.info:
     description: Allows you to see informative messages about the spawners as you place and break them

@@ -191,6 +191,7 @@ public class SilkSpawners extends JavaPlugin {
                 PermissionDefault.FALSE);
         loadPermissions("freeitemegg", "Allows you to get spawn eggs in your hand for free using /spawner [creature]egg",
                 PermissionDefault.FALSE);
+        loadPermissions("list", "Allows you to list the available mobs", PermissionDefault.TRUE);
     }
 
     private void loadPermissions(final String permissionPart, final String description, final PermissionDefault permDefault) {

@@ -654,17 +654,19 @@ public class SilkUtil {
     public void showAllCreatures(final CommandSender sender) {
         // For each entry in the list
         final StringBuilder builder = new StringBuilder();
-        for (Entry<String, String> entityType : displayNameToMobID.entrySet()) {
+        for (final Entry<String, String> entityType : displayNameToMobID.entrySet()) {
             String displayName = entityType.getKey();
-            String entityId = entityType.getValue();
+            final String entityId = entityType.getValue();
             displayName = displayName.replace(" ", "");
-            if (hasPermission(sender, "silkspawners.changetype.", entityId)) {
+            if (hasPermission(sender, "silkspawners.list.", entityId)) {
                 builder.append(displayName + ", ");
             }
         }
         // Strip last comma out
         String message = builder.toString();
-        message = message.substring(0, message.length() - ", ".length());
+        if (StringUtils.isNotBlank(message)) {
+            message = message.substring(0, message.length() - ", ".length());
+        }
         sendMessage(sender, message);
     }
 

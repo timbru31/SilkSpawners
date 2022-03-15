@@ -3,6 +3,7 @@ package de.dustplanet.silkspawners.commands;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map.Entry;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -34,16 +35,16 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
             return addCommands(command);
         } else if (args.length == 2 && ("change".equalsIgnoreCase(args[0]) || "set".equalsIgnoreCase(args[0]))) {
             final String mob = args[1].toLowerCase(Locale.ENGLISH);
-            results.addAll(addMobs(mob));
+            results.addAll(addMobs(mob, "changetype", sender));
         } else if (args.length == 2 && ("give".equalsIgnoreCase(args[0]) || "add".equalsIgnoreCase(args[0]))) {
             final String player = args[1].toLowerCase(Locale.ENGLISH);
             results.addAll(addPlayers(player));
         } else if (args.length == 3 && ("give".equalsIgnoreCase(args[0]) || "add".equalsIgnoreCase(args[0]))) {
             final String mob = args[2].toLowerCase(Locale.ENGLISH);
-            results.addAll(addMobs(mob));
+            results.addAll(addMobs(mob, "freeitem", sender));
         } else if (args.length == 2 && ("selfget".equalsIgnoreCase(args[0]) || "i".equalsIgnoreCase(args[0]))) {
             final String mob = args[1].toLowerCase(Locale.ENGLISH);
-            results.addAll(addMobs(mob));
+            results.addAll(addMobs(mob, "freeitem", sender));
         }
         return results;
     }
@@ -58,11 +59,12 @@ public class SilkSpawnersTabCompleter implements TabCompleter {
         return results;
     }
 
-    private ArrayList<String> addMobs(final String mob) {
+    private ArrayList<String> addMobs(final String mob, final String perm, final CommandSender sender) {
         final ArrayList<String> results = new ArrayList<>();
-        for (String displayName : su.getDisplayNameToMobID().keySet()) {
-            displayName = displayName.toLowerCase(Locale.ENGLISH).replace(" ", "");
-            if (displayName.startsWith(mob)) {
+        for (final Entry<String, String> entityType : su.getDisplayNameToMobID().entrySet()) {
+            final String displayName = entityType.getKey().toLowerCase(Locale.ENGLISH).replace(" ", "");
+            final String entityId = entityType.getValue();
+            if (displayName.startsWith(mob) && su.hasPermission(sender, "silkspawners." + perm, entityId)) {
                 results.add(displayName);
             }
         }

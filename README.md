@@ -240,6 +240,7 @@ Aliases:
 |  silkspawners.viewtype   |  true   |                         View the spawner type using /spawner                         |
 |   silkspawners.reload    |   op    |                            Reload the configs on the fly                             |
 | silkspawners.explodedrop |  false  | Receive a drop when Spawner explodes via TNT (off by default, see permissionExplode) |
+|   silkspawners.list.\*   |  true   |                   Allows you to view the list of mobs in /ss list                    |
 
 #### Placing spawners
 
