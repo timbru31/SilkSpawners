@@ -180,8 +180,8 @@ public class NMSHandler implements NMSProvider {
         } catch (@SuppressWarnings("unused") NoSuchFieldException | SecurityException | IllegalArgumentException
                 | IllegalAccessException e) {
             try {
-                // int maxStackSize -> c
-                final Field maxStackSize = Item.class.getDeclaredField("c");
+                // int maxStackSize -> d
+                final Field maxStackSize = Item.class.getDeclaredField("d");
                 maxStackSize.setAccessible(true);
                 maxStackSize.set(spawner, 1);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
