@@ -251,7 +251,12 @@ public class NMSHandler implements NMSProvider {
         if (!tag.contains("SpawnData")) {
             tag.put("SpawnData", new CompoundTag());
         }
-        tag.getCompound("SpawnData").putString("id", prefixedEntity);
+
+        final CompoundTag spawnDataTag = tag.getCompound("SpawnData");
+        if (!spawnDataTag.contains("entity")) {
+            spawnDataTag.put("entity", new CompoundTag());
+        }
+        spawnDataTag.getCompound("entity").putString("id", prefixedEntity);
 
         if (!tag.contains("SpawnPotentials")) {
             tag.put("SpawnPotentials", new CompoundTag());
@@ -297,6 +302,9 @@ public class NMSHandler implements NMSProvider {
             return tag.getString("EntityId");
         } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("id")) {
             return tag.getCompound("SpawnData").getString("id");
+        } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("entity")
+                && tag.getCompound("SpawnData").getCompound("entity").contains("id")) {
+            return tag.getCompound("SpawnData").getCompound("entity").getString("id");
         } else if (tag.contains("SpawnPotentials") && !tag.getList("SpawnPotentials", 8).isEmpty()) {
             return tag.getList("SpawnPotentials", 8).getCompound(0).getCompound("Entity").getString("id");
         } else {
