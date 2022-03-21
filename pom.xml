@@ -4,7 +4,7 @@
   <groupId>de.dustplanet</groupId>
   <artifactId>silkspawners-parent</artifactId>
   <packaging>pom</packaging>
-  <version>7.3.0</version>
+  <version>7.3.1-SNAPSHOT</version>
   <name>SilkSpawners Parent</name>
   <url>https://dev.bukkit.org/projects/silkspawners/</url>
 
@@ -148,7 +148,7 @@
     <url>https://github.com/timbru31/SilkSpawners</url>
     <connection>scm:git:git://github.com/timbru31/SilkSpawners.git</connection>
     <developerConnection>scm:git:git@github.com:timbru31/SilkSpawners.git</developerConnection>
-    <tag>silkspawners-7.3.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <ciManagement>
