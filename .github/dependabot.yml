@@ -125,3 +125,9 @@ updates:
     interval: daily
   registries:
   - maven-repository-repo-dustplanet-de
+- package-ecosystem: "maven"
+  directory: "/modules/v1_19_R1"
+  schedule:
+    interval: daily
+  registries:
+  - maven-repository-repo-dustplanet-de
