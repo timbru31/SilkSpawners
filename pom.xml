@@ -38,6 +38,7 @@
     <module>modules/v1_18_R1</module>
     <module>modules/v1_18_R2</module>
     <module>modules/v1_19_R1</module>
+    <module>modules/v1_19_R2</module>
     <module>modules/SilkSpawners</module>
   </modules>
 
