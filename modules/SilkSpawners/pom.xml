@@ -95,7 +95,7 @@
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>Factions</artifactId>
-      <version>1.6.9.5-U0.6.8</version>
+      <version>1.6.9.5-U0.6.29</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
@@ -106,7 +106,7 @@
     <dependency>
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
-      <version>3.0.0</version>
+      <version>3.0.2</version>
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
@@ -291,7 +291,7 @@
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>4.7.3.4</version>
+        <version>4.5.3.0</version>
         <configuration>
           <effort>Max</effort>
           <threshold>Low</threshold>
