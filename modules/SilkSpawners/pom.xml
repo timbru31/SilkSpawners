@@ -190,6 +190,11 @@
     </dependency>
     <dependency>
       <groupId>de.dustplanet</groupId>
+      <artifactId>silkspawners-v1_19_R2</artifactId>
+      <version>7.3.1-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-API</artifactId>
       <version>7.3.1-SNAPSHOT</version>
     </dependency>
