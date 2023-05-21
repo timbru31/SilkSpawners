@@ -277,7 +277,7 @@ public class NMSHandler implements NMSProvider {
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player the player
+     * @param player   the player
      * @param distance the reach distance
      * @return the found block or null
      */

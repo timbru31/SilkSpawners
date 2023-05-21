@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -44,6 +42,7 @@ import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -142,13 +141,8 @@ public class NMSHandler implements NMSProvider {
     public List<String> rawEntityMap() {
         final List<String> entities = new ArrayList<>();
         try {
-//            final Registry<EntityType<?>> entityTypeRegistry = Registry.ENTITY_TYPE;
             final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
-
-            final Iterator<EntityType<?>> iterator = entityTypeRegistry.iterator();
-
-            while (iterator.hasNext()) {
-                final EntityType<?> next = iterator.next();
+            for (EntityType<?> next : entityTypeRegistry) {
                 entities.add(EntityType.getKey(next).getPath());
             }
         } catch (SecurityException | IllegalArgumentException e) {
@@ -175,7 +169,6 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void setSpawnersUnstackable() {
         final ResourceLocation resourceLocation = new ResourceLocation(NAMESPACED_SPAWNER_ID);
-//        final Registry<Item> itemRegistry = Registry.ITEM;
         final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         final Item spawner = itemRegistry.get(resourceLocation);
 
@@ -196,6 +189,7 @@ public class NMSHandler implements NMSProvider {
         }
     }
 
+    @SuppressWarnings("resource")
     @Override
     public boolean setMobNameOfSpawner(final BlockState blockState, final String mobID) {
         // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
@@ -205,16 +199,10 @@ public class NMSHandler implements NMSProvider {
 
         try {
             final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
-//            final Registry<EntityType<?>> entityTypeRegistry = Registry.ENTITY_TYPE;
             final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
             final ResourceLocation resourceLocation = new ResourceLocation(safeMobID);
-//            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation));
-            tile.getSpawner().setEntityId(
-                entityTypeRegistry.get(resourceLocation),
-                spawner.getWorldHandle().getMinecraftWorld(),
-                spawner.getWorldHandle().getMinecraftWorld().random,
-                spawner.getPosition()
-            );
+            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation), spawner.getWorldHandle().getMinecraftWorld(),
+                    spawner.getWorldHandle().getMinecraftWorld().random, spawner.getPosition());
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
@@ -328,7 +316,7 @@ public class NMSHandler implements NMSProvider {
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player the player
+     * @param player   the player
      * @param distance the reach distance
      * @return the found block or null
      */
@@ -389,7 +377,6 @@ public class NMSHandler implements NMSProvider {
         CompoundTag tag = itemStack.getTag();
 
         if (tag == null || !tag.contains("EntityTag")) {
-//            final Registry<Item> itemRegistry = Registry.ITEM;
             final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
             final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
             if (vanillaKey != null) {

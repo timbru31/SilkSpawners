@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners.compat.v1_14_R1;
+package de.dustplanet.silkspawners.compat.v1_19_R3;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -22,12 +22,12 @@ import org.bukkit.block.BlockState;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.craftbukkit.v1_14_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_14_R1.block.CraftBlockEntityState;
-import org.bukkit.craftbukkit.v1_14_R1.block.CraftCreatureSpawner;
-import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_14_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_19_R3.CraftServer;
+import org.bukkit.craftbukkit.v1_19_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_19_R3.block.CraftBlockEntityState;
+import org.bukkit.craftbukkit.v1_19_R3.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_19_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
@@ -41,21 +41,23 @@ import com.google.common.base.CaseFormat;
 import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
-import net.minecraft.server.v1_14_R1.DimensionManager;
-import net.minecraft.server.v1_14_R1.Entity;
-import net.minecraft.server.v1_14_R1.EntityPlayer;
-import net.minecraft.server.v1_14_R1.EntityTypes;
-import net.minecraft.server.v1_14_R1.IRegistry;
-import net.minecraft.server.v1_14_R1.Item;
-import net.minecraft.server.v1_14_R1.MinecraftKey;
-import net.minecraft.server.v1_14_R1.MinecraftServer;
-import net.minecraft.server.v1_14_R1.NBTTagCompound;
-import net.minecraft.server.v1_14_R1.PacketPlayOutEntityHeadRotation;
-import net.minecraft.server.v1_14_R1.PlayerInteractManager;
-import net.minecraft.server.v1_14_R1.TileEntityMobSpawner;
-import net.minecraft.server.v1_14_R1.TileEntityTypes;
-import net.minecraft.server.v1_14_R1.World;
-import net.minecraft.server.v1_14_R1.WorldServer;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -83,7 +85,7 @@ public class NMSHandler implements NMSProvider {
 
         if (checkForNerfFlags) {
             @SuppressWarnings("resource")
-            final WorldServer handle = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
+            final ServerLevel handle = ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle();
 
             try {
                 final SpigotWorldConfig spigotConfig = handle.spigotConfig;
@@ -94,6 +96,21 @@ public class NMSHandler implements NMSProvider {
             } catch (@SuppressWarnings("unused") final NoSuchFieldError e) {
                 // Silence
             }
+
+            try {
+                final Field paperConfigField = Level.class.getDeclaredField("paperConfig");
+                paperConfigField.setAccessible(true);
+
+                final Field ironGolemsCanSpawnInAirField = paperConfigField.getType().getDeclaredField("ironGolemsCanSpawnInAir");
+                ironGolemsCanSpawnInAirField.setAccessible(true);
+                if (!ironGolemsCanSpawnInAirField.getBoolean(paperConfigField.get(handle))) {
+                    Bukkit.getLogger().warning(
+                            "[SilkSpawners] Warning! \"iron-golems-can-spawn-in-air\" is set to false in the paper.yml! Iron Golem farms might not work!");
+                }
+            } catch (@SuppressWarnings("unused") final NoSuchFieldError | IllegalArgumentException | IllegalAccessException
+                    | NoSuchFieldException | SecurityException e) {
+                // Silence
+            }
         }
     }
 
@@ -101,11 +118,11 @@ public class NMSHandler implements NMSProvider {
     @Override
     public void spawnEntity(final org.bukkit.World w, final String entityID, final double x, final double y, final double z,
             final Player player) {
-        final NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("id", entityID);
+        final CompoundTag tag = new CompoundTag();
+        tag.putString("id", entityID);
 
-        final World world = ((CraftWorld) w).getHandle();
-        final Optional<Entity> entity = EntityTypes.a(tag, world);
+        final ServerLevel world = ((CraftWorld) w).getHandle();
+        final Optional<Entity> entity = EntityType.create(tag, world);
 
         if (!entity.isPresent()) {
             Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
@@ -113,19 +130,20 @@ public class NMSHandler implements NMSProvider {
         }
 
         final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
-        entity.get().setPositionRotation(x, y, z, yaw, 0);
-        world.addEntity(entity.get(), SpawnReason.SPAWNER_EGG);
-        final PacketPlayOutEntityHeadRotation rotation = new PacketPlayOutEntityHeadRotation(entity.get(), (byte) yaw);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(rotation);
+        entity.get().moveTo(x, y, z, yaw, 0);
+        ((CraftWorld) w).addEntity(entity.get(), SpawnReason.SPAWNER_EGG);
+        final Packet<ClientGamePacketListener> rotationPacket = new ClientboundRotateHeadPacket(entity.get(), (byte) yaw);
+        final ServerPlayerConnection connection = ((CraftPlayer) player).getHandle().connection;
+        connection.send(rotationPacket);
     }
 
     @Override
     public List<String> rawEntityMap() {
         final List<String> entities = new ArrayList<>();
         try {
-            final IRegistry<EntityTypes<?>> entityTypeRegistry = IRegistry.ENTITY_TYPE;
-            for (EntityTypes<?> next : entityTypeRegistry) {
-                entities.add(EntityTypes.getName(next).getKey());
+            final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
+            for (EntityType<?> next : entityTypeRegistry) {
+                entities.add(EntityType.getKey(next).getPath());
             }
         } catch (SecurityException | IllegalArgumentException e) {
             Bukkit.getLogger().severe("[SilkSpawners] Failed to dump entity map: " + e.getMessage());
@@ -138,9 +156,9 @@ public class NMSHandler implements NMSProvider {
     public String getMobNameOfSpawner(final BlockState blockState) {
         final CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
         try {
-            final TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-            final MinecraftKey minecraftKey = tile.getSpawner().getMobName();
-            return minecraftKey != null ? minecraftKey.getKey() : "";
+            final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
+            final CompoundTag resourceLocation = tile.getSpawner().nextSpawnData.entityToSpawn();
+            return resourceLocation != null ? resourceLocation.getString("id").replace("minecraft:", "") : "";
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -150,16 +168,28 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
+        final ResourceLocation resourceLocation = new ResourceLocation(NAMESPACED_SPAWNER_ID);
+        final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
+        final Item spawner = itemRegistry.get(resourceLocation);
+
         try {
-            final Item spawner = IRegistry.ITEM.get(new MinecraftKey(NAMESPACED_SPAWNER_ID));
             final Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
             maxStackSize.setAccessible(true);
             maxStackSize.set(spawner, 1);
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (@SuppressWarnings("unused") NoSuchFieldException | SecurityException | IllegalArgumentException
+                | IllegalAccessException e) {
+            try {
+                // int maxStackSize -> d
+                final Field maxStackSize = Item.class.getDeclaredField("d");
+                maxStackSize.setAccessible(true);
+                maxStackSize.set(spawner, 1);
+            } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
+                e1.printStackTrace();
+            }
         }
     }
 
+    @SuppressWarnings("resource")
     @Override
     public boolean setMobNameOfSpawner(final BlockState blockState, final String mobID) {
         // Prevent ResourceKeyInvalidException: Non [a-z0-9/._-] character in path of location
@@ -168,8 +198,11 @@ public class NMSHandler implements NMSProvider {
         final CraftCreatureSpawner spawner = (CraftCreatureSpawner) blockState;
 
         try {
-            final TileEntityMobSpawner tile = (TileEntityMobSpawner) tileField.get(spawner);
-            tile.getSpawner().setMobName(IRegistry.ENTITY_TYPE.get(new MinecraftKey(safeMobID)));
+            final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
+            final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
+            final ResourceLocation resourceLocation = new ResourceLocation(safeMobID);
+            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation), spawner.getWorldHandle().getMinecraftWorld(),
+                    spawner.getWorldHandle().getMinecraftWorld().random, spawner.getPosition());
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
@@ -192,56 +225,62 @@ public class NMSHandler implements NMSProvider {
             prefixedEntity = entity;
         }
 
-        net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
+        net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getOrCreateTag();
+        CompoundTag tag = itemStack.getOrCreateTag();
 
         // Check for SilkSpawners key
-        if (!tag.hasKey("SilkSpawners")) {
-            tag.set("SilkSpawners", new NBTTagCompound());
+        if (!tag.contains("SilkSpawners")) {
+            tag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").setString("entity", entity);
+        tag.getCompound("SilkSpawners").putString("entity", entity);
 
         // Check for Vanilla keys
-        if (!tag.hasKey("BlockEntityTag")) {
-            tag.set("BlockEntityTag", new NBTTagCompound());
+        if (!tag.contains("BlockEntityTag")) {
+            tag.put("BlockEntityTag", new CompoundTag());
         }
 
         tag = tag.getCompound("BlockEntityTag");
 
         // EntityId - Deprecated in 1.9
-        tag.setString("EntityId", entity);
-        tag.setString("id", TileEntityTypes.a(TileEntityTypes.MOB_SPAWNER).getKey());
+        tag.putString("EntityId", entity);
+        tag.putString("id", BlockEntityType.getKey(BlockEntityType.MOB_SPAWNER).getPath());
 
         // SpawnData
-        if (!tag.hasKey("SpawnData")) {
-            tag.set("SpawnData", new NBTTagCompound());
+        if (!tag.contains("SpawnData")) {
+            tag.put("SpawnData", new CompoundTag());
         }
-        tag.getCompound("SpawnData").setString("id", prefixedEntity);
 
-        if (!tag.hasKey("SpawnPotentials")) {
-            tag.set("SpawnPotentials", new NBTTagCompound());
+        final CompoundTag spawnDataTag = tag.getCompound("SpawnData");
+        if (!spawnDataTag.contains("entity")) {
+            spawnDataTag.put("entity", new CompoundTag());
+        }
+        spawnDataTag.getCompound("entity").putString("id", prefixedEntity);
+
+        if (!tag.contains("SpawnPotentials")) {
+            tag.put("SpawnPotentials", new CompoundTag());
         }
 
         // SpawnEgg data
-        if (!tag.hasKey("EntityTag")) {
-            tag.set("EntityTag", new NBTTagCompound());
+        if (!tag.contains("EntityTag")) {
+            tag.put("EntityTag", new CompoundTag());
         }
-        tag.getCompound("EntityTag").setString("id", prefixedEntity);
+        tag.getCompound("EntityTag").putString("id", prefixedEntity);
+
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
     @Override
     @Nullable
     public String getSilkSpawnersNBTEntityID(final ItemStack item) {
-        net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
+        net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final NBTTagCompound tag = itemStack.getTag();
+        final CompoundTag tag = itemStack.getTag();
 
-        if (tag == null || !tag.hasKey("SilkSpawners")) {
+        if (tag == null || !tag.contains("SilkSpawners")) {
             return null;
         }
         return tag.getCompound("SilkSpawners").getString("entity");
@@ -250,21 +289,24 @@ public class NMSHandler implements NMSProvider {
     @Override
     @Nullable
     public String getVanillaNBTEntityID(final ItemStack item) {
-        net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
+        net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getTag();
+        CompoundTag tag = itemStack.getTag();
 
-        if (tag == null || !tag.hasKey("BlockEntityTag")) {
+        if (tag == null || !tag.contains("BlockEntityTag")) {
             return null;
         }
 
         tag = tag.getCompound("BlockEntityTag");
-        if (tag.hasKey("EntityId")) {
+        if (tag.contains("EntityId")) {
             return tag.getString("EntityId");
-        } else if (tag.hasKey("SpawnData") && tag.getCompound("SpawnData").hasKey("id")) {
+        } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("id")) {
             return tag.getCompound("SpawnData").getString("id");
-        } else if (tag.hasKey("SpawnPotentials") && !tag.getList("SpawnPotentials", 8).isEmpty()) {
+        } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("entity")
+                && tag.getCompound("SpawnData").getCompound("entity").contains("id")) {
+            return tag.getCompound("SpawnData").getCompound("entity").getString("id");
+        } else if (tag.contains("SpawnPotentials") && !tag.getList("SpawnPotentials", 8).isEmpty()) {
             return tag.getList("SpawnPotentials", 8).getCompound(0).getCompound("Entity").getString("id");
         } else {
             return null;
@@ -301,19 +343,19 @@ public class NMSHandler implements NMSProvider {
             itemMeta.setDisplayName(displayName);
             item.setItemMeta(itemMeta);
         }
-        net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
+        net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final NBTTagCompound tag = itemStack.getOrCreateTag();
+        final CompoundTag tag = itemStack.getOrCreateTag();
 
-        if (!tag.hasKey("SilkSpawners")) {
-            tag.set("SilkSpawners", new NBTTagCompound());
+        if (!tag.contains("SilkSpawners")) {
+            tag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").setString("entity", entityID);
+        tag.getCompound("SilkSpawners").putString("entity", entityID);
 
-        if (!tag.hasKey("EntityTag")) {
-            tag.set("EntityTag", new NBTTagCompound());
+        if (!tag.contains("EntityTag")) {
+            tag.put("EntityTag", new CompoundTag());
         }
 
         String prefixedEntity;
@@ -322,26 +364,27 @@ public class NMSHandler implements NMSProvider {
         } else {
             prefixedEntity = entityID;
         }
-        tag.getCompound("EntityTag").setString("id", prefixedEntity);
+        tag.getCompound("EntityTag").putString("id", prefixedEntity);
 
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
     @Override
     public String getVanillaEggNBTEntityID(final ItemStack item) {
-        net.minecraft.server.v1_14_R1.ItemStack itemStack = null;
+        net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        NBTTagCompound tag = itemStack.getTag();
+        CompoundTag tag = itemStack.getTag();
 
-        if (tag == null || !tag.hasKey("EntityTag")) {
-            final MinecraftKey vanillaKey = IRegistry.ITEM.getKey(itemStack.getItem());
+        if (tag == null || !tag.contains("EntityTag")) {
+            final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
+            final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
             if (vanillaKey != null) {
-                return vanillaKey.getKey().replace("minecraft:", "").replace("_spawn_egg", "");
+                return vanillaKey.getPath().replace("minecraft:", "").replace("_spawn_egg", "");
             }
         } else {
             tag = tag.getCompound("EntityTag");
-            if (tag.hasKey("id")) {
+            if (tag.contains("id")) {
                 return tag.getString("id").replace("minecraft:", "");
             }
         }
@@ -469,8 +512,7 @@ public class NMSHandler implements NMSProvider {
         final GameProfile profile = new GameProfile(offline.getUniqueId(),
                 offline.getName() != null ? offline.getName() : offline.getUniqueId().toString());
         final MinecraftServer server = ((CraftServer) Bukkit.getServer()).getServer();
-        final EntityPlayer entity = new EntityPlayer(server, server.getWorldServer(DimensionManager.OVERWORLD), profile,
-                new PlayerInteractManager(server.getWorldServer(DimensionManager.OVERWORLD)));
+        final ServerPlayer entity = new ServerPlayer(server, server.getLevel(Level.OVERWORLD), profile);
 
         final Player target = entity.getBukkitEntity();
         if (target != null) {
@@ -478,4 +520,5 @@ public class NMSHandler implements NMSProvider {
         }
         return target;
     }
+
 }

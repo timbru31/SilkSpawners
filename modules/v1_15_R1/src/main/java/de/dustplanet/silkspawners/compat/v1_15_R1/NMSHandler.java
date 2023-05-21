@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -140,9 +139,7 @@ public class NMSHandler implements NMSProvider {
         final List<String> entities = new ArrayList<>();
         try {
             final IRegistry<EntityTypes<?>> entityTypeRegistry = IRegistry.ENTITY_TYPE;
-            final Iterator<EntityTypes<?>> iterator = entityTypeRegistry.iterator();
-            while (iterator.hasNext()) {
-                final EntityTypes<?> next = iterator.next();
+            for (EntityTypes<?> next : entityTypeRegistry) {
                 entities.add(EntityTypes.getName(next).getKey());
             }
         } catch (SecurityException | IllegalArgumentException e) {
@@ -293,7 +290,7 @@ public class NMSHandler implements NMSProvider {
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player the player
+     * @param player   the player
      * @param distance the reach distance
      * @return the found block or null
      */
