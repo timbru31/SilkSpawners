@@ -37,7 +37,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>1.18.26</version>
     </dependency>
     <dependency>
       <groupId>org.spigotmc</groupId>
@@ -318,7 +318,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>3.16.0</version>
+        <version>3.21.0</version>
         <configuration>
           <targetJdk>1.8</targetJdk>
           <rulesets>
