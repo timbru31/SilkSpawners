@@ -822,6 +822,35 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Goat
+  allay:
+    aliases:
+      - helper
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Allay
+  frog:
+    aliases:
+      - squib
+      - toad
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Frog
+  tadpole:
+    aliases:
+      - polliwog
+      - pollywog
+      - tad
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Frog
+  warden:
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Warden
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
