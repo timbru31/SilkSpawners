@@ -886,6 +886,42 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.goat.displayName", "Goat");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Allay
+        tempList.add("helper");
+        config.addDefault("creatures.allay.aliases", tempList);
+        config.addDefault("creatures.allay.enable", true);
+        config.addDefault("creatures.allay.enableCraftingSpawner", true);
+        config.addDefault("creatures.allay.enableSpawnEggOverride", true);
+        config.addDefault("creatures.allay.displayName", "Allay");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Frog
+        tempList.add("squib");
+        tempList.add("toad");
+        config.addDefault("creatures.frog.aliases", tempList);
+        config.addDefault("creatures.frog.enable", true);
+        config.addDefault("creatures.frog.enableCraftingSpawner", true);
+        config.addDefault("creatures.frog.enableSpawnEggOverride", true);
+        config.addDefault("creatures.frog.displayName", "Frog");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Tadpole
+        tempList.add("polliwog");
+        tempList.add("pollywog");
+        tempList.add("tad");
+        config.addDefault("creatures.tadpole.aliases", tempList);
+        config.addDefault("creatures.tadpole.enable", true);
+        config.addDefault("creatures.tadpole.enableCraftingSpawner", true);
+        config.addDefault("creatures.tadpole.enableSpawnEggOverride", true);
+        config.addDefault("creatures.tadpole.displayName", "Tadpole");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Warden
+        config.addDefault("creatures.warden.enable", true);
+        config.addDefault("creatures.warden.enableCraftingSpawner", true);
+        config.addDefault("creatures.warden.enableSpawnEggOverride", true);
+        config.addDefault("creatures.warden.displayName", "Warden");
+        config.options().copyDefaults(true);
 
         // Non-mob vanilla entities below
         // Item
@@ -1022,5 +1058,21 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.trident.enable", false);
         // glow_item_frame
         config.addDefault("creatures.glow_item_frame.enable", false);
+        // chest_boat
+        config.addDefault("creatures.chest_boat.enable", false);
+        // interaction
+        config.addDefault("creatures.interaction.enable", false);
+        // marker
+        config.addDefault("creatures.marker.enable", false);
+        // block_display
+        config.addDefault("creatures.block_display.enable", false);
+        // item_display
+        config.addDefault("creatures.item_display.enable", false);
+        // text_display
+        config.addDefault("creatures.text_display.enable", false);
+        // camel
+        config.addDefault("creatures.camel.enable", false);
+        // sniffer
+        config.addDefault("creatures.sniffer.enable", false);
     }
 }

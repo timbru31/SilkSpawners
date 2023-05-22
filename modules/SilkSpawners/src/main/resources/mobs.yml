@@ -993,3 +993,19 @@ creatures:
     enable: false
   glow_item_frame:
     enable: false
+  chest_boat:
+    enable: false
+  interaction:
+    enable: false
+  marker:
+    enable: false
+  block_display:
+    enable: false
+  item_display:
+    enable: false
+  text_display:
+    enable: false
+  camel:
+    enable: false
+  sniffer:
+    enable: false
