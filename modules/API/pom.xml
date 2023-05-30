@@ -3,12 +3,12 @@
   <artifactId>silkspawners-API</artifactId>
   <packaging>jar</packaging>
   <name>SilkSpawners API</name>
-  <version>7.4.0</version>
+  <version>7.4.1-SNAPSHOT</version>
 
   <parent>
     <groupId>de.dustplanet</groupId>
     <artifactId>silkspawners-parent</artifactId>
-    <version>7.4.0</version>
+    <version>7.4.1-SNAPSHOT</version>
     <relativePath>../../</relativePath>
   </parent>
 
