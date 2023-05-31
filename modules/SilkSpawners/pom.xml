@@ -94,7 +94,7 @@
     <dependency>
       <groupId>com.massivecraft</groupId>
       <artifactId>Factions</artifactId>
-      <version>1.6.9.5-U0.6.29</version>
+      <version>1.6.9.5-4.1.1-STABLE</version>
       <exclusions>
         <exclusion>
           <groupId>*</groupId>
