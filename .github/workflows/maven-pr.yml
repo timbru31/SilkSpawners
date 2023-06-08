@@ -53,6 +53,7 @@ jobs:
       - name: Build Spigot versions with JDK 17
         run: |
           cd BuildTools
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.20-R0.1-SNAPSHOT/spigot-1.20-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.20 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.19.4-R0.1-SNAPSHOT/spigot-1.19.4-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.19.4 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.19.3-R0.1-SNAPSHOT/spigot-1.19.3-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.19.3 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.19.2-R0.1-SNAPSHOT/spigot-1.19.2-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.19.2 --remapped

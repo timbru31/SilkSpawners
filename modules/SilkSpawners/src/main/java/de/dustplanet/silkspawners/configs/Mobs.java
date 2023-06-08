@@ -922,6 +922,27 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.warden.enableSpawnEggOverride", true);
         config.addDefault("creatures.warden.displayName", "Warden");
         config.options().copyDefaults(true);
+        // Camel
+        tempList.add("dromedary");
+        config.addDefault("creatures.camel.aliases", tempList);
+        config.addDefault("creatures.camel.enable", true);
+        config.addDefault("creatures.camel.enableCraftingSpawner", true);
+        config.addDefault("creatures.camel.enableSpawnEggOverride", true);
+        config.addDefault("creatures.camel.displayName", "Camel");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Sniffer
+        tempList.add("snooper");
+        tempList.add("snoop");
+        tempList.add("sleuthhound");
+        tempList.add("shamus");
+        config.addDefault("creatures.sniffer.aliases", tempList);
+        config.addDefault("creatures.sniffer.enable", true);
+        config.addDefault("creatures.sniffer.enableCraftingSpawner", true);
+        config.addDefault("creatures.sniffer.enableSpawnEggOverride", true);
+        config.addDefault("creatures.sniffer.displayName", "Sniffer");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
@@ -1070,9 +1091,5 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.item_display.enable", false);
         // text_display
         config.addDefault("creatures.text_display.enable", false);
-        // camel
-        config.addDefault("creatures.camel.enable", false);
-        // sniffer
-        config.addDefault("creatures.sniffer.enable", false);
     }
 }
