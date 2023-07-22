@@ -103,6 +103,12 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>ru.endlesscode.mimic</groupId>
+      <artifactId>mimic-bukkit-api</artifactId>
+      <version>0.8.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.bstats</groupId>
       <artifactId>bstats-bukkit</artifactId>
       <version>3.0.2</version>

@@ -47,6 +47,7 @@ import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import lombok.Getter;
 import lombok.Setter;
 import me.confuser.barapi.BarAPI;
+import ru.endlesscode.mimic.Mimic;
 
 /**
  * This is the util class where all the magic happens.
@@ -91,6 +92,11 @@ public class SilkUtil {
     private WorldGuardPlugin wg;
 
     /**
+     * Mimic instance, may be null
+     */
+    private Mimic mimic;
+
+    /**
      * BarAPI usage toggle.
      */
     @Getter
@@ -127,6 +133,7 @@ public class SilkUtil {
         }
 
         getWorldGuard();
+        getMimic();
         final boolean nmsProviderFound = setupNMSProvider();
 
         if (nmsProviderFound) {
@@ -816,6 +823,10 @@ public class SilkUtil {
                 toolAllowed = true;
                 break;
             }
+            if (mimic != null && mimic.getItemsRegistry().isSameItem(tool, allowedTool)) {
+                toolAllowed = true;
+                break;
+            }
         }
         if (!toolAllowed) {
             plugin.getLogger().log(Level.FINE, "Tool not allowed: {0}", tool.getType());
@@ -887,6 +898,20 @@ public class SilkUtil {
         }
         plugin.getLogger().info("WorldGuard was found and support is enabled");
         wg = (WorldGuardPlugin) worldGuard;
+    }
+
+    private void getMimic() {
+        if (!plugin.getConfig().getBoolean("useMimic", true)) {
+            plugin.getLogger().info("Mimic support is disabled due to config setting");
+            return;
+        }
+        final Plugin mimicPlugin = plugin.getServer().getPluginManager().getPlugin("Mimic");
+        if (mimicPlugin == null) {
+            plugin.getLogger().info("Mimic was not found and support is disabled");
+            return;
+        }
+        mimic = Mimic.getInstance();
+        plugin.getLogger().info("Mimic was found and support is enabled");
     }
 
     /**
