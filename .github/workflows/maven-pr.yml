@@ -38,10 +38,7 @@ jobs:
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.13.2-R0.1-SNAPSHOT/spigot-1.13.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.13.2
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.12.2-R0.1-SNAPSHOT/spigot-1.12.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.12.2
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.11.2-R0.1-SNAPSHOT/spigot-1.11.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.11.2
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.10.2-R0.1-SNAPSHOT/spigot-1.10.2-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.10.2
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.9.4-R0.1-SNAPSHOT/spigot-1.9.4-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.9.4
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.8.8-R0.1-SNAPSHOT/spigot-1.8.8-R0.1-SNAPSHOT.jar ] || java -jar BuildTools.jar --rev 1.8.8
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.8-R0.1-SNAPSHOT/spigot-1.8-R0.1-SNAPSHOT.jar  ] || java -jar BuildTools.jar --rev 1.8
 
       - name: Set up Java 17
         uses: actions/setup-java@v3
