@@ -13,17 +13,17 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.6.0
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v3.3.1
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Set up Java 17
-        uses: actions/setup-java@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3.12.0
         with:
           distribution: "temurin"
           java-version: 17
@@ -33,6 +33,7 @@ jobs:
         run: |
           java -version
           mvn --version
+
       - name: Build with Maven
         run: mvn -s conf/settings.xml -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" -D"https.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
         env:
