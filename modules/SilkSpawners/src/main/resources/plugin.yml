@@ -2,7 +2,7 @@ name: SilkSpawners
 author: xGhOsTkiLLeRx
 authors: [mushroomhostage]
 main: de.dustplanet.silkspawners.SilkSpawners
-version: 7.3.0
+version: ${project.version}${build.number}
 url: https://dev.bukkit.org/projects/silkspawners
 description: pick up and move monster spawners using silk touch
 api-version: 1.13
