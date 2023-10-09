@@ -323,7 +323,10 @@ java -jar BuildTools.jar --rev 1.19.2 --remapped
 java -jar BuildTools.jar --rev 1.18.2 --remapped
 java -jar BuildTools.jar --rev 1.18.1 --remapped
 java -jar BuildTools.jar --rev 1.17.1 --remapped
-java -jar BuildTools.jar --rev 1.14.4
+java -jar BuildTools.jar --rev 1.16.5
+java -jar BuildTools.jar --rev 1.16.3
+java -jar BuildTools.jar --rev 1.16.1
+java -jar BuildTools.jar --rev 1.15.2
 java -jar BuildTools.jar --rev 1.13.2
 java -jar BuildTools.jar --rev 1.12.2
 java -jar BuildTools.jar --rev 1.11.2
