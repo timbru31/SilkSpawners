@@ -77,3 +77,17 @@ jobs:
 
       - name: Build with Maven
         run: mvn -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
+
+  auto-merge:
+    runs-on: ubuntu-latest
+    needs: build
+
+    permissions:
+      pull-requests: write
+      contents: write
+
+    steps:
+      - name: Automatically merge dependabot upgrades
+        uses: fastify/github-action-merge-dependabot@v3.9.1
+        with:
+          target: minor
