@@ -1,5 +1,6 @@
 package de.dustplanet.silkspawners.commands;
 
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
@@ -159,7 +160,8 @@ public class SpawnerCommand implements CommandExecutor {
         // Add egg
         if (su.hasPermission(sender, "silkspawners.freeitemegg.", entityID)) {
             final ItemStack eggItemStack = su.newEggItem(entityID, amount, su.getCreatureEggName(entityID));
-            if (receiver.getInventory().firstEmpty() == -1) {
+            final HashMap<Integer, ItemStack> leftOvers = receiver.getInventory().addItem(eggItemStack);
+            if (!leftOvers.values().isEmpty()) {
                 if (plugin.getConfig().getBoolean("spillSpawnersFromCommands", false)) {
                     final World world = receiver.getWorld();
                     world.dropItemNaturally(receiver.getLocation(), eggItemStack);
@@ -170,7 +172,6 @@ public class SpawnerCommand implements CommandExecutor {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(eggItemStack);
             if (saveData) {
                 receiver.saveData();
             }
@@ -213,7 +214,8 @@ public class SpawnerCommand implements CommandExecutor {
         // Add spawner
         if (su.hasPermission(sender, "silkspawners.freeitem.", entityID)) {
             final ItemStack spawnerItemStack = su.newSpawnerItem(entityID, su.getCustomSpawnerName(entityID), amount, false);
-            if (receiver.getInventory().firstEmpty() == -1) {
+            final HashMap<Integer, ItemStack> leftOvers = receiver.getInventory().addItem(spawnerItemStack);
+            if (!leftOvers.values().isEmpty()) {
                 if (plugin.getConfig().getBoolean("spillSpawnersFromCommands", false)) {
                     final World world = receiver.getWorld();
                     world.dropItemNaturally(receiver.getLocation(), spawnerItemStack);
@@ -224,7 +226,6 @@ public class SpawnerCommand implements CommandExecutor {
                 su.sendMessage(sender, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noFreeSlot")));
                 return;
             }
-            receiver.getInventory().addItem(spawnerItemStack);
             if (saveData) {
                 receiver.saveData();
             }
