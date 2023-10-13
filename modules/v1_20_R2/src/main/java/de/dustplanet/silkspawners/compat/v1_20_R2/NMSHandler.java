@@ -53,6 +53,7 @@ import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -201,8 +202,9 @@ public class NMSHandler implements NMSProvider {
             final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
             final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
             final ResourceLocation resourceLocation = new ResourceLocation(safeMobID);
-            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation), spawner.getWorldHandle().getMinecraftWorld(),
-                    spawner.getWorldHandle().getRandom(), spawner.getPosition());
+            final RandomSource rand = RandomSource.create();
+            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation), spawner.getWorldHandle().getMinecraftWorld(), rand,
+                    spawner.getPosition());
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
