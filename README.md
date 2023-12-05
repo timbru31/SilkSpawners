@@ -10,7 +10,7 @@
 
 ## Info
 
-This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to obtain the spawner with the corresponding mob when mined with `Silk Touch`enchanted pickaxes and offers a range of features to change, obtain or craft spawners, too.
+This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to obtain the spawner with the corresponding mob when mined with `Silk Touch` enchanted pickaxes and offers a range of features to change, obtain or craft spawners, too.
 
 - Crafting of each spawner (own recipe for every mob if wanted)
 - Commands for player and console
