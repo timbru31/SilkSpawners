@@ -9,6 +9,9 @@ permissionExplode: false
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
 
+useMimic: true
+# Allows you to use Mimic item IDs in allowedTools
+
 # Percentage of dropping a spawner block when TNT or creepers explode
 explosionDropChance: 30
 
