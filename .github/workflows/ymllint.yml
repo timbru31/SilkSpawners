@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4.1.4
+      - uses: actions/checkout@v4.1.5
 
       - name: Runs the YML file checker
         run: yamllint -f standard -c ./.github/ymllint-config.yml ./modules/SilkSpawners/src/main/resources
