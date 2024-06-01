@@ -231,21 +231,16 @@ public class NMSHandler implements NMSProvider {
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         final CustomData blockData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         CompoundTag tag = blockData.copyTag();
+        CompoundTag customTag = customData.copyTag();
 
         // Check for SilkSpawners key
-        if (!tag.contains("SilkSpawners")) {
-            tag.put("SilkSpawners", new CompoundTag());
+        if (!customTag.contains("SilkSpawners")) {
+            customTag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").putString("entity", entity);
-
-        // Check for Vanilla keys
-        if (!tag.contains("BlockEntityTag")) {
-            tag.put("BlockEntityTag", new CompoundTag());
-        }
-
-        tag = tag.getCompound("BlockEntityTag");
+        customTag.getCompound("SilkSpawners").putString("entity", entity);
 
         // EntityId - Deprecated in 1.9
         tag.putString("EntityId", entity);
@@ -273,6 +268,7 @@ public class NMSHandler implements NMSProvider {
         tag.getCompound("EntityTag").putString("id", prefixedEntity);
 
         itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -282,10 +278,10 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
         final CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("SilkSpawners")) {
+        if (!tag.contains("SilkSpawners")) {
             return null;
         }
         return tag.getCompound("SilkSpawners").getString("entity");
@@ -300,11 +296,6 @@ public class NMSHandler implements NMSProvider {
         final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
         CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("BlockEntityTag")) {
-            return null;
-        }
-
-        tag = tag.getCompound("BlockEntityTag");
         if (tag.contains("EntityId")) {
             return tag.getString("EntityId");
         } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("id")) {
@@ -352,18 +343,16 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-        final CompoundTag tag = blockEntityData.copyTag();
+        final CustomData blockData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        CompoundTag tag = blockData.copyTag();
+        CompoundTag customTag = customData.copyTag();
 
-        if (!tag.contains("SilkSpawners")) {
-            tag.put("SilkSpawners", new CompoundTag());
+        if (!customTag.contains("SilkSpawners")) {
+            customTag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").putString("entity", entityID);
-
-        if (!tag.contains("EntityTag")) {
-            tag.put("EntityTag", new CompoundTag());
-        }
+        customTag.getCompound("SilkSpawners").putString("entity", entityID);
 
         String prefixedEntity;
         if (!entityID.startsWith("minecraft:")) {
@@ -371,9 +360,10 @@ public class NMSHandler implements NMSProvider {
         } else {
             prefixedEntity = entityID;
         }
-        tag.getCompound("EntityTag").putString("id", prefixedEntity);
+        tag.putString("id", prefixedEntity);
 
-        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+        itemStack.set(DataComponents.ENTITY_DATA, CustomData.of(tag));
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -382,21 +372,19 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
         CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("EntityTag")) {
-            final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
-            final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
-            if (vanillaKey != null) {
-                return vanillaKey.getPath().replace("minecraft:", "").replace("_spawn_egg", "");
-            }
-        } else {
-            tag = tag.getCompound("EntityTag");
-            if (tag.contains("id")) {
-                return tag.getString("id").replace("minecraft:", "");
-            }
+        if (tag.contains("id")) {
+            return tag.getString("id").replace("minecraft:", "");
         }
+
+        final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
+        final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
+        if (vanillaKey != null) {
+            return vanillaKey.getPath().replace("minecraft:", "").replace("_spawn_egg", "");
+        }
+
         return null;
     }
 

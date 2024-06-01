@@ -20,6 +20,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Server;
+import org.bukkit.UnsafeValues;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
@@ -41,6 +43,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.Flags;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
+import com.vdurmont.semver4j.Semver;
 
 import de.dustplanet.silkspawners.SilkSpawners;
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
@@ -160,7 +163,21 @@ public class SilkUtil {
         // Rare cases might trigger API usage before SilkSpawners
         if (version == null) {
             final String packageName = Bukkit.getServer().getClass().getPackage().getName();
-            version = (packageName.substring(packageName.lastIndexOf('.') + 1));
+            String nmsVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
+            if (nmsVersion.equals("craftbukkit")) {
+                try {
+                    String minecraftVersion = (String) Server.class.getDeclaredMethod("getMinecraftVersion").invoke(Bukkit.getServer());
+                    Semver semver = new Semver(minecraftVersion);
+                    if (semver.isGreaterThanOrEqualTo("1.20.5")) {
+                        @SuppressWarnings("deprecation")
+                        int protocolVersion = (Integer) UnsafeValues.class.getDeclaredMethod("getProtocolVersion")
+                                .invoke(Bukkit.getUnsafe());
+                        version = SilkSpawners.PROTOCOL_VERSION_PACKAGE_MAP.get(protocolVersion);
+                    }
+                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
         final FileConfiguration config = plugin.getConfig();
@@ -320,7 +337,7 @@ public class SilkUtil {
      *
      * @deprecated Use {@link SilkUtil#newEggItem(String, int, String)} instead.
      * @param entityID which mob should be spawned
-     * @param amount the amount of spawn eggs
+     * @param amount   the amount of spawn eggs
      * @return the ItemStack
      */
     @Deprecated
@@ -331,8 +348,8 @@ public class SilkUtil {
     /**
      * Returns a new ItemStack of a spawn egg with the specified amount and mob.
      *
-     * @param entityID which mob should be spawned
-     * @param amount the amount of spawn eggs
+     * @param entityID    which mob should be spawned
+     * @param amount      the amount of spawn eggs
      * @param displayName the display name of the egg in case of unknown entities
      * @return the ItemStack
      */
@@ -344,10 +361,10 @@ public class SilkUtil {
     /**
      * This method will make a new MobSpawner with a custom entityID, name and amount.
      *
-     * @param entityID the mob
+     * @param entityID   the mob
      * @param customName if the MobSpawner should be named different
-     * @param amount the wanted amount
-     * @param forceLore whether the lore tag should be forces
+     * @param amount     the wanted amount
+     * @param forceLore  whether the lore tag should be forces
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(final String entityID, final String customName, final int amount, final boolean forceLore) {
@@ -395,10 +412,12 @@ public class SilkUtil {
         if (isUsingReflection()) {
             // Now try reflection for NBT tag
             entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
+            plugin.getLogger().log(Level.FINE, "EntityID from egg item stack (custom tag) is {0}", entityID);
             if (entityID != null) {
                 return entityID;
             }
             entityID = nmsProvider.getVanillaEggNBTEntityID(item);
+            plugin.getLogger().log(Level.FINE, "EntityID from egg item stack (vanilla tag) is {0}", entityID);
             if (entityID != null) {
                 return entityID;
             }
@@ -423,10 +442,12 @@ public class SilkUtil {
     public String getStoredSpawnerItemEntityID(final ItemStack item) {
         if (isUsingReflection()) {
             String entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
+            plugin.getLogger().log(Level.FINE, "EntityID from item stack (custom tag) is {0}", entityID);
             if (StringUtils.isNotBlank(entityID)) {
                 return entityID;
             }
             entityID = nmsProvider.getVanillaNBTEntityID(item);
+            plugin.getLogger().log(Level.FINE, "EntityID from item stack (vanilla tag) is {0}", entityID);
             if (StringUtils.isNotBlank(entityID)) {
                 return entityID.replace("minecraft:", "");
             }
@@ -505,7 +526,7 @@ public class SilkUtil {
     /**
      * Set the specified MonterSpawner to another entity ID.
      *
-     * @param block MonsterSpawner
+     * @param block  MonsterSpawner
      * @param entity the wanted entity
      */
     public void setSpawnerEntityID(final Block block, final String entity) {
@@ -539,9 +560,9 @@ public class SilkUtil {
     /**
      * Set a spawner (if allowed) to a new mob.
      *
-     * @param block the MonsterSpawner
-     * @param entityID the new entity ID
-     * @param player the player
+     * @param block         the MonsterSpawner
+     * @param entityID      the new entity ID
+     * @param player        the player
      * @param messageDenied the message which is shown, when the player can't build here see {@link #canBuildHere(Player, Location)}
      * @return whether the operation was successful or not
      */
@@ -559,8 +580,8 @@ public class SilkUtil {
     /**
      * Sets a spawner item or egg to a new ID.
      *
-     * @param item ItemStack (Egg or Spawner)
-     * @param entityID wanted entity ID
+     * @param item       ItemStack (Egg or Spawner)
+     * @param entityID   wanted entity ID
      * @param customName if a custom name should be used (null for none)
      * @return the updated ItemStack
      */
@@ -706,7 +727,7 @@ public class SilkUtil {
     /**
      * Notify a player about the spawner.
      *
-     * @param player the player
+     * @param player      the player
      * @param spawnerName the creature name
      */
     @SuppressWarnings("deprecation")
@@ -892,7 +913,7 @@ public class SilkUtil {
     /**
      * Checks if a player can build here (WorldGuard).
      *
-     * @param player the player
+     * @param player   the player
      * @param location the location to check
      * @return the result, true or false
      */
@@ -934,9 +955,9 @@ public class SilkUtil {
     /**
      * Helper methods to check if a player has any of the aliases permissions for a given mobID.
      *
-     * @param permissible - the permissible to check the permission for
+     * @param permissible    - the permissible to check the permission for
      * @param basePermission - the basis permission without the specific mob
-     * @param entityID - the internal mob ID (not display name)
+     * @param entityID       - the internal mob ID (not display name)
      * @return the permission check result, true if the player has got the permission, false otherwise
      */
     public boolean hasPermission(final Permissible permissible, final String basePermission, final String entityID) {

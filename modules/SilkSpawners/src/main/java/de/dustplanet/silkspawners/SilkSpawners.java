@@ -5,16 +5,21 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 
 import org.apache.commons.lang.StringUtils;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Server;
+import org.bukkit.UnsafeValues;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +28,8 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.vdurmont.semver4j.Semver;
 
 import de.dustplanet.silkspawners.commands.SilkSpawnersTabCompleter;
 import de.dustplanet.silkspawners.commands.SpawnerCommand;
@@ -56,6 +63,12 @@ public class SilkSpawners extends JavaPlugin {
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = { "v1_8_R3", "v1_11_R1", "v1_12_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1",
             "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1", "v1_19_R2", "v1_19_R3", "v1_20_R1",
             "v1_20_R2", "v1_20_R3", "v1_20_R4" };
+    public static final Map<Integer, String> PROTOCOL_VERSION_PACKAGE_MAP = new HashMap<Integer, String>() {
+        private static final long serialVersionUID = -5188779509588704507L;
+        {
+            put(766, "v1_20_R4");
+        }
+    };
     public CommentedConfiguration config;
     public CommentedConfiguration localization;
     @Getter
@@ -78,7 +91,21 @@ public class SilkSpawners extends JavaPlugin {
         final String packageName = getServer().getClass().getPackage().getName();
         // org.bukkit.craftbukkit.version
         // Get the last element of the package
-        setNmsVersion(packageName.substring(packageName.lastIndexOf('.') + 1));
+        String _nmsVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
+        if (_nmsVersion.equals("craftbukkit")) {
+            try {
+                String minecraftVersion = (String) Server.class.getDeclaredMethod("getMinecraftVersion").invoke(Bukkit.getServer());
+                Semver semver = new Semver(minecraftVersion);
+                if (semver.isGreaterThanOrEqualTo("1.20.5")) {
+                    @SuppressWarnings("deprecation")
+                    int protocolVersion = (Integer) UnsafeValues.class.getDeclaredMethod("getProtocolVersion").invoke(Bukkit.getUnsafe());
+                    _nmsVersion = PROTOCOL_VERSION_PACKAGE_MAP.get(protocolVersion);
+                }
+            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+        setNmsVersion(_nmsVersion);
 
         // Test for right Minecraft version
         if (config.getBoolean("testMCVersion", true)) {
@@ -403,7 +430,7 @@ public class SilkSpawners extends JavaPlugin {
                 // If the custom recipe fails, we have a fallback
                 getLogger().log(Level.WARNING, "Could not add the recipe of {0}!", entityID);
                 getLogger().log(Level.WARNING, "Error:", e);
-                recipe.shape(new String[] { "AAA", "ABA", "AAA" });
+                recipe.shape("AAA", "ABA", "AAA");
                 recipe.setIngredient('A', su.nmsProvider.getIronFenceMaterial());
                 if (legacySpawnEggs) {
                     recipe.setIngredient('X', su.nmsProvider.getSpawnEggMaterial(), 0);
@@ -496,7 +523,7 @@ public class SilkSpawners extends JavaPlugin {
             } catch (final IllegalArgumentException e) {
                 // If the custom recipe fails, we have a fallback
                 getLogger().log(Level.WARNING, "Could not add the default recipe!", e);
-                baseSpawnerRecipe.shape(new String[] { "AAA", "ABA", "AAA" });
+                baseSpawnerRecipe.shape("AAA", "ABA", "AAA");
                 baseSpawnerRecipe.setIngredient('A', su.nmsProvider.getIronFenceMaterial());
                 // Use the right egg!
                 baseSpawnerRecipe.setIngredient('B', su.nmsProvider.getSpawnEggMaterial());
@@ -529,7 +556,7 @@ public class SilkSpawners extends JavaPlugin {
     /**
      * Sends a message to the player if the 'silkspawners.info' permission is granted. Empty messages are ignored and not are not sent.
      *
-     * @param player the player to message
+     * @param player  the player to message
      * @param message the message to send
      */
     public void informPlayer(final Player player, final String message) {
