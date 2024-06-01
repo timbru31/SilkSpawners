@@ -42,6 +42,7 @@ import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
@@ -56,6 +57,7 @@ import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -228,7 +230,8 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getOrCreateTag();
+        final CustomData blockData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        CompoundTag tag = blockData.copyTag();
 
         // Check for SilkSpawners key
         if (!tag.contains("SilkSpawners")) {
@@ -269,6 +272,7 @@ public class NMSHandler implements NMSProvider {
         }
         tag.getCompound("EntityTag").putString("id", prefixedEntity);
 
+        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -278,7 +282,8 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
         if (tag == null || !tag.contains("SilkSpawners")) {
             return null;
@@ -292,7 +297,8 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        CompoundTag tag = blockEntityData.copyTag();
 
         if (tag == null || !tag.contains("BlockEntityTag")) {
             return null;
@@ -316,7 +322,7 @@ public class NMSHandler implements NMSProvider {
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player the player
+     * @param player   the player
      * @param distance the reach distance
      * @return the found block or null
      */
@@ -346,7 +352,8 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CompoundTag tag = itemStack.getOrCreateTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
         if (!tag.contains("SilkSpawners")) {
             tag.put("SilkSpawners", new CompoundTag());
@@ -366,6 +373,7 @@ public class NMSHandler implements NMSProvider {
         }
         tag.getCompound("EntityTag").putString("id", prefixedEntity);
 
+        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -374,7 +382,8 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        CompoundTag tag = blockEntityData.copyTag();
 
         if (tag == null || !tag.contains("EntityTag")) {
             final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
