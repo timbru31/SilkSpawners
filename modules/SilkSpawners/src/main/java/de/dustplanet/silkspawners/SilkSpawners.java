@@ -13,7 +13,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.apache.commons.lang.StringUtils;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -62,11 +61,12 @@ public class SilkSpawners extends JavaPlugin {
     private static final int BSTATS_PLUGIN_ID = 273;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = { "v1_8_R3", "v1_11_R1", "v1_12_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1",
             "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1", "v1_19_R2", "v1_19_R3", "v1_20_R1",
-            "v1_20_R2", "v1_20_R3", "v1_20_R4" };
+            "v1_20_R2", "v1_20_R3", "v1_20_R4", "v1_21_R1" };
     public static final Map<Integer, String> PROTOCOL_VERSION_PACKAGE_MAP = new HashMap<Integer, String>() {
         private static final long serialVersionUID = -5188779509588704507L;
         {
             put(766, "v1_20_R4");
+            put(767, "v1_21_R1");
         }
     };
     public CommentedConfiguration config;
@@ -94,11 +94,12 @@ public class SilkSpawners extends JavaPlugin {
         String _nmsVersion = packageName.substring(packageName.lastIndexOf('.') + 1);
         if (_nmsVersion.equals("craftbukkit")) {
             try {
-                String minecraftVersion = (String) Server.class.getDeclaredMethod("getMinecraftVersion").invoke(Bukkit.getServer());
-                Semver semver = new Semver(minecraftVersion);
+                final String minecraftVersion = (String) Server.class.getDeclaredMethod("getMinecraftVersion").invoke(Bukkit.getServer());
+                final Semver semver = new Semver(minecraftVersion);
                 if (semver.isGreaterThanOrEqualTo("1.20.5")) {
                     @SuppressWarnings("deprecation")
-                    int protocolVersion = (Integer) UnsafeValues.class.getDeclaredMethod("getProtocolVersion").invoke(Bukkit.getUnsafe());
+                    final int protocolVersion = (Integer) UnsafeValues.class.getDeclaredMethod("getProtocolVersion")
+                            .invoke(Bukkit.getUnsafe());
                     _nmsVersion = PROTOCOL_VERSION_PACKAGE_MAP.get(protocolVersion);
                 }
             } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -556,16 +557,29 @@ public class SilkSpawners extends JavaPlugin {
     /**
      * Sends a message to the player if the 'silkspawners.info' permission is granted. Empty messages are ignored and not are not sent.
      *
-     * @param player  the player to message
+     * @param player the player to message
      * @param message the message to send
      */
     public void informPlayer(final Player player, final String message) {
-        if (StringUtils.isBlank(message)) {
+        if (isBlank(message)) {
             return;
         }
         if (player.hasPermission("silkspawners.info")) {
             su.sendMessage(player, message);
         }
+    }
+
+    public boolean isBlank(final CharSequence cs) {
+        final int strLen = cs == null ? 0 : cs.length();
+        if (strLen == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void reloadConfigs() {
