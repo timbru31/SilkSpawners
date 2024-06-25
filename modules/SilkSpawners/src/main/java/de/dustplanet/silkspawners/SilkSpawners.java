@@ -95,7 +95,8 @@ public class SilkSpawners extends JavaPlugin {
         if (_nmsVersion.equals("craftbukkit")) {
             try {
                 final String minecraftVersion = (String) Server.class.getDeclaredMethod("getMinecraftVersion").invoke(Bukkit.getServer());
-                final Semver semver = new Semver(minecraftVersion);
+                final String normalizedVersion = minecraftVersion.matches("^\\d+\\.\\d+$") ? minecraftVersion + ".0" : minecraftVersion;
+                final Semver semver = new Semver(normalizedVersion);
                 if (semver.isGreaterThanOrEqualTo("1.20.5")) {
                     @SuppressWarnings("deprecation")
                     final int protocolVersion = (Integer) UnsafeValues.class.getDeclaredMethod("getProtocolVersion")
