@@ -42,6 +42,7 @@ import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -174,17 +175,21 @@ public class NMSHandler implements NMSProvider {
         final ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath("minecraft", NAMESPACED_SPAWNER_ID);
         final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         final Item spawner = itemRegistry.get(resourceLocation);
+        final DataComponentMap currentComponents = spawner.components();
+        final DataComponentMap updatedComponents = DataComponentMap.composite(currentComponents,
+                DataComponentMap.builder().set(DataComponents.MAX_STACK_SIZE, 1).build());
         try {
-            final Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.set(spawner, 1);
+
+            final Field components = Item.class.getDeclaredField("components");
+            components.setAccessible(true);
+            components.set(spawner, updatedComponents);
         } catch (@SuppressWarnings("unused") NoSuchFieldException | SecurityException | IllegalArgumentException
                 | IllegalAccessException e) {
             try {
-                // int maxStackSize -> d
-                final Field maxStackSize = Item.class.getDeclaredField("d");
-                maxStackSize.setAccessible(true);
-                maxStackSize.set(spawner, 1);
+                // DataComponentMap components -> c
+                final Field components = Item.class.getDeclaredField("c");
+                components.setAccessible(true);
+                components.set(spawner, updatedComponents);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
                 e1.printStackTrace();
             }

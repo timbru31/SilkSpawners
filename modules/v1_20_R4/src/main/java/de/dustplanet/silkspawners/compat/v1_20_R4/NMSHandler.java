@@ -42,6 +42,7 @@ import com.mojang.authlib.GameProfile;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -174,17 +175,21 @@ public class NMSHandler implements NMSProvider {
         final ResourceLocation resourceLocation = new ResourceLocation(NAMESPACED_SPAWNER_ID);
         final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
         final Item spawner = itemRegistry.get(resourceLocation);
+        final DataComponentMap currentComponents = spawner.components();
+        final DataComponentMap updatedComponents = DataComponentMap.composite(currentComponents,
+                DataComponentMap.builder().set(DataComponents.MAX_STACK_SIZE, 1).build());
         try {
-            final Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.set(spawner, 1);
+
+            final Field components = Item.class.getDeclaredField("components");
+            components.setAccessible(true);
+            components.set(spawner, updatedComponents);
         } catch (@SuppressWarnings("unused") NoSuchFieldException | SecurityException | IllegalArgumentException
                 | IllegalAccessException e) {
             try {
-                // int maxStackSize -> d
-                final Field maxStackSize = Item.class.getDeclaredField("d");
-                maxStackSize.setAccessible(true);
-                maxStackSize.set(spawner, 1);
+                // DataComponentMap components -> c
+                final Field components = Item.class.getDeclaredField("c");
+                components.setAccessible(true);
+                components.set(spawner, updatedComponents);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
                 e1.printStackTrace();
             }
@@ -232,8 +237,8 @@ public class NMSHandler implements NMSProvider {
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         final CustomData blockData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
         final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        CompoundTag tag = blockData.copyTag();
-        CompoundTag customTag = customData.copyTag();
+        final CompoundTag tag = blockData.copyTag();
+        final CompoundTag customTag = customData.copyTag();
 
         // Check for SilkSpawners key
         if (!customTag.contains("SilkSpawners")) {
@@ -294,7 +299,7 @@ public class NMSHandler implements NMSProvider {
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
-        CompoundTag tag = blockEntityData.copyTag();
+        final CompoundTag tag = blockEntityData.copyTag();
 
         if (tag.contains("EntityId")) {
             return tag.getString("EntityId");
@@ -313,7 +318,7 @@ public class NMSHandler implements NMSProvider {
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player   the player
+     * @param player the player
      * @param distance the reach distance
      * @return the found block or null
      */
@@ -345,8 +350,8 @@ public class NMSHandler implements NMSProvider {
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         final CustomData blockData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
         final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-        CompoundTag tag = blockData.copyTag();
-        CompoundTag customTag = customData.copyTag();
+        final CompoundTag tag = blockData.copyTag();
+        final CompoundTag customTag = customData.copyTag();
 
         if (!customTag.contains("SilkSpawners")) {
             customTag.put("SilkSpawners", new CompoundTag());
@@ -373,7 +378,7 @@ public class NMSHandler implements NMSProvider {
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
         final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
-        CompoundTag tag = blockEntityData.copyTag();
+        final CompoundTag tag = blockEntityData.copyTag();
 
         if (tag.contains("id")) {
             return tag.getString("id").replace("minecraft:", "");
