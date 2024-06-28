@@ -853,39 +853,39 @@ creatures:
     displayName: Warden
   camel:
     aliases:
-    - dromedary
+      - dromedary
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Camel
   sniffer:
     aliases:
-    - snooper
-    - snoop
-    - sleuthhound
-    - shamus
+      - snooper
+      - snoop
+      - sleuthhound
+      - shamus
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Sniffer
   armadillo:
     aliases:
-    - belt
+      - belt
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Armadillo
   bogged:
     aliases:
-    - swampskelly
-    - sawmpskellington
+      - swampskelly
+      - sawmpskellington
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Bogged
   breeze:
     aliases:
-    - wind
+      - wind
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
