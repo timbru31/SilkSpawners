@@ -943,6 +943,34 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.sniffer.displayName", "Sniffer");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Armadillo
+        tempList.add("belt");
+        config.addDefault("creatures.armadillo.aliases", tempList);
+        config.addDefault("creatures.armadillo.enable", true);
+        config.addDefault("creatures.armadillo.enableCraftingSpawner", true);
+        config.addDefault("creatures.armadillo.enableSpawnEggOverride", true);
+        config.addDefault("creatures.armadillo.displayName", "Armadillo");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Bogged
+        tempList.add("swampskelly");
+        tempList.add("sawmpskellington");
+        config.addDefault("creatures.bogged.aliases", tempList);
+        config.addDefault("creatures.bogged.enable", true);
+        config.addDefault("creatures.bogged.enableCraftingSpawner", true);
+        config.addDefault("creatures.bogged.enableSpawnEggOverride", true);
+        config.addDefault("creatures.bogged.displayName", "Bogged");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
+        // Breeze
+        tempList.add("wind");
+        config.addDefault("creatures.breeze.aliases", tempList);
+        config.addDefault("creatures.breeze.enable", true);
+        config.addDefault("creatures.breeze.enableCraftingSpawner", true);
+        config.addDefault("creatures.breeze.enableSpawnEggOverride", true);
+        config.addDefault("creatures.breeze.displayName", "Breeze");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
@@ -1091,5 +1119,11 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.item_display.enable", false);
         // text_display
         config.addDefault("creatures.text_display.enable", false);
+        // breeze_wind_charge
+        config.addDefault("creatures.breeze_wind_charge.enable", false);
+        // ominous_item_spawner
+        config.addDefault("creatures.ominous_item_spawner.enable", false);
+        // wind_charge
+        config.addDefault("creatures.wind_charge.enable", false);
     }
 }

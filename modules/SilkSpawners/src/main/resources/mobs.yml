@@ -851,6 +851,45 @@ creatures:
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
     displayName: Warden
+  camel:
+    aliases:
+    - dromedary
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Camel
+  sniffer:
+    aliases:
+    - snooper
+    - snoop
+    - sleuthhound
+    - shamus
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Sniffer
+  armadillo:
+    aliases:
+    - belt
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Armadillo
+  bogged:
+    aliases:
+    - swampskelly
+    - sawmpskellington
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Bogged
+  breeze:
+    aliases:
+    - wind
+    enable: true
+    enableCraftingSpawner: true
+    enableSpawnEggOverride: true
+    displayName: Breeze
 
   # Non-mob vanilla entities
   # Enable on your own risk, some might work, some not!
@@ -1037,4 +1076,10 @@ creatures:
   camel:
     enable: false
   sniffer:
+    enable: false
+  breeze_wind_charge:
+    enable: false
+  ominous_item_spawner:
+    enable: false
+  wind_charge:
     enable: false
