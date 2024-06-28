@@ -1073,10 +1073,6 @@ creatures:
     enable: false
   text_display:
     enable: false
-  camel:
-    enable: false
-  sniffer:
-    enable: false
   breeze_wind_charge:
     enable: false
   ominous_item_spawner:
