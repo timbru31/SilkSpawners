@@ -26,6 +26,8 @@ public class Config extends AbstractConfiguration {
         config.addComment("permissionExplode", "", "# Should a permission be required when a spawner explodes by TNT to achieve a drop");
         config.addDefault("useWorldGuard", true);
         config.addComment("useWorldGuard", "", "# Should be checked for WorldGuard build ability to change spawners");
+        config.addDefault("useMimic", true);
+        config.addComment("useMimic", "", "# Allows you to use Mimic item IDs in allowedTools");
         config.addDefault("explosionDropChance", 30);
         config.addComment("explosionDropChance", "", "# Percentage of dropping a spawner block when TNT or creepers explode");
         config.addDefault("destroyDropChance", 100);

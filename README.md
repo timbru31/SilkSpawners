@@ -27,6 +27,7 @@ This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to ob
 - Economy addon [SilkSpawnersEcoAddon](https://dev.bukkit.org/projects/silkspawnersecoaddon)
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
+- Mimic support
 - Support for multiple Minecraft versions, from 1.8.8 to 1.21 (with exlusion of 1.9 and 1.10)
 
 _Third party features, all of them can be disabled_
@@ -53,6 +54,9 @@ permissionExplode: false
 
 # Should be checked for WorldGuard build ability to change spawners
 useWorldGuard: true
+
+# Allows you to use Mimic item IDs in allowedTools
+useMimic: true
 
 # Percentage of dropping a spawner block when TNT or creepers explode
 explosionDropChance: 30
