@@ -138,7 +138,7 @@ public class NMSHandler implements NMSProvider {
         final List<String> entities = new ArrayList<>();
         try {
             final IRegistry<EntityTypes<?>> entityTypeRegistry = IRegistry.ENTITY_TYPE;
-            for (EntityTypes<?> next : entityTypeRegistry) {
+            for (final EntityTypes<?> next : entityTypeRegistry) {
                 entities.add(EntityTypes.getName(next).getKey());
             }
         } catch (SecurityException | IllegalArgumentException e) {
@@ -286,10 +286,26 @@ public class NMSHandler implements NMSProvider {
         }
     }
 
+    @Override
+    public String getOtherPluginsNBTEntityID(final ItemStack item) {
+        net.minecraft.server.v1_16_R1.ItemStack itemStack = null;
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        final NBTTagCompound tag = itemStack.getTag();
+
+        if (tag == null) {
+            return null;
+        }
+        if (tag.hasKey("ms_mob")) {
+            return tag.getString("ms_mob");
+        }
+        return null;
+    }
+
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
-     * @param player   the player
+     * @param player the player
      * @param distance the reach distance
      * @return the found block or null
      */

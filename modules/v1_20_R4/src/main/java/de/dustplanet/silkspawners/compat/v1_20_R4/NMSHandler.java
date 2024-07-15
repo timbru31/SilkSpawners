@@ -394,6 +394,23 @@ public class NMSHandler implements NMSProvider {
     }
 
     @Override
+    public String getOtherPluginsNBTEntityID(final ItemStack item) {
+        net.minecraft.world.item.ItemStack itemStack = null;
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
+
+        if (tag == null) {
+            return null;
+        }
+        if (tag.contains("ms_mob")) {
+            return tag.getString("ms_mob");
+        }
+        return null;
+    }
+
+    @Override
     public void displayBossBar(final String title, final String colorName, final String styleName, final Player player, final Plugin plugin,
             final int period) {
         final BarColor color = BarColor.valueOf(colorName.toUpperCase());

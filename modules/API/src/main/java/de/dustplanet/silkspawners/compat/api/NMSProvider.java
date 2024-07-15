@@ -45,6 +45,10 @@ public interface NMSProvider {
 
     String getVanillaNBTEntityID(ItemStack item);
 
+    default String getOtherPluginsNBTEntityID(@SuppressWarnings("unused") final ItemStack item) {
+        return null;
+    }
+
     Block getSpawnerFacing(Player player, int distance);
 
     default Collection<? extends Player> getOnlinePlayers() {

@@ -225,6 +225,22 @@ public class NMSHandler implements NMSProvider {
         return tag.getCompound("BlockEntityTag").getString("EntityId");
     }
 
+    @Override
+    public String getOtherPluginsNBTEntityID(final ItemStack item) {
+        net.minecraft.server.v1_8_R3.ItemStack itemStack = null;
+        final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
+        itemStack = CraftItemStack.asNMSCopy(craftStack);
+        final NBTTagCompound tag = itemStack.getTag();
+
+        if (tag == null) {
+            return null;
+        }
+        if (tag.hasKey("ms_mob")) {
+            return tag.getString("ms_mob");
+        }
+        return null;
+    }
+
     /**
      * Return the spawner block the player is looking at, or null if isn't.
      *
