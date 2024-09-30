@@ -61,8 +61,8 @@
             <id>remap-spigot</id>
             <configuration>
               <inputFile>${project.build.directory}/${project.artifactId}-${project.version}-remapped-mojang.jar</inputFile>
-              <srgIn>org.spigotmc:minecraft-server:1.21-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
-              <remappedDependencies>org.spigotmc:spigot:1.21-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
+              <srgIn>org.spigotmc:minecraft-server:1.21.1-R0.1-SNAPSHOT:csrg:maps-spigot</srgIn>
+              <remappedDependencies>org.spigotmc:spigot:1.21.1-R0.1-SNAPSHOT:jar:remapped-mojang</remappedDependencies>
             </configuration>
           </execution>
         </executions>
