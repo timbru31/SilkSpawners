@@ -88,6 +88,7 @@ jobs:
           cd BuildTools
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.20.6-R0.1-SNAPSHOT/spigot-1.20.6-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.20.6 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.1-R0.1-SNAPSHOT/spigot-1.21.1-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.1 --remapped
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.3-R0.1-SNAPSHOT/spigot-1.21.3-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.3 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.4-R0.1-SNAPSHOT/spigot-1.21.4-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.4 --remapped
 
       - name: Build with Maven

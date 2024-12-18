@@ -320,6 +320,7 @@ mkdir -p BuildTools
 cd BuildTools
 wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
 java -jar BuildTools.jar --rev 1.21.4 --remapped
+java -jar BuildTools.jar --rev 1.21.3 --remapped
 java -jar BuildTools.jar --rev 1.21.1 --remapped
 java -jar BuildTools.jar --rev 1.20.6 --remapped
 java -jar BuildTools.jar --rev 1.20.4 --remapped
