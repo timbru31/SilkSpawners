@@ -971,6 +971,15 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.breeze.displayName", "Breeze");
         config.options().copyDefaults(true);
         tempList = new ArrayList<>();
+        // Creaking
+        tempList.add("groan");
+        config.addDefault("creatures.creaking.aliases", tempList);
+        config.addDefault("creatures.creaking.enable", true);
+        config.addDefault("creatures.creaking.enableCraftingSpawner", true);
+        config.addDefault("creatures.creaking.enableSpawnEggOverride", true);
+        config.addDefault("creatures.creaking.displayName", "Creaking");
+        config.options().copyDefaults(true);
+        tempList = new ArrayList<>();
 
         // Non-mob vanilla entities below
         // Item
@@ -1125,5 +1134,45 @@ public class Mobs extends AbstractConfiguration {
         config.addDefault("creatures.ominous_item_spawner.enable", false);
         // wind_charge
         config.addDefault("creatures.wind_charge.enable", false);
+        // acacia_boat
+        config.addDefault("creatures.acacia_boat.enable", false);
+        // acacia_chest_boat
+        config.addDefault("creatures.acacia_chest_boat.enable", false);
+        // bamboo_chest_raft
+        config.addDefault("creatures.bamboo_chest_raft.enable", false);
+        // bamboo_raft
+        config.addDefault("creatures.bamboo_raft.enable", false);
+        // birch_boat
+        config.addDefault("creatures.birch_boat.enable", false);
+        // birch_chest_boat
+        config.addDefault("creatures.birch_chest_boat.enable", false);
+        // cherry_boat
+        config.addDefault("creatures.cherry_boat.enable", false);
+        // cherry_chest_boat
+        config.addDefault("creatures.cherry_chest_boat.enable", false);
+        // dark_oak_boat
+        config.addDefault("creatures.dark_oak_boat.enable", false);
+        // dark_oak_chest_boat
+        config.addDefault("creatures.dark_oak_chest_boat.enable", false);
+        // jungle_boat
+        config.addDefault("creatures.jungle_boat.enable", false);
+        // jungle_chest_boat
+        config.addDefault("creatures.jungle_chest_boat.enable", false);
+        // mangrove_boat
+        config.addDefault("creatures.mangrove_boat.enable", false);
+        // mangrove_chest_boat
+        config.addDefault("creatures.mangrove_chest_boat.enable", false);
+        // oak_boat
+        config.addDefault("creatures.oak_boat.enable", false);
+        // oak_chest_boat
+        config.addDefault("creatures.oak_chest_boat.enable", false);
+        // pale_oak_boat
+        config.addDefault("creatures.pale_oak_boat.enable", false);
+        // pale_oak_chest_boat
+        config.addDefault("creatures.pale_oak_chest_boat.enable", false);
+        // spruce_boat
+        config.addDefault("creatures.spruce_boat.enable", false);
+        // spruce_chest_boat
+        config.addDefault("creatures.spruce_chest_boat.enable", false);
     }
 }
