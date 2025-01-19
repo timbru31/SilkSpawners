@@ -11,6 +11,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
@@ -133,4 +134,8 @@ public interface NMSProvider {
     }
 
     Player loadPlayer(OfflinePlayer offline);
+
+    default boolean isWindCharge(@SuppressWarnings("unused") final Entity entity) {
+        return false;
+    }
 }

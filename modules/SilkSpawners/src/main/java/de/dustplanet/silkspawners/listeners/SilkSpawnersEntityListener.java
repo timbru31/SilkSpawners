@@ -44,7 +44,12 @@ public class SilkSpawnersEntityListener implements Listener {
          * Skip if entity is not known or null or EnderDragon calls or this event explosionChance is 0
          */
         final Entity entity = event.getEntity();
-        if (event.getEntity() == null || entity instanceof EnderDragon || plugin.config.getInt("explosionDropChance", 30) == 0) {
+        final int explosionChance = plugin.config.getInt("explosionDropChance", 30);
+        if (event.getEntity() == null || entity instanceof EnderDragon || su.nmsProvider.isWindCharge(event.getEntity())
+                || explosionChance == 0) {
+            plugin.getLogger().log(Level.FINE,
+                    "Skipping handling of explosion event because abort criteria are met, explosion chance is {0}", explosionChance);
+
             return;
         }
 
@@ -68,6 +73,9 @@ public class SilkSpawnersEntityListener implements Listener {
                 plugin.getLogger().log(Level.FINE, "Calculating exploded spawner at {0}, {1}, {2}",
                         new Object[] { block.getX(), block.getY(), block.getZ() });
 
+                plugin.getLogger().log(Level.FINE, "Explosion source is {0}", event.getEntity().getName());
+                plugin.getLogger().log(Level.FINE, "Explosion source (EntityType) is {0}", event.getEntityType().name());
+
                 final int randomNumber = rnd.nextInt(100);
                 String entityID = su.getSpawnerEntityID(block);
                 plugin.getLogger().log(Level.FINE, "Current entityID is {0}", entityID);
@@ -79,8 +87,8 @@ public class SilkSpawnersEntityListener implements Listener {
                     dropChance = plugin.config.getInt("explosionDropChance", 100);
                 }
                 plugin.getLogger().log(Level.FINE, "Current drop chance is {0}", dropChance);
-                final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(entity, sourcePlayer, block, entityID,
-                        dropChance);
+                final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(entity, sourcePlayer, block,
+                        entityID, dropChance);
                 plugin.getServer().getPluginManager().callEvent(explodeEvent);
                 if (explodeEvent.isAllCancelled()) {
                     plugin.getLogger()

@@ -29,6 +29,7 @@ import org.bukkit.craftbukkit.v1_21_R1.block.CraftCreatureSpawner;
 import org.bukkit.craftbukkit.v1_21_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.WindCharge;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -538,6 +539,11 @@ public class NMSHandler implements NMSProvider {
             target.loadData();
         }
         return target;
+    }
+
+    @Override
+    public boolean isWindCharge(final org.bukkit.entity.Entity entity) {
+        return entity instanceof WindCharge;
     }
 
 }
