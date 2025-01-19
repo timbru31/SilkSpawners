@@ -844,7 +844,7 @@ creatures:
     enable: true
     enableCraftingSpawner: true
     enableSpawnEggOverride: true
-    displayName: Frog
+    displayName: Tadpole
   warden:
     enable: true
     enableCraftingSpawner: true
