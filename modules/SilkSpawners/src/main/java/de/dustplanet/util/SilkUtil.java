@@ -275,7 +275,7 @@ public class SilkUtil {
             final String defaultCreatureString = plugin.getConfig().getString("defaultCreature", "pig").toLowerCase(Locale.ENGLISH);
             // If we know the internal name
             if (displayNameToMobID.containsKey(defaultCreatureString)) {
-                setDefaultEntityID(defaultEntityID);
+                setDefaultEntityID(displayNameToMobID.get(defaultCreatureString));
                 plugin.getLogger().fine("Default monster spawner set to " + defaultEntityID);
             } else {
                 // Unknown, fallback
