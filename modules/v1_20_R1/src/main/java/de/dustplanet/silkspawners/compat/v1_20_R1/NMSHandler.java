@@ -44,6 +44,7 @@ import de.dustplanet.silkspawners.compat.api.NMSProvider;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
@@ -259,7 +260,7 @@ public class NMSHandler implements NMSProvider {
         spawnDataTag.getCompound("entity").putString("id", prefixedEntity);
 
         if (!tag.contains("SpawnPotentials")) {
-            tag.put("SpawnPotentials", new CompoundTag());
+            tag.put("SpawnPotentials", new ListTag());
         }
 
         // SpawnEgg data

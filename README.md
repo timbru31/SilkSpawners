@@ -28,7 +28,7 @@ This Bukkit (compatible with CraftBukkit, Spigot, Paper) plugin adds a way to ob
 - Shop addon [SilkSpawnersShopAddon](https://spigotmc.org/resources/12028/) (login required, Premium Plugin)
 - BossBarAPI support for >= 1.9, otherwise BarAPI can be used
 - Mimic support
-- Support for multiple Minecraft versions, from 1.8.8 to 1.21.4 (with exlusion of 1.9 and 1.10)
+- Support for multiple Minecraft versions, from 1.8.8 to 1.21.6 (with exlusion of 1.9 and 1.10)
 
 _Third party features, all of them can be disabled_
 
@@ -297,6 +297,7 @@ Aliases:
 - smsunrato for the review and Indonesian translation
 - Jeroendedoem for the Dutch translation
 - electronicboy and Chazza for the 1.14 and 1.15 support during my absence
+- Snewmy for the 1.21.5 update
 
 ## Support
 
@@ -319,6 +320,8 @@ Unfortunately, I can't give access to https://repo.dustplanet.de/artifactory/pri
 mkdir -p BuildTools
 cd BuildTools
 wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+java -jar BuildTools.jar --rev 1.21.6 --remapped
+java -jar BuildTools.jar --rev 1.21.5 --remapped
 java -jar BuildTools.jar --rev 1.21.4 --remapped
 java -jar BuildTools.jar --rev 1.21.3 --remapped
 java -jar BuildTools.jar --rev 1.21.1 --remapped

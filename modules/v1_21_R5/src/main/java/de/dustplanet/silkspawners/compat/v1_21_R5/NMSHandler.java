@@ -1,4 +1,4 @@
-package de.dustplanet.silkspawners.compat.v1_20_R2;
+package de.dustplanet.silkspawners.compat.v1_21_R5;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -22,12 +22,13 @@ import org.bukkit.block.BlockState;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
-import org.bukkit.craftbukkit.v1_20_R2.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R2.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R2.block.CraftBlockEntityState;
-import org.bukkit.craftbukkit.v1_20_R2.block.CraftCreatureSpawner;
-import org.bukkit.craftbukkit.v1_20_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_21_R5.CraftServer;
+import org.bukkit.craftbukkit.v1_21_R5.CraftWorld;
+import org.bukkit.craftbukkit.v1_21_R5.block.CraftBlockEntityState;
+import org.bukkit.craftbukkit.v1_21_R5.block.CraftCreatureSpawner;
+import org.bukkit.craftbukkit.v1_21_R5.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_21_R5.inventory.CraftItemStack;
+import org.bukkit.entity.AbstractWindCharge;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.ItemStack;
@@ -39,12 +40,17 @@ import org.spigotmc.SpigotWorldConfig;
 
 import com.google.common.base.CaseFormat;
 import com.mojang.authlib.GameProfile;
+import com.mojang.logging.LogUtils;
 
 import de.dustplanet.silkspawners.compat.api.NMSProvider;
+import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
@@ -54,12 +60,18 @@ import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.phys.Vec3;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -123,8 +135,12 @@ public class NMSHandler implements NMSProvider {
         final CompoundTag tag = new CompoundTag();
         tag.putString("id", entityID);
 
+        final ServerPlayer sp = ((CraftPlayer) player).getHandle();
+
         final ServerLevel world = ((CraftWorld) w).getHandle();
-        final Optional<Entity> entity = EntityType.create(tag, world);
+        final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(sp.problemPath(), LogUtils.getLogger());
+        final ValueInput valueInput = TagValueInput.create(problemReporter, world.registryAccess(), tag);
+        final Optional<Entity> entity = EntityType.create(valueInput, world, EntitySpawnReason.SPAWN_ITEM_USE);
 
         if (!entity.isPresent()) {
             Bukkit.getLogger().warning("[SilkSpawners] Failed to spawn, falling through. You should report this (entity == null)!");
@@ -132,7 +148,11 @@ public class NMSHandler implements NMSProvider {
         }
 
         final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
-        entity.get().moveTo(x, y, z, yaw, 0);
+        final Entity spawnedEntity = entity.get();
+        // Use moveOrInterpolateTo with a Vec3 target position
+        spawnedEntity.moveOrInterpolateTo(new Vec3(x, y, z), 1.0f, 0.0f); // 1.0f for instant move, 0.0f to skip interpolation
+        spawnedEntity.setYRot(yaw); // Set the yaw (horizontal rotation)
+        spawnedEntity.setXRot(0); // Set the pitch (vertical rotation, 0 as before)
         ((CraftWorld) w).addEntity(entity.get(), SpawnReason.SPAWNER_EGG);
         final Packet<ClientGamePacketListener> rotationPacket = new ClientboundRotateHeadPacket(entity.get(), (byte) yaw);
         final ServerPlayerConnection connection = ((CraftPlayer) player).getHandle().connection;
@@ -160,7 +180,7 @@ public class NMSHandler implements NMSProvider {
         try {
             final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
             final CompoundTag resourceLocation = tile.getSpawner().nextSpawnData.entityToSpawn();
-            return resourceLocation != null ? resourceLocation.getString("id").replace("minecraft:", "") : "";
+            return resourceLocation != null ? resourceLocation.getString("id").orElse("").replace("minecraft:", "") : "";
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -170,20 +190,26 @@ public class NMSHandler implements NMSProvider {
 
     @Override
     public void setSpawnersUnstackable() {
-        final ResourceLocation resourceLocation = new ResourceLocation(NAMESPACED_SPAWNER_ID);
+        final ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath("minecraft", NAMESPACED_SPAWNER_ID);
         final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
-        final Item spawner = itemRegistry.get(resourceLocation);
+        final Optional<Reference<Item>> spawner = itemRegistry.get(resourceLocation);
+        if (spawner.isEmpty()) {
+            return;
+        }
+        final DataComponentMap currentComponents = spawner.get().value().components();
+        final DataComponentMap updatedComponents = DataComponentMap.composite(currentComponents,
+                DataComponentMap.builder().set(DataComponents.MAX_STACK_SIZE, 1).build());
         try {
-            final Field maxStackSize = Item.class.getDeclaredField("maxStackSize");
-            maxStackSize.setAccessible(true);
-            maxStackSize.set(spawner, 1);
+            final Field components = Item.class.getDeclaredField("components");
+            components.setAccessible(true);
+            components.set(spawner, updatedComponents);
         } catch (@SuppressWarnings("unused") NoSuchFieldException | SecurityException | IllegalArgumentException
                 | IllegalAccessException e) {
             try {
-                // int maxStackSize -> d
-                final Field maxStackSize = Item.class.getDeclaredField("d");
-                maxStackSize.setAccessible(true);
-                maxStackSize.set(spawner, 1);
+                // DataComponentMap components -> c
+                final Field components = Item.class.getDeclaredField("c");
+                components.setAccessible(true);
+                components.set(spawner.get().value(), updatedComponents);
             } catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e1) {
                 e1.printStackTrace();
             }
@@ -201,8 +227,12 @@ public class NMSHandler implements NMSProvider {
         try {
             final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
             final Registry<EntityType<?>> entityTypeRegistry = BuiltInRegistries.ENTITY_TYPE;
-            final ResourceLocation resourceLocation = new ResourceLocation(safeMobID);
-            tile.getSpawner().setEntityId(entityTypeRegistry.get(resourceLocation), spawner.getWorldHandle().getMinecraftWorld(),
+            final ResourceLocation resourceLocation = ResourceLocation.fromNamespaceAndPath("minecraft", safeMobID);
+            final Optional<Reference<EntityType<?>>> entityType = entityTypeRegistry.get(resourceLocation);
+            if (entityType.isEmpty()) {
+                return false;
+            }
+            tile.getSpawner().setEntityId(entityType.get().value(), spawner.getWorldHandle().getMinecraftWorld(),
                     spawner.getWorldHandle().getRandom(), spawner.getPosition());
             return true;
         } catch (IllegalArgumentException | IllegalAccessException e) {
@@ -229,37 +259,43 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getOrCreateTag();
+        final CustomData blockData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockData.copyTag();
+        final CompoundTag customTag = customData.copyTag();
 
         // Check for SilkSpawners key
-        if (!tag.contains("SilkSpawners")) {
-            tag.put("SilkSpawners", new CompoundTag());
+        if (!customTag.contains("SilkSpawners")) {
+            customTag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").putString("entity", entity);
-
-        // Check for Vanilla keys
-        if (!tag.contains("BlockEntityTag")) {
-            tag.put("BlockEntityTag", new CompoundTag());
-        }
-
-        tag = tag.getCompound("BlockEntityTag");
+        // Get or create the SilkSpawners compound tag
+        final CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
+        customTag.put("SilkSpawners", silkSpawnersTag); // Ensure it's stored back
+        silkSpawnersTag.put("entity", StringTag.valueOf(entity)); // Replace putString with put and StringTag
 
         // EntityId - Deprecated in 1.9
-        tag.putString("EntityId", entity);
-        tag.putString("id", BlockEntityType.getKey(BlockEntityType.MOB_SPAWNER).getPath());
+        tag.put("EntityId", StringTag.valueOf(entity));
+        tag.put("id", StringTag.valueOf(BlockEntityType.getKey(BlockEntityType.MOB_SPAWNER).getPath()));
 
         // SpawnData
         if (!tag.contains("SpawnData")) {
             tag.put("SpawnData", new CompoundTag());
         }
 
-        final CompoundTag spawnDataTag = tag.getCompound("SpawnData");
+        // Get or create the SpawnData compound tag
+        final CompoundTag spawnDataTag = tag.getCompound("SpawnData").orElse(new CompoundTag());
+        tag.put("SpawnData", spawnDataTag); // Ensure it's stored back
         if (!spawnDataTag.contains("entity")) {
             spawnDataTag.put("entity", new CompoundTag());
         }
-        spawnDataTag.getCompound("entity").putString("id", prefixedEntity);
 
+        // Get or create the entity compound tag inside SpawnData
+        final CompoundTag entityTag = spawnDataTag.getCompound("entity").orElse(new CompoundTag());
+        spawnDataTag.put("entity", entityTag); // Ensure it's stored back
+        entityTag.put("id", StringTag.valueOf(prefixedEntity));
+
+        // SpawnPotentials
         if (!tag.contains("SpawnPotentials")) {
             tag.put("SpawnPotentials", new ListTag());
         }
@@ -268,8 +304,14 @@ public class NMSHandler implements NMSProvider {
         if (!tag.contains("EntityTag")) {
             tag.put("EntityTag", new CompoundTag());
         }
-        tag.getCompound("EntityTag").putString("id", prefixedEntity);
 
+        // Get or create the EntityTag compound tag
+        final CompoundTag entityTagForEgg = tag.getCompound("EntityTag").orElse(new CompoundTag());
+        tag.put("EntityTag", entityTagForEgg); // Ensure it's stored back
+        entityTagForEgg.put("id", StringTag.valueOf(prefixedEntity));
+
+        itemStack.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag));
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -279,12 +321,13 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("SilkSpawners")) {
+        if (!tag.contains("SilkSpawners")) {
             return null;
         }
-        return tag.getCompound("SilkSpawners").getString("entity");
+        return tag.getCompound("SilkSpawners").flatMap(silkSpawnersTag -> silkSpawnersTag.getString("entity")).orElse(null);
     }
 
     @Override
@@ -293,25 +336,46 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.BLOCK_ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("BlockEntityTag")) {
-            return null;
-        }
-
-        tag = tag.getCompound("BlockEntityTag");
+        // Check for EntityId
         if (tag.contains("EntityId")) {
-            return tag.getString("EntityId");
-        } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("id")) {
-            return tag.getCompound("SpawnData").getString("id");
-        } else if (tag.contains("SpawnData") && tag.getCompound("SpawnData").contains("entity")
-                && tag.getCompound("SpawnData").getCompound("entity").contains("id")) {
-            return tag.getCompound("SpawnData").getCompound("entity").getString("id");
-        } else if (tag.contains("SpawnPotentials") && !tag.getList("SpawnPotentials", 8).isEmpty()) {
-            return tag.getList("SpawnPotentials", 8).getCompound(0).getCompound("Entity").getString("id");
-        } else {
-            return null;
+            return tag.getString("EntityId").orElse(null);
         }
+
+        // Check for SpawnData -> id
+        if (tag.contains("SpawnData")) {
+            final Optional<CompoundTag> spawnDataOpt = tag.getCompound("SpawnData");
+            if (spawnDataOpt.isPresent()) {
+                final CompoundTag spawnData = spawnDataOpt.get();
+                if (spawnData.contains("id")) {
+                    return spawnData.getString("id").orElse(null);
+                }
+
+                // Check for SpawnData -> entity -> id
+                if (spawnData.contains("entity")) {
+                    final Optional<CompoundTag> entityOpt = spawnData.getCompound("entity");
+                    if (entityOpt.isPresent() && entityOpt.get().contains("id")) {
+                        return entityOpt.get().getString("id").orElse(null);
+                    }
+                }
+            }
+        }
+
+        // Check for SpawnPotentials
+        if (tag.contains("SpawnPotentials")) {
+            final ListTag spawnPotentials = tag.getListOrEmpty("SpawnPotentials"); // 8 is the type ID for CompoundTag
+            if (spawnPotentials != null && !spawnPotentials.isEmpty()) {
+                final CompoundTag potential = spawnPotentials.getCompoundOrEmpty(0);
+                final Optional<CompoundTag> entityOpt = potential.getCompound("Entity");
+                if (entityOpt.isPresent()) {
+                    return entityOpt.get().getString("id").orElse(null);
+                }
+            }
+        }
+
+        return null;
     }
 
     @Override
@@ -319,13 +383,14 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
         if (tag == null) {
             return null;
         }
         if (tag.contains("ms_mob")) {
-            return tag.getString("ms_mob");
+            return tag.getString("ms_mob").orElse(null);
         }
         return null;
     }
@@ -363,17 +428,22 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        final CompoundTag tag = itemStack.getOrCreateTag();
+        final CustomData blockData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        final CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockData.copyTag();
+        final CompoundTag customTag = customData.copyTag();
 
-        if (!tag.contains("SilkSpawners")) {
-            tag.put("SilkSpawners", new CompoundTag());
+        if (!customTag.contains("SilkSpawners")) {
+            customTag.put("SilkSpawners", new CompoundTag());
         }
 
-        tag.getCompound("SilkSpawners").putString("entity", entityID);
-
-        if (!tag.contains("EntityTag")) {
-            tag.put("EntityTag", new CompoundTag());
+        // Assuming customTag is a CompoundTag
+        if (!customTag.contains("SilkSpawners")) {
+            customTag.put("SilkSpawners", new CompoundTag());
         }
+        final CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
+        silkSpawnersTag.put("entity", StringTag.valueOf(entityID));
+        customTag.put("SilkSpawners", silkSpawnersTag); // Ensure the updated tag is stored back
 
         String prefixedEntity;
         if (!entityID.startsWith("minecraft:")) {
@@ -381,8 +451,10 @@ public class NMSHandler implements NMSProvider {
         } else {
             prefixedEntity = entityID;
         }
-        tag.getCompound("EntityTag").putString("id", prefixedEntity);
+        tag.putString("id", prefixedEntity);
 
+        itemStack.set(DataComponents.ENTITY_DATA, CustomData.of(tag));
+        itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(customTag));
         return CraftItemStack.asCraftMirror(itemStack);
     }
 
@@ -391,20 +463,19 @@ public class NMSHandler implements NMSProvider {
         net.minecraft.world.item.ItemStack itemStack = null;
         final CraftItemStack craftStack = CraftItemStack.asCraftCopy(item);
         itemStack = CraftItemStack.asNMSCopy(craftStack);
-        CompoundTag tag = itemStack.getTag();
+        final CustomData blockEntityData = itemStack.getOrDefault(DataComponents.ENTITY_DATA, CustomData.EMPTY);
+        final CompoundTag tag = blockEntityData.copyTag();
 
-        if (tag == null || !tag.contains("EntityTag")) {
-            final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
-            final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
-            if (vanillaKey != null) {
-                return vanillaKey.getPath().replace("minecraft:", "").replace("_spawn_egg", "");
-            }
-        } else {
-            tag = tag.getCompound("EntityTag");
-            if (tag.contains("id")) {
-                return tag.getString("id").replace("minecraft:", "");
-            }
+        if (tag.contains("id")) {
+            return tag.getString("id").orElse(null).replace("minecraft:", "");
         }
+
+        final Registry<Item> itemRegistry = BuiltInRegistries.ITEM;
+        final ResourceLocation vanillaKey = itemRegistry.getKey(itemStack.getItem());
+        if (vanillaKey != null) {
+            return vanillaKey.getPath().replace("minecraft:", "").replace("_spawn_egg", "");
+        }
+
         return null;
     }
 
@@ -536,6 +607,11 @@ public class NMSHandler implements NMSProvider {
             target.loadData();
         }
         return target;
+    }
+
+    @Override
+    public boolean isWindCharge(final org.bukkit.entity.Entity entity) {
+        return entity instanceof AbstractWindCharge;
     }
 
 }

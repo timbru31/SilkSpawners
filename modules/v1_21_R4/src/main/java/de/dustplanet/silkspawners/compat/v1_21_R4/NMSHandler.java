@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -51,6 +48,8 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
@@ -68,6 +67,7 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.phys.Vec3;
 
 public class NMSHandler implements NMSProvider {
     private Field tileField;
@@ -140,11 +140,11 @@ public class NMSHandler implements NMSProvider {
         }
 
         final float yaw = world.random.nextFloat() * (-180 - 180) + 180;
-        Entity spawnedEntity = entity.get();
+        final Entity spawnedEntity = entity.get();
         // Use moveOrInterpolateTo with a Vec3 target position
         spawnedEntity.moveOrInterpolateTo(new Vec3(x, y, z), 1.0f, 0.0f); // 1.0f for instant move, 0.0f to skip interpolation
-        spawnedEntity.setYRot(yaw);    // Set the yaw (horizontal rotation)
-        spawnedEntity.setXRot(0);      // Set the pitch (vertical rotation, 0 as before)
+        spawnedEntity.setYRot(yaw); // Set the yaw (horizontal rotation)
+        spawnedEntity.setXRot(0); // Set the pitch (vertical rotation, 0 as before)
         ((CraftWorld) w).addEntity(entity.get(), SpawnReason.SPAWNER_EGG);
         final Packet<ClientGamePacketListener> rotationPacket = new ClientboundRotateHeadPacket(entity.get(), (byte) yaw);
         final ServerPlayerConnection connection = ((CraftPlayer) player).getHandle().connection;
@@ -172,9 +172,7 @@ public class NMSHandler implements NMSProvider {
         try {
             final SpawnerBlockEntity tile = (SpawnerBlockEntity) tileField.get(spawner);
             final CompoundTag resourceLocation = tile.getSpawner().nextSpawnData.entityToSpawn();
-            return resourceLocation != null
-                ? resourceLocation.getString("id").orElse("").replace("minecraft:", "")
-                : "";
+            return resourceLocation != null ? resourceLocation.getString("id").orElse("").replace("minecraft:", "") : "";
         } catch (IllegalArgumentException | IllegalAccessException e) {
             Bukkit.getLogger().warning("[SilkSpawners] Reflection failed: " + e.getMessage());
             e.printStackTrace();
@@ -264,7 +262,7 @@ public class NMSHandler implements NMSProvider {
         }
 
         // Get or create the SilkSpawners compound tag
-        CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
+        final CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
         customTag.put("SilkSpawners", silkSpawnersTag); // Ensure it's stored back
         silkSpawnersTag.put("entity", StringTag.valueOf(entity)); // Replace putString with put and StringTag
 
@@ -278,20 +276,20 @@ public class NMSHandler implements NMSProvider {
         }
 
         // Get or create the SpawnData compound tag
-        CompoundTag spawnDataTag = tag.getCompound("SpawnData").orElse(new CompoundTag());
+        final CompoundTag spawnDataTag = tag.getCompound("SpawnData").orElse(new CompoundTag());
         tag.put("SpawnData", spawnDataTag); // Ensure it's stored back
         if (!spawnDataTag.contains("entity")) {
             spawnDataTag.put("entity", new CompoundTag());
         }
 
         // Get or create the entity compound tag inside SpawnData
-        CompoundTag entityTag = spawnDataTag.getCompound("entity").orElse(new CompoundTag());
+        final CompoundTag entityTag = spawnDataTag.getCompound("entity").orElse(new CompoundTag());
         spawnDataTag.put("entity", entityTag); // Ensure it's stored back
         entityTag.put("id", StringTag.valueOf(prefixedEntity));
 
         // SpawnPotentials
         if (!tag.contains("SpawnPotentials")) {
-            tag.put("SpawnPotentials", new CompoundTag());
+            tag.put("SpawnPotentials", new ListTag());
         }
 
         // SpawnEgg data
@@ -300,7 +298,7 @@ public class NMSHandler implements NMSProvider {
         }
 
         // Get or create the EntityTag compound tag
-        CompoundTag entityTagForEgg = tag.getCompound("EntityTag").orElse(new CompoundTag());
+        final CompoundTag entityTagForEgg = tag.getCompound("EntityTag").orElse(new CompoundTag());
         tag.put("EntityTag", entityTagForEgg); // Ensure it's stored back
         entityTagForEgg.put("id", StringTag.valueOf(prefixedEntity));
 
@@ -321,8 +319,7 @@ public class NMSHandler implements NMSProvider {
         if (!tag.contains("SilkSpawners")) {
             return null;
         }
-        return tag.getCompound("SilkSpawners").flatMap(silkSpawnersTag -> silkSpawnersTag.getString("entity"))
-            .orElse(null);
+        return tag.getCompound("SilkSpawners").flatMap(silkSpawnersTag -> silkSpawnersTag.getString("entity")).orElse(null);
     }
 
     @Override
@@ -341,16 +338,16 @@ public class NMSHandler implements NMSProvider {
 
         // Check for SpawnData -> id
         if (tag.contains("SpawnData")) {
-            Optional<CompoundTag> spawnDataOpt = tag.getCompound("SpawnData");
+            final Optional<CompoundTag> spawnDataOpt = tag.getCompound("SpawnData");
             if (spawnDataOpt.isPresent()) {
-                CompoundTag spawnData = spawnDataOpt.get();
+                final CompoundTag spawnData = spawnDataOpt.get();
                 if (spawnData.contains("id")) {
                     return spawnData.getString("id").orElse(null);
                 }
 
                 // Check for SpawnData -> entity -> id
                 if (spawnData.contains("entity")) {
-                    Optional<CompoundTag> entityOpt = spawnData.getCompound("entity");
+                    final Optional<CompoundTag> entityOpt = spawnData.getCompound("entity");
                     if (entityOpt.isPresent() && entityOpt.get().contains("id")) {
                         return entityOpt.get().getString("id").orElse(null);
                     }
@@ -360,10 +357,10 @@ public class NMSHandler implements NMSProvider {
 
         // Check for SpawnPotentials
         if (tag.contains("SpawnPotentials")) {
-            ListTag spawnPotentials = tag.getListOrEmpty("SpawnPotentials"); // 8 is the type ID for CompoundTag
+            final ListTag spawnPotentials = tag.getListOrEmpty("SpawnPotentials"); // 8 is the type ID for CompoundTag
             if (spawnPotentials != null && !spawnPotentials.isEmpty()) {
-                CompoundTag potential = spawnPotentials.getCompoundOrEmpty(0);
-                Optional<CompoundTag> entityOpt = potential.getCompound("Entity");
+                final CompoundTag potential = spawnPotentials.getCompoundOrEmpty(0);
+                final Optional<CompoundTag> entityOpt = potential.getCompound("Entity");
                 if (entityOpt.isPresent()) {
                     return entityOpt.get().getString("id").orElse(null);
                 }
@@ -436,7 +433,7 @@ public class NMSHandler implements NMSProvider {
         if (!customTag.contains("SilkSpawners")) {
             customTag.put("SilkSpawners", new CompoundTag());
         }
-        CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
+        final CompoundTag silkSpawnersTag = customTag.getCompound("SilkSpawners").orElse(new CompoundTag());
         silkSpawnersTag.put("entity", StringTag.valueOf(entityID));
         customTag.put("SilkSpawners", silkSpawnersTag); // Ensure the updated tag is stored back
 
