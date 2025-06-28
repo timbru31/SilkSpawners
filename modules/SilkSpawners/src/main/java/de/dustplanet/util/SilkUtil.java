@@ -362,6 +362,9 @@ public class SilkUtil {
      * @return the ItemStack
      */
     public ItemStack newEggItem(final String entityID, final int amount, final String displayName) {
+        if (amount == 0) {
+            return new ItemStack(Material.AIR);
+        }
         return nmsProvider.newEggItem(entityID, amount, displayName);
     }
 
@@ -376,6 +379,10 @@ public class SilkUtil {
      * @return the ItemStack with the configured options
      */
     public ItemStack newSpawnerItem(final String entityID, final String customName, final int amount, final boolean forceLore) {
+        if (amount == 0) {
+            return new ItemStack(Material.AIR);
+        }
+
         String targetEntityID = null;
         try {
             targetEntityID = displayNameToMobID.get(entityID);
