@@ -853,6 +853,11 @@ public class SilkUtil {
         final Material toolType = tool.getType();
         final List<String> allowedTools = plugin.getConfig().getStringList("allowedTools");
         for (final String allowedTool : allowedTools) {
+            if ("all".equalsIgnoreCase(allowedTool)) {
+                toolAllowed = true;
+                break;
+            }
+
             if (toolType == Material.matchMaterial(allowedTool)) {
                 toolAllowed = true;
                 break;
