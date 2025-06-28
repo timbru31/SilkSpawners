@@ -51,6 +51,8 @@ spawnerNotDeterminable: >-
   &4Elinizde bir canavar yaratıcısı veya yumurtası yok veya bir elinizde yumurta diğer elinizde yaratıcı yok.
   Lütfen birini boşaltınız!
 
+noSilkTouch: '&eSeçtiğin alet bu spawner’ı kırmak için yeterince güçlü değil, dikkatli ol!'
+
 help: |-
   &7------&6SilkSpawners v%version% Yardım Menüsü&7------
   &e/ss help &7- &2Yardım menüsünü gösterir.

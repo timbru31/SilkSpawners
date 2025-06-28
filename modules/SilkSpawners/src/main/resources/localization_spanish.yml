@@ -53,6 +53,8 @@ lookAtSpawner: '&4Debes mirar directamente a un generador.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner
   or egg in both hands. Please make one empty!'
 
+noSilkTouch: '&eLa herramienta que elegiste no es lo suficientemente potente para minar este generador, ¡ten cuidado!'
+
 help: |-
   &7------&6Menu de ayuda de SilkSpawners v%version%&7------
   &e/ss help &7- &2Mostrar el menu de ayuda.

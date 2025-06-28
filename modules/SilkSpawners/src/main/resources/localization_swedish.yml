@@ -46,6 +46,8 @@ noSpawnerHere: '&4Du kan inte placera en spawner här, blocket ovanför är bloc
 lookAtSpawner: '&4Titta eller peka mot spawnern.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
 
+noSilkTouch: '&eDitt valda verktyg är inte tillräckligt kraftfullt för att bryta denna spawner – var försiktig!'
+
 help: |-
   &7------&6SilkSpawners v%version% Help Menu&7------
   &e/ss help &7- &2Displays the help menu.

@@ -45,6 +45,9 @@ noSpawnerHere: '&4Nie można tu umieścić spawnera, ponieważ ten blok jest zab
 
 lookAtSpawner: '&4Musisz patrzeć prosto na spawner.'
 spawnerNotDeterminable: '&4Nie masz spawnera lub jajka w ręku lub masz w obu dłoniach. Zostaw jedną rękę pustą.'
+
+noSilkTouch: '&eWybrane narzędzie nie jest wystarczająco silne, aby wydobyć ten spawner – uważaj!'
+
 help: |-
   &7------&6SilkSpawners v%version% Pomoc&7------
   &e/ss help &7- &2Wyświetla pomoc.

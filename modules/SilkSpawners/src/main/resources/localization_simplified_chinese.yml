@@ -50,6 +50,8 @@ noSpawnerHere: '&4由于上方方块被阻挡，刷挂笼无法在此放置！'
 lookAtSpawner: '&4您必须直视刷挂笼。'
 spawnerNotDeterminable: '&4您单手或双手上既没有刷挂笼也没有怪物蛋。请清空一个！'
 
+noSilkTouch: '&e你选择的工具无法有效开采这个刷怪笼，请小心！'
+
 help: |-
   &7------&6丝绸刷怪笼 版本 %version% 帮助菜单&7------
   &e/ss help &7- &2显示帮助菜单。

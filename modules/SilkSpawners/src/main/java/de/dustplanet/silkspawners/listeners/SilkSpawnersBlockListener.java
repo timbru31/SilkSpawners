@@ -12,8 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -38,6 +40,46 @@ public class SilkSpawnersBlockListener implements Listener {
         plugin = instance;
         su = util;
         rnd = new Random();
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPlayerInteract(final PlayerInteractEvent event) {
+        if (event.getClickedBlock() == null || event.getAction() != Action.LEFT_CLICK_BLOCK) {
+            return;
+        }
+        plugin.getLogger().fine("Handling a player interact event");
+
+        final boolean isFakeEvent = !PlayerInteractEvent.class.equals(event.getClass());
+        if (isFakeEvent) {
+            plugin.getLogger().log(Level.FINE, "Skipping player interact event because the event is fake: {0}", event.getClass().getName());
+            return;
+        }
+
+        final Block block = event.getClickedBlock();
+
+        if (block.getType() != su.nmsProvider.getSpawnerMaterial()) {
+            plugin.getLogger().log(Level.FINE, "Skipping player interact event because the block is not a spawner: {0}",
+                    block.getType().name());
+            return;
+        }
+
+        if (!plugin.getConfig().getBoolean("showNoSilkMessage", false)) {
+            plugin.getLogger().fine("Skipping player interact event due to config setting");
+            return;
+        }
+
+        final Player player = event.getPlayer();
+        final ItemStack tool = su.nmsProvider.getItemInHand(player);
+
+        final boolean validToolAndSilkTouch = su.isValidItemAndHasSilkTouch(tool);
+
+        final String entityID = su.getSpawnerEntityID(block);
+
+        final boolean hasNoSilkPermission = su.hasPermission(player, "silkspawners.nosilk.", entityID);
+
+        if (!validToolAndSilkTouch && !hasNoSilkPermission) {
+            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSilkTouch")));
+        }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

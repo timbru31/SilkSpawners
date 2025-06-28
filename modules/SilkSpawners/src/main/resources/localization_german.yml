@@ -46,6 +46,8 @@ noSpawnerHere: '&4Ein Spawner kann hier nicht aufgestellt werden, da der Block o
 lookAtSpawner: '&4Du musst den Spawner direkt anschauen'
 spawnerNotDeterminable: '&4Du hast entweder keinen Spawner oder ein Ei in deiner Hand, oder in beiden Händen etwas. Bitte mache eine leer!'
 
+noSilkTouch: '&eDein gewähltes Werkzeug ist nicht stark genug, um diesen Spawner abzubauen – sei vorsichtig!'
+
 help: |-
   &7------&6SilkSpawners v%version% Hilfe&7------
   &e/ss help &7- &2Zeigt diese Hilfe.

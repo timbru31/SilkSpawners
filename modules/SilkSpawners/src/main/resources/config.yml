@@ -150,6 +150,9 @@ spillSpawnersFromCommands: false
 # Check for spigot.yml and paper.yml flags that conflict with SilkSpawners
 checkForNerfFlags: true
 
+# Shows a warning message to players that the given tool is not powerful enough to drop the spawner
+showNoSilkMessage: false
+
 # Puts more information out on startup and interactions, such as block placement and breaking
 verboseMode: false
 

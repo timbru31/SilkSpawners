@@ -49,6 +49,8 @@ spawnerNotDeterminable: >-
   &4Você ou não tem um gerador ou ovo em sua mão ou tem um gerador ou ovo em ambas mãos.
   Remova um da mão secundária!
 
+noSilkTouch: '&eA ferramenta escolhida não é poderosa o suficiente para minerar este spawner, tenha cuidado!'
+
 help: |-
   &7------&6Menu de Ajuda SilkSpawners v%version%7------
   &e/ss help &7- &2Mostra o menu de ajuda.

@@ -46,6 +46,8 @@ noSpawnerHere: '&4Un générateur ne peut pas etre placé ici, parce que le bloc
 lookAtSpawner: '&4Vous devez regarder directement le générateur.'
 spawnerNotDeterminable: '&4Vous n''avez ni générateur ni oeuf dans votre main.'
 
+noSilkTouch: '&eL''outil que vous avez choisi n''est pas assez puissant pour miner ce spawner, faites attention !'
+
 help: |-
   &7------&6SilkSpawners v%version% Menu d''aide&7------
   &e/ss help &7- &2Afficher les menus d''aide.

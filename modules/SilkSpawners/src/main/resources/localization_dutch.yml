@@ -48,6 +48,8 @@ spawnerNotDeterminable: >-
   &4Je hebtr geen spawer of spawn egg in je hand of een spawner en spawn egg in allebeide handen.
   Maak een leeg asjeblieft!
 
+noSilkTouch: '&eHet door jou gekozen gereedschap is niet krachtig genoeg om deze spawner te mijnen, wees voorzichtig!'
+
 help: |-
   &7------&6SilkSpawners v%version% Help Menu&7------
   &e/ss help &7- &22Laat het Het help menu zien.

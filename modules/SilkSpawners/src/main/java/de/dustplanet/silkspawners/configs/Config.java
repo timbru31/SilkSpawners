@@ -128,6 +128,9 @@ public class Config extends AbstractConfiguration {
                 "# If the inventory of a player is full, drop spawners/eggs from /ss give on the ground");
         config.addDefault("checkForNerfFlags", true);
         config.addComment("checkForNerfFlags", "", "# Check for spigot.yml and paper.yml flags that conflict with SilkSpawners");
+        config.addDefault("showNoSilkMessage", false);
+        config.addComment("showNoSilkMessage", "",
+                "# Shows a warning message to players that the given tool is not powerful enough to drop the spawner");
         config.addDefault("verboseMode", false);
         config.addComment("verboseMode", "",
                 "# Puts more information out on startup and interactions, such as block placement and breaking");

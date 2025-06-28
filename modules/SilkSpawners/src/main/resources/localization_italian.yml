@@ -46,6 +46,8 @@ noSpawnerHere: '&4Lo spawner non può essere piazzato qui poichè il blocco sopr
 lookAtSpawner: '&4Devi guardare direttamente lo spawner.'
 spawnerNotDeterminable: '&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!'
 
+noSilkTouch: '&eLo strumento scelto non è abbastanza potente per minare questo spawner, fai attenzione!'
+
 help: |-
   &7------&6SilkSpawners v%version% Help Menu&7------
   &e/ss help &7- &2Displays the help menu.

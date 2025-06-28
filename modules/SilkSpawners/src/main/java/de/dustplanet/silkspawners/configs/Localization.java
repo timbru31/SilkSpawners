@@ -64,6 +64,7 @@ public class Localization extends AbstractConfiguration {
         config.addComment("lookAtSpawner", "");
         config.addDefault("spawnerNotDeterminable",
                 "&4You either have no spawner or egg in your hand or a spawner or egg in both hands. Please make one empty!");
+        config.addDefault("noSilkTouch", "&eYour chosen tool is not powerful enough to mine this spawner, be careful!");
         config.addDefault("help",
                 "&7------&6SilkSpawners v%version% Help Menu&7------\n" + "&e/ss help &7- &2Displays the help menu.\n"
                         + "&e/ss list|all &7- &2Displays all available creatures.\n"
