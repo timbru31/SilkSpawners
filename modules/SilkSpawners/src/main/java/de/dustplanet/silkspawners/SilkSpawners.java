@@ -71,6 +71,7 @@ public class SilkSpawners extends JavaPlugin {
             put(769, "v1_21_R3");
             put(770, "v1_21_R4");
             put(771, "v1_21_R5");
+            put(772, "v1_21_R5");
         }
     };
     public CommentedConfiguration config;

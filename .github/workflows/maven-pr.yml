@@ -91,7 +91,7 @@ jobs:
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.3-R0.1-SNAPSHOT/spigot-1.21.3-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.3 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.4-R0.1-SNAPSHOT/spigot-1.21.4-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.4 --remapped
           [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.5-R0.1-SNAPSHOT/spigot-1.21.5-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.5 --remapped
-          [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.6-R0.1-SNAPSHOT/spigot-1.21.6-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.6 --remapped
+          [ -f ~/.m2/repository/org/spigotmc/spigot/1.21.7-R0.1-SNAPSHOT/spigot-1.21.7-R0.1-SNAPSHOT-remapped-mojang.jar ] || java -jar BuildTools.jar --rev 1.21.7 --remapped
 
       - name: Build with Maven
         run: mvn -D"http.keepAlive=false" -D"maven.wagon.http.pool=false" -D"maven.wagon.httpconnectionManager.ttlSeconds=120" "-Dhttps.protocols=TLSv1.2" -DskipTests=true "-Dmaven.javadoc.skip=true" -B clean package
