@@ -41,14 +41,15 @@ public class SilkSpawnersEntityListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntiyExplode(final EntityExplodeEvent event) {
         /*
-         * Skip if entity is not known or null or EnderDragon calls or this event explosionChance is 0
+         * Skip if entity is not known or null or EnderDragon calls or this event tntExplosionChance/creeperExplosionChance is 0
          */
         final Entity entity = event.getEntity();
-        final int explosionChance = plugin.config.getInt("explosionDropChance", 30);
+        final int tntExplosionChance = plugin.config.getInt("tntExplosionDropChance", 30);
+        final int creeperExplosionChance = plugin.config.getInt("creeperExplosionDropChance", 100);
         if (event.getEntity() == null || entity instanceof EnderDragon || su.nmsProvider.isWindCharge(event.getEntity())
-                || explosionChance == 0) {
+                || tntExplosionChance == 0 || creeperExplosionChance == 0) {
             plugin.getLogger().log(Level.FINE,
-                    "Skipping handling of explosion event because abort criteria are met, explosion chance is {0}", explosionChance);
+                    "Skipping handling of explosion event because abort criteria are met, tnt explosion chance is {0}, creeper explosion chance is {1}", tntExplosionChance, creeperExplosionChance);
 
             return;
         }
@@ -80,11 +81,18 @@ public class SilkSpawnersEntityListener implements Listener {
                 String entityID = su.getSpawnerEntityID(block);
                 plugin.getLogger().log(Level.FINE, "Current entityID is {0}", entityID);
 
-                int dropChance = 0;
-                if (plugin.mobs.contains("creatures." + entityID + ".explosionDropChance")) {
-                    dropChance = plugin.mobs.getInt("creatures." + entityID + ".explosionDropChance", 100);
-                } else {
-                    dropChance = plugin.config.getInt("explosionDropChance", 100);
+                if (entity instanceof TNTPrimed) { // if tnt is source of explosion
+                    if (plugin.mobs.contains("creatures." + entityID + ".tntExplosionDropChance")) {
+                        dropChance = plugin.mobs.getInt("creatures." + entityID + ".tntExplosionDropChance", 30);
+                    } else {
+                        dropChance = plugin.config.getInt("tntExplosionDropChance", 100);;
+                    }
+                } else { // if creeper is source of explosion
+                    if (plugin.mobs.contains("creatures." + entityID + ".creeperExplosionDropChance")) {
+                        dropChance = plugin.mobs.getInt("creatures." + entityID + ".creeperExplosionDropChance", 100);
+                    } else {
+                        dropChance = plugin.config.getInt("creeperExplosionDropChance", 100);;
+                    }
                 }
                 plugin.getLogger().log(Level.FINE, "Current drop chance is {0}", dropChance);
                 final SilkSpawnersSpawnerExplodeEvent explodeEvent = new SilkSpawnersSpawnerExplodeEvent(entity, sourcePlayer, block,
