@@ -58,8 +58,11 @@ useWorldGuard: true
 # Allows you to use Mimic item IDs in allowedTools
 useMimic: true
 
-# Percentage of dropping a spawner block when TNT or creepers explode
-explosionDropChance: 30
+# Percentage of dropping a spawner block when TNT explode
+tntExplosionDropChance: 30
+
+# Percentage of dropping a spawner block when creepers explode
+creeperExplosionDropChance: 100
 
 # Percentage of dropping a iron bars when a spawner is mined
 destroyDropChance: 100
