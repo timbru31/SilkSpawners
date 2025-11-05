@@ -61,7 +61,7 @@ public class SilkSpawners extends JavaPlugin {
     private static final int BSTATS_PLUGIN_ID = 273;
     private static final String[] COMPATIBLE_MINECRAFT_VERSIONS = { "v1_8_R3", "v1_11_R1", "v1_12_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1",
             "v1_16_R1", "v1_16_R2", "v1_16_R3", "v1_17_R1", "v1_18_R1", "v1_18_R2", "v1_19_R1", "v1_19_R2", "v1_19_R3", "v1_20_R1",
-            "v1_20_R2", "v1_20_R3", "v1_20_R4", "v1_21_R1", "v1_21_R2", "v1_21_R3", "v1_21_R4", "v1_21_R5" };
+            "v1_20_R2", "v1_20_R3", "v1_20_R4", "v1_21_R1", "v1_21_R2", "v1_21_R3", "v1_21_R4", "v1_21_R5", "v1_21_R6" };
     public static final Map<Integer, String> PROTOCOL_VERSION_PACKAGE_MAP = new HashMap<Integer, String>() {
         private static final long serialVersionUID = -5188779509588704507L;
         {
@@ -72,6 +72,7 @@ public class SilkSpawners extends JavaPlugin {
             put(770, "v1_21_R4");
             put(771, "v1_21_R5");
             put(772, "v1_21_R5");
+            put(773, "v1_21_R6");
         }
     };
     public CommentedConfiguration config;
