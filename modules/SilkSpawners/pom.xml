@@ -114,6 +114,16 @@
       <version>3.2.1</version>
     </dependency>
     <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-platform-bukkit</artifactId>
+      <version>4.4.1</version>
+    </dependency>
+    <dependency>
+      <groupId>net.kyori</groupId>
+      <artifactId>adventure-text-minimessage</artifactId>
+      <version>4.21.0</version>
+    </dependency>
+    <dependency>
       <groupId>de.dustplanet</groupId>
       <artifactId>silkspawners-v1_8_R3</artifactId>
       <version>8.3.1-SNAPSHOT</version>
@@ -274,6 +284,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
         <configuration>
+          <proc>full</proc>
           <source>1.8</source>
           <target>1.8</target>
           <compilerArgument>-Xlint:all</compilerArgument>
@@ -299,6 +310,7 @@
                   <include>org.bstats:*</include>
                   <include>net.gravitydevelopment.updater:updater</include>
                   <include>com.vdurmont:semver4j</include>
+                  <include>net.kyori:*</include>
                 </includes>
                 <excludes>
                   <exclude>de.dustplanet.silkspawners:silkspawners-API</exclude>
@@ -312,6 +324,10 @@
                 <relocation>
                   <pattern>org.bstats</pattern>
                   <shadedPattern>de.dustplanet.util.stats</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>net.kyori</pattern>
+                  <shadedPattern>de.dustplanet.util.kyori</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>

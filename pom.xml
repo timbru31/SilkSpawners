@@ -64,6 +64,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.15.0</version>
         <configuration>
+          <proc>full</proc>
           <source>1.8</source>
           <target>1.8</target>
           <compilerArgument>-Xlint:all</compilerArgument>
@@ -89,6 +90,7 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.11.3</version>
         <configuration>
+          <proc>full</proc>
           <source>1.8</source>
         </configuration>
       </plugin>

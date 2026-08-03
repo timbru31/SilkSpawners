@@ -1,6 +1,5 @@
 package de.dustplanet.silkspawners.listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -90,8 +89,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                 if (!disableChangeTypeWithEgg) {
                     if (!su.canBuildHere(player, block.getLocation())) {
-                        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                                plugin.localization.getString("changingDeniedWorldGuard")));
+                        su.sendMessage(player, plugin.localization.getString("changingDeniedWorldGuard"));
                         return;
                     }
 
@@ -101,8 +99,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     }
 
                     if (!su.hasPermission(player, "silkspawners.changetypewithegg.", entityID)) {
-                        su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                                plugin.localization.getString("noPermissionChangingWithEggs")));
+                        su.sendMessage(player, plugin.localization.getString("noPermissionChangingWithEggs"));
                         event.setCancelled(true);
                         return;
                     }
@@ -120,8 +117,8 @@ public class SilkSpawnersPlayerListener implements Listener {
                     entityID = changeEvent.getEntityID();
 
                     su.setSpawnerType(block, entityID, player,
-                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedWorldGuard")));
-                    su.sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changedSpawner"))
+                            plugin.localization.getString("changingDeniedWorldGuard"));
+                    su.sendMessage(player, plugin.localization.getString("changedSpawner")
                             .replace("%creature%", su.getCreatureName(entityID)));
 
                     // Consume egg
@@ -154,7 +151,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                         }
                     } else {
                         su.sendMessage(player,
-                                ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSpawnerHere")));
+                                plugin.localization.getString("noSpawnerHere"));
                     }
                     event.setCancelled(true);
                 } else if (plugin.config.getBoolean("spawnEggOverride", false)) {
@@ -165,9 +162,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                     // Deny spawning
                     if (!allowed) {
                         su.sendMessage(player,
-                                ChatColor
-                                        .translateAlternateColorCodes('\u0026',
-                                                plugin.localization.getString("spawningDenied").replace("%ID%", entityID))
+                                plugin.localization.getString("spawningDenied").replace("%ID%", entityID)
                                         .replace("%creature%", su.getCreatureName(entityID)));
                         event.setCancelled(true);
                         return;
@@ -178,9 +173,7 @@ public class SilkSpawnersPlayerListener implements Listener {
 
                     // Notify
                     plugin.informPlayer(player,
-                            ChatColor
-                                    .translateAlternateColorCodes('\u0026',
-                                            plugin.localization.getString("spawning").replace("%ID%", entityID))
+                            plugin.localization.getString("spawning").replace("%ID%", entityID)
                                     .replace("%creature%", su.getCreatureName(entityID)));
 
                     // Spawn on top of targeted block and center the mob
@@ -209,7 +202,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 final Faction blockFaction = BoardColl.get().getFactionAt(PS.valueOf(block.getLocation()));
                 if (!blockFaction.isNone() && !mp.isInOwnTerritory()) {
                     su.sendMessage(player,
-                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                            plugin.localization.getString("changingDeniedFactions"));
                     return false;
                 }
             } catch (@SuppressWarnings("unused") final NoClassDefFoundError e) {
@@ -220,7 +213,7 @@ public class SilkSpawnersPlayerListener implements Listener {
                 final com.massivecraft.factions.Faction blockFaction = board.getFactionAt(new FLocation(block.getLocation()));
                 if (!blockFaction.isWilderness() && !fPlayer.isInOwnTerritory()) {
                     su.sendMessage(player,
-                            ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("changingDeniedFactions")));
+                            plugin.localization.getString("changingDeniedFactions"));
                     return false;
                 }
             }

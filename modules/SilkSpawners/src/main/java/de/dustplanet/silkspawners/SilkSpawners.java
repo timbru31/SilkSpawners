@@ -83,6 +83,7 @@ public class SilkSpawners extends JavaPlugin {
     public void onDisable() {
         if (su != null) {
             su.clearAll();
+            su.getMiniMessage().close();
         }
     }
 

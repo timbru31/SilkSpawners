@@ -2,7 +2,6 @@ package de.dustplanet.silkspawners.listeners;
 
 import java.util.Locale;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -79,9 +78,7 @@ public class SilkSpawnersInventoryListener implements Listener {
         if (!su.hasPermission(player, "silkspawners.craft.", entityID)) {
             event.setCancelled(true);
             su.sendMessage(player,
-                    ChatColor
-                            .translateAlternateColorCodes('\u0026',
-                                    plugin.localization.getString("noPermissionCraft").replace("%ID%", entityID))
+                    plugin.localization.getString("noPermissionCraft").replace("%ID%", entityID)
                             .replace("%creature%", spawnerName));
             return;
         }

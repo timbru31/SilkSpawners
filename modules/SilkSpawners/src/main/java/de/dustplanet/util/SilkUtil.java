@@ -15,9 +15,7 @@ import java.util.logging.Level;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -117,6 +115,12 @@ public class SilkUtil {
     public NMSProvider nmsProvider;
 
     /**
+     * MiniMessage parser used for every message, item name and boss bar.
+     */
+    @Getter
+    private final MiniMessageUtil miniMessage;
+
+    /**
      * Constructor to make your own SilkUtil instance.
      *
      * @param instance SilkSpawners instance
@@ -128,6 +132,7 @@ public class SilkUtil {
             correctedInstance = (SilkSpawners) Bukkit.getPluginManager().getPlugin("SilkSpawners");
         }
         plugin = correctedInstance;
+        miniMessage = new MiniMessageUtil(plugin);
 
         final boolean verboseMode = plugin.getConfig().getBoolean("verboseMode", false);
         if (verboseMode) {
@@ -314,6 +319,24 @@ public class SilkUtil {
     }
 
     /**
+     * Receives the map of display names (and aliases) to entity IDs.
+     *
+     * @return the display name to mob ID mapping
+     */
+    public Map<String, String> getDisplayNameToMobID() {
+        return displayNameToMobID;
+    }
+
+    /**
+     * Receives the map of entity IDs to display names.
+     *
+     * @return the mob ID to display name mapping
+     */
+    public Map<String, String> getMobIDToDisplayName() {
+        return mobIDToDisplayName;
+    }
+
+    /**
      * Returns if SilkUtil is using reflection.
      *
      * @return true for reflection, false for not
@@ -394,15 +417,14 @@ public class SilkUtil {
         }
 
         String spawnerName = customName;
-        if (StringUtils.isBlank(spawnerName)) {
+        if (spawnerName == null || spawnerName.trim().isEmpty()) {
             spawnerName = "Monster Spawner";
         }
         final ItemStack item = new ItemStack(nmsProvider.getSpawnerMaterial(), amount);
         final ItemMeta meta = item.getItemMeta();
 
         if (!"Monster Spawner".equalsIgnoreCase(spawnerName)) {
-            meta.setDisplayName(
-                    ChatColor.translateAlternateColorCodes('\u0026', spawnerName).replace("%creature%", getCreatureName(targetEntityID)));
+            meta.setDisplayName(toLegacy(spawnerName.replace("%creature%", getCreatureName(targetEntityID))));
         }
 
         if ((forceLore || !isUsingReflection()) && plugin.getConfig().getBoolean("useMetadata", true)) {
@@ -458,17 +480,17 @@ public class SilkUtil {
         if (isUsingReflection()) {
             String entityID = nmsProvider.getSilkSpawnersNBTEntityID(item);
             plugin.getLogger().log(Level.FINE, "EntityID from item stack (custom tag) is {0}", entityID);
-            if (StringUtils.isNotBlank(entityID)) {
+            if (entityID != null && !entityID.trim().isEmpty()) {
                 return entityID;
             }
             entityID = nmsProvider.getVanillaNBTEntityID(item);
             plugin.getLogger().log(Level.FINE, "EntityID from item stack (vanilla tag) is {0}", entityID);
-            if (StringUtils.isNotBlank(entityID)) {
+            if (entityID != null && !entityID.trim().isEmpty()) {
                 return entityID.replace("minecraft:", "");
             }
             entityID = nmsProvider.getOtherPluginsNBTEntityID(item);
             plugin.getLogger().log(Level.FINE, "EntityID from item stack (other plugin tags) is {0}", entityID);
-            if (StringUtils.isNotBlank(entityID)) {
+            if (entityID != null && !entityID.trim().isEmpty()) {
                 return entityID.replace("minecraft:", "");
             }
         }
@@ -608,7 +630,7 @@ public class SilkUtil {
     public ItemStack setSpawnerType(final ItemStack item, final String entityID, final String customName) {
         final String correctedEntityID = displayNameToMobID.get(entityID);
         String correctedCustomName = customName;
-        if (StringUtils.isBlank(customName)) {
+        if (customName == null || customName.trim().isEmpty()) {
             correctedCustomName = "Monster Spawner";
         }
         // Please eggs or spawners
@@ -619,8 +641,7 @@ public class SilkUtil {
         final ItemMeta meta = item.getItemMeta();
         // Case spawner and check if we should color
         if (item.getType() == nmsProvider.getSpawnerMaterial() && !correctedCustomName.equalsIgnoreCase("Monster Spawner")) {
-            meta.setDisplayName(ChatColor.translateAlternateColorCodes('\u0026', correctedCustomName).replace("%creature%",
-                    getCreatureName(correctedEntityID)));
+            meta.setDisplayName(toLegacy(correctedCustomName.replace("%creature%", getCreatureName(correctedEntityID))));
         }
 
         if (!isUsingReflection() && plugin.getConfig().getBoolean("useMetadata", true)) {
@@ -705,7 +726,7 @@ public class SilkUtil {
         }
         // Strip last comma out
         String message = builder.toString();
-        if (StringUtils.isNotBlank(message)) {
+        if (message != null && !message.trim().isEmpty()) {
             message = message.substring(0, message.length() - ", ".length());
         }
         sendMessage(sender, message);
@@ -753,21 +774,19 @@ public class SilkUtil {
     @SuppressWarnings("deprecation")
     public void notify(final Player player, final String spawnerName) {
         if (isBarAPI()) {
-            final String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+            final String shortInfo = toLegacy(
                     plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
             BarAPI.setMessage(player, shortInfo, plugin.getConfig().getInt("barAPI.displayTime", 3));
         } else if (isVanillaBossBar()) {
-            final String shortInfo = ChatColor.translateAlternateColorCodes('\u0026',
+            final String shortInfo = toLegacy(
                     plugin.localization.getString("informationOfSpawnerBar").replace("%creature%", spawnerName));
             final String barColor = plugin.getConfig().getString("vanillaBossBar.color", "RED");
             final String barStyle = plugin.getConfig().getString("vanillaBossBar.style", "SOLID");
             final int barTime = plugin.getConfig().getInt("vanillaBossBar.displayTime", 3);
             nmsProvider.displayBossBar(shortInfo, barColor, barStyle, player, plugin, barTime);
         } else {
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner1").replace("%creature%", spawnerName)));
-            sendMessage(player, ChatColor.translateAlternateColorCodes('\u0026',
-                    plugin.localization.getString("informationOfSpawner2").replace("%creature%", spawnerName)));
+            sendMessage(player, plugin.localization.getString("informationOfSpawner1").replace("%creature%", spawnerName));
+            sendMessage(player, plugin.localization.getString("informationOfSpawner2").replace("%creature%", spawnerName));
         }
     }
 
@@ -900,24 +919,31 @@ public class SilkUtil {
      */
     public String getCustomSpawnerName(final String mobName) {
         if (plugin.mobs.contains("creatures." + mobName + ".spawnerName")) {
-            return ChatColor.translateAlternateColorCodes('&',
-                    plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner"));
+            return plugin.mobs.getString("creatures." + mobName + ".spawnerName", "Monster Spawner");
         }
-        return ChatColor.translateAlternateColorCodes('&', plugin.localization.getString("spawnerName", "Monster Spawner"));
+        return plugin.localization.getString("spawnerName", "Monster Spawner");
     }
 
     /**
-     * Sends a message to a Player or CommandSender with support for newlines
+     * Sends a message to a Player or CommandSender. The message is parsed as MiniMessage, legacy color codes and newlines are supported
+     * as well.
      *
      * @param receiver the receiver of the message
      * @param messages message with support for newlines
      */
-    @SuppressWarnings("static-method")
     public void sendMessage(final CommandSender receiver, final String messages) {
-        if (receiver == null || StringUtils.isBlank(messages)) {
-            return;
-        }
-        receiver.sendMessage(messages.split("\n"));
+        miniMessage.send(receiver, messages);
+    }
+
+    /**
+     * Parses a MiniMessage (or legacy) formatted string into a legacy string. Needed wherever Bukkit only accepts plain strings, such as
+     * item display names.
+     *
+     * @param message the raw message
+     * @return the legacy representation of the message
+     */
+    public String toLegacy(final String message) {
+        return miniMessage.toLegacy(message);
     }
 
     /**
@@ -1004,7 +1030,7 @@ public class SilkUtil {
      * @return the permission check result, true if the player has got the permission, false otherwise
      */
     public boolean hasPermission(final Permissible permissible, final String basePermission, final String entityID) {
-        if (StringUtils.isBlank(entityID) || permissible == null || StringUtils.isBlank(basePermission)) {
+        if (entityID == null || entityID.trim().isEmpty() || permissible == null || basePermission == null || basePermission.trim().isEmpty()) {
             plugin.getLogger().fine("permission check is false because the given input is invalid");
             return false;
         }

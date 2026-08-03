@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.logging.Level;
 
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -78,7 +77,7 @@ public class SilkSpawnersBlockListener implements Listener {
         final boolean hasNoSilkPermission = su.hasPermission(player, "silkspawners.nosilk.", entityID);
 
         if (!validToolAndSilkTouch && !hasNoSilkPermission) {
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("noSilkTouch")));
+            plugin.informPlayer(player, plugin.localization.getString("noSilkTouch"));
         }
     }
 
@@ -119,7 +118,7 @@ public class SilkSpawnersBlockListener implements Listener {
         entityID = su.getDisplayNameToMobID().get(breakEvent.getEntityID());
         plugin.getLogger().log(Level.FINE, "The stored entity of the block is {0}", entityID);
 
-        plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerBroken"))
+        plugin.informPlayer(player, plugin.localization.getString("spawnerBroken")
                 .replace("%creature%", su.getCreatureName(entityID)));
 
         final ItemStack tool = su.nmsProvider.getItemInHand(player);
@@ -305,9 +304,7 @@ public class SilkSpawnersBlockListener implements Listener {
         if (!su.hasPermission(player, "silkspawners.place.", entityID)) {
             event.setCancelled(true);
             su.sendMessage(player,
-                    ChatColor
-                            .translateAlternateColorCodes('\u0026',
-                                    plugin.localization.getString("noPermissionPlace").replace("%ID%", entityID))
+                    plugin.localization.getString("noPermissionPlace").replace("%ID%", entityID)
                             .replace("%creature%", creatureName));
             plugin.getLogger().fine("Skipping block place event because the player is missing the permission");
 
@@ -315,9 +312,9 @@ public class SilkSpawnersBlockListener implements Listener {
         }
 
         if (defaultID) {
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("placingDefault")));
+            plugin.informPlayer(player, plugin.localization.getString("placingDefault"));
         } else {
-            plugin.informPlayer(player, ChatColor.translateAlternateColorCodes('\u0026', plugin.localization.getString("spawnerPlaced"))
+            plugin.informPlayer(player, plugin.localization.getString("spawnerPlaced")
                     .replace("%creature%", su.getCreatureName(entityID)));
         }
 
